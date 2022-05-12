@@ -5,9 +5,90 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #F5F1ED;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/*---------------------------- Header CSS ----------------------------*/
+.header {
+  background: rgba(0,51,153) !important; 
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.header-links {
+  float:right;
+  color: #FFF;
+  padding: 5px;
+  text-decoration: none;
+}
+
+.header-links:hover {
+  color: #FFF;
+  opacity: 0.5;
+}
+
+#search-wrapper {
+  float: left;
+}
+
+#link-wrapper {
+  float:inline-end;
+}
+/*---------------------------- Header CSS ----------------------------*/
+/*---------------------------- Search CSS ----------------------------*/
+#search-bar {
+  float:left;
+  background-color: #001132;
+  padding: 5px;
+  padding-left: 20px;
+  color: #FFF;
+  opacity: 0.85;
+  border-radius: 1em;
+  border: none;
+  width:75%;
+}
+
+#search-bar:focus {
+  outline: none;
+}
+
+#search-button {
+  background-color: #FFF;
+  padding: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 1em;
+  border: none;
+  color:#001132;
+}
+/*---------------------------- Search CSS ----------------------------*/
+/*----------------------------- Body CSS -----------------------------*/
+.card {
+  margin-top: 8rem;
+  height: 10em;
+  width: 20em;
+}
+
+.card-body {
+  padding: 10%;
+}
+
+.jumbotron {
+  padding: 10rem 5rem;
+  margin-bottom: 2rem;
+  color: #FFF;
+  background-image: url("./Assets/victoria-shes-UC0HZdUitWY-unsplash-tint.png"); 
+  background-position: 50% 75%;
+  z-index: 1;
+}
+
+.jumbotron h1 {
+  font-size: 500%;
+  text-align: center;
+}
+/*----------------------------- Body CSS -----------------------------*/

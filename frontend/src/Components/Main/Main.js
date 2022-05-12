@@ -1,7 +1,8 @@
-import {Component} from 'react'
+import React, {Component} from 'react';
 import {Switch, Route, Redirect, Link} from 'react-router-dom'
 import Login from '../Login/Login'
 import Register from '../Register/Register'
+import Header from '../Header/Header'
 import Home from '../Home/Home'
 import Recipes from '../Home/RecipesList'
 import Groceries from '../Home/GroceryList'
@@ -35,16 +36,8 @@ class Main extends Component {
     render(){
         return(
             <div>
-                {this.props.token.token !== undefined ?
-                        <div>
-                            <Link to='/home'>Home | </Link>
-                            <Link to='/login' onClick={this.handleLogout}>logout</Link> 
-                            <Redirect to='/home'/>
-
-                        </div>  
-                    : 
-                        <Link to='/login'>Home | </Link>
-                }
+                {/* Passes the token and the handleLogout method to the Header component. */}
+                <Header token={this.props.token.token} handleLogout={this.handleLogout}/>
                 <Switch>
                     <Route path='/login' component={() => <Login/>}/>
                     <Route path='/register'component={() => <Register/>}/>

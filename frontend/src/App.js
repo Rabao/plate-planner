@@ -1,3 +1,4 @@
+import React from 'react'
 import Main from './Components/Main/Main'
 import {Provider} from 'react-redux'
 import {BrowserRouter} from 'react-router-dom'
