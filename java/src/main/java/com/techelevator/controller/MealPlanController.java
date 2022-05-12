@@ -27,10 +27,20 @@ public class MealPlanController {
         this.recipeDao = recipeDao;
     }
 
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping(value="ingredients")
+//    public List<Ingredients> listIngredient(){
+//        return ingredientsDao.listIngredient();
+//    }
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="ingredients")
-    public List<Ingredients> listIngredient(){
-        return ingredientsDao.listIngredient();
+    public List<Ingredients> listIngredient(@RequestParam int recipeId){
+        if(recipeId!=0)
+            return ingredientsDao.listIngredientsByRecipe(recipeId);
+        else
+            return ingredientsDao.listIngredient();
+
     }
 
     @ResponseStatus(HttpStatus.OK)

@@ -9,6 +9,8 @@ public interface IngredientsDao {
 
     List<Ingredients> listIngredient();
 
+    List<Ingredients> listIngredientsByRecipe(int recipeId);
+
     boolean addIngredient(Ingredients ingredient);
 
     boolean deleteIngredient(int id);

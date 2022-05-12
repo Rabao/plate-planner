@@ -47,6 +47,24 @@ public class JdbcIngredientsDao implements IngredientsDao{
     }
 
     @Override
+    public List<Ingredients> listIngredientsByRecipe(int recipeId) {
+        List<Ingredients> ingredients = new ArrayList<>();
+        String sql = "SELECT * " +
+                "FROM ingredients AS i " +
+                "INNER JOIN recipes_ingredients AS ri " +
+                "ON ri.ingredientid = i.id " +
+                "INNER JOIN recipes AS r " +
+                "ON r.id = ri.recipeid ";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while(results.next()) {
+            Ingredients ingredient = mapRowToIngredient(results);
+            ingredients.add(ingredient);
+        }
+        return ingredients;
+    }
+
+    @Override
     public boolean addIngredient(Ingredients ingredient) {
         String sql = "INSERT INTO ingredients (id, name, type) VALUES (DEFAULT, ?, ?)";
         return jdbcTemplate.update(sql,ingredient.getName(),ingredient.getType()) == 1;
