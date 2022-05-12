@@ -113,7 +113,6 @@ code {
 }
 
 #recipe-img {
-  float:right;
   height: 500px;
   width: 500px;
   margin:15px;
@@ -125,5 +124,60 @@ code {
 
 h5 {
   background-color: #dbd5cf;
+  padding: 10px;
+}
+
+.component-list {
+  background-color: #F5F1ED;
+  padding: 1em;
+}
+
+.component-list-item {
+  background-color:#dbd5cf;  
+  border-bottom: 1px solid black;
+  border-radius: 30px;
+  list-style: none;
+  padding: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 5px;
+}
+
+.checklist-check-box {
+  height: 25px;
+  width: 25px;
+  margin-left: 10px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 50%;
+  background-color: #FFF;
+  width:fit-content;
+  float:right;
+}
+
+.check {
+  line-height: 25px;
+}
+
+.checklist-complete {
+  margin-left: 25px;
+  float: right;
+}
+
+.checklist-quantity {
+  float: right;
+}
+
+.checklist-quantity input {
+  width: 50px;
+  margin-left: 10px;
+  background-color:#bcb2a9;
+  border:none;
+  border-radius: 5px;
+}
+
+.checklist-quantity:hover {
+  filter:brightness(0.85);
 }
 /*----------------------------- Body CSS -----------------------------*/
