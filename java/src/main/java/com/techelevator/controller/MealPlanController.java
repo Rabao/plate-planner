@@ -2,21 +2,14 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.IngredientsDao;
 import com.techelevator.dao.NutritionDao;
-import com.techelevator.model.IngredientNotFoundException;
-import com.techelevator.model.Ingredients;
-import com.techelevator.model.Nutrition;
-import com.techelevator.model.NutritionNotFoundException;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
+import com.techelevator.dao.RecipeDao;
+import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Random;
 
 @CrossOrigin(origins = "http://localhost:8080")
 @RestController()
@@ -25,11 +18,13 @@ public class MealPlanController {
 
     private IngredientsDao ingredientsDao;
     private NutritionDao nutritionDao;
+    private RecipeDao recipeDao;
 
-
-    public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao) {
+    public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao,
+                              RecipeDao recipeDao) {
         this.ingredientsDao = ingredientsDao;
         this.nutritionDao = nutritionDao;
+        this.recipeDao = recipeDao;
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -78,6 +73,30 @@ public class MealPlanController {
     @RequestMapping(value="nutrition/{id}", method = RequestMethod.DELETE )
     public void deleteNutrition(@PathVariable int id) throws NutritionNotFoundException {
         nutritionDao.deleteNutrition(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="recipes")
+    public List<Recipe> listRecipe(){
+        return recipeDao.listRecipe();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="recipes/{id}")
+    public Recipe getRecipe(@PathVariable int id){
+        return recipeDao.getRecipe(id);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="recipes")
+    public void addRecipe(@Valid @RequestBody Recipe recipe){
+        recipeDao.addRecipe(recipe);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value="recipes/{id}", method = RequestMethod.DELETE )
+    public void deleteRecipe(@PathVariable int id) throws NutritionNotFoundException {
+        recipeDao.deleteRecipe(id);
     }
 
 //
