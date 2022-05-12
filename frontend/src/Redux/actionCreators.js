@@ -1,4 +1,5 @@
 import * as ActionTypes from './actionTypes'
+import { baseUrl } from '../Shared/baseUrl'
 
 //----------------------------------USER AUTH
 export const addToken = (token) => ({
@@ -244,7 +245,7 @@ export const mealPlanCollectionFailed = (errmess) => ({
     payload: errmess
 });
 
-export const addMealPlanCollection = (recipeCollection) => ({
+export const addMealPlanCollection = (mealPlanCollection) => ({
     type: ActionTypes.ADD_MEALPLANCOLLECTION,
     payload: mealPlanCollection
 });
