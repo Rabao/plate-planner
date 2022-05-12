@@ -58,6 +58,7 @@ code {
 }
 
 #search-button {
+  left:5px;
   background-color: #FFF;
   padding: 5px;
   padding-left: 12px;
@@ -72,6 +73,16 @@ code {
   margin-top: 8rem;
   height: 10em;
   width: 20em;
+}
+
+.filters {
+  list-style: none;
+}
+
+.filters li {
+  display: inline;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .card-body {
@@ -90,5 +101,9 @@ code {
 .jumbotron h1 {
   font-size: 500%;
   text-align: center;
+}
+
+.dashboard {
+  margin-left: 24.5%;
 }
 /*----------------------------- Body CSS -----------------------------*/

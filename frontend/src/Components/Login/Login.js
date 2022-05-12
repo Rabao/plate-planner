@@ -5,7 +5,8 @@ import {withRouter} from 'react-router-dom'
 import {addToken, addUser} from '../../Redux/actionCreators'
 import {baseUrl} from '../../Shared/baseUrl'
 import axios from 'axios'
-import styled from 'styled-components'
+import {Breadcrumb} from 'react-bootstrap'
+
 
 const mapDispatchToProps = (dispatch) => ({
     addToken: () =>  dispatch(addToken()),
@@ -45,8 +46,17 @@ class Login extends Component {
     render(){
         return(
             <div className="container">
+             <Breadcrumb>
+                <Breadcrumb.Item>
+                    <Link to="/home">Home</Link>  
+                </Breadcrumb.Item>
+                <Breadcrumb.Item active>
+                    Sign In
+                </Breadcrumb.Item>
+            </Breadcrumb>
                 <div className="row">
-                    <div className="col">
+                    <h3> Sign in </h3>
+                    <div className="col"  md={3}>
                         <label class="sr-only">Username</label>
                         <input
                             type="text"

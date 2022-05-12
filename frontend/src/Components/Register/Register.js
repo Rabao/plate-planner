@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import { baseUrl } from '../../Shared/baseUrl'
+import {Breadcrumb} from 'react-bootstrap'
 
 class Register extends Component{
 
@@ -33,8 +34,17 @@ class Register extends Component{
 
     render(){
         return(
-            <div>
-                <h1>Create Account</h1>
+            <div className="container">
+            <Breadcrumb>
+               <Breadcrumb.Item>
+                   <Link to="/home">Home</Link>  
+               </Breadcrumb.Item>
+               <Breadcrumb.Item active>
+                   Register
+               </Breadcrumb.Item>
+           </Breadcrumb>
+               <div className="row">
+                <h3>Create Account</h3>
                 <label class="sr-only">Username</label>
                 <input
                     type="text"
@@ -70,6 +80,7 @@ class Register extends Component{
                 <Link to="/login">Have an account?</Link>
                 <button type="submit" onClick={this.handleSubmit}>Sign in</button>
             </div>
+        </div>
         )
     }
 }
