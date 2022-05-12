@@ -22,7 +22,7 @@ export default class Header extends Component {
                                         <Link to='/home' className="header-links">Home |</Link>
                                     </div>  
                                 : 
-                                    <Link to='/login'>Home | </Link>
+                                    <Link to='/login' className="header-links">Home </Link>
                             }
                         </div>
                     </div>

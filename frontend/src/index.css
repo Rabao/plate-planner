@@ -106,4 +106,24 @@ code {
 .dashboard {
   margin-left: 24.5%;
 }
+
+.component-body {
+  background-color: #fdfbf9;
+  padding: 2rem;
+}
+
+#recipe-img {
+  float:right;
+  height: 500px;
+  width: 500px;
+  margin:15px;
+}
+
+#recipe-img img {
+  background-size: cover;
+}
+
+h5 {
+  background-color: #dbd5cf;
+}
 /*----------------------------- Body CSS -----------------------------*/
