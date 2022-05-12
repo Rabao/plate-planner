@@ -15,15 +15,6 @@ code {
 
 /*---------------------------- Header CSS ----------------------------*/
 
-@document url("http://localhost:3030/home"){
-  .header {
-    background: none; 
-    padding-top: 1em;
-    padding-bottom: 1em;
-    margin-bottom: -4em;
-  }
-}
-
 .header {
   background: rgba(0,51,153) !important; 
   padding-top: 1em;

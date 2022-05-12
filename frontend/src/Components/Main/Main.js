@@ -3,6 +3,7 @@ import {Switch, Route, Redirect, Link} from 'react-router-dom'
 import Login from '../Login/Login'
 import Register from '../Register/Register'
 import Header from '../Header/Header'
+import { Footer } from '../Footer/Footer'
 import Home from '../Home/Home'
 import Recipes from '../Pages/Recipes'
 import Groceries from '../Pages/GroceryList'
@@ -47,6 +48,7 @@ class Main extends Component {
                     <Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : null}/>
                     <Redirect to='/login'/>
                 </Switch>
+                <Footer/>
             </div>
         )
     }
