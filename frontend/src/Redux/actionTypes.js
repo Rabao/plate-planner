@@ -17,6 +17,7 @@ export const GROCERIES_FAILED = 'GROCERIES_FAILED';
 
 //----------------------------------RECIPE
 export const ADD_RECIPE = 'ADD_RECIPE';
+export const DELETE_RECIPE = 'DELETE_RECIPE';
 export const RECIPE_LOADING = 'RECIPE_LOADING';
 export const RECIPE_FAILED = 'RECIPE_FAILED';
 

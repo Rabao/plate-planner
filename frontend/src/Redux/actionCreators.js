@@ -130,6 +130,10 @@ export const recipeFailed = (errmess) => ({
     payload: errmess
 });
 
+export const deleteRecipe = () => ({
+    type: ActionTypes.DELETE_RECIPE
+});
+
 export const addRecipe = (recipe) => ({
     type: ActionTypes.ADD_RECIPE,
     payload: recipe
