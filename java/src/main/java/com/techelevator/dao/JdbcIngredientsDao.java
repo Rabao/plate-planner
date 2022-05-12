@@ -1,7 +1,7 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.IngredientNotFoundException;
 import com.techelevator.model.Ingredients;
+import com.techelevator.model.IngredientNotFoundException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -19,20 +19,7 @@ public class JdbcIngredientsDao implements IngredientsDao{
     }
 
     @Override
-    public List<Ingredients> list() {
-        List<Ingredients> ingredients = new ArrayList<>();
-        String sql = "SELECT id, name, type FROM ingredients ";
-
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        while(results.next()) {
-            Ingredients card = mapRowToIngredient(results);
-            ingredients.add(card);
-        }
-        return ingredients;
-    }
-
-    @Override
-    public Ingredients get(int id) {
+    public Ingredients getIngredient(int id) {
         Ingredients ingredient = null;
         String sql = "SELECT id, name, type FROM ingredients WHERE id = ? ";
 
@@ -44,6 +31,31 @@ public class JdbcIngredientsDao implements IngredientsDao{
         }
 
         return ingredient;
+    }
+
+    @Override
+    public List<Ingredients> listIngredient() {
+        List<Ingredients> ingredients = new ArrayList<>();
+        String sql = "SELECT id, name, type FROM ingredients ";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        while(results.next()) {
+            Ingredients ingredient = mapRowToIngredient(results);
+            ingredients.add(ingredient);
+        }
+        return ingredients;
+    }
+
+    @Override
+    public boolean addIngredient(Ingredients ingredient) {
+        String sql = "INSERT INTO ingredients (id, name, type) VALUES (DEFAULT, ?, ?)";
+        return jdbcTemplate.update(sql,ingredient.getName(),ingredient.getType()) == 1;
+    }
+
+    @Override
+    public boolean deleteIngredient(int id) {
+        String sql = "DELETE FROM ingredients WHERE id = ? ";
+        return jdbcTemplate.update(sql, id) == 1;
     }
 
     private Ingredients mapRowToIngredient(SqlRowSet rs) {

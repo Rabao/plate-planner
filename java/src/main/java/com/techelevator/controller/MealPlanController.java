@@ -1,7 +1,11 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.IngredientsDao;
+import com.techelevator.dao.NutritionDao;
+import com.techelevator.model.IngredientNotFoundException;
 import com.techelevator.model.Ingredients;
+import com.techelevator.model.Nutrition;
+import com.techelevator.model.NutritionNotFoundException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,42 +24,68 @@ import java.util.Random;
 public class MealPlanController {
 
     private IngredientsDao ingredientsDao;
+    private NutritionDao nutritionDao;
 
 
-    public MealPlanController(IngredientsDao ingredientsDao) {
+    public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao) {
         this.ingredientsDao = ingredientsDao;
+        this.nutritionDao = nutritionDao;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="ingredients")
-    public List<Ingredients> list(){
-        return ingredientsDao.list();
+    public List<Ingredients> listIngredient(){
+        return ingredientsDao.listIngredient();
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="ingredients/{id}")
-    public Ingredients get(@PathVariable int id){
-        return ingredientsDao.get(id);
+    public Ingredients getIngredient(@PathVariable int id){
+        return ingredientsDao.getIngredient(id);
     }
-//
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping(value="/cards")
-//    public void create(@Valid @RequestBody CatCard cardToSave){
-//        catCardDao.save(cardToSave);
-//    }
-//
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="ingredients")
+    public void addIngredient(@Valid @RequestBody Ingredients ingredient){
+        ingredientsDao.addIngredient(ingredient);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value="ingredients/{id}", method = RequestMethod.DELETE )
+    public void deleteIngredient(@PathVariable int id) throws IngredientNotFoundException {
+        ingredientsDao.deleteIngredient(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="nutrition")
+    public List<Nutrition> listNutrition(){
+        return nutritionDao.listNutrition();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="nutrition/{id}")
+    public Nutrition getNutrition(@PathVariable int id){
+        return nutritionDao.getNutrition(id);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="nutrition")
+    public void addNutrition(@Valid @RequestBody Nutrition nutrition){
+        nutritionDao.addNutrition(nutrition);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value="nutrition/{id}", method = RequestMethod.DELETE )
+    public void deleteNutrition(@PathVariable int id) throws NutritionNotFoundException {
+        nutritionDao.deleteNutrition(id);
+    }
+
 //
 //    @PutMapping(value="/cards/{id}")
 //    public void update(@PathVariable int id, @RequestBody CatCard card) throws CatCardNotFoundException {
 //        catCardDao.update(id, card);
 //    }
 //
-//    //Added 'method = RequestMethod.DELETE' to enable DELETE via ReactJS REST app.
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @RequestMapping(value="/cards/{id}", method = RequestMethod.DELETE )
-//    public void delete(@PathVariable int id) throws CatCardNotFoundException {
-//        catCardDao.delete(id);
-//    }
 //
 //    private static final String PATH = "/error";
 //
