@@ -13,7 +13,7 @@ export default function Groceries(props) {
                 <Link to="/home">Home</Link>  
             </Breadcrumb.Item>
             <Breadcrumb.Item active>
-                Grocer List
+                Grocery List
             </Breadcrumb.Item>
         </Breadcrumb>
         <div className='component-body'>

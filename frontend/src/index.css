@@ -14,6 +14,16 @@ code {
 }
 
 /*---------------------------- Header CSS ----------------------------*/
+
+@document url("http://localhost:3030/home"){
+  .header {
+    background: none; 
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-bottom: -4em;
+  }
+}
+
 .header {
   background: rgba(0,51,153) !important; 
   padding-top: 1em;
@@ -51,6 +61,8 @@ code {
   border-radius: 1em;
   border: none;
   width:75%;
+  padding-right: 45px;
+  z-index:0;
 }
 
 #search-bar:focus {
@@ -58,14 +70,22 @@ code {
 }
 
 #search-button {
-  left:5px;
+  margin-left: -35px;
   background-color: #FFF;
-  padding: 5px;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-bottom: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
   border-radius: 1em;
   border: none;
   color:#001132;
+  vertical-align: middle;
+  z-index: 1;
+  top: 1.12em;
+  position: absolute;
+}
+
+#search-button:hover {
+  filter: brightness(0.85);
 }
 /*---------------------------- Search CSS ----------------------------*/
 /*----------------------------- Body CSS -----------------------------*/
@@ -93,7 +113,7 @@ code {
   padding: 10rem 5rem;
   margin-bottom: 2rem;
   color: #FFF;
-  background-image: url("./Assets/victoria-shes-UC0HZdUitWY-unsplash-tint.png"); 
+  background-image: linear-gradient(to bottom, rgba(0,51,153, 0.50), rgba(0, 20, 60, 0.75)),url("./Assets/victoria-shes-UC0HZdUitWY-unsplash.jpg"); 
   background-position: 50% 75%;
   z-index: 1;
 }
@@ -101,10 +121,6 @@ code {
 .jumbotron h1 {
   font-size: 500%;
   text-align: center;
-}
-
-.dashboard {
-  margin-left: 24.5%;
 }
 
 .component-body {

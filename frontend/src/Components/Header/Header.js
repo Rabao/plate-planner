@@ -10,7 +10,8 @@ export default class Header extends Component {
                     <div className="row">
                         <div className="col search-wrapper" id="search-wrapper" md={9}>
                             <form>
-                                <input type="text" name="search-bar" id="search-bar"></input><button id="search-button"><FaSearch /></button>
+                                <input type="text" name="search-bar" id="search-bar"></input>
+                                <button id="search-button"><FaSearch /></button>
                             </form>
                         </div>
                         <div className="col link-wrapper" id="link-wrapper" md={3}>

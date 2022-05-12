@@ -6,7 +6,7 @@ function Home(props) {
         <div>
             <div className="jumbotron">
                 <div>
-                    <h1>Me.els</h1>
+                    <h1>Plate Planner</h1>
                 </div>
                     <div className="container dashboard">
                         <div className="row">
