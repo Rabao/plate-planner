@@ -6,6 +6,7 @@ import Header from '../Header/Header'
 import { Footer } from '../Footer/Footer'
 import Home from '../Home/Home'
 import Recipes from '../Pages/Recipes'
+import RecipesList from '../Pages/RecipesList'
 import Groceries from '../Pages/GroceryList'
 import MealPlans from '../Pages/MealPlans'
 import {addToken, deleteUser,
@@ -15,7 +16,6 @@ import {addToken, deleteUser,
         addMealPlanCollection, addRecipe, addRecipeCollection} from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import RecipeCollection from '../SubComponents/RecipeCollection';
 
 const mapStateToProps = state => {
     return {
@@ -94,14 +94,14 @@ class Main extends Component {
                 <Switch>
                     <Route path='/login' component={() => <Login/>}/>
                     <Route path='/register'component={() => <Register/>}/>
-                    <Route path='/recipes' component={() => <Recipes/>}/>
+                    <Route path='/recipes' component={() => <RecipesList recipes={this.props.recipe.recipe} />}/>
+                    <Route path='/recipes/:id' component={() => <Recipes recipes={this.props.recipe.recipe} />}/>
                     <Route path='/groceries' component={() => <Groceries/>}/>
                     <Route path='/mealplans' component={() => <MealPlans/>}/>
-                    <Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : null}/>
+                    <Route path='/home' component={this.props.token.token !== undefined ? () => <Home collection={this.props.recipe.recipe}/> : null}/>
                     <Redirect to='/login'/>
                 </Switch>
                 <Footer/>
-                <RecipeCollection collection={this.props.recipe.recipe}/>
             </div>
         )
     }

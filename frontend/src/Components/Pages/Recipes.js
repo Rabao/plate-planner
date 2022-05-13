@@ -16,6 +16,7 @@ export default class Recipes extends Component {
                 Recipes
             </Breadcrumb.Item>
         </Breadcrumb>
+        <h3>This is the recipe's title!</h3>
         <div className='component-body'>
         <Ingredients/>
         <RecipeSteps/>

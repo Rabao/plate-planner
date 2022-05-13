@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
+import RecipeCollection from '../SubComponents/RecipeCollection';
 
 function Home(props) {
     return(
@@ -44,7 +45,7 @@ function Home(props) {
                         <li>Snack</li>
                         <li>Dessert</li>
                     </ul>
-
+                    <RecipeCollection collection={props.collection}/>
                 </div>
         </div>
     )
