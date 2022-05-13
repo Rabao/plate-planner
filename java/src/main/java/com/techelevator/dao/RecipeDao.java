@@ -9,6 +9,10 @@ public interface RecipeDao {
 
     List<Recipe> listRecipe();
 
+    List<Recipe> listRecipesByIngredient(int ingredientId);
+
+    List<Recipe> listRecipesByType(String type);
+
     boolean addRecipe(Recipe recipe);
 
     boolean deleteRecipe(int id);

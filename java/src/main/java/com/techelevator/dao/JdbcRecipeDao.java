@@ -23,7 +23,8 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public Recipe getRecipe(int id) {
         Recipe recipe = null;
-        String sql = "SELECT id, name, num_of_steps, image, notes FROM recipes WHERE id = ? ";
+        String sql = "SELECT id, name, num_of_steps, image, notes, type " +
+                "FROM recipes WHERE id = ? ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql,id);
         if(results.next()) {
@@ -38,7 +39,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public List<Recipe> listRecipe() {
         List<Recipe> recipes = new ArrayList<>();
-        String sql = "SELECT id, name, num_of_steps, image, notes FROM recipes ";
+        String sql = "SELECT id, name, num_of_steps, image, notes, type FROM recipes ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
@@ -49,11 +50,44 @@ public class JdbcRecipeDao implements RecipeDao{
     }
 
     @Override
+    public List<Recipe> listRecipesByIngredient(int ingredientId) {
+        List<Recipe> recipes = new ArrayList<>();
+        String sql = "SELECT * " +
+                "FROM recipes AS r " +
+                "INNER JOIN recipes_ingredients AS ri " +
+                "ON ri.recipe_id = r.id " +
+                "INNER JOIN ingredients AS i " +
+                "ON i.id = ri.ingredient_id " +
+                "WHERE i.id = ?";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, ingredientId);
+        while(results.next()) {
+            Recipe recipe = mapRowToRecipe(results);
+            recipes.add(recipe);
+        }
+        return recipes;
+    }
+
+    @Override
+    public List<Recipe> listRecipesByType(String type) {
+        List<Recipe> recipes = new ArrayList<>();
+        String sql = "SELECT id, name, num_of_steps, image, notes, type FROM recipes " +
+                "WHERE type = ?";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, type);
+        while(results.next()) {
+            Recipe recipe = mapRowToRecipe(results);
+            recipes.add(recipe);
+        }
+        return recipes;
+    }
+
+    @Override
     public boolean addRecipe(Recipe recipe) {
-        String sql = "INSERT INTO recipes (id, name, num_of_steps, image, notes) " +
-                "VALUES (DEFAULT, ?, ?, ?, ?)";
+        String sql = "INSERT INTO recipes (id, name, num_of_steps, image, notes, type) " +
+                "VALUES (DEFAULT, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql,recipe.getName(),recipe.getNumOfSteps(),
-                recipe.getImage(), recipe.getNotes()) == 1;
+                recipe.getImage(), recipe.getNotes(), recipe.getType()) == 1;
     }
 
     @Override
@@ -69,6 +103,7 @@ public class JdbcRecipeDao implements RecipeDao{
         recipe.setNumOfSteps(rs.getInt("num_of_steps"));
         recipe.setImage(rs.getString("image"));
         recipe.setNotes(rs.getString("notes"));
+        recipe.setType(rs.getString("type"));
         return recipe;
     };
 }

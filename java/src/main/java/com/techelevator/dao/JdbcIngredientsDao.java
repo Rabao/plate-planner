@@ -52,11 +52,12 @@ public class JdbcIngredientsDao implements IngredientsDao{
         String sql = "SELECT * " +
                 "FROM ingredients AS i " +
                 "INNER JOIN recipes_ingredients AS ri " +
-                "ON ri.ingredientid = i.id " +
+                "ON ri.ingredient_id = i.id " +
                 "INNER JOIN recipes AS r " +
-                "ON r.id = ri.recipeid ";
+                "ON r.id = ri.recipe_id " +
+                "WHERE r.id = ?";
 
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, recipeId);
         while(results.next()) {
             Ingredients ingredient = mapRowToIngredient(results);
             ingredients.add(ingredient);

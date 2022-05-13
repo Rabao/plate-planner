@@ -42,16 +42,6 @@ public class MealPlanController {
         return ingredientsDao.listIngredient();
     }
 
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping(value="ingredients")
-//    public List<Ingredients> listIngredient(@RequestParam int recipeId){
-//        if(recipeId!=0)
-//            return ingredientsDao.listIngredientsByRecipe(recipeId);
-//        else
-//            return ingredientsDao.listIngredient();
-//
-//    }
-
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="ingredients/recipe")
     public List<Ingredients> listIngredientsByRecipe(@RequestParam int id){
@@ -126,6 +116,12 @@ public class MealPlanController {
     @GetMapping(value="recipes")
     public List<Recipe> listRecipe(){
         return recipeDao.listRecipe();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="recipes/ingredient")
+    public List<Recipe> listRecipesByIngredient(@RequestParam int id){
+        return recipeDao.listRecipesByIngredient(id);
     }
 
     @ResponseStatus(HttpStatus.OK)

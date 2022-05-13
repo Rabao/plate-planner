@@ -7,16 +7,18 @@ public class Recipe {
     private int numOfSteps;
     private String image;
     private String notes;
+    private String type;
 
     public Recipe() {
     }
 
-    public Recipe(int id, String name, int numOfSteps, String image, String notes) {
+    public Recipe(int id, String name, int numOfSteps, String image, String notes, String type) {
         this.id = id;
         this.name = name;
         this.numOfSteps = numOfSteps;
         this.image = image;
         this.notes = notes;
+        this.type = type;
     }
 
     public int getId() {
@@ -57,5 +59,13 @@ public class Recipe {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
