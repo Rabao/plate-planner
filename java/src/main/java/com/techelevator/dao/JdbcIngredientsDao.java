@@ -19,7 +19,7 @@ public class JdbcIngredientsDao implements IngredientsDao{
     }
 
     @Override
-    public Ingredients getIngredient(int id) {
+    public Ingredients getIngredient(long id) {
         Ingredients ingredient = null;
         String sql = "SELECT id, name, type FROM ingredients WHERE id = ? ";
 
@@ -47,7 +47,7 @@ public class JdbcIngredientsDao implements IngredientsDao{
     }
 
     @Override
-    public List<Ingredients> listIngredientsByRecipe(int recipeId) {
+    public List<Ingredients> listIngredientsByRecipe(long recipeId) {
         List<Ingredients> ingredients = new ArrayList<>();
         String sql = "SELECT * " +
                 "FROM ingredients AS i " +
@@ -72,14 +72,14 @@ public class JdbcIngredientsDao implements IngredientsDao{
     }
 
     @Override
-    public boolean deleteIngredient(int id) {
+    public boolean deleteIngredient(long id) {
         String sql = "DELETE FROM ingredients WHERE id = ? ";
         return jdbcTemplate.update(sql, id) == 1;
     }
 
     private Ingredients mapRowToIngredient(SqlRowSet rs) {
         Ingredients ingredients = new Ingredients();
-        ingredients.setId(rs.getInt("id"));
+        ingredients.setId(rs.getLong("id"));
         ingredients.setName(rs.getString("name"));
         ingredients.setType(rs.getString("type"));
         return ingredients;

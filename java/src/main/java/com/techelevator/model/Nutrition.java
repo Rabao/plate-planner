@@ -2,7 +2,7 @@ package com.techelevator.model;
 
 public class Nutrition {
 
-    private int id;
+    private long id;
     private double servingSize;
     private double calories;
     private double caloriesFat;
@@ -21,7 +21,7 @@ public class Nutrition {
     public Nutrition() {
     }
 
-    public Nutrition(int id, double servingSize, double calories, double caloriesFat,
+    public Nutrition(long id, double servingSize, double calories, double caloriesFat,
                      double totalFat, double saturatedFat, double transFat, double cholesterol,
                      double sodium, double potassium, double totalCarbs,
                      double dietaryFiber, double sugar, double sugarAlcohol, double protein) {
@@ -42,11 +42,11 @@ public class Nutrition {
         this.protein = protein;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

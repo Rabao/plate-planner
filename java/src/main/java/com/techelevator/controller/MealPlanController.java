@@ -1,9 +1,6 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.GroceryListDao;
-import com.techelevator.dao.IngredientsDao;
-import com.techelevator.dao.NutritionDao;
-import com.techelevator.dao.RecipeDao;
+import com.techelevator.dao.*;
 import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +18,16 @@ public class MealPlanController {
     private NutritionDao nutritionDao;
     private RecipeDao recipeDao;
     private GroceryListDao groceryListDao;
+    private UserReviewDao userReviewDao;
 
     public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao,
-                              RecipeDao recipeDao, GroceryListDao groceryListDao) {
+                              RecipeDao recipeDao, GroceryListDao groceryListDao,
+                              UserReviewDao userReviewDao) {
         this.ingredientsDao = ingredientsDao;
         this.nutritionDao = nutritionDao;
         this.recipeDao = recipeDao;
         this.groceryListDao = groceryListDao;
+        this.userReviewDao = userReviewDao;
     }
 
     /*****************************************************
@@ -44,13 +44,13 @@ public class MealPlanController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="ingredients/recipe")
-    public List<Ingredients> listIngredientsByRecipe(@RequestParam int id){
+    public List<Ingredients> listIngredientsByRecipe(@RequestParam long id){
         return ingredientsDao.listIngredientsByRecipe(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="ingredients/{id}")
-    public Ingredients getIngredient(@PathVariable int id){
+    public Ingredients getIngredient(@PathVariable long id){
         return ingredientsDao.getIngredient(id);
     }
 
@@ -62,7 +62,7 @@ public class MealPlanController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value="ingredients/{id}", method = RequestMethod.DELETE )
-    public void deleteIngredient(@PathVariable int id) throws IngredientNotFoundException {
+    public void deleteIngredient(@PathVariable long id) throws IngredientNotFoundException {
         ingredientsDao.deleteIngredient(id);
     }
 
@@ -85,7 +85,7 @@ public class MealPlanController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="nutrition/{id}")
-    public Nutrition getNutrition(@PathVariable int id){
+    public Nutrition getNutrition(@PathVariable long id){
         return nutritionDao.getNutrition(id);
     }
 
@@ -97,7 +97,7 @@ public class MealPlanController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value="nutrition/{id}", method = RequestMethod.DELETE )
-    public void deleteNutrition(@PathVariable int id) throws NutritionNotFoundException {
+    public void deleteNutrition(@PathVariable long id) throws NutritionNotFoundException {
         nutritionDao.deleteNutrition(id);
     }
 
@@ -120,13 +120,13 @@ public class MealPlanController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="recipes/ingredient")
-    public List<Recipe> listRecipesByIngredient(@RequestParam int id){
+    public List<Recipe> listRecipesByIngredient(@RequestParam long id){
         return recipeDao.listRecipesByIngredient(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="recipes/{id}")
-    public Recipe getRecipe(@PathVariable int id){
+    public Recipe getRecipe(@PathVariable long id){
         return recipeDao.getRecipe(id);
     }
 
@@ -138,7 +138,7 @@ public class MealPlanController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value="recipes/{id}", method = RequestMethod.DELETE )
-    public void deleteRecipe(@PathVariable int id) throws NutritionNotFoundException {
+    public void deleteRecipe(@PathVariable long id) throws NutritionNotFoundException {
         recipeDao.deleteRecipe(id);
     }
     /*****************************************************
@@ -160,7 +160,7 @@ public class MealPlanController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="lists/{id}")
-    public GroceryList getGroceryList(@PathVariable int id){
+    public GroceryList getGroceryList(@PathVariable long id){
         return groceryListDao.getGroceryList(id);
     }
 
@@ -184,6 +184,40 @@ public class MealPlanController {
     /*****************************************************
      *                                                    *
      *                  GROCERY APIs                      *
+     *                                                    *
+     *****************************************************/
+    /*****************************************************
+     *                                                    *
+     *                  USER REVIEW APIs                  *
+     *                                                    *
+     *****************************************************/
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="reviews/recipe")
+    public List<UserReview> getListOfReviewsByRecipe(@RequestParam long id){
+        return userReviewDao.getListOfReviewsByRecipe(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="reviews/user")
+    public List<UserReview> getListOfReviewByUser(@RequestParam long id){
+        return userReviewDao.getListOfReviewByUser(id);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="reviews")
+    public void addReview(@Valid @RequestBody UserReview userReview){
+        userReviewDao.addReview(userReview);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value="reviews", method = RequestMethod.DELETE )
+    public void deleteReview(@RequestParam long recipeId, @RequestParam long userId)
+            throws ReviewNotFoundException {
+        userReviewDao.deleteReview(recipeId, userId);
+    }
+    /*****************************************************
+     *                                                    *
+     *                  USER REVIEW APIs                  *
      *                                                    *
      *****************************************************/
 //

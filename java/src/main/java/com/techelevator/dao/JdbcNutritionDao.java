@@ -19,7 +19,7 @@ public class JdbcNutritionDao implements NutritionDao{
     }
 
     @Override
-    public Nutrition getNutrition(int id) {
+    public Nutrition getNutrition(long id) {
         Nutrition nutrition = null;
         String sql = "SELECT id, serving_size, calories, calories_fat, total_fat, " +
                 "saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, " +
@@ -64,14 +64,14 @@ public class JdbcNutritionDao implements NutritionDao{
     }
 
     @Override
-    public boolean deleteNutrition(int id) {
+    public boolean deleteNutrition(long id) {
         String sql = "DELETE FROM nutrition WHERE id = ? ";
         return jdbcTemplate.update(sql, id) == 1;
     }
 
     private Nutrition mapRowToNutrition(SqlRowSet rs) {
         Nutrition nutrition = new Nutrition();
-        nutrition.setId(rs.getInt("id"));
+        nutrition.setId(rs.getLong("id"));
         nutrition.setServingSize(rs.getDouble("serving_size"));
         nutrition.setCalories(rs.getDouble("calories"));
         nutrition.setCaloriesFat(rs.getDouble("calories_fat"));

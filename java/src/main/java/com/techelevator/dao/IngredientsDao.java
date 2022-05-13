@@ -5,13 +5,13 @@ import com.techelevator.model.Ingredients;
 import java.util.List;
 
 public interface IngredientsDao {
-    Ingredients getIngredient(int id);
+    Ingredients getIngredient(long id);
 
     List<Ingredients> listIngredient();
 
-    List<Ingredients> listIngredientsByRecipe(int recipeId);
+    List<Ingredients> listIngredientsByRecipe(long recipeId);
 
     boolean addIngredient(Ingredients ingredient);
 
-    boolean deleteIngredient(int id);
+    boolean deleteIngredient(long id);
 }

@@ -2,13 +2,13 @@ package com.techelevator.model;
 
 public class Ingredients {
 
-    private int id;
+    private long id;
     private String name;
     private String type;
 
     public Ingredients(){}
 
-    public Ingredients(int id, String name, String type){
+    public Ingredients(long id, String name, String type){
         this.id = id;
         this.name = name;
         this.type = type;
@@ -21,11 +21,11 @@ public class Ingredients {
                 "\n Type: " + type;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

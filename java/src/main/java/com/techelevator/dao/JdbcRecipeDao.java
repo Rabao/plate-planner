@@ -21,9 +21,9 @@ public class JdbcRecipeDao implements RecipeDao{
     }
 
     @Override
-    public Recipe getRecipe(int id) {
+    public Recipe getRecipe(long id) {
         Recipe recipe = null;
-        String sql = "SELECT id, name, num_of_steps, image, notes, type " +
+        String sql = "SELECT id, name, num_of_steps, image, notes, user_id, type " +
                 "FROM recipes WHERE id = ? ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql,id);
@@ -39,7 +39,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public List<Recipe> listRecipe() {
         List<Recipe> recipes = new ArrayList<>();
-        String sql = "SELECT id, name, num_of_steps, image, notes, type FROM recipes ";
+        String sql = "SELECT id, name, num_of_steps, image, notes, user_id, type FROM recipes ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
@@ -50,7 +50,7 @@ public class JdbcRecipeDao implements RecipeDao{
     }
 
     @Override
-    public List<Recipe> listRecipesByIngredient(int ingredientId) {
+    public List<Recipe> listRecipesByIngredient(long ingredientId) {
         List<Recipe> recipes = new ArrayList<>();
         String sql = "SELECT * " +
                 "FROM recipes AS r " +
@@ -71,7 +71,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public List<Recipe> listRecipesByType(String type) {
         List<Recipe> recipes = new ArrayList<>();
-        String sql = "SELECT id, name, num_of_steps, image, notes, type FROM recipes " +
+        String sql = "SELECT id, name, num_of_steps, image, notes, user_id, type FROM recipes " +
                 "WHERE type = ?";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, type);
@@ -84,25 +84,27 @@ public class JdbcRecipeDao implements RecipeDao{
 
     @Override
     public boolean addRecipe(Recipe recipe) {
-        String sql = "INSERT INTO recipes (id, name, num_of_steps, image, notes, type) " +
-                "VALUES (DEFAULT, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO recipes (id, name, num_of_steps, image, notes, user_id, type) " +
+                "VALUES (DEFAULT, ?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql,recipe.getName(),recipe.getNumOfSteps(),
-                recipe.getImage(), recipe.getNotes(), recipe.getType()) == 1;
+                recipe.getImage(), recipe.getNotes(), recipe.getUserId(),
+                recipe.getType()) == 1;
     }
 
     @Override
-    public boolean deleteRecipe(int id) {
+    public boolean deleteRecipe(long id) {
         String sql = "DELETE FROM recipes WHERE id = ? ";
         return jdbcTemplate.update(sql, id) == 1;
     }
 
     private Recipe mapRowToRecipe(SqlRowSet rs) {
         Recipe recipe = new Recipe();
-        recipe.setId(rs.getInt("id"));
+        recipe.setId(rs.getLong("id"));
         recipe.setName(rs.getString("name"));
         recipe.setNumOfSteps(rs.getInt("num_of_steps"));
         recipe.setImage(rs.getString("image"));
         recipe.setNotes(rs.getString("notes"));
+        recipe.setUserId(rs.getInt("user_id"));
         recipe.setType(rs.getString("type"));
         return recipe;
     };

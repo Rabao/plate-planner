@@ -2,30 +2,33 @@ package com.techelevator.model;
 
 public class Recipe {
 
-    private int id;
+    private long id;
     private String name;
     private int numOfSteps;
     private String image;
     private String notes;
+    private int userId;
     private String type;
 
     public Recipe() {
     }
 
-    public Recipe(int id, String name, int numOfSteps, String image, String notes, String type) {
+    public Recipe(long id, String name, int numOfSteps, String image, String notes,
+                  int userId, String type) {
         this.id = id;
         this.name = name;
         this.numOfSteps = numOfSteps;
         this.image = image;
         this.notes = notes;
+        this.userId = userId;
         this.type = type;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -59,6 +62,14 @@ public class Recipe {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getType() {

@@ -5,11 +5,11 @@ import com.techelevator.model.Nutrition;
 import java.util.List;
 
 public interface NutritionDao {
-    Nutrition getNutrition(int id);
+    Nutrition getNutrition(long id);
 
     List<Nutrition> listNutrition();
 
     boolean addNutrition(Nutrition nutrition);
 
-    boolean deleteNutrition(int id);
+    boolean deleteNutrition(long id);
 }
