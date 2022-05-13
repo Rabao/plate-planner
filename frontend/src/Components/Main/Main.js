@@ -15,6 +15,7 @@ import {addToken, deleteUser,
         addMealPlanCollection, addRecipe, addRecipeCollection} from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
+import RecipeCollection from '../SubComponents/RecipeCollection';
 
 const mapStateToProps = state => {
     return {
@@ -58,7 +59,7 @@ class Main extends Component {
     constructor(props){
         super(props);
 
-        this.alertTest = this.alertTest.bind(this);
+        // this.alertTest = this.alertTest.bind(this);
     }
 
     componentDidMount(){
@@ -99,8 +100,8 @@ class Main extends Component {
                     <Route path='/home' component={this.props.token.token !== undefined ? () => <Home/> : null}/>
                     <Redirect to='/login'/>
                 </Switch>
-                {/* <button onClick={() => this.alertTest()}>This is a test!</button> */}
                 <Footer/>
+                <RecipeCollection collection={this.props.recipe.recipe}/>
             </div>
         )
     }
