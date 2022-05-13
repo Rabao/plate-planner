@@ -1,4 +1,4 @@
-import * as ActionTypes from './actionTypes'
+import * as ActionTypes from './ActionTypes'
 import { baseUrl } from '../Shared/baseUrl'
 
 //----------------------------------USER AUTH
@@ -20,23 +20,29 @@ export const deleteUser = () => ({
 export const fetchInredients = () => (dispatch) => {
     dispatch(ingredientsLoading(true));
 
-    return fetch(baseUrl + "ingredients")
-    .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(ingredients => dispatch(addIngredients(ingredients)))
-    .catch(error => dispatch(ingredientsFailed(error.message)));
+    return fetch(baseUrl + "/ingredients", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+        })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },  
+        error => {
+            let errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(ingredients => dispatch(addIngredients(ingredients)))
+        .catch(error => dispatch(ingredientsFailed(error.message)));
 }
 
 export const ingredientsLoading = () => ({
@@ -61,8 +67,14 @@ export const addIngredients = (ingredients) => ({
 export const fetchGroceries = () => (dispatch) => {
     dispatch(groceriesLoading(true));
 
-    return fetch(baseUrl + "groceries")
-    .then(response => {
+    return fetch(baseUrl + "/groceries", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+        })
+        .then(response => {
          if (response.ok) {
              return response;
          } else {
@@ -102,8 +114,14 @@ export const addGroceries = (mealplans) => ({
 export const fetchRecipe = (id) => (dispatch) => {
     dispatch(recipeLoading(true));
 
-    return fetch(baseUrl + "recipes/" + id)
-    .then(response => {
+    return fetch(baseUrl + "/recipes/" + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+        })
+        .then(response => {
          if (response.ok) {
              return response;
          } else {
@@ -143,8 +161,14 @@ export const addRecipe = (recipe) => ({
 export const fetchRecipeCollection = () => (dispatch) => {
     dispatch(recipeCollectionLoading(true));
 
-    return fetch(baseUrl + "recipes")
-    .then(response => {
+    return fetch(baseUrl + "/recipes", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+        })
+        .then(response => {
          if (response.ok) {
              return response;
          } else {
@@ -180,8 +204,14 @@ export const addRecipeCollection = (recipeCollection) => ({
 export const fetchMealPlan = (id) => (dispatch) => {
     dispatch(mealPlanLoading(true));
 
-    return fetch(baseUrl + "mealplans/" + id)
-    .then(response => {
+    return fetch(baseUrl + "/mealplans/" + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+        })
+        .then(response => {
          if (response.ok) {
              return response;
          } else {
@@ -221,8 +251,14 @@ export const addMealPlan = (mealplans) => ({
 export const fetchMealPlanCollection = () => (dispatch) => {
     dispatch(mealPlanCollectionLoading(true));
 
-    return fetch(baseUrl + "mealplans")
-    .then(response => {
+    return fetch(baseUrl + "/mealplans", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+        })
+        .then(response => {
          if (response.ok) {
              return response;
          } else {
@@ -270,7 +306,7 @@ export const postComment = (recipeId, rating, user, userId, comment) => (dispatc
     }
     newComment.date = new Date().toISOString();
 
-    return fetch(baseUrl + 'comments', {
+    return fetch(baseUrl + '/comments', {
         method: 'POST',
         body: JSON.stringify(newComment),
         headers: {
