@@ -98,10 +98,10 @@ export const postIngredient = (id, name,type) => (dispatch) => {
 };
 //----------------------------------INGREDIENT
 //----------------------------------NUTRITION
-export const fetchNutrition = () => (dispatch) => {
+export const fetchNutrition = (id) => (dispatch) => {
     dispatch(nutritionLoading(true));
 
-    return fetch(baseUrl + "/nutrition", {
+    return fetch(baseUrl + "/nutrition/" + id, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

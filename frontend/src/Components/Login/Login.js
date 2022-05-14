@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {withRouter} from 'react-router-dom'
+import { withRouter } from '../WithRouer/WithRouter';
 import {addToken, addUser} from '../../Redux/actionCreators'
 import {baseUrl} from '../../Shared/baseUrl'
 import axios from 'axios'

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Redirect, Link} from 'react-router-dom';
+import {Navigate, Link, Route, Routes} from 'react-router-dom';
 import {FaSearch} from 'react-icons/fa';
 
 export default class Header extends Component {
@@ -19,7 +19,9 @@ export default class Header extends Component {
                                     <div>
                                         
                                         <Link to='/login' className="header-links" onClick={this.props.handleLogout}>Logout</Link> 
-                                        <Redirect to='/home'/>
+                                        <Routes>
+                                            <Route path='' element={<Navigate to='/home' />} />
+                                        </Routes>
                                         <Link to='/home' className="header-links">Home |</Link>
                                     </div>  
                                 : 
