@@ -17,14 +17,22 @@ public class Nutrition {
     private double sugar;
     private double sugarAlcohol;
     private double protein;
+    private int vitC;
+    private int calcium;
+    private int iron;
+    private int vitD;
+    private int vitB6;
+    private int cobalamin;
+    private int magnesium;
 
     public Nutrition() {
     }
 
     public Nutrition(long id, double servingSize, double calories, double caloriesFat,
-                     double totalFat, double saturatedFat, double transFat, double cholesterol,
-                     double sodium, double potassium, double totalCarbs,
-                     double dietaryFiber, double sugar, double sugarAlcohol, double protein) {
+                     double totalFat, double saturatedFat, double transFat,
+                     double cholesterol, double sodium, double potassium, double totalCarbs,
+                     double dietaryFiber, double sugar, double sugarAlcohol, double protein,
+                     int vitC, int calcium, int iron, int vitD, int vitB6, int cobalamin, int magnesium) {
         this.id = id;
         this.servingSize = servingSize;
         this.calories = calories;
@@ -40,6 +48,13 @@ public class Nutrition {
         this.sugar = sugar;
         this.sugarAlcohol = sugarAlcohol;
         this.protein = protein;
+        this.vitC = vitC;
+        this.calcium = calcium;
+        this.iron = iron;
+        this.vitD = vitD;
+        this.vitB6 = vitB6;
+        this.cobalamin = cobalamin;
+        this.magnesium = magnesium;
     }
 
     public long getId() {
@@ -160,5 +175,61 @@ public class Nutrition {
 
     public void setProtein(double protein) {
         this.protein = protein;
+    }
+
+    public int getVitC() {
+        return vitC;
+    }
+
+    public void setVitC(int vitC) {
+        this.vitC = vitC;
+    }
+
+    public int getCalcium() {
+        return calcium;
+    }
+
+    public void setCalcium(int calcium) {
+        this.calcium = calcium;
+    }
+
+    public int getIron() {
+        return iron;
+    }
+
+    public void setIron(int iron) {
+        this.iron = iron;
+    }
+
+    public int getVitD() {
+        return vitD;
+    }
+
+    public void setVitD(int vitD) {
+        this.vitD = vitD;
+    }
+
+    public int getVitB6() {
+        return vitB6;
+    }
+
+    public void setVitB6(int vitB6) {
+        this.vitB6 = vitB6;
+    }
+
+    public int getCobalamin() {
+        return cobalamin;
+    }
+
+    public void setCobalamin(int cobalamin) {
+        this.cobalamin = cobalamin;
+    }
+
+    public int getMagnesium() {
+        return magnesium;
+    }
+
+    public void setMagnesium(int magnesium) {
+        this.magnesium = magnesium;
     }
 }

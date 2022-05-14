@@ -23,7 +23,8 @@ public class JdbcNutritionDao implements NutritionDao{
         Nutrition nutrition = null;
         String sql = "SELECT id, serving_size, calories, calories_fat, total_fat, " +
                 "saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, " +
-                "dietary_fiber, sugar, sugar_alcohol, protein FROM nutrition WHERE id = ?";
+                "dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, " +
+                "vitD, vitB6, cobalamin, magnesium FROM nutrition WHERE id = ?";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql,id);
         if(results.next()) {
@@ -40,7 +41,8 @@ public class JdbcNutritionDao implements NutritionDao{
         List<Nutrition> nutritionList = new ArrayList<>();
         String sql = "SELECT id, serving_size, calories, calories_fat, total_fat, " +
                 "saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, " +
-                "dietary_fiber, sugar, sugar_alcohol, protein FROM nutrition";
+                "dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, " +
+                "vitD, vitB6, cobalamin, magnesium FROM nutrition";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
@@ -54,13 +56,16 @@ public class JdbcNutritionDao implements NutritionDao{
     public boolean addNutrition(Nutrition nutrition) {
         String sql = "INSERT INTO nutrition (id, serving_size, calories, calories_fat, total_fat, " +
                 "saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, " +
-                "dietary_fiber, sugar, sugar_alcohol, protein) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, " +
-                "?, ?, ?, ?, ?, ?, ?)";
+                "dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, " +
+                "vitD, vitB6, cobalamin, magnesium) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, " +
+                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql,nutrition.getServingSize(),nutrition.getCalories(),
                 nutrition.getCaloriesFat(), nutrition.getTotalFat(), nutrition.getSaturatedFat(),
                 nutrition.getTransFat(), nutrition.getCholesterol(), nutrition.getSodium(),
                 nutrition.getPotassium(), nutrition.getTotalCarbs(), nutrition.getDietaryFiber(),
-                nutrition.getSugar(), nutrition.getSugarAlcohol(), nutrition.getProtein()) == 1;
+                nutrition.getSugar(), nutrition.getSugarAlcohol(), nutrition.getProtein(),
+                nutrition.getVitC(), nutrition.getCalcium(), nutrition.getIron(), nutrition.getVitD(),
+                nutrition.getVitB6(), nutrition.getCobalamin(), nutrition.getMagnesium()) == 1;
     }
 
     @Override
@@ -86,6 +91,13 @@ public class JdbcNutritionDao implements NutritionDao{
         nutrition.setSugar(rs.getDouble("sugar"));
         nutrition.setSugarAlcohol(rs.getDouble("sugar_alcohol"));
         nutrition.setProtein(rs.getDouble("protein"));
+        nutrition.setVitC(rs.getInt("vitC"));
+        nutrition.setCalcium(rs.getInt("calcium"));
+        nutrition.setIron(rs.getInt("iron"));
+        nutrition.setVitD(rs.getInt("vitD"));
+        nutrition.setVitB6(rs.getInt("vitB6"));
+        nutrition.setCobalamin(rs.getInt("cobalamin"));
+        nutrition.setMagnesium(rs.getInt("magnesium"));
         return nutrition;
     };
 }

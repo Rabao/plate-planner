@@ -47,13 +47,16 @@ const mapDispatchToProps = (dispatch) => ({
     fetchNutrition: () => {dispatch(fetchNutrition())},
 
     //Post methods
-    postComment: (recipeId, rating, user, userId, comment) => {dispatch(postComment(recipeId, rating, user, userId, comment))},
+    postComment: (recipeId, rating, user, userId, comment) => 
+        {dispatch(postComment(recipeId, rating, user, userId, comment))},
     postNutrition: (id, serving_size, calories, calories_fat, total_fat, 
         saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, 
-        dietary_fiber, sugar, sugar_alcohol, protein) => 
+        dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,
+        vitB6, cobalamin, magnesium) => 
         {dispatch(postNutrition(id, serving_size, calories, calories_fat, total_fat, 
             saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, 
-            dietary_fiber, sugar, sugar_alcohol, protein))},
+            dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,
+            vitB6, cobalamin, magnesium))},
     postIngredient: (id, name, type) => {dispatch(postIngredient(id, name, type))},
 
     //Add methods

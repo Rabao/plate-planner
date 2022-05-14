@@ -212,6 +212,59 @@ function GroceryList() {
                 </div>
             </FormGroup>
             <FormGroup>
+                <div className="row">
+                    <div  className="col" md={3}>
+                        <label htmlFor="vitC">Vitamin C</label> 
+                            <Control.text model='.vitC' 
+                            id="vitC" 
+                            name="vitC" 
+                            className="form-control"/>
+                    </div>
+                    <div  className="col" md={1}>
+                        <label htmlFor="calcium">Calcium</label> 
+                            <Control.text model='.calcium' 
+                            id="calcium" 
+                            name="calcium" 
+                            className="form-control"/>
+                    </div>
+                    <div  className="col" md={1}>
+                        <label htmlFor="iron">Iron</label> 
+                            <Control.text model='.iron' 
+                            id="iron" 
+                            name="iron" 
+                            className="form-control"/>
+                    </div>
+                    <div  className="col" md={1}>
+                        <label htmlFor="vitD">Vitamin D</label> 
+                            <Control.text model='.vitD' 
+                            id="vitD" 
+                            name="vitD" 
+                            className="form-control"/>
+                    </div>
+                    <div  className="col" md={1}>
+                        <label htmlFor="vitB6">Vitamin B6</label> 
+                            <Control.text model='.vitB6' 
+                            id="vitB6" 
+                            name="vitB6" 
+                            className="form-control"/>
+                    </div>
+                    <div  className="col" md={1}>
+                        <label htmlFor="cobalamin">Cobalamin</label> 
+                            <Control.text model='.cobalamin' 
+                            id="cobalamin" 
+                            name="cobalamin" 
+                            className="form-control"/>
+                    </div>
+                    <div  className="col" md={4}>
+                        <label htmlFor="magnesium">Magnesium</label> 
+                            <Control.text model='.magnesium' 
+                            id="magnesium" 
+                            name="magnesium" 
+                            className="form-control"/>
+                    </div>
+                </div>
+            </FormGroup>
+            <FormGroup>
                 <div  className="col" md={12}>
                     <button type='submit' color="primary">Add To Grocery List</button>
                 </div>

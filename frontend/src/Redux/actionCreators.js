@@ -146,7 +146,8 @@ export const addNutrition = (nutrition) => ({
 
 export const postNutrition = (id, serving_size, calories, calories_fat,
     total_fat, saturated_fat, trans_fat, cholesterol, sodium, potassium, 
-    total_carbs, dietary_fiber, sugar, sugar_alcohol, protein) => (dispatch) => {
+    total_carbs, dietary_fiber, sugar, sugar_alcohol, protein, vitC,
+    calcium, iron, vitD, vitB6, cobalamin, magnesium) => (dispatch) => {
     const newNutrition = {
         id: id,
         serving_size: serving_size,
@@ -162,7 +163,14 @@ export const postNutrition = (id, serving_size, calories, calories_fat,
         dietary_fiber: dietary_fiber,
         sugar: sugar,
         sugar_alcohol: sugar_alcohol,
-        protein: protein
+        protein: protein,
+        vitC: vitC,
+        calcium: calcium,
+        iron: iron,
+        vitD: vitD,
+        vitB6: vitB6,
+        cobalamin: cobalamin,
+        magnesium: magnesium
     }
 
     return fetch(baseUrl + '/nutrition', {

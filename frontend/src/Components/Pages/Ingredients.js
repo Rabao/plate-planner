@@ -65,6 +65,34 @@ const ingredients = (props) => {
                 <td>Protein</td>
                 <td>{props.nutrition.protein}g</td>
             </tr>
+            <tr>
+                <td>Vitamin C</td>
+                <td>{props.nutrition.vitC}%</td>
+            </tr>
+            <tr>
+                <td>Calcium</td>
+                <td>{props.nutrition.calcium}%</td>
+            </tr>
+            <tr>
+                <td>Iron</td>
+                <td>{props.nutrition.iron}%</td>
+            </tr>
+            <tr>
+                <td>Vitamin D</td>
+                <td>{props.nutrition.vitD}%</td>
+            </tr>
+            <tr>
+                <td>Vitamin B6</td>
+                <td>{props.nutrition.vitB6}%</td>
+            </tr>
+            <tr>
+                <td>Cobalamin</td>
+                <td>{props.nutrition.cobalamin}%</td>
+            </tr>
+            <tr>
+                <td>Magnesium</td>
+                <td>{props.nutrition.magnesium}%</td>
+            </tr>
         </table>
     )
     else
