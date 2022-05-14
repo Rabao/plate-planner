@@ -4,20 +4,24 @@ import {Link} from 'react-router-dom'
 
 function RecipesList(props) {
 
-    // renderRecipes(){
-    //     const map = props.collection.map((recipe) => {
-
-    //             // return(
-    //             //     <div className="col" md={4}>
-    //             //         <div key={recipe.id} className="recipe-collection">
-    //             //             <div id="recipe-collection-text"><p>{recipe.name}</p></div>
-    //             //         </div>            
-    //             //     </div>
-    //             //     )
-    //             // })
-    //         // }
-    //     return(map)
-    // }
+    function renderRecipes(){
+        const map = props.recipes.map((recipe) => {
+                console.log(recipe)
+                return(
+                    <div className="row recipe-result" key={recipe.id}>
+                    <div className="col" id="recipe-text" xs={6} md={8} xl={10}>
+                        <div className="row" id="recipe-title"><h6>{recipe.name}</h6></div>
+                        <div className="row" id="recipe-note"><p>{recipe.notes}</p></div>
+                    </div>
+                    <div className="col recipe-img" xs={6} md={4} xl={10}>
+                        <img alt="recipe" src={recipe.img}/>
+                    </div>
+                </div>
+                    )
+                })
+                return(map)
+            }
+    
 
     return(
         <div className="container">
@@ -31,13 +35,9 @@ function RecipesList(props) {
         </Breadcrumb>
             <div className='component-body'>
                 <h5>Recipes</h5>
-                <div className="row">
-                    <div></div>
+                    {renderRecipes()}
                 </div>
-                <div>This is the recipes page comments!</div>
-
-                    {/* Visible if the user is registered. */}
-            </div>
+                    {/* Visible if the user is registered. */}         
         </div>
     )
 }

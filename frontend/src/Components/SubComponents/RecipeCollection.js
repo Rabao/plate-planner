@@ -9,7 +9,7 @@ export default class RecipeCollection extends Component {
     enumRecipeCollection() {
         const map = this.props.collection.map((recipe) => {
 
-            // if(recipe != null){
+            if(recipe != null){
                 return(
                     <div className="col" md={4}>
                         <div key={recipe.id} className="recipe-collection">
@@ -18,10 +18,15 @@ export default class RecipeCollection extends Component {
                         </div>            
                     </div>
                     )
-                })
-            // }
-        return(map)
+                
+            } else {
+                return(<div><p>This is null.</p></div>)
+            }
+         }
+        )
+         return(map)
     }
+    
 
   render() {
     return (

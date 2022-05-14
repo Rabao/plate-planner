@@ -216,3 +216,24 @@ h5 {
 }
 
 /*----------------------------- Body CSS -----------------------------*/
+/*------------------------- Recipe List CSS --------------------------*/
+.recipe-result {
+  margin: 1px;
+  margin-bottom:15px;
+  border-bottom: dashed 1px #dbd5cf; 
+}
+
+#recipe-text {
+  width:75%;
+  height: 100px;
+}
+
+#recipe-img {
+  width: auto;
+}
+
+#recipe-title {
+  background-color: #eae4de;
+}
+
+/*------------------------- Recipe List CSS --------------------------*/
