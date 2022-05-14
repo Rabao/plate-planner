@@ -117,7 +117,7 @@ class Main extends Component {
                 {/* Passes the token and the handleLogout method to the Header component. */}
                 <Header token={this.props.token.token} handleLogout={this.handleLogout}/>
                 <Routes>
-                    <Route path='/login' element={<Login/>}/>
+                    <Route exact path='/login' element={<Login/>}/>
                     <Route path='/register'element={<Register/>}/>
                     <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
                     <Route path='/recipes/:id' element={<Recipes recipes={this.props.recipe.recipe} />}/>

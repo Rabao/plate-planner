@@ -4,10 +4,68 @@ import React, { Component } from 'react'
 const ingredients = (props) => {
     if(props.ingredient!=null&&props.nutrition!=null)
     return(
-        <div>
-            {props.ingredient.name}
-            {props.nutrition.sodium}
-        </div>
+        <table>
+            <tr>
+                <th>Ingredient</th>
+                <th>{props.ingredient.name}</th>
+            </tr>
+            <tr>
+                <td>Serving Size</td>
+                <td>{props.nutrition.servingSize}</td>
+            </tr>
+            <tr>
+                <td>Calories</td>
+                <td>{props.nutrition.calories}</td>
+            </tr>
+            <tr>
+                <td>Calories from Fat</td>
+                <td>{props.nutrition.caloriesFat}</td>
+            </tr>
+            <tr>
+                <td>Total Fat</td>
+                <td>{props.nutrition.totalFat}g</td>
+            </tr>
+            <tr>
+                <td>Saturated Fat</td>
+                <td>{props.nutrition.saturatedFat}g</td>
+            </tr>
+            <tr>
+                <td>Trans Fat</td>
+                <td>{props.nutrition.transFat}g</td>
+            </tr>
+            <tr>
+                <td>Cholesterol</td>
+                <td>{props.nutrition.cholesterol}mg</td>
+            </tr>
+            <tr>
+                <td>Sodium</td>
+                <td>{props.nutrition.sodium}mg</td>
+            </tr>
+            <tr>
+                <td>Potassium</td>
+                <td>{props.nutrition.potassium}mg</td>
+            </tr>
+            <tr>
+                <td>Total Carbohydrates</td>
+                <td>{props.nutrition.totalCarbs}g</td>
+            </tr>
+            <tr>
+                <td>Dietary Fiber</td>
+                <td>{props.nutrition.dietaryFiber}g</td>
+            </tr>
+            <tr>
+                <td>Sugar</td>
+                <td>{props.nutrition.sugar}g</td>
+            </tr>
+            <tr>
+                <td>Sugar Alcohol</td>
+                <td>{props.nutrition.sugarAlcohol}g</td>
+            </tr>
+            <tr>
+                <td>Protein</td>
+                <td>{props.nutrition.protein}g</td>
+            </tr>
+        </table>
     )
     else
     return(
