@@ -25,6 +25,7 @@ import { Nutrition } from './nutrition';
 import { MealPlan } from "./mealPlans";
 import {Token} from './token'
 import {User} from './user'
+import logger from 'redux-logger'
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -38,7 +39,7 @@ export const ConfigureStore = () => {
             recipe: Recipe,
             mealPlan: MealPlan
         }),
-        applyMiddleware(thunk)
+        applyMiddleware(thunk, logger)
     );
 
     return store;
