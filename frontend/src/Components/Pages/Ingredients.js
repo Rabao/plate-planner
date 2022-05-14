@@ -11,7 +11,7 @@ const ingredients = (props) => {
             </tr>
             <tr>
                 <td>Serving Size</td>
-                <td>{props.nutrition.servingSize}</td>
+                <td>{props.nutrition.serving_size}</td>
             </tr>
             <tr>
                 <td>Calories</td>
@@ -19,19 +19,19 @@ const ingredients = (props) => {
             </tr>
             <tr>
                 <td>Calories from Fat</td>
-                <td>{props.nutrition.caloriesFat}</td>
+                <td>{props.nutrition.calories_fat}</td>
             </tr>
             <tr>
                 <td>Total Fat</td>
-                <td>{props.nutrition.totalFat}g</td>
+                <td>{props.nutrition.total_fat}g</td>
             </tr>
             <tr>
                 <td>Saturated Fat</td>
-                <td>{props.nutrition.saturatedFat}g</td>
+                <td>{props.nutrition.saturated_fat}g</td>
             </tr>
             <tr>
                 <td>Trans Fat</td>
-                <td>{props.nutrition.transFat}g</td>
+                <td>{props.nutrition.trans_fat}g</td>
             </tr>
             <tr>
                 <td>Cholesterol</td>
@@ -47,11 +47,11 @@ const ingredients = (props) => {
             </tr>
             <tr>
                 <td>Total Carbohydrates</td>
-                <td>{props.nutrition.totalCarbs}g</td>
+                <td>{props.nutrition.total_carbs}g</td>
             </tr>
             <tr>
                 <td>Dietary Fiber</td>
-                <td>{props.nutrition.dietaryFiber}g</td>
+                <td>{props.nutrition.dietary_fiber}g</td>
             </tr>
             <tr>
                 <td>Sugar</td>
@@ -59,7 +59,7 @@ const ingredients = (props) => {
             </tr>
             <tr>
                 <td>Sugar Alcohol</td>
-                <td>{props.nutrition.sugarAlcohol}g</td>
+                <td>{props.nutrition.sugar_alcohol}g</td>
             </tr>
             <tr>
                 <td>Protein</td>

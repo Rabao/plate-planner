@@ -59,11 +59,11 @@ public class JdbcNutritionDao implements NutritionDao{
                 "dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD, " +
                 "vitB6, cobalamin, magnesium) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?" +
                 ", ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, nutrition.getServingSize(),
-                nutrition.getCalories(),nutrition.getCaloriesFat(), nutrition.getTotalFat(),
-                nutrition.getSaturatedFat(),nutrition.getTransFat(), nutrition.getCholesterol(),
-                nutrition.getSodium(),nutrition.getPotassium(), nutrition.getTotalCarbs(),
-                nutrition.getDietaryFiber(),nutrition.getSugar(), nutrition.getSugarAlcohol(),
+        return jdbcTemplate.update(sql, nutrition.getserving_size(),
+                nutrition.getCalories(),nutrition.getcalories_fat(), nutrition.gettotal_fat(),
+                nutrition.getsaturated_fat(),nutrition.gettrans_fat(), nutrition.getCholesterol(),
+                nutrition.getSodium(),nutrition.getPotassium(), nutrition.gettotal_carbs(),
+                nutrition.getdietary_fiber(),nutrition.getSugar(), nutrition.getsugar_alcohol(),
                 nutrition.getProtein(),nutrition.getVitC(), nutrition.getCalcium(),
                 nutrition.getIron(), nutrition.getVitD(),nutrition.getVitB6(),
                 nutrition.getCobalamin(), nutrition.getMagnesium()) == 1;
@@ -78,19 +78,19 @@ public class JdbcNutritionDao implements NutritionDao{
     private Nutrition mapRowToNutrition(SqlRowSet rs) {
         Nutrition nutrition = new Nutrition();
         nutrition.setId(rs.getLong("id"));
-        nutrition.setServingSize(rs.getDouble("serving_size"));
+        nutrition.setserving_size(rs.getDouble("serving_size"));
         nutrition.setCalories(rs.getDouble("calories"));
-        nutrition.setCaloriesFat(rs.getDouble("calories_fat"));
-        nutrition.setTotalFat(rs.getDouble("total_fat"));
-        nutrition.setSaturatedFat(rs.getDouble("saturated_fat"));
-        nutrition.setTransFat(rs.getDouble("trans_fat"));
+        nutrition.setcalories_fat(rs.getDouble("calories_fat"));
+        nutrition.settotal_fat(rs.getDouble("total_fat"));
+        nutrition.setsaturated_fat(rs.getDouble("saturated_fat"));
+        nutrition.settrans_fat(rs.getDouble("trans_fat"));
         nutrition.setCholesterol(rs.getDouble("cholesterol"));
         nutrition.setSodium(rs.getDouble("sodium"));
         nutrition.setPotassium(rs.getDouble("potassium"));
-        nutrition.setTotalCarbs(rs.getDouble("total_carbs"));
-        nutrition.setDietaryFiber(rs.getDouble("dietary_fiber"));
+        nutrition.settotal_carbs(rs.getDouble("total_carbs"));
+        nutrition.setdietary_fiber(rs.getDouble("dietary_fiber"));
         nutrition.setSugar(rs.getDouble("sugar"));
-        nutrition.setSugarAlcohol(rs.getDouble("sugar_alcohol"));
+        nutrition.setsugar_alcohol(rs.getDouble("sugar_alcohol"));
         nutrition.setProtein(rs.getDouble("protein"));
         nutrition.setVitC(rs.getInt("vitC"));
         nutrition.setCalcium(rs.getInt("calcium"));

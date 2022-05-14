@@ -85,9 +85,9 @@ function GroceryList() {
     handleSubmit(values){
         this.props.postIngredient(values.product, values.type);
         this.props.postNutrition(values.serving,values.calories,
-            values.fromfat, values.totalfat, values.satfat,
-            values.transfat, values.cholesterol, values.sodium, values.potassium, 
-            values.carbs, values.fiber, values.sugar, values.sugaralcohol,
+            values.fromfat, values.total_fat, values.satfat,
+            values.trans_fat, values.cholesterol, values.sodium, values.potassium, 
+            values.carbs, values.fiber, values.sugar, values.sugar_alcohol,
             values.protein, values.vitC, values.calcium, values.iron,
             values.vitD, values.vitB6, values.cobalamin, values.magnesium);
     }
@@ -146,10 +146,10 @@ function GroceryList() {
                 </Row>
                 <Row className="form-group">
                     <Col md={4}>
-                        <label htmlFor="totalfat">Total Fat</label> 
-                            <Control.text model='.totalfat' 
-                            id="totalfat" 
-                            name="totalfat" 
+                        <label htmlFor="total_fat">Total Fat</label> 
+                            <Control.text model='.total_fat' 
+                            id="total_fat" 
+                            name="total_fat" 
                             className="form-control"/>
                     </Col>
                     <Col md={4}>
@@ -160,10 +160,10 @@ function GroceryList() {
                             className="form-control"/>
                     </Col>
                     <Col md={4}>
-                        <label htmlFor="transfat">Trans Fat</label> 
-                            <Control.text model='.transfat' 
-                            id="transfat" 
-                            name="transfat" 
+                        <label htmlFor="trans_fat">Trans Fat</label> 
+                            <Control.text model='.trans_fat' 
+                            id="trans_fat" 
+                            name="trans_fat" 
                             className="form-control"/>
                     </Col>
                 </Row>
@@ -213,10 +213,10 @@ function GroceryList() {
                             className="form-control"/>
                     </Col>
                     <Col md={2}>
-                        <label htmlFor="sugaralcohol">Sugar Alcohol</label> 
-                            <Control.text model='.sugaralcohol' 
-                            id="sugaralcohol" 
-                            name="sugaralcohol" 
+                        <label htmlFor="sugar_alcohol">Sugar Alcohol</label> 
+                            <Control.text model='.sugar_alcohol' 
+                            id="sugar_alcohol" 
+                            name="sugar_alcohol" 
                             className="form-control"/>
                     </Col>
                     <Col md={2}>
