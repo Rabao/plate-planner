@@ -98,10 +98,10 @@ export const postIngredient = (id, name,type) => (dispatch) => {
 };
 //----------------------------------INGREDIENT
 //----------------------------------NUTRITION
-export const fetchNutrition = (id) => (dispatch) => {
+export const fetchNutrition = () => (dispatch) => {
     dispatch(nutritionLoading(true));
 
-    return fetch(baseUrl + "/nutrition/" + id, {
+    return fetch(baseUrl + "/nutrition", {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -240,10 +240,10 @@ export const addGroceries = (mealplans) => ({
 });
 //----------------------------------GROCERIES
 //----------------------------------RECIPE
-export const fetchRecipe = (id) => (dispatch) => {
+export const fetchRecipe = () => (dispatch) => {
     dispatch(recipeLoading(true));
 
-    return fetch(baseUrl + "/recipes/" + id, {
+    return fetch(baseUrl + "/recipes", {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -330,10 +330,10 @@ export const addRecipeCollection = (recipeCollection) => ({
 });
 //----------------------------------RECIPECOLLECTION
 //----------------------------------MEALPLAN
-export const fetchMealPlan = (id) => (dispatch) => {
+export const fetchMealPlan = () => (dispatch) => {
     dispatch(mealPlanLoading(true));
 
-    return fetch(baseUrl + "/mealplans/" + id, {
+    return fetch(baseUrl + "/mealplans", {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

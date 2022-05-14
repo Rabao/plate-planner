@@ -2,15 +2,18 @@ import React, { Component } from 'react'
 
 
 const ingredients = (props) => {
-    if(props.ingredient!=null)
+    if(props.ingredient!=null&&props.nutrition!=null)
     return(
         <div>
             {props.ingredient.name}
+            {props.nutrition.sodium}
         </div>
     )
     else
     return(
-        <div>test</div>
+        <div>
+            {console.log(JSON.stringify(props.ingredient) + " " +JSON.stringify(props.nutrition))}
+        </div>
     )
 }
 

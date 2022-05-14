@@ -42,11 +42,9 @@ const mapDispatchToProps = (dispatch) => ({
     fetchGroceries: () => {dispatch(fetchGroceries())},
     fetchMealPlanCollection: () => {dispatch(fetchMealPlanCollection())},
     fetchRecipeCollection: () => {dispatch(fetchRecipeCollection())},
-
-    // Fetch with parameters
-    fetchMealPlan: (id) => {dispatch(fetchMealPlan(id))},
-    fetchRecipe: (id) => {dispatch(fetchRecipe(id))},
-    fetchNutrition: (id) => {dispatch(fetchNutrition(id))},
+    fetchMealPlan: () => {dispatch(fetchMealPlan())},
+    fetchRecipe: () => {dispatch(fetchRecipe())},
+    fetchNutrition: () => {dispatch(fetchNutrition())},
 
     //Post methods
     postComment: (recipeId, rating, user, userId, comment) => {dispatch(postComment(recipeId, rating, user, userId, comment))},
@@ -103,12 +101,15 @@ class Main extends Component {
     render(){
 
         const IngredientWithId = () => {
-            const {ingredientId} = useParams();
+            const {id} = useParams();
             return(
-                <Ingredients ingredient={this.props.ingredients.ingredients.filter
-                    ((ingredient) => ingredient.id === parseInt(ingredientId,10))[0]}
+                <Ingredients 
+                    ingredient={this.props.ingredients.ingredients.filter(
+                        (ingredient) => ingredient.id === parseInt(id,10))[0]}
+                    nutrition={this.props.nutrition.nutrition.filter(
+                        (nutrition) => nutrition.id === parseInt(id,10))[0]}
                 />
-            )
+            );
         }
 
         return(
@@ -121,7 +122,7 @@ class Main extends Component {
                     <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
                     <Route path='/recipes/:id' element={<Recipes recipes={this.props.recipe.recipe} />}/>
                     <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
-                    <Route path='/ingredients/:ingredientId' element={<IngredientWithId/>}/>
+                    <Route path='/ingredients/:id' element={<IngredientWithId/>}/>
                     <Route path='/groceries' element={<Groceries/>}/>
                     <Route path='/mealplans' element={<MealPlans/>}/>
                     <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>
