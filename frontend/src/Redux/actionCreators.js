@@ -17,7 +17,7 @@ export const deleteUser = () => ({
 })
 //----------------------------------USER AUTH
 //----------------------------------INGREDIENT
-export const fetchInredients = () => (dispatch) => {
+export const fetchIngredients = () => (dispatch) => {
     dispatch(ingredientsLoading(true));
 
     return fetch(baseUrl + "/ingredients", {
@@ -62,7 +62,136 @@ export const addIngredients = (ingredients) => ({
     type: ActionTypes.ADD_INGREDIENTS,
     payload: ingredients
 });
+
+export const postIngredient = (id, name,type) => (dispatch) => {
+    const newIngredient = {
+        id: id,
+        name: name,
+        type: type
+    }
+
+    return fetch(baseUrl + '/ingredients', {
+        method: 'POST',
+        body: JSON.stringify(newIngredient),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            let error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+            }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(response => dispatch(addIngredients(response)))
+    .catch(error => {console.log('Post ingredient ', error.message)
+        alert('Your ingredient could not be added.\nError: ' + error.message)});
+};
 //----------------------------------INGREDIENT
+//----------------------------------NUTRITION
+export const fetchNutrition = () => (dispatch) => {
+    dispatch(nutritionLoading(true));
+
+    return fetch(baseUrl + "/nutrition", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+        })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },  
+        error => {
+            let errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(nutrition => dispatch(addNutrition(nutrition)))
+        .catch(error => dispatch(nutritionFailed(error.message)));
+}
+
+export const nutritionLoading = () => ({
+    type: ActionTypes.NUTRITION_LOADING
+});
+
+export const nutritionFailed = (errmess) => ({
+    type: ActionTypes.NUTRITION_FAILED,
+    payload: errmess
+});
+
+export const deleteNutrition = () => ({
+    type: ActionTypes.DELETE_NUTRITION
+});
+
+export const addNutrition = (nutrition) => ({
+    type: ActionTypes.ADD_NUTRITION,
+    payload: nutrition
+});
+
+export const postNutrition = (id, serving_size, calories, calories_fat,
+    total_fat, saturated_fat, trans_fat, cholesterol, sodium, potassium, 
+    total_carbs, dietary_fiber, sugar, sugar_alcohol, protein) => (dispatch) => {
+    const newNutrition = {
+        id: id,
+        serving_size: serving_size,
+        calories: calories,
+        calories_fat: calories_fat,
+        total_fat: total_fat,
+        saturated_fat: saturated_fat,
+        trans_fat: trans_fat,
+        cholesterol: cholesterol,
+        sodium: sodium,
+        potassium: potassium,
+        total_carbs: total_carbs,
+        dietary_fiber: dietary_fiber,
+        sugar: sugar,
+        sugar_alcohol: sugar_alcohol,
+        protein: protein
+    }
+
+    return fetch(baseUrl + '/nutrition', {
+        method: 'POST',
+        body: JSON.stringify(newNutrition),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            let error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+            }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(response => dispatch(addNutrition(response)))
+    .catch(error => {console.log('Post nutrition ', error.message)
+        alert('Your nutrition could not be added.\nError: ' + error.message)});
+};
+//----------------------------------NUTRITION
 //----------------------------------GROCERIES
 export const fetchGroceries = () => (dispatch) => {
     dispatch(groceriesLoading(true));

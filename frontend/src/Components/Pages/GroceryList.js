@@ -89,9 +89,9 @@ function GroceryList() {
                     <div  className="col" md={2}>
                     <label htmlFor="quantity">Quantity</label> 
                         <Control.text type="number"  
-                        model='.qauntity' 
-                        id="qauntity" 
-                        name="qauntity" 
+                        model='.quantity' 
+                        id="quantity" 
+                        name="quantity" 
                         className="form-control"/>
                     </div>
                 </div>
@@ -164,10 +164,10 @@ function GroceryList() {
                             className="form-control"/>
                     </div>
                     <div  className="col" md={4}>
-                        <label htmlFor="potasium">Potasium</label> 
-                            <Control.text model='.potasium' 
-                            id="potasium" 
-                            name="potasium" 
+                        <label htmlFor="potassium">Potassium</label> 
+                            <Control.text model='.potassium' 
+                            id="potassium" 
+                            name="potassium" 
                             className="form-control"/>
                     </div>
                 </div>

@@ -15,6 +15,12 @@ export const DELETE_GROCERIES = 'DELETE_GROCERIES';
 export const GROCERIES_LOADING = 'GROCERIES_LOADING';
 export const GROCERIES_FAILED = 'GROCERIES_FAILED';
 
+//----------------------------------NUTRITION
+export const ADD_NUTRITION = 'ADD_NUTRITION';
+export const DELETE_NUTRITION = 'DELETE_NUTRITION';
+export const NUTRITION_LOADING = 'NUTRITION_LOADING';
+export const NUTRITION_FAILED = 'NUTRITION_FAILED';
+
 //----------------------------------RECIPE
 export const ADD_RECIPE = 'ADD_RECIPE';
 export const DELETE_RECIPE = 'DELETE_RECIPE';
