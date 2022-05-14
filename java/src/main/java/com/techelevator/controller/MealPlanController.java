@@ -89,11 +89,11 @@ public class MealPlanController {
         return nutritionDao.getNutrition(id);
     }
 
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping(value="nutrition")
-//    public void addNutrition(@Valid @RequestBody Nutrition nutrition){
-//        nutritionDao.addNutrition(nutrition);
-//    }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="nutrition")
+    public void addNutrition(@Valid @RequestBody Nutrition nutrition){
+        nutritionDao.addNutrition(nutrition);
+    }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value="nutrition/{id}", method = RequestMethod.DELETE )

@@ -63,9 +63,8 @@ export const addIngredients = (ingredients) => ({
     payload: ingredients
 });
 
-export const postIngredient = (id, name,type) => (dispatch) => {
+export const postIngredient = (name,type) => (dispatch) => {
     const newIngredient = {
-        id: id,
         name: name,
         type: type
     }
@@ -144,12 +143,11 @@ export const addNutrition = (nutrition) => ({
     payload: nutrition
 });
 
-export const postNutrition = (id, serving_size, calories, calories_fat,
+export const postNutrition = (serving_size, calories, calories_fat,
     total_fat, saturated_fat, trans_fat, cholesterol, sodium, potassium, 
     total_carbs, dietary_fiber, sugar, sugar_alcohol, protein, vitC,
     calcium, iron, vitD, vitB6, cobalamin, magnesium) => (dispatch) => {
     const newNutrition = {
-        id: id,
         serving_size: serving_size,
         calories: calories,
         calories_fat: calories_fat,

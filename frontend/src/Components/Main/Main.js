@@ -49,15 +49,15 @@ const mapDispatchToProps = (dispatch) => ({
     //Post methods
     postComment: (recipeId, rating, user, userId, comment) => 
         {dispatch(postComment(recipeId, rating, user, userId, comment))},
-    postNutrition: (id, serving_size, calories, calories_fat, total_fat, 
+    postNutrition: (serving_size, calories, calories_fat, total_fat, 
         saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, 
         dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,
         vitB6, cobalamin, magnesium) => 
-        {dispatch(postNutrition(id, serving_size, calories, calories_fat, total_fat, 
+        {dispatch(postNutrition(serving_size, calories, calories_fat, total_fat, 
             saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, 
             dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,
             vitB6, cobalamin, magnesium))},
-    postIngredient: (id, name, type) => {dispatch(postIngredient(id, name, type))},
+    postIngredient: (name, type) => {dispatch(postIngredient(name, type))},
 
     //Add methods
     // addGroceries: () => {dispatch(addGroceries())},
@@ -126,7 +126,9 @@ class Main extends Component {
                     <Route path='/recipes/:id' element={<Recipes recipes={this.props.recipe.recipe} />}/>
                     <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
                     <Route path='/ingredients/:id' element={<IngredientWithId/>}/>
-                    <Route path='/groceries' element={<Groceries/>}/>
+                    <Route path='/groceries' element={<Groceries 
+                        postIngredient={this.props.postIngredient}
+                        postNutrition={this.props.postNutrition}/>}/>
                     <Route path='/mealplans' element={<MealPlans/>}/>
                     <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>
                     <Route path='' element={<Navigate to='/login' />} />

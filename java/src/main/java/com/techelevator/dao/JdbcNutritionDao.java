@@ -54,18 +54,19 @@ public class JdbcNutritionDao implements NutritionDao{
 
     @Override
     public boolean addNutrition(Nutrition nutrition) {
-        String sql = "INSERT INTO nutrition (id, serving_size, calories, calories_fat, total_fat, " +
-                "saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, " +
-                "dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, " +
-                "vitD, vitB6, cobalamin, magnesium) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, " +
-                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql,nutrition.getServingSize(),nutrition.getCalories(),
-                nutrition.getCaloriesFat(), nutrition.getTotalFat(), nutrition.getSaturatedFat(),
-                nutrition.getTransFat(), nutrition.getCholesterol(), nutrition.getSodium(),
-                nutrition.getPotassium(), nutrition.getTotalCarbs(), nutrition.getDietaryFiber(),
-                nutrition.getSugar(), nutrition.getSugarAlcohol(), nutrition.getProtein(),
-                nutrition.getVitC(), nutrition.getCalcium(), nutrition.getIron(), nutrition.getVitD(),
-                nutrition.getVitB6(), nutrition.getCobalamin(), nutrition.getMagnesium()) == 1;
+        String sql = "INSERT INTO nutrition (id) SELECT COUNT(*) FROM ingredients;" +
+                "UPDATE nutrition SET serving_size=?, calories=?, calories_fat=?, total_fat=?, " +
+                "saturated_fat=?, trans_fat=?, cholesterol=?, sodium=?, potassium=?, total_carbs=?, " +
+                "dietary_fiber=?, sugar=?, sugar_alcohol=?, protein=?, vitC=?, calcium=?, iron=?, " +
+                "vitD=?, vitB6=?, cobalamin=?, magnesium=? WHERE id = COUNT(*) FROM ingredients;";
+        return jdbcTemplate.update(sql, nutrition.getServingSize(),
+                nutrition.getCalories(),nutrition.getCaloriesFat(), nutrition.getTotalFat(),
+                nutrition.getSaturatedFat(),nutrition.getTransFat(), nutrition.getCholesterol(),
+                nutrition.getSodium(),nutrition.getPotassium(), nutrition.getTotalCarbs(),
+                nutrition.getDietaryFiber(),nutrition.getSugar(), nutrition.getSugarAlcohol(),
+                nutrition.getProtein(),nutrition.getVitC(), nutrition.getCalcium(),
+                nutrition.getIron(), nutrition.getVitD(),nutrition.getVitB6(),
+                nutrition.getCobalamin(), nutrition.getMagnesium()) == 1;
     }
 
     @Override
