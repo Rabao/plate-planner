@@ -10,12 +10,13 @@ import RecipesList from '../Pages/RecipesList'
 import Groceries from '../Pages/GroceryList'
 import MealPlans from '../Pages/MealPlans'
 import {addToken, deleteUser,
-        fetchInredients, fetchGroceries, fetchMealPlan, 
+        fetchIngredients, fetchGroceries, fetchMealPlan, 
         fetchMealPlanCollection, fetchRecipe, fetchRecipeCollection,
-        postComment, addGroceries, addIngredients, addMealPlan, 
+        postComment, addGroceries, addNutrition, addMealPlan, 
         addMealPlanCollection, addRecipe, addRecipeCollection} from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
+import IngredientsList from '../Pages/IngredientsList';
 
 const mapStateToProps = state => {
     return {
@@ -24,6 +25,7 @@ const mapStateToProps = state => {
         comments: state.comments,
         groceries: state.groceries,
         ingredients: state.ingredients,
+        nutrition: state.nutrition,
         recipe: state.recipe,
         mealPlan: state.mealPlan
     }
@@ -34,7 +36,7 @@ const mapDispatchToProps = (dispatch) => ({
     deleteUser: () => { dispatch(deleteUser())},
 
     // Fetch methods
-    fetchInredients: () => {dispatch(fetchInredients())},
+    fetchIngredients: () => {dispatch(fetchIngredients())},
     fetchGroceries: () => {dispatch(fetchGroceries())},
     fetchMealPlanCollection: () => {dispatch(fetchMealPlanCollection())},
     fetchRecipeCollection: () => {dispatch(fetchRecipeCollection())},
@@ -48,7 +50,7 @@ const mapDispatchToProps = (dispatch) => ({
 
     //Add methods
     addGroceries: () => {dispatch(addGroceries())},
-    addIngredients: () => {dispatch(addIngredients())},
+    addIngredients: () => {dispatch(addNutrition())},
     addMealPlan: () => {dispatch(addMealPlan())},
     addMealPlanCollection: () => {dispatch(addMealPlanCollection())},
     addRecipe: () => {dispatch(addRecipe())},
@@ -63,7 +65,7 @@ class Main extends Component {
     }
 
     componentDidMount(){
-        this.props.fetchInredients();
+        this.props.fetchIngredients();
         this.props.fetchGroceries();
         this.props.fetchMealPlan();
         this.props.fetchMealPlanCollection();
@@ -96,6 +98,7 @@ class Main extends Component {
                     <Route path='/register'component={() => <Register/>}/>
                     <Route path='/recipes' component={() => <RecipesList recipes={this.props.recipe.recipe} />}/>
                     <Route path='/recipes/:id' component={() => <Recipes recipes={this.props.recipe.recipe} />}/>
+                    <Route path='/ingredients' component={() => <IngredientsList collection={this.props.ingredients.ingredients} />}/>
                     <Route path='/groceries' component={() => <Groceries/>}/>
                     <Route path='/mealplans' component={() => <MealPlans/>}/>
                     <Route path='/home' component={this.props.token.token !== undefined ? () => <Home collection={this.props.recipe.recipe}/> : null}/>
