@@ -47,9 +47,8 @@ class Login extends Component {
         return(
             <div className="container">
              <Breadcrumb>
-                <Breadcrumb.Item>
-                    <Link to="/home">Home</Link>  
-                </Breadcrumb.Item>
+                <Link to="/home"><Breadcrumb.Item>Home  
+                </Breadcrumb.Item></Link>    
                 <Breadcrumb.Item active>
                     Sign In
                 </Breadcrumb.Item>

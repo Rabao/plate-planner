@@ -1,26 +1,23 @@
 import React, { Component } from 'react'
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import {Breadcrumb} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
-import { Form, FormGroup, Input } from 'react-bootstrap'
-import { Control, LocalForm, Errors } from 'react-redux-form';
-import Loading from '../SubComponents/Loader/Loader';
+import { Breadcrumb, Form, FormGroup } from 'react-bootstrap'
+import { Control,  LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
+
+
+function handleSubmit(values) {
+    values.preventDefault();
+    console.log(values.comment);  
+         // this.props.postComment(this.props.targetRecipe.id, this.props.user, values.rating, values.comment);
+        // e.stopPropagation();
+}
 
 export default class Recipes extends Component {
     constructor(props){
         super(props)
-
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit(values){
-        // this.props.postComment(this.props.targetRecipe.id, this.props.user, values.rating, values.comment);
-        alert(this.props.targetRecipe.id, this.props.user, values.rating, values.comment);
-        console.log(this.props.targetRecipe.id, this.props.user, values.rating, values.comment);
-    }
-    
-    
   render() {
             return (
                 <div className='container'>
@@ -32,6 +29,7 @@ export default class Recipes extends Component {
                             Recipes
                         </Breadcrumb.Item>
                     </Breadcrumb>
+                    {/* {alert(this.props.user)} */}
                     <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps}
                     comments={this.props.targetComments} 
                     isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}/>
@@ -65,33 +63,8 @@ const Recipe = (props) => {
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
             {props.comments ? <RenderComments target={props.comments}/> : <div>Null</div>}
-            </div>
-        </div>
-    )
-  }
-}
-
-function RenderComments(props){
-    let arr = [];
-    const recipeComments = props.target.map((comment, index) => {
-        let obj =<p key={index}>{comment.comment}</p>
-                 arr.push(obj)});  
-    
-    return (             
-        <div className='row'>
-            <div className='col' md={12}>
-                <h5>Comments</h5>
-                    {arr}
-                    <CommentForm/>
-            </div>
-        </div>
-    )
-}
-
-function CommentForm() {
-    return (
-        <>
-            <Form onSubmit={(values) => this.handleSubmit(values)}>
+            
+            <Form model="comments" onSubmit={(values) => handleSubmit(values)}>
                 <FormGroup>                                   
                     <div  className="col" md={12}>
                     <label htmlFor="rating">Rating</label> 
@@ -119,11 +92,32 @@ function CommentForm() {
                 </FormGroup>
                 <FormGroup>
                     <div  className="col" md={12}>
-                        <button type='submit' color="primary">Submit</button>
+                        <button type='submit' color="primary">Post Comment</button>
                     </div>
                 </FormGroup>
             </Form>
-        </>
+            </div>
+        </div>
+    )
+  }
+}
+
+function RenderComments(props){
+    let arr = [];
+    const recipeComments = props.target.map((comment, index) => {
+        let obj =<div id="user-comment" key={index}>
+                    <p>{comment.comment}</p>
+                    {/* <div>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</div> */}
+                </div>
+                 arr.push(obj)});  
+    
+    return (             
+        <div className='row'>
+            <div className='col' md={12}>
+                <h5>Comments</h5>
+                    {arr}
+            </div>
+        </div>
     )
 }
 

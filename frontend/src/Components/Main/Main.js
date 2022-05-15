@@ -53,8 +53,8 @@ const mapDispatchToProps = (dispatch) => ({
     fetchNutrition: () => {dispatch(fetchNutrition())},
 
     //Post methods
-    postComment: (recipeId, rating, user, userId, comment) => 
-        {dispatch(postComment(recipeId, rating, user, userId, comment))},
+    postComment: (recipeId, userId, rating, comment) => 
+        {dispatch(postComment(recipeId, userId, rating, comment))},
     postNutrition: (serving_size, calories, calories_fat, total_fat, 
         saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, 
         dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,
@@ -117,20 +117,20 @@ class Main extends Component {
                 targetRecipeSteps={this.props.recipeSteps.recipeSteps.filter(steps => steps.recipeId === parseInt(id,10))}
                 recipeLoading={this.props.recipe.recipe.isLoading}
                 recipeErrMess={this.props.recipe.recipe.errMess}
-                user={this.props.user.id}
+                user={this.props.user}
                 targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
                 commentsLoading={this.props.comments.isLoading}
                 commentsErrMess={this.props.comments.errMess}  
                 postComment={this.props.postComment}/>
             )
         }
+
 // filter(comments => comments.recipeId === parseInt(id,10))
         return(
             <div>
                 {/* Passes the token and the handleLogout method to the Header component. */}
                 <Header token={this.props.token.token} user={this.props.user.username} handleLogout={this.handleLogout}/>
                 <div className="main">
-                    {console.log("THIS IS A TEST!!!!!!!!!!!!!" + this.props.comments.comments)}
                     <Routes>
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/register'element={<Register/>}/>

@@ -10,6 +10,8 @@ import { MealPlan } from "./mealPlans";
 import {Token} from './token'
 import {User} from './user'
 import { RecipeSteps } from './recipeSteps';
+import { createForms } from 'react-redux-form';
+import { InitialFeedback } from "./forms";
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -23,7 +25,10 @@ export const ConfigureStore = () => {
             recipe: Recipe,
             recipeSteps: RecipeSteps,
             mealPlan: MealPlan,
-        }),
+            ...createForms({
+                feedback: InitialFeedback
+            })
+            }),
         applyMiddleware(thunk, logger)
     );
 

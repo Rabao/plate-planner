@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
 import {useParams} from 'react-router-dom'
 import {Breadcrumb} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import Recipes from '../Pages/Recipes'
 
 function RecipesList(props) {
+
+    const navigate = useNavigate();
     let results = 0;
+
+    function handleClick (e) {
+       const targetId = e.id;
+       const path = '/recipes/'+e.id;
+       console.log(e.id)
+       navigate(path);       
+     }
 
     function resultCount() {
         for(let i = 0; i < props.recipes.length; i++){
@@ -17,7 +26,7 @@ function RecipesList(props) {
         const map = props.recipes.map((recipe) => {
                 console.log(recipe)
                 return(
-                <div className="row recipe-result" key={recipe.id}>
+                <div className="row recipe-result" key={recipe.id}  onClick={() => {handleClick(recipe)}}>
                     <table>
                         <td id="recipe-text">
                             <tr id="recipe-title"><h6>{recipe.name}</h6></tr>

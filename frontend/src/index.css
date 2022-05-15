@@ -317,3 +317,11 @@ h5 {
 .footer li:link {
   color:#FFF;
 }
+/*------------------------- User Comment CSS --------------------------*/
+#user-comment{
+  margin-top: 1em;
+  margin-bottom: 1em;
+  padding: 1em;
+  background-color: #FFF;
+  border-bottom: dashed 1px #dbd5cf; 
+}
