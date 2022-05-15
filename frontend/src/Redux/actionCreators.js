@@ -101,7 +101,7 @@ export const postIngredient = (id, name,type) => (dispatch) => {
 export const fetchNutrition = (id) => (dispatch) => {
     dispatch(nutritionLoading(true));
 
-    return fetch(baseUrl + "/nutrition/" + id, {
+    return fetch(baseUrl + "/nutrition", {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -240,10 +240,10 @@ export const addGroceries = (mealplans) => ({
 });
 //----------------------------------GROCERIES
 //----------------------------------RECIPE
-export const fetchRecipe = (id) => (dispatch) => {
+export const fetchRecipe = () => (dispatch) => {
     dispatch(recipeLoading(true));
 
-    return fetch(baseUrl + "/recipes/" + id, {
+    return fetch(baseUrl + "/recipes", {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -268,8 +268,9 @@ export const fetchRecipe = (id) => (dispatch) => {
     .catch(error => dispatch(recipeFailed(error.message)));
 }
 
-export const recipeLoading = () => ({
-    type: ActionTypes.RECIPE_LOADING
+export const recipeLoading = (status) => ({
+    type: ActionTypes.RECIPE_LOADING,
+    payload: status
 });
 
 export const recipeFailed = (errmess) => ({
@@ -286,11 +287,11 @@ export const addRecipe = (recipe) => ({
     payload: recipe
 });
 //----------------------------------RECIPE
-//----------------------------------RECIPECOLLECTION
-export const fetchRecipeCollection = () => (dispatch) => {
-    dispatch(recipeCollectionLoading(true));
+//----------------------------------RECIPESTEPS
+export const fetchRecipeSteps = () => (dispatch) => {
+    dispatch(recipeStepsLoading(true));
 
-    return fetch(baseUrl + "/recipes", {
+    return fetch(baseUrl + "/steps", {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -311,29 +312,34 @@ export const fetchRecipeCollection = () => (dispatch) => {
         throw errmess;
     })
     .then(response => response.json())
-    .then(recipeCollection => dispatch(addRecipeCollection(recipeCollection)))
-    .catch(error => dispatch(recipeCollectionFailed(error.message)));
+    .then(steps => dispatch(addRecipeSteps(steps)))
+    .catch(error => dispatch(recipeStepsFailed(error.message)));
 }
 
-export const recipeCollectionLoading = () => ({
-    type: ActionTypes.RECIPECOLLECTION_LOADING
+export const recipeStepsLoading = (status) => ({
+    type: ActionTypes.RECIPESTEPS_LOADING,
+    payload: status
 });
 
-export const recipeCollectionFailed = (errmess) => ({
-    type: ActionTypes.RECIPECOLLECTION_FAILED,
+export const recipeStepsFailed = (errmess) => ({
+    type: ActionTypes.RECIPESTEPS_FAILED,
     payload: errmess
 });
 
-export const addRecipeCollection = (recipeCollection) => ({
-    type: ActionTypes.ADD_RECIPECOLLECTION,
-    payload: recipeCollection
+export const deleteRecipeSteps = () => ({
+    type: ActionTypes.DELETE_RECIPESTEPS
 });
-//----------------------------------RECIPECOLLECTION
+
+export const addRecipeSteps = (recipe) => ({
+    type: ActionTypes.ADD_RECIPESTEPS,
+    payload: recipe
+});
+//----------------------------------RECIPE
 //----------------------------------MEALPLAN
-export const fetchMealPlan = (id) => (dispatch) => {
+export const fetchMealPlan = () => (dispatch) => {
     dispatch(mealPlanLoading(true));
 
-    return fetch(baseUrl + "/mealplans/" + id, {
+    return fetch(baseUrl + "/mealplans", {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -435,7 +441,7 @@ export const postComment = (recipeId, rating, user, userId, comment) => (dispatc
     }
     newComment.date = new Date().toISOString();
 
-    return fetch(baseUrl + '/comments', {
+    return fetch(baseUrl + '/reviews', {
         method: 'POST',
         body: JSON.stringify(newComment),
         headers: {
@@ -462,4 +468,33 @@ export const postComment = (recipeId, rating, user, userId, comment) => (dispatc
         alert('Your comment could not be posted.\nError: ' + error.message)});
 };
 
+export const fetchComments = () => (dispatch) => {
+    return fetch(baseUrl + "reviews/recipe")
+        .then(response => {
+            if (response.ok) {
+                return response;
+            }else {
+                let error = new Error('Error ' + response.status + ': ' + response.statusText)
+                error.response = response;
+                throw error;
+            }
+        },  
+        error => {
+            let errmess = new Error(error.message);
+            throw errmess;
+        })
+    .then(response => response.json())
+    .then(comments => dispatch(addComments(comments)))
+    .catch(error => dispatch(commentsFailed(error.message)));
+}
+
+export const addComments = (comments) => ({
+    type: ActionTypes.ADD_COMMENTS,
+    payload: comments
+});
+
+export const commentsFailed = (errmess) => ({
+    type: ActionTypes.ADD_COMMENTS,
+    payload: errmess
+});
 //----------------------------------COMMENTS

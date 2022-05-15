@@ -6,6 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #F5F1ED;
+  height:100%;
 }
 
 code {
@@ -13,12 +14,17 @@ code {
     monospace;
 }
 
+.main {
+  margin-bottom: 5em;
+}
+
 /*---------------------------- Header CSS ----------------------------*/
 
 .header {
   background: rgba(0,51,153) !important; 
   padding-top: 1em;
-  padding-bottom: 1em;
+  padding-bottom: 0.5em;
+  font-size: larger;
 }
 
 .header-links {
@@ -30,7 +36,6 @@ code {
 
 .header-links:hover {
   color: #FFF;
-  opacity: 0.5;
 }
 
 #search-wrapper {
@@ -40,6 +45,8 @@ code {
 #link-wrapper {
   float:inline-end;
 }
+
+
 /*---------------------------- Header CSS ----------------------------*/
 /*---------------------------- Search CSS ----------------------------*/
 #search-bar {
@@ -211,29 +218,102 @@ h5 {
   width: 100%;
   height: auto;
   top:20px;
-  position: absolute;
   z-index: -5;
 }
 
 /*----------------------------- Body CSS -----------------------------*/
 /*------------------------- Recipe List CSS --------------------------*/
 .recipe-result {
+  display: flex;
   margin: 1px;
   margin-bottom:15px;
+  padding-bottom: 8px;
   border-bottom: dashed 1px #dbd5cf; 
 }
 
+.recipe-result:hover {
+  cursor:pointer;
+  box-shadow: 1px 4px 2px rgba(0,0,0,0.15);
+}
+
 #recipe-text {
-  width:75%;
+  width: max-content;
+  padding-right: 203px;
   height: 100px;
+  box-shadow: inset 0em 1.75em #eae4de;
 }
 
-#recipe-img {
-  width: auto;
+#recipe-img-td {
+  width: 200px;
+  height: 100px;
+  margin-left: -198px;
+  overflow:hidden;
+  position:absolute;
 }
 
-#recipe-title {
-  background-color: #eae4de;
+#recipe-img-td img {
+  width: 100%;
+  height: auto;
+  position:relative;
 }
 
+#recipe-pg-img-container{
+  width: 500px;
+  height: 500px;
+  margin-bottom: 30px;
+  
+  position:relative;
+  overflow: hidden;
+}
+
+#recipe-pg-img {
+  width: 100%;
+  height: auto;
+  top:50;
+}
 /*------------------------- Recipe List CSS --------------------------*/
+.lds-circle {
+  display: inline-block;
+  transform: translateZ(1px);
+}
+.lds-circle > div {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  background: #fff;
+  animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+@keyframes lds-circle {
+  0%, 100% {
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+  }
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(1800deg);
+    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+  }
+  100% {
+    transform: rotateY(3600deg);
+  }
+}
+/*---------------------------- Footer CSS -----------------------------*/
+.footer {
+  background-color: #001132;
+  padding: 2rem;
+  position: relative;
+  left:0;
+  bottom:0;
+  right:0;
+}
+
+.footer li {
+  list-style: none;
+}
+
+.footer li:link {
+  color:#FFF;
+}

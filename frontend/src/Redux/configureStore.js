@@ -15,8 +15,9 @@
 //     return store;
 // }
 
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import logger from "redux-logger";
 import { Comments } from "./comments";
 import { Groceries } from "./groceries";
 import { Recipe } from "./recipes";
@@ -25,6 +26,7 @@ import { Nutrition } from './nutrition';
 import { MealPlan } from "./mealPlans";
 import {Token} from './token'
 import {User} from './user'
+import { RecipeSteps } from './recipeSteps';
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -36,9 +38,10 @@ export const ConfigureStore = () => {
             ingredients: Ingredients,
             nutrition: Nutrition,
             recipe: Recipe,
-            mealPlan: MealPlan
+            recipeSteps: RecipeSteps,
+            mealPlan: MealPlan,
         }),
-        applyMiddleware(thunk)
+        applyMiddleware(thunk, logger)
     );
 
     return store;

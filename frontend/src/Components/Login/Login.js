@@ -71,7 +71,7 @@ class Login extends Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col">
+                    <div className="col" md={3}>
                         <label class="sr-only">Password</label>
                         <input
                             type="password"

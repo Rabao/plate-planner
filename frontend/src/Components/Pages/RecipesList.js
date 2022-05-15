@@ -1,21 +1,30 @@
 import React, {Component} from 'react';
+import {useParams} from 'react-router-dom'
 import {Breadcrumb} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import Recipes from '../Pages/Recipes'
 
 function RecipesList(props) {
+    let results = 0;
+
+    function resultCount() {
+        for(let i = 0; i < props.recipes.length; i++){
+            results++
+        }
+    }
 
     function renderRecipes(){
         const map = props.recipes.map((recipe) => {
                 console.log(recipe)
                 return(
-                    <div className="row recipe-result" key={recipe.id}>
-                    <div className="col" id="recipe-text" xs={6} md={8} xl={10}>
-                        <div className="row" id="recipe-title"><h6>{recipe.name}</h6></div>
-                        <div className="row" id="recipe-note"><p>{recipe.notes}</p></div>
-                    </div>
-                    <div className="col recipe-img" xs={6} md={4} xl={10}>
-                        <img alt="recipe" src={recipe.img}/>
-                    </div>
+                <div className="row recipe-result" key={recipe.id}>
+                    <table>
+                        <td id="recipe-text">
+                            <tr id="recipe-title"><h6>{recipe.name}</h6></tr>
+                            <tr id="recipe-note"><p>{recipe.notes}</p></tr>
+                        </td>
+                        <td id="recipe-img-td"><img src={recipe.image}/></td>
+                    </table>
                 </div>
                     )
                 })
@@ -25,6 +34,7 @@ function RecipesList(props) {
 
     return(
         <div className="container">
+            {resultCount()}
         <Breadcrumb>
             <Breadcrumb.Item>
                 <Link to="/home">Home</Link>  
@@ -33,8 +43,8 @@ function RecipesList(props) {
                 Recipes
             </Breadcrumb.Item>
         </Breadcrumb>
-            <div className='component-body'>
-                <h5>Recipes</h5>
+            <div className='component-body'>             
+                <h5>Search returned {results} results:</h5>
                     {renderRecipes()}
                 </div>
                     {/* Visible if the user is registered. */}         

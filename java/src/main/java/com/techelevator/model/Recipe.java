@@ -14,7 +14,7 @@ public class Recipe {
     }
 
     public Recipe(long id, String name, int numOfSteps, String image, String notes,
-                  int userId, String type) {
+                  int userId, String type ) {
         this.id = id;
         this.name = name;
         this.numOfSteps = numOfSteps;
@@ -79,4 +79,5 @@ public class Recipe {
     public void setType(String type) {
         this.type = type;
     }
+
 }

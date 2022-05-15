@@ -32,7 +32,6 @@ public class JdbcRecipeDao implements RecipeDao{
         } else {
             throw new RecipeNotFoundException();
         }
-
         return recipe;
     }
 
@@ -42,7 +41,7 @@ public class JdbcRecipeDao implements RecipeDao{
         String sql = "SELECT id, name, num_of_steps, image, notes, user_id, type FROM recipes ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-        while(results.next()) {
+        while (results.next()) {
             Recipe recipe = mapRowToRecipe(results);
             recipes.add(recipe);
         }
@@ -84,8 +83,8 @@ public class JdbcRecipeDao implements RecipeDao{
 
     @Override
     public boolean addRecipe(Recipe recipe) {
-        String sql = "INSERT INTO recipes (id, name, num_of_steps, image, notes, user_id, type) " +
-                "VALUES (DEFAULT, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO recipes (id, name, num_of_steps, image, notes, user_id, type ) " +
+                "VALUES (DEFAULT, ?, ?, ?, ?, ?, ? )";
         return jdbcTemplate.update(sql,recipe.getName(),recipe.getNumOfSteps(),
                 recipe.getImage(), recipe.getNotes(), recipe.getUserId(),
                 recipe.getType()) == 1;

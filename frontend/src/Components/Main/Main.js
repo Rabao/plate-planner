@@ -11,14 +11,15 @@ import Groceries from '../Pages/GroceryList'
 import MealPlans from '../Pages/MealPlans'
 import {addToken, deleteUser,
         fetchIngredients, fetchGroceries, fetchMealPlan, 
-        fetchMealPlanCollection, fetchRecipe, fetchRecipeCollection,
-        postComment, addGroceries, addIngredients, postIngredient,
+        fetchMealPlanCollection, fetchRecipe, fetchRecipeSteps,
+        postComment, fetchComments, addGroceries, addIngredients, postIngredient,
         addNutrition, fetchNutrition, postNutrition, addMealPlan, 
-        addMealPlanCollection, addRecipe, addRecipeCollection} from '../../Redux/actionCreators'
+        addMealPlanCollection, addRecipe, } from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import { withRouter } from '../WithRouer/WithRouter';
 import IngredientsList from '../Pages/IngredientsList';
 import Ingredients from '../Pages/Ingredients';
+import Loader from '../SubComponents/Loader/Loader';
 
 const mapStateToProps = state => {
     return {
@@ -29,7 +30,8 @@ const mapStateToProps = state => {
         ingredients: state.ingredients,
         nutrition: state.nutrition,
         recipe: state.recipe,
-        mealPlan: state.mealPlan
+        recipeSteps: state.recipeSteps,
+        mealPlan: state.mealPlan,
     }
 }
 
@@ -41,12 +43,14 @@ const mapDispatchToProps = (dispatch) => ({
     fetchIngredients: () => {dispatch(fetchIngredients())},
     fetchGroceries: () => {dispatch(fetchGroceries())},
     fetchMealPlanCollection: () => {dispatch(fetchMealPlanCollection())},
-    fetchRecipeCollection: () => {dispatch(fetchRecipeCollection())},
+    fetchComments: () => {dispatch(fetchComments())},
+    // fetchRecipeCollection: () => {dispatch(fetchRecipeCollection())},
 
     // Fetch with parameters
-    fetchMealPlan: (id) => {dispatch(fetchMealPlan(id))},
-    fetchRecipe: (id) => {dispatch(fetchRecipe(id))},
-    fetchNutrition: (id) => {dispatch(fetchNutrition(id))},
+    fetchMealPlan: () => {dispatch(fetchMealPlan())},
+    fetchRecipe: () => {dispatch(fetchRecipe())},
+    fetchRecipeSteps: () => {dispatch(fetchRecipeSteps())},
+    fetchNutrition: () => {dispatch(fetchNutrition())},
 
     //Post methods
     postComment: (recipeId, rating, user, userId, comment) => {dispatch(postComment(recipeId, rating, user, userId, comment))},
@@ -81,8 +85,10 @@ class Main extends Component {
         this.props.fetchGroceries();
         this.props.fetchMealPlan();
         this.props.fetchMealPlanCollection();
+        this.props.fetchComments();
         this.props.fetchRecipe();
-        this.props.fetchRecipeCollection();
+        this.props.fetchRecipeSteps();
+        // this.props.fetchRecipeCollection();
     }
 
     handleLogout = () => {
@@ -90,45 +96,50 @@ class Main extends Component {
         this.props.deleteUser()
     }
 
-    //  PROOF OF CONCEPT REDUX WORKING
-    // alertTest = () => {
-    //     let arr = []
-    //     this.props.ingredients.ingredients.map((ing) => {
-    //         arr.push(ing)
-    //         console.log(ing);
-    //     })
-    //     alert(arr)
-    // }
-
     render(){
 
         const IngredientWithId = () => {
-            const {ingredientId} = useParams();
+            const {id} = useParams();
             return(
-                <Ingredients ingredient={this.props.ingredients.ingredients.filter
-                    ((ingredient) => ingredient.id === parseInt(ingredientId,10))[0]}
+                <Ingredients ingredient={this.props.ingredients.ingredients.filter(
+                    (ingredient) => ingredient.id === parseInt(id,10))[0]}
                 />
+            )
+        }
+
+        const RecipeWithId = () => {
+            const {id} = useParams();
+            return(
+                <Recipes targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
+                targetRecipeSteps={this.props.recipeSteps.recipeSteps.filter(steps => steps.recipeId === parseInt(id,10))}
+                recipeLoading={this.props.recipe.recipe.isLoading}
+                recipeErrMess={this.props.recipe.recipe.errMess}
+                targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
+                /> 
             )
         }
 
         return(
             <div>
                 {/* Passes the token and the handleLogout method to the Header component. */}
-                <Header token={this.props.token.token} handleLogout={this.handleLogout}/>
-                <Routes>
-                    <Route path='/login' element={<Login/>}/>
-                    <Route path='/register'element={<Register/>}/>
-                    <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
-                    <Route path='/recipes/:id' element={<Recipes recipes={this.props.recipe.recipe} />}/>
-                    <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
-                    <Route path='/ingredients/:ingredientId' element={<IngredientWithId/>}/>
-                    <Route path='/groceries' element={<Groceries/>}/>
-                    <Route path='/mealplans' element={<MealPlans/>}/>
-                    <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>
-                    <Route path='' element={<Navigate to='/login' />} />
-                </Routes>
+                {console.log(this.props.user.user)}
+                <Header token={this.props.token.token} user={this.props.user.username} handleLogout={this.handleLogout}/>
+                <div className="main">
+                    <Routes>
+                        <Route path='/login' element={<Login/>}/>
+                        <Route path='/register'element={<Register/>}/>
+                        <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
+                        <Route path='/recipes/:id' element={<RecipeWithId/>}/>
+                        <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
+                        <Route path='/ingredients/:id' element={<IngredientWithId/>}/>
+                        <Route path='/groceries' element={<Groceries/>}/>
+                        <Route path='/mealplans' element={<MealPlans/>}/>
+                        <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>
+                        <Route path='' element={<Navigate to='/login' />} />
+                    </Routes>
+                </div>
                 <Footer/>
-            </div>
+          </div>
         )
     }
 } 

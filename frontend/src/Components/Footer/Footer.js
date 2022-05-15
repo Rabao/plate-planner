@@ -14,12 +14,14 @@ export const Footer = ({ hrefIn }) => {
 
   return (
       <div className="footer">
-        <ul>
-            <li>Home</li>
-            <li>Recipes</li>
-            <li>Groceries</li>
-            <li>Meal Plans</li>
-        </ul>
+        <div className="container">
+          <ul>
+              <li><Link to="/home">Home</Link></li>
+              <li><Link to="/recipes">Recipes</Link></li>
+              <li><Link to="/groceries">Groceries</Link></li>
+              <li><Link to="/mealplans">Meal Plans</Link></li>
+          </ul>
+        </div>
     </div>
   );
 };

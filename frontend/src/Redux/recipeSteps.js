@@ -1,20 +1,20 @@
 import * as ActionTypes from "./ActionTypes";
 
-export const Recipe = (state = {
+export const RecipeSteps = (state = {
         // id: null,
         isLoading: true,
         errMess: null,
-        recipe: []
+        recipeSteps: []
     }, action) => {
     
 
     switch(action.type) {
         
-        case ActionTypes.ADD_RECIPE:
+        case ActionTypes.ADD_RECIPESTEPS:
             return {...state,
                 isLoading: false,
                 errMess: null,
-                recipe: action.payload}
+                recipeSteps: action.payload}
 
         // case ActionTypes.DELETE_RECIPE:
         //     return { ...state, 
@@ -22,17 +22,17 @@ export const Recipe = (state = {
         //         recipe: '', 
         //         authorities: [] }
 
-        case ActionTypes.RECIPE_LOADING:
+        case ActionTypes.RECIPESTEPS_LOADING:
             return{...state,
                     isLoading: true,
                     errMess: null,
-                    recipe: []}
+                    recipeSteps: []}
     
-        case ActionTypes.RECIPE_FAILED:
+        case ActionTypes.RECIPESTEPS_FAILED:
                 return{...state, 
                     isLoading: false,
                     errMess: action.payload,
-                    recipe: []}
+                    recipeSteps: []}
 
         default:
             return state;

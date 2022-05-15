@@ -19,15 +19,17 @@ public class MealPlanController {
     private RecipeDao recipeDao;
     private GroceryListDao groceryListDao;
     private UserReviewDao userReviewDao;
+    private RecipeStepsDao recipeStepsDao;
 
     public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao,
-                              RecipeDao recipeDao, GroceryListDao groceryListDao,
-                              UserReviewDao userReviewDao) {
+                              RecipeDao recipeDao, RecipeStepsDao recipeStepsDao,
+                              GroceryListDao groceryListDao, UserReviewDao userReviewDao) {
         this.ingredientsDao = ingredientsDao;
         this.nutritionDao = nutritionDao;
         this.recipeDao = recipeDao;
         this.groceryListDao = groceryListDao;
         this.userReviewDao = userReviewDao;
+        this.recipeStepsDao = recipeStepsDao;
     }
 
     /*****************************************************
@@ -144,6 +146,33 @@ public class MealPlanController {
     /*****************************************************
      *                                                    *
      *                   RECIPE APIs                      *
+     *                                                    *
+     *****************************************************/
+    /*****************************************************
+     *                                                    *
+     *                RECIPE STEPS APIs                   *
+     *                                                    *
+     *****************************************************/
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="/steps")
+    public List<RecipeSteps> listRecipeSteps(){
+        return recipeStepsDao.listRecipeSteps();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="/steps/{id}")
+    public RecipeSteps getRecipeSteps(@PathVariable long id){
+        return recipeStepsDao.getRecipeSteps(id);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="/steps")
+    public void addRecipeSteps(@Valid @RequestBody RecipeSteps recipeSteps){
+        recipeStepsDao.addRecipeSteps(recipeSteps);
+    }
+    /*****************************************************
+     *                                                    *
+     *                RECIPE STEPS APIs                   *
      *                                                    *
      *****************************************************/
     /*****************************************************
