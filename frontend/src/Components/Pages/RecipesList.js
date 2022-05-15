@@ -1,8 +1,6 @@
-import React, {Component} from 'react';
-import {useParams} from 'react-router-dom'
+import React from 'react';
 import {Breadcrumb} from 'react-bootstrap'
 import {Link, useNavigate} from 'react-router-dom'
-import Recipes from '../Pages/Recipes'
 
 function RecipesList(props) {
 

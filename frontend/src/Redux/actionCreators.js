@@ -467,7 +467,7 @@ export const postComment = (recipeId, userId, rating, comment) => (dispatch) => 
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(response => dispatch(addComment(response)))
     .catch(error => {console.log('Post comments ', error.message)
         alert('Your comment could not be posted.\nError: ' + error.message)});

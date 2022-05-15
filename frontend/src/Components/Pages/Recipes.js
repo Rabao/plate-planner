@@ -1,17 +1,10 @@
 import React, { Component } from 'react'
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import {Link} from 'react-router-dom'
-import { Breadcrumb, Form, FormGroup } from 'react-bootstrap'
-import { Control,  LocalForm, Errors } from 'react-redux-form';
+import { Breadcrumb, Col } from 'react-bootstrap'
+import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
 
-
-function handleSubmit(values) {
-    values.preventDefault();
-    console.log(values.comment);  
-         // this.props.postComment(this.props.targetRecipe.id, this.props.user, values.rating, values.comment);
-        // e.stopPropagation();
-}
 
 export default class Recipes extends Component {
     constructor(props){
@@ -31,15 +24,27 @@ export default class Recipes extends Component {
                     </Breadcrumb>
                     {/* {alert(this.props.user)} */}
                     <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps}
-                    comments={this.props.targetComments} 
-                    isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}/>
+                    comments={this.props.targetComments} user={this.props.user}
+                    isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}
+                    postComment={this.props.postComment}/>
                  </div>  
             )
         }
       
 }
 
+
+
 const Recipe = (props) => {
+
+    const recipeId = props.recipe.id;
+    const userId = props.user.id;
+
+    function handleSubmit(values) {
+        props.postComment( recipeId, userId, values.rating, values.userComment);
+           <RenderComments/>
+    }
+
     if(props.isLoading){
     return(<div className="container">
             <div className="row">
@@ -64,9 +69,8 @@ const Recipe = (props) => {
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
             {props.comments ? <RenderComments target={props.comments}/> : <div>Null</div>}
             
-            <Form model="comments" onSubmit={(values) => handleSubmit(values)}>
-                <FormGroup>                                   
-                    <div  className="col" md={12}>
+            <LocalForm onSubmit={(values) => handleSubmit(values)}>                        
+                    <Col md={12}>
                     <label htmlFor="rating">Rating</label> 
                         <Control.select model='.rating' 
                         name="rating" 
@@ -78,24 +82,18 @@ const Recipe = (props) => {
                             <option>4</option>
                             <option>5</option>
                         </Control.select>
-                    </div>                                     
-                </FormGroup>
-                <FormGroup>
-                    <div  className="col" md={12}>
-                    <label htmlFor="comment">Comment</label> 
-                        <Control.textarea model='.comment' 
-                        id="comment" 
-                        name="comment" 
+                    </Col>                                     
+                    <Col md={12}>
+                    <label htmlFor="userComment">Comment</label> 
+                        <Control.textarea model='.userComment' 
+                        name="userComment" 
                         rows="6" 
                         className="form-control"/>
-                    </div>
-                </FormGroup>
-                <FormGroup>
-                    <div  className="col" md={12}>
+                    </Col>
+                    <Col md={12}>
                         <button type='submit' color="primary">Post Comment</button>
-                    </div>
-                </FormGroup>
-            </Form>
+                    </Col>
+            </LocalForm>
             </div>
         </div>
     )
@@ -103,19 +101,20 @@ const Recipe = (props) => {
 }
 
 function RenderComments(props){
-    let arr = [];
     const recipeComments = props.target.map((comment, index) => {
-        let obj =<div id="user-comment" key={index}>
+        return (  
+        <div id="user-comment" key={index}>
                     <p>{comment.comment}</p>
                     {/* <div>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</div> */}
                 </div>
-                 arr.push(obj)});  
+             )
+    });
     
     return (             
         <div className='row'>
             <div className='col' md={12}>
                 <h5>Comments</h5>
-                    {arr}
+                {recipeComments}
             </div>
         </div>
     )
