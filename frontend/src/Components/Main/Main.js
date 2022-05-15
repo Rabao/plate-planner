@@ -53,14 +53,17 @@ const mapDispatchToProps = (dispatch) => ({
     fetchNutrition: () => {dispatch(fetchNutrition())},
 
     //Post methods
-    postComment: (recipeId, rating, user, userId, comment) => {dispatch(postComment(recipeId, rating, user, userId, comment))},
-    postNutrition: (id, serving_size, calories, calories_fat, total_fat, 
+    postComment: (recipeId, rating, user, userId, comment) => 
+        {dispatch(postComment(recipeId, rating, user, userId, comment))},
+    postNutrition: (serving_size, calories, calories_fat, total_fat, 
         saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, 
-        dietary_fiber, sugar, sugar_alcohol, protein) => 
-        {dispatch(postNutrition(id, serving_size, calories, calories_fat, total_fat, 
+        dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,
+        vitB6, cobalamin, magnesium) => 
+        {dispatch(postNutrition(serving_size, calories, calories_fat, total_fat, 
             saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, 
-            dietary_fiber, sugar, sugar_alcohol, protein))},
-    postIngredient: (id, name, type) => {dispatch(postIngredient(id, name, type))},
+            dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,
+            vitB6, cobalamin, magnesium))},
+    postIngredient: (name, type) => {dispatch(postIngredient(name, type))},
 
     //Add methods
     // addGroceries: () => {dispatch(addGroceries())},
@@ -101,10 +104,13 @@ class Main extends Component {
         const IngredientWithId = () => {
             const {id} = useParams();
             return(
-                <Ingredients ingredient={this.props.ingredients.ingredients.filter(
-                    (ingredient) => ingredient.id === parseInt(id,10))[0]}
+                <Ingredients 
+                    ingredient={this.props.ingredients.ingredients.filter(
+                        (ingredient) => ingredient.id === parseInt(id,10))[0]}
+                    nutrition={this.props.nutrition.nutrition.filter(
+                        (nutrition) => nutrition.id === parseInt(id,10))[0]}
                 />
-            )
+            );
         }
 
         const RecipeWithId = () => {
@@ -122,7 +128,6 @@ class Main extends Component {
         return(
             <div>
                 {/* Passes the token and the handleLogout method to the Header component. */}
-                {console.log(this.props.user.user)}
                 <Header token={this.props.token.token} user={this.props.user.username} handleLogout={this.handleLogout}/>
                 <div className="main">
                     <Routes>
@@ -132,14 +137,15 @@ class Main extends Component {
                         <Route path='/recipes/:id' element={<RecipeWithId/>}/>
                         <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
                         <Route path='/ingredients/:id' element={<IngredientWithId/>}/>
-                        <Route path='/groceries' element={<Groceries/>}/>
+                        <Route path='/groceries' element={<Groceries 
+							postIngredient={this.props.postIngredient}
+							postNutrition={this.props.postNutrition}/>}/>
                         <Route path='/mealplans' element={<MealPlans/>}/>
                         <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>
                         <Route path='' element={<Navigate to='/login' />} />
                     </Routes>
                 </div>
-                <Footer/>
-          </div>
+            </div>
         )
     }
 } 

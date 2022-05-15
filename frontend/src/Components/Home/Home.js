@@ -31,6 +31,13 @@ function Home(props) {
                                     <Link to='/mealplans'>Meal Plans</Link>
                                     </div>
                                 </div>
+                            </div>           
+                            <div className="col" md={3}>
+                                <div className="card">
+                                    <div className="card-body">
+                                    <Link to='/ingredients'>Ingredients</Link>
+                                    </div>
+                                </div>
                             </div>                         
                         </div>
                     </div>
