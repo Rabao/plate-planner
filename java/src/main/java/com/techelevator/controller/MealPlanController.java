@@ -222,13 +222,13 @@ public class MealPlanController {
      *****************************************************/
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="reviews/recipe")
-    public List<UserReview> getListOfReviewsByRecipe(@RequestParam long id){
-        return userReviewDao.getListOfReviewsByRecipe(id);
+    public List<UserReview> getListOfReviewsByRecipe(){
+        return userReviewDao.getListOfReviewsByRecipe();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value="reviews/user")
-    public List<UserReview> getListOfReviewByUser(@RequestParam long id){
+    @GetMapping(value="reviews/user/{id}")
+    public List<UserReview> getListOfReviewByUser(@PathVariable long id){
         return userReviewDao.getListOfReviewByUser(id);
     }
 

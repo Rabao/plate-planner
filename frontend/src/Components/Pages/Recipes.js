@@ -10,12 +10,18 @@ import Loader from '../SubComponents/Loader/Loader';
 export default class Recipes extends Component {
     constructor(props){
         super(props)
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(values){
+        // this.props.postComment(this.props.targetRecipe.id, this.props.user, values.rating, values.comment);
+        alert(this.props.targetRecipe.id, this.props.user, values.rating, values.comment);
+        console.log(this.props.targetRecipe.id, this.props.user, values.rating, values.comment);
     }
     
     
   render() {
-
-
             return (
                 <div className='container'>
                     <Breadcrumb>
@@ -26,7 +32,9 @@ export default class Recipes extends Component {
                             Recipes
                         </Breadcrumb.Item>
                     </Breadcrumb>
-                    <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps} isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}/>
+                    <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps}
+                    comments={this.props.targetComments} 
+                    isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}/>
                  </div>  
             )
         }
@@ -51,37 +59,39 @@ const Recipe = (props) => {
     } else { 
     return(
         <div>
-            {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>null</h3>}
+            {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>Null</h3>}
             <div className='component-body'>
-            {props.recipe ?<Ingredients target={props.recipe} /> : <div>null</div>}
+            {props.recipe ?<Ingredients target={props.recipe} /> : <div>Null</div>}
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
-            {props.recipe ?<Notes target={props.recipe.notes} /> : <div>null</div>}
-            <RenderComments/>
+            {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
+            {props.comments ? <RenderComments target={props.comments}/> : <div>Null</div>}
             </div>
         </div>
     )
   }
 }
 
-function RenderComments(){
-    return (
-        <> 
-            <div className='row'>
-                <div className='col' md={12}>
-                     <h5>Comments</h5>
-                     <div>This is the recipes page comments!</div>
-                     {/* Visible if the user is registered. */}
-                     <CommentForm/>
-                </div>
+function RenderComments(props){
+    let arr = [];
+    const recipeComments = props.target.map((comment, index) => {
+        let obj =<p key={index}>{comment.comment}</p>
+                 arr.push(obj)});  
+    
+    return (             
+        <div className='row'>
+            <div className='col' md={12}>
+                <h5>Comments</h5>
+                    {arr}
+                    <CommentForm/>
             </div>
-        </>
-      );
+        </div>
+    )
 }
 
 function CommentForm() {
     return (
         <>
-            <Form>
+            <Form onSubmit={(values) => this.handleSubmit(values)}>
                 <FormGroup>                                   
                     <div  className="col" md={12}>
                     <label htmlFor="rating">Rating</label> 
@@ -150,8 +160,6 @@ function RecipeSteps(props) {
             </div>
     )
 }
-
-  
 
 function Notes(props) { 
         return (

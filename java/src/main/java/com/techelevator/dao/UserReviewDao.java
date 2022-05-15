@@ -5,7 +5,7 @@ import com.techelevator.model.UserReview;
 import java.util.List;
 
 public interface UserReviewDao {
-    List<UserReview> getListOfReviewsByRecipe(long recipeId);
+    List<UserReview> getListOfReviewsByRecipe();
 
     List<UserReview> getListOfReviewByUser(long userId);
 

@@ -78,8 +78,6 @@ const mapDispatchToProps = (dispatch) => ({
 class Main extends Component {
     constructor(props){
         super(props);
-
-        // this.alertTest = this.alertTest.bind(this);
     }
 
     componentDidMount(){
@@ -91,7 +89,6 @@ class Main extends Component {
         this.props.fetchComments();
         this.props.fetchRecipe();
         this.props.fetchRecipeSteps();
-        // this.props.fetchRecipeCollection();
     }
 
     handleLogout = () => {
@@ -120,16 +117,20 @@ class Main extends Component {
                 targetRecipeSteps={this.props.recipeSteps.recipeSteps.filter(steps => steps.recipeId === parseInt(id,10))}
                 recipeLoading={this.props.recipe.recipe.isLoading}
                 recipeErrMess={this.props.recipe.recipe.errMess}
+                user={this.props.user.id}
                 targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
-                /> 
+                commentsLoading={this.props.comments.isLoading}
+                commentsErrMess={this.props.comments.errMess}  
+                postComment={this.props.postComment}/>
             )
         }
-
+// filter(comments => comments.recipeId === parseInt(id,10))
         return(
             <div>
                 {/* Passes the token and the handleLogout method to the Header component. */}
                 <Header token={this.props.token.token} user={this.props.user.username} handleLogout={this.handleLogout}/>
                 <div className="main">
+                    {console.log("THIS IS A TEST!!!!!!!!!!!!!" + this.props.comments.comments)}
                     <Routes>
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/register'element={<Register/>}/>
@@ -145,7 +146,8 @@ class Main extends Component {
                         <Route path='' element={<Navigate to='/login' />} />
                     </Routes>
                 </div>
-            </div>
+            <Footer/>
+        </div>
         )
     }
 } 

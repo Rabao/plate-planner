@@ -475,7 +475,7 @@ export const postComment = (recipeId, rating, user, userId, comment) => (dispatc
 };
 
 export const fetchComments = () => (dispatch) => {
-    return fetch(baseUrl + "reviews/recipe")
+    return fetch(baseUrl + "/reviews/recipe")
         .then(response => {
             if (response.ok) {
                 return response;
