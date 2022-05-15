@@ -78,7 +78,7 @@ public class JdbcNutritionDao implements NutritionDao{
     private Nutrition mapRowToNutrition(SqlRowSet rs) {
         Nutrition nutrition = new Nutrition();
         nutrition.setId(rs.getLong("id"));
-        nutrition.setserving_size(rs.getDouble("serving_size"));
+        nutrition.setserving_size(rs.getString("serving_size"));
         nutrition.setCalories(rs.getDouble("calories"));
         nutrition.setcalories_fat(rs.getDouble("calories_fat"));
         nutrition.settotal_fat(rs.getDouble("total_fat"));

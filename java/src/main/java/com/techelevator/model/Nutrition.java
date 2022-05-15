@@ -3,7 +3,7 @@ package com.techelevator.model;
 public class Nutrition {
 
     private long id;
-    private double serving_size;
+    private String serving_size;
     private double calories;
     private double calories_fat;
     private double total_fat;
@@ -28,7 +28,7 @@ public class Nutrition {
     public Nutrition() {
     }
 
-    public Nutrition(long id, double serving_size, double calories, double calories_fat,
+    public Nutrition(long id, String serving_size, double calories, double calories_fat,
                      double total_fat, double saturated_fat, double trans_fat,
                      double cholesterol, double sodium, double potassium, double total_carbs,
                      double dietary_fiber, double sugar, double sugar_alcohol, double protein,
@@ -65,11 +65,11 @@ public class Nutrition {
         this.id = id;
     }
 
-    public double getserving_size() {
+    public String getserving_size() {
         return serving_size;
     }
 
-    public void setserving_size(double serving_size) {
+    public void setserving_size(String serving_size) {
         this.serving_size = serving_size;
     }
 

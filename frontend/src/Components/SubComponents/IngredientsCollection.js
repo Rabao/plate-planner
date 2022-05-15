@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import {Breadcrumb, Row, Col} from 'react-bootstrap'
+import { Link } from 'react-router-dom';
 
 export default class IngredientsCollection extends Component {
     constructor(props){
@@ -11,11 +13,13 @@ export default class IngredientsCollection extends Component {
 
             // if(recipe != null){
                 return(
-                    <div className="col" md={4}>
-                        <div key={ingredients.id} className="ingredients-collection">
-                            <div id="ingredients-collection-text"><p>{ingredients.name}</p></div>
-                        </div>            
-                    </div>
+                    <Col md={2}>
+                        <Link to={`/ingredients/${ingredients.id}`}>
+                            <div id="ingredients-collection-text">
+                                <p>{ingredients.name}</p>
+                            </div>
+                        </Link>
+                    </Col>
                     )
                 })
             // }
