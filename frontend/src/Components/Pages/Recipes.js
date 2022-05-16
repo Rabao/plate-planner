@@ -112,6 +112,63 @@ function EditDeleteComment(props){
     )
 }
 
+function showStars(rating){
+    switch (rating){
+        case 1:
+            return (
+                <div>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/white-star-icon-19.png' style={{width:20}}></img>
+                    <img src='/white-star-icon-19.png' style={{width:20}}></img>
+                    <img src='/white-star-icon-19.png' style={{width:20}}></img>
+                    <img src='/white-star-icon-19.png' style={{width:20}}></img>
+                </div>
+            );
+        case 2:
+            return (
+                <div>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/white-star-icon-19.png' style={{width:20}}></img>
+                    <img src='/white-star-icon-19.png' style={{width:20}}></img>
+                    <img src='/white-star-icon-19.png' style={{width:20}}></img>
+                </div>
+            );
+        case 3:
+            return (
+                <div>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/white-star-icon-19.png' style={{width:20}}></img>
+                    <img src='/white-star-icon-19.png' style={{width:20}}></img>
+                </div>
+            );
+        case 4:
+            return (
+                <div>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/white-star-icon-19.png' style={{width:20}}></img>
+                </div>
+            );
+        case 5:
+            return (
+                <div>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                    <img src='/star-vector-png-transparent-image-pngpix-21.png' style={{width:20}}></img>
+                </div>
+            );
+        default:
+            return(<div></div>);
+    }
+}
+
 function RenderComments(props){
     
    
@@ -124,6 +181,7 @@ function RenderComments(props){
         <div id="user-comment" key={index}>
                     <p className="username">{userObj[0].username}</p>
                     <p className="comment-text">{comment.comment}</p>
+                    <p className="stars">{showStars(comment.rating)}</p>
                     {props.authUser.id === comment.userId ? <EditDeleteComment/> : <div></div>}
                     {/* <div>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</div> */}
                 </div>
