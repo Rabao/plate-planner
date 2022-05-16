@@ -6,7 +6,7 @@ import { Dropdown, ButtonGroup, Button } from 'react-bootstrap';
 
 export default class Header extends Component {
     render(){
-        const navText = "Hello, " + this.props.user + "!";
+        const navText = "Hello, " + this.props.user.username + "! ";
         return(
             <div className="header">
                 <div className="container">

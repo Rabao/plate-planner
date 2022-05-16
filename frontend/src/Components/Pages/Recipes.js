@@ -22,7 +22,7 @@ export default class Recipes extends Component {
                             Recipes
                         </Breadcrumb.Item>
                     </Breadcrumb>
-                    {/* {alert(this.props.user)} */}
+                    {/* {alert(this.props.user.username)} */}
                     <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps} ingredients={this.props.targetIngredients}
                     comments={this.props.targetComments} user={this.props.user} users={this.props.users}
                     isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}
@@ -42,7 +42,6 @@ const Recipe = (props) => {
 
     function handleSubmit(values) {
         props.postComment( recipeId, userId, values.rating, values.userComment);
-           <RenderComments/>
     }
 
     if(props.isLoading){
@@ -69,7 +68,7 @@ const Recipe = (props) => {
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
             {props.comments ? <RenderComments target={props.comments} authUser={props.user} users={props.users}/> : <div>Null</div>}
             
-            <LocalForm onSubmit={(values) => handleSubmit(values)}>                        
+            <LocalForm >                        
                     <Col md={12}>
                     <label htmlFor="rating">Rating</label> 
                         <Control.select model='.rating' 
@@ -117,8 +116,9 @@ function RenderComments(props){
     
    
     const recipeComments = props.target.map((comment, index) => {
+        console.log(props.users.allUsers)
         //User Filter 
-            const userObj = props.users.filter((user) => user.id === comment.userId);
+            const userObj = props.users.allUsers.filter((user) => user.id === comment.userId);
 
         return (  
         <div id="user-comment" key={index}>

@@ -35,14 +35,14 @@ class Register extends Component{
     render(){
         return(
             <div className="container">
-            <Breadcrumb>
-               <Breadcrumb.Item>
-                   <Link to="/home">Home</Link>  
-               </Breadcrumb.Item>
-               <Breadcrumb.Item active>
-                   Register
-               </Breadcrumb.Item>
-           </Breadcrumb>
+                <Breadcrumb>
+                    <Breadcrumb.Item>
+                        <Link to="/home">Home</Link>  
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item active>
+                        Register
+                    </Breadcrumb.Item>
+                </Breadcrumb>
                <div className="row">
                 <h3>Create Account</h3>
                 <label class="sr-only">Username</label>

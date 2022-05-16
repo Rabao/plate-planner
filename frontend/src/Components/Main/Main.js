@@ -96,6 +96,7 @@ class Main extends Component {
         this.props.fetchRecipe();
         this.props.fetchRecipeSteps();
         this.props.fetchRecipeIngredients();
+       
     }
 
     handleLogout = () => {
@@ -123,10 +124,10 @@ class Main extends Component {
             return(
                 <Recipes targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
                 targetRecipeSteps={this.props.recipeSteps.recipeSteps.filter(steps => steps.recipeId === parseInt(id,10))}
-                recipeLoading={this.props.recipe.recipe.isLoading}
-                recipeErrMess={this.props.recipe.recipe.errMess}
+                recipeLoading={this.props.recipe.isLoading}
+                recipeErrMess={this.props.recipe.errMess}
                 user={this.props.user}
-                users={this.props.allUsers.allUsers}
+                users={this.props.allUsers}
                 targetIngredients={this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10))}
                 targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
                 commentsLoading={this.props.comments.isLoading}
@@ -138,9 +139,8 @@ class Main extends Component {
 // filter(comments => comments.recipeId === parseInt(id,10))
         return(
             <div>
-             
                 {/* Passes the token and the handleLogout method to the Header component. */}
-                <Header token={this.props.token.token} user={this.props.user.username} handleLogout={this.handleLogout}/>
+                <Header token={this.props.token.token} user={this.props.user} handleLogout={this.handleLogout}/>
                 <div className="main">
                     <Routes>
                         <Route path='/login' element={<Login/>}/>
@@ -151,8 +151,8 @@ class Main extends Component {
                         <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
                         <Route path='/ingredients/:id' element={<IngredientWithId/>}/>
                         <Route path='/groceries' element={<Groceries 
-                            ingredients={this.props.ingredients.ingredients}
-                            nutrition={this.props.nutrition.nutrition}
+                            ingredients={this.props.ingredients}
+                            nutrition={this.props.nutrition}
 							postIngredient={this.props.postIngredient}
 							postNutrition={this.props.postNutrition}/>}/>
                         <Route path='/mealplans' element={<MealPlans/>}/>

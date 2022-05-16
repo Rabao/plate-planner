@@ -46,13 +46,14 @@ class Login extends Component {
     render(){
         return(
             <div className="container">
-             <Breadcrumb>
-                <Link to="/home"><Breadcrumb.Item>Home  
-                </Breadcrumb.Item></Link>    
-                <Breadcrumb.Item active>
-                    Sign In
-                </Breadcrumb.Item>
-            </Breadcrumb>
+                <Breadcrumb>
+                    <Breadcrumb.Item>
+                        <Link to="/home">Home</Link>  
+                    </Breadcrumb.Item>
+                    <Breadcrumb.Item active>
+                        Sign In
+                    </Breadcrumb.Item>
+                </Breadcrumb>
                 <div className="row">
                     <h3> Sign in </h3>
                     <div className="col"  md={3}>
