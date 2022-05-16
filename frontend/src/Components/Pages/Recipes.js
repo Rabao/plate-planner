@@ -68,7 +68,7 @@ const Recipe = (props) => {
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
             {props.comments ? <RenderComments target={props.comments} authUser={props.user} users={props.users}/> : <div>Null</div>}
             
-            <LocalForm >                        
+            <LocalForm onSubmit={(values) => handleSubmit(values)}>                        
                     <Col md={12}>
                     <label htmlFor="rating">Rating</label> 
                         <Control.select model='.rating' 
