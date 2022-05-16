@@ -98,13 +98,15 @@ function GroceryList() {
     handleInputChange(){
         const product = document.getElementById('product');
         let found = false;
-        let i = 0;
+        let i = -1;
         do{
+            i++;
             if(product.value == this.props.ingredients[i].name)
                 found = true;
-            i++;
         }while(!found && i<this.props.ingredients.length);
         if(found){
+            const type = document.getElementById('type');
+            type.value = this.props.ingredients[i].type;
             const serving = document.getElementById('serving');
             serving.value = this.props.nutrition[i].serving_size;
             const calories = document.getElementById('calories');
