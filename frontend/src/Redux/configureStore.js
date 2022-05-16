@@ -12,12 +12,14 @@ import {User} from './user'
 import { RecipeSteps } from './recipeSteps';
 import { createForms } from 'react-redux-form';
 import { InitialFeedback } from "./forms";
+import { Users } from './users';
 
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
             token: Token,
             user: User,
+            allUsers: Users,
             comments: Comments,
             groceries: Groceries,
             ingredients: Ingredients,
@@ -29,8 +31,7 @@ export const ConfigureStore = () => {
                 feedback: InitialFeedback
             })
             }),
-        applyMiddleware(thunk,)
-            //  logger)
+        applyMiddleware(thunk,logger)
     );
 
     return store;

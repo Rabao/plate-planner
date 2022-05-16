@@ -24,7 +24,7 @@ export default class Recipes extends Component {
                     </Breadcrumb>
                     {/* {alert(this.props.user)} */}
                     <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps}
-                    comments={this.props.targetComments} user={this.props.user}
+                    comments={this.props.targetComments} user={this.props.user} users={this.props.users}
                     isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}
                     postComment={this.props.postComment}/>
                  </div>  
@@ -67,7 +67,7 @@ const Recipe = (props) => {
             {props.recipe ?<Ingredients target={props.recipe} /> : <div>Null</div>}
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
-            {props.comments ? <RenderComments target={props.comments}/> : <div>Null</div>}
+            {props.comments ? <RenderComments target={props.comments} authUser={props.user} users={props.users}/> : <div>Null</div>}
             
             <LocalForm onSubmit={(values) => handleSubmit(values)}>                        
                     <Col md={12}>
@@ -100,11 +100,31 @@ const Recipe = (props) => {
   }
 }
 
+function EditDeleteComment(props){
+    return(
+        <div>
+            <div className="row">
+                <Col md={6}>
+                    <button className="interface_buttons" >&#9997;</button>
+                    <button className="interface_buttons" >&#10060;</button>
+                </Col>
+            </div>
+        </div>
+    )
+}
+
 function RenderComments(props){
+    
+   
     const recipeComments = props.target.map((comment, index) => {
+        //User Filter 
+            const userObj = props.users.filter((user) => user.id === comment.userId);
+
         return (  
         <div id="user-comment" key={index}>
-                    <p>{comment.comment}</p>
+                    <p className="username">{userObj[0].username}</p>
+                    <p className="comment-text">{comment.comment}</p>
+                    {props.authUser.id === comment.userId ? <EditDeleteComment/> : <div></div>}
                     {/* <div>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</div> */}
                 </div>
              )
@@ -117,12 +137,14 @@ function RenderComments(props){
                 {recipeComments}
             </div>
         </div>
+        
     )
 }
 
 function Ingredients(props) { 
+
     return (
-      <> 
+      
           <div className='row'>
               <div className='col' md={7}>
                    <h5>Ingredients</h5>
@@ -132,38 +154,40 @@ function Ingredients(props) {
                   <img id="recipe-pg-img" src={props.target.image}></img>
               </div>
           </div>
-      </>
+      
     );
   }
 
 function RecipeSteps(props) {
-    let arr = [];
 
     const recipeSteps = props.target.map((step) => {
-        let obj =<li key={step.step_num}>{step.steps}</li>
-                 arr.push(obj)});  
-    
+        return(
+            <li key={step.step_num}>{step.steps}</li>
+            )
+        });
+
     return ( <div className='row' >         
                 <div className='col' md={12}>
                     <h5>Recipe Steps</h5>
                     <ol>   
-                        {arr} 
+                        {recipeSteps} 
                     </ol>
                 </div>
             </div>
+
     )
 }
 
 function Notes(props) { 
-        return (
-        <> 
-            <div className='row'>
-                <div className='col' md={12}>
-                    <h5>Notes</h5>
-                    <p>{props.target}</p>
-                </div>
+
+    return (
+        <div className='row'>
+            <div className='col' md={12}>
+                <h5>Notes</h5>
+                <p>{props.target}</p>
             </div>
-        </>
+        </div>
+
         );
   }
   

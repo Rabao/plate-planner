@@ -20,14 +20,16 @@ public class MealPlanController {
     private GroceryListDao groceryListDao;
     private UserReviewDao userReviewDao;
     private RecipeStepsDao recipeStepsDao;
+    private UserDao userDao;
 
     public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao,
                               RecipeDao recipeDao, RecipeStepsDao recipeStepsDao,
-                              GroceryListDao groceryListDao, UserReviewDao userReviewDao) {
+                              GroceryListDao groceryListDao, UserDao userDao, UserReviewDao userReviewDao) {
         this.ingredientsDao = ingredientsDao;
         this.nutritionDao = nutritionDao;
         this.recipeDao = recipeDao;
         this.groceryListDao = groceryListDao;
+        this.userDao = userDao;
         this.userReviewDao = userReviewDao;
         this.recipeStepsDao = recipeStepsDao;
     }
@@ -220,6 +222,12 @@ public class MealPlanController {
      *                  USER REVIEW APIs                  *
      *                                                    *
      *****************************************************/
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="reviews/user")
+    public List<User> findAll(){
+        return userDao.findAll();
+    }
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="reviews/recipe")
     public List<UserReview> getListOfReviewsByRecipe(){

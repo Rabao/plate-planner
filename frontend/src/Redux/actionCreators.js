@@ -2,6 +2,34 @@ import * as ActionTypes from './ActionTypes'
 import { baseUrl } from '../Shared/baseUrl'
 
 //----------------------------------USER AUTH
+export const fetchUsers = () => (dispatch) => {
+    dispatch(usersLoading(true));
+
+    return fetch(baseUrl + "/reviews/user", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+        })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },  
+        error => {
+            let errmess = new Error(error.message);
+            throw errmess;
+        })
+        .then(response => response.json())
+        .then(users => dispatch(addUsers(users)))
+        .catch(error => dispatch(usersFailed(error.message)));
+}
+
 export const addToken = (token) => ({
     type: ActionTypes.ADD_TOKEN,
     payload: token
@@ -14,6 +42,19 @@ export const addUser = (user) => ({
 
 export const deleteUser = () => ({
     type: ActionTypes.DELETE_USER
+})
+
+export const addUsers = (users) => ({
+    type: ActionTypes.ADD_USERS,
+    payload: users
+})
+
+export const usersLoading = () => ({
+    type: ActionTypes.USERS_LOADING
+})
+
+export const usersFailed = () => ({
+    type: ActionTypes.USERS_FAILED
 })
 //----------------------------------USER AUTH
 //----------------------------------INGREDIENT

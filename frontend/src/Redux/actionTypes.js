@@ -3,6 +3,11 @@ export const ADD_TOKEN = 'ADD_TOKEN';
 export const ADD_USER = 'ADD_USER';
 export const DELETE_USER = 'DELETE_USER';
 
+//----------------------------------USERS
+export const ADD_USERS = 'ADD_USERS';
+export const USERS_LOADING = 'USERS_LOADING';
+export const USERS_FAILED = 'USERS_FAILED';
+
 //----------------------------------INGREDIENT
 export const ADD_INGREDIENTS = 'ADD_INGREDIENTS';
 export const DELETE_INGREDIENTS = 'DELETE_INGREDIENTS';

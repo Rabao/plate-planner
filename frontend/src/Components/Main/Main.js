@@ -9,7 +9,7 @@ import Recipes from '../Pages/Recipes'
 import RecipesList from '../Pages/RecipesList'
 import Groceries from '../Pages/GroceryList'
 import MealPlans from '../Pages/MealPlans'
-import {addToken, deleteUser,
+import {addToken, deleteUser, fetchUsers,
         fetchIngredients, fetchGroceries, fetchMealPlan, 
         fetchMealPlanCollection, fetchRecipe, fetchRecipeSteps,
         postComment, fetchComments, addGroceries, addIngredients, postIngredient,
@@ -25,6 +25,7 @@ const mapStateToProps = state => {
     return {
         token: state.token,
         user: state.user,
+        allUsers: state.allUsers,
         comments: state.comments,
         groceries: state.groceries,
         ingredients: state.ingredients,
@@ -40,6 +41,7 @@ const mapDispatchToProps = (dispatch) => ({
     deleteUser: () => { dispatch(deleteUser())},
 
     // Fetch methods
+    fetchUsers: () => {dispatch(fetchUsers())},
     fetchIngredients: () => {dispatch(fetchIngredients())},
     fetchGroceries: () => {dispatch(fetchGroceries())},
     fetchMealPlanCollection: () => {dispatch(fetchMealPlanCollection())},
@@ -81,6 +83,7 @@ class Main extends Component {
     }
 
     componentDidMount(){
+        this.props.fetchUsers();
         this.props.fetchIngredients();
         this.props.fetchNutrition();
         this.props.fetchGroceries();
@@ -112,22 +115,25 @@ class Main extends Component {
 
         const RecipeWithId = () => {
             const {id} = useParams();
+           
             return(
                 <Recipes targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
                 targetRecipeSteps={this.props.recipeSteps.recipeSteps.filter(steps => steps.recipeId === parseInt(id,10))}
                 recipeLoading={this.props.recipe.recipe.isLoading}
                 recipeErrMess={this.props.recipe.recipe.errMess}
                 user={this.props.user}
+                users={this.props.allUsers.allUsers}
                 targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
                 commentsLoading={this.props.comments.isLoading}
                 commentsErrMess={this.props.comments.errMess}  
                 postComment={this.props.postComment}/>
-            )
+            ) 
         }
 
 // filter(comments => comments.recipeId === parseInt(id,10))
         return(
             <div>
+             
                 {/* Passes the token and the handleLogout method to the Header component. */}
                 <Header token={this.props.token.token} user={this.props.user.username} handleLogout={this.handleLogout}/>
                 <div className="main">
