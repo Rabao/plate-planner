@@ -139,6 +139,8 @@ class Main extends Component {
                         <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
                         <Route path='/ingredients/:id' element={<IngredientWithId/>}/>
                         <Route path='/groceries' element={<Groceries 
+                            ingredients={this.props.ingredients.ingredients}
+                            nutrition={this.props.nutrition.nutrition}
 							postIngredient={this.props.postIngredient}
 							postNutrition={this.props.postNutrition}/>}/>
                         <Route path='/mealplans' element={<MealPlans/>}/>
