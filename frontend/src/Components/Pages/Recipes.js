@@ -23,7 +23,7 @@ export default class Recipes extends Component {
                         </Breadcrumb.Item>
                     </Breadcrumb>
                     {/* {alert(this.props.user)} */}
-                    <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps}
+                    <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps} ingredients={this.props.targetIngredients}
                     comments={this.props.targetComments} user={this.props.user} users={this.props.users}
                     isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}
                     postComment={this.props.postComment}/>
@@ -64,7 +64,7 @@ const Recipe = (props) => {
         <div>
             {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>Null</h3>}
             <div className='component-body'>
-            {props.recipe ?<Ingredients target={props.recipe} /> : <div>Null</div>}
+            {props.ingredients ?<Ingredients ingredients={props.ingredients} recipe={props.recipe}/> : <div>Null</div>}
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
             {props.comments ? <RenderComments target={props.comments} authUser={props.user} users={props.users}/> : <div>Null</div>}
@@ -142,16 +142,35 @@ function RenderComments(props){
 }
 
 function Ingredients(props) { 
+    const recipeIngredients = props.ingredients.map((ingredient, index) => {
 
-    return (
+        let item = ''
+
+        if(ingredient.unit>1){
+            item = " " + ingredient.unit + " " + ingredient.ingredientName;
+        } else {
+            item = " " + ingredient.unit + "s " + ingredient.ingredientName;
+        }
+
+        return (  
+                <div id="recipe-ingredients" key={index}>
+                    <p className="recipe-ingredient-text">
+                        <span id="ingredient-measurement">{ingredient.measurement}</span>
+                        {item}
+                    </p>
+                </div>
+             )
+    });
+    
+    return (    
       
           <div className='row'>
               <div className='col' md={7}>
                    <h5>Ingredients</h5>
-                   <div>This is the recipes page!</div>
+                   {recipeIngredients}
               </div>
               <div className='col' id="recipe-pg-img-container" md={5}>
-                  <img id="recipe-pg-img" src={props.target.image}></img>
+                  <img id="recipe-pg-img" src={props.recipe.image}></img>
               </div>
           </div>
       

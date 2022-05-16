@@ -325,3 +325,40 @@ h5 {
   background-color: #FFF;
   border-bottom: dashed 1px #dbd5cf; 
 }
+/*-------------------------- Add Recipe CSS ---------------------------*/
+.recipe-steps{
+  width:90%;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.recipe-forms{
+  width:99%;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+#steps-container{
+  width:99%;
+  height: 500px;
+  overflow: scroll;
+}
+
+.image-dropzone{
+  margin-top: 1.75em;
+  width:99%;
+ 
+  height: 500px;
+  border-radius: 5px;
+  box-shadow:inset 0 -1.5em 3em rgba(0,0,0,0.05),
+                    0 0  0 2px rgb(255,255,255);
+  border: dashed 1px #dbd5cf; 
+}
+
+#image-dropzone-area {
+  padding: fit-content;
+  padding: fit-content;
+  
+}

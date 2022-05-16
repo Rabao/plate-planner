@@ -7,11 +7,12 @@ import { Footer } from '../Footer/Footer'
 import Home from '../Home/Home'
 import Recipes from '../Pages/Recipes'
 import RecipesList from '../Pages/RecipesList'
+import AddRecipe from '../Pages/AddRecipe'
 import Groceries from '../Pages/GroceryList'
 import MealPlans from '../Pages/MealPlans'
 import {addToken, deleteUser, fetchUsers,
         fetchIngredients, fetchGroceries, fetchMealPlan, 
-        fetchMealPlanCollection, fetchRecipe, fetchRecipeSteps,
+        fetchMealPlanCollection, fetchRecipe, fetchRecipeSteps, fetchRecipeIngredients,
         postComment, fetchComments, addGroceries, addIngredients, postIngredient,
         addNutrition, fetchNutrition, postNutrition, addMealPlan, 
         addMealPlanCollection, addRecipe, } from '../../Redux/actionCreators'
@@ -32,6 +33,7 @@ const mapStateToProps = state => {
         nutrition: state.nutrition,
         recipe: state.recipe,
         recipeSteps: state.recipeSteps,
+        recipeIngredients: state.recipeIngredients,
         mealPlan: state.mealPlan,
     }
 }
@@ -52,6 +54,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchMealPlan: () => {dispatch(fetchMealPlan())},
     fetchRecipe: () => {dispatch(fetchRecipe())},
     fetchRecipeSteps: () => {dispatch(fetchRecipeSteps())},
+    fetchRecipeIngredients: () => {dispatch(fetchRecipeIngredients())},
     fetchNutrition: () => {dispatch(fetchNutrition())},
 
     //Post methods
@@ -92,6 +95,7 @@ class Main extends Component {
         this.props.fetchComments();
         this.props.fetchRecipe();
         this.props.fetchRecipeSteps();
+        this.props.fetchRecipeIngredients();
     }
 
     handleLogout = () => {
@@ -123,6 +127,7 @@ class Main extends Component {
                 recipeErrMess={this.props.recipe.recipe.errMess}
                 user={this.props.user}
                 users={this.props.allUsers.allUsers}
+                targetIngredients={this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10))}
                 targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
                 commentsLoading={this.props.comments.isLoading}
                 commentsErrMess={this.props.comments.errMess}  
@@ -141,6 +146,7 @@ class Main extends Component {
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/register'element={<Register/>}/>
                         <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
+                        <Route exact path='/add/recipe' element={<AddRecipe />}/>
                         <Route path='/recipes/:id' element={<RecipeWithId/>}/>
                         <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
                         <Route path='/ingredients/:id' element={<IngredientWithId/>}/>

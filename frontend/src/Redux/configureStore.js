@@ -13,6 +13,7 @@ import { RecipeSteps } from './recipeSteps';
 import { createForms } from 'react-redux-form';
 import { InitialFeedback } from "./forms";
 import { Users } from './users';
+import { RecipeIngredients } from './recipeIngredients'
 
 export const ConfigureStore = () => {
     const store = createStore(
@@ -26,6 +27,7 @@ export const ConfigureStore = () => {
             nutrition: Nutrition,
             recipe: Recipe,
             recipeSteps: RecipeSteps,
+            recipeIngredients: RecipeIngredients,
             mealPlan: MealPlan,
             ...createForms({
                 feedback: InitialFeedback

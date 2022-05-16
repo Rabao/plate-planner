@@ -20,10 +20,11 @@ public class MealPlanController {
     private GroceryListDao groceryListDao;
     private UserReviewDao userReviewDao;
     private RecipeStepsDao recipeStepsDao;
+    private RecipeIngredientsDao recipeIngredientsDao;
     private UserDao userDao;
 
     public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao,
-                              RecipeDao recipeDao, RecipeStepsDao recipeStepsDao,
+                              RecipeDao recipeDao, RecipeStepsDao recipeStepsDao, RecipeIngredientsDao recipeIngredientsDao,
                               GroceryListDao groceryListDao, UserDao userDao, UserReviewDao userReviewDao) {
         this.ingredientsDao = ingredientsDao;
         this.nutritionDao = nutritionDao;
@@ -32,6 +33,7 @@ public class MealPlanController {
         this.userDao = userDao;
         this.userReviewDao = userReviewDao;
         this.recipeStepsDao = recipeStepsDao;
+        this.recipeIngredientsDao = recipeIngredientsDao;
     }
 
     /*****************************************************
@@ -175,6 +177,33 @@ public class MealPlanController {
     /*****************************************************
      *                                                    *
      *                RECIPE STEPS APIs                   *
+     *                                                    *
+     *****************************************************/
+    /*****************************************************
+     *                                                    *
+     *             RECIPE INGREDIENTS APIs                *
+     *                                                    *
+     *****************************************************/
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="/recipes/ingredients")
+    public List<RecipeIngredients> listRecipeIngredients(){
+        return recipeIngredientsDao.listRecipeIngredients();
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="/recipes/ingredients")
+    public boolean addRecipeIngredients(@Valid @RequestBody RecipeIngredients recipeIngredients){
+        return recipeIngredientsDao.addRecipeIngredients(recipeIngredients);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value="/recipes/ingredients/{id}", method = RequestMethod.DELETE )
+    public boolean deleteRecipeIngredients(@PathVariable long id) throws RecipeIngredientsNotFoundException {
+        return recipeIngredientsDao.deleteRecipeIngredients(id);
+    }
+    /*****************************************************
+     *                                                    *
+     *             RECIPE INGREDIENTS APIs                *
      *                                                    *
      *****************************************************/
     /*****************************************************

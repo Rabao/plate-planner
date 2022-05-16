@@ -333,6 +333,54 @@ export const addRecipe = (recipe) => ({
     type: ActionTypes.ADD_RECIPE,
     payload: recipe
 });
+//-------------------
+export const fetchRecipeIngredients = () => (dispatch) => {
+    dispatch(recipeIngredientsLoading(true));
+
+    return fetch(baseUrl + "/recipes/ingredients", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+        })
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(ingredients => dispatch(addRecipeIngredients(ingredients)))
+    .catch(error => dispatch(recipeIngredientsFailed(error.message)));
+}
+
+export const recipeIngredientsLoading = (status) => ({
+    type: ActionTypes.RECIPEINGREDIENTS_LOADING,
+    payload: status
+});
+
+export const recipeIngredientsFailed = (errmess) => ({
+    type: ActionTypes.RECIPEINGREDIENTS_FAILED,
+    payload: errmess
+});
+
+export const deleteRecipeIngredients = () => ({
+    type: ActionTypes.DELETE_RECIPEINGREDIENTS
+});
+
+export const addRecipeIngredients = (ingredients) => ({
+    type: ActionTypes.ADD_RECIPEINGREDIENTS,
+    payload: ingredients
+});
+
 //----------------------------------RECIPE
 //----------------------------------RECIPESTEPS
 export const fetchRecipeSteps = () => (dispatch) => {

@@ -20,18 +20,20 @@ export default class Header extends Component {
                         <div className="col link-wrapper" id="link-wrapper" md={3}>
                             {this.props.token !== undefined ?
                                     <div>
-                                        <Routes>
+                                        {/* <Routes>
                                             <Route path='' element={<Navigate to='/home' />} />
                                         </Routes>   
-                                        
+
+                                         */}
                                         <Dropdown as={ButtonGroup} className="header-links">
                                             <Link to="/home"><Button><CgHome/></Button></Link> 
                                             <Dropdown.Toggle split >
                                                 <span id="header-welcome">{navText}</span>
                                             </Dropdown.Toggle>    
                                                 <Dropdown.Menu>
+                                                    <Dropdown.Item as={Link} to='/add/recipe'>Author Recipe</Dropdown.Item>
                                                     <Dropdown.Item to='/login' onClick={this.props.handleLogout}>Logout</Dropdown.Item>  
-                                                </Dropdown.Menu>                           
+                                                </Dropdown.Menu>                              
                                        </Dropdown>
                                     </div>
 
