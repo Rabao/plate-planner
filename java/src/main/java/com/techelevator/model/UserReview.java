@@ -2,6 +2,7 @@ package com.techelevator.model;
 
 public class UserReview {
 
+    private long id;
     private long recipeId;
     private long userId;
     private int rating;
@@ -10,11 +11,20 @@ public class UserReview {
     public UserReview() {
     }
 
-    public UserReview(long recipeId, long userId, int rating, String comment) {
+    public UserReview(long id, long recipeId, long userId, int rating, String comment) {
+        this.id = id;
         this.recipeId = recipeId;
         this.userId = userId;
         this.rating = rating;
         this.comment = comment;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getRecipeId() {

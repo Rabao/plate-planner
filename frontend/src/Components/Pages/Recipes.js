@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import {Link} from 'react-router-dom'
-import { Breadcrumb, Col } from 'react-bootstrap'
+import { Breadcrumb, Button, Col } from 'react-bootstrap'
+import {Modal, ModalBody, ModalHeader} from 'reactstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
 
@@ -99,17 +100,44 @@ const Recipe = (props) => {
   }
 }
 
-function EditDeleteComment(props){
-    return(
-        <div>
-            <div className="row">
-                <Col md={6}>
-                    <button className="interface_buttons" >&#9997;</button>
-                    <button className="interface_buttons" >&#10060;</button>
-                </Col>
-            </div>
-        </div>
-    )
+class EditDeleteComment extends Component{
+
+    constructor(props){
+        super(props);
+        this.state = {
+            isModalOpen: false
+        };
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    toggleModal(){
+        this.setState({
+            isModalOpen: !this.state.isModalOpen
+        });
+        console.log(this.state.isModalOpen);
+    }
+
+    handleSubmit(values){
+        this.toggleModal();
+    }
+
+    render(){
+        return(
+            <>
+                <div className="row">
+                    <Col md={6}>
+                        <Button className="interface_buttons" >&#9997;</Button>
+                        <Button className="interface_buttons" onClick={this.toggleModal}>&#10060;</Button>
+                    </Col>
+                    <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                        <ModalHeader toggle={this.toggleModal}>Delete Comment?</ModalHeader>
+                        <ModalBody>test</ModalBody>
+                    </Modal>
+                </div>
+            </>
+        )
+    }
 }
 
 function showStars(rating){

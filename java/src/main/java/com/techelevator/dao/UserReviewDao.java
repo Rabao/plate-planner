@@ -12,5 +12,5 @@ public interface UserReviewDao {
 
     boolean addReview(UserReview userReview);
 
-    boolean deleteReview(long recipeId, long userId);
+    boolean deleteReview(long id);
 }

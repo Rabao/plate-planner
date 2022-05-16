@@ -53,10 +53,9 @@ public class JdbcUserReviewDao implements UserReviewDao{
     }
 
     @Override
-    public boolean deleteReview(long recipeId, long userId) {
-        String sql = "DELETE FROM user_reviews WHERE recipe_id = ? " +
-                "AND user_id = ? ";
-        return jdbcTemplate.update(sql, recipeId, userId) == 1;
+    public boolean deleteReview(long id) {
+        String sql = "DELETE FROM user_reviews WHERE id = ?";
+        return jdbcTemplate.update(sql, id) == 1;
     }
 
     private UserReview mapRowToReview(SqlRowSet rs) {

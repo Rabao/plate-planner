@@ -277,9 +277,9 @@ public class MealPlanController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value="reviews", method = RequestMethod.DELETE )
-    public void deleteReview(@RequestParam long recipeId, @RequestParam long userId)
+    public void deleteReview(@RequestParam long id)
             throws ReviewNotFoundException {
-        userReviewDao.deleteReview(recipeId, userId);
+        userReviewDao.deleteReview(id);
     }
     /*****************************************************
      *                                                    *
