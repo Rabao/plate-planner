@@ -45,6 +45,7 @@ const Recipe = (props) => {
 
     function handleSubmit(values) {
         props.postComment( recipeId, userId, values.rating, values.userComment);
+        window.location.reload(false);
     }
 
     // if(props.isLoading){
@@ -123,6 +124,7 @@ class EditDeleteComment extends Component{
     handleDelete(id){
         this.toggleModal();
         this.props.deleteComment(id);
+        window.location.reload(false);
     }
 
     render(){
