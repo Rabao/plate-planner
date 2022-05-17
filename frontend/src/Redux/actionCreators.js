@@ -3,7 +3,7 @@ import { baseUrl } from '../Shared/baseUrl'
 
 //----------------------------------USER AUTH
 export const fetchUsers = () => (dispatch) => {
-    dispatch(usersLoading(true));
+    // dispatch(usersLoading(true));
 
     return fetch(baseUrl + "/reviews/user", {
         method: 'GET',
@@ -59,7 +59,7 @@ export const usersFailed = () => ({
 //----------------------------------USER AUTH
 //----------------------------------INGREDIENT
 export const fetchIngredients = () => (dispatch) => {
-    dispatch(ingredientsLoading(true));
+    // dispatch(ingredientsLoading(true));
 
     return fetch(baseUrl + "/ingredients", {
         method: 'GET',
@@ -139,7 +139,7 @@ export const postIngredient = (name,type) => (dispatch) => {
 //----------------------------------INGREDIENT
 //----------------------------------NUTRITION
 export const fetchNutrition = () => (dispatch) => {
-    dispatch(nutritionLoading(true));
+    // dispatch(nutritionLoading(true));
 
     return fetch(baseUrl + "/nutrition", {
         method: 'GET',
@@ -241,7 +241,7 @@ export const postNutrition = (serving_size, calories, calories_fat,
 //----------------------------------NUTRITION
 //----------------------------------GROCERIES
 export const fetchGroceries = () => (dispatch) => {
-    dispatch(groceriesLoading(true));
+    // dispatch(groceriesLoading(true));
 
     return fetch(baseUrl + "/groceries", {
         method: 'GET',
@@ -288,7 +288,7 @@ export const addGroceries = (mealplans) => ({
 //----------------------------------GROCERIES
 //----------------------------------RECIPE
 export const fetchRecipe = () => (dispatch) => {
-    dispatch(recipeLoading(true));
+    // dispatch(recipeLoading(true));
 
     return fetch(baseUrl + "/recipes", {
         method: 'GET',
@@ -335,7 +335,7 @@ export const addRecipe = (recipe) => ({
 });
 //-------------------
 export const fetchRecipeIngredients = () => (dispatch) => {
-    dispatch(recipeIngredientsLoading(true));
+    // dispatch(recipeIngredientsLoading(true));
 
     return fetch(baseUrl + "/recipes/ingredients", {
         method: 'GET',
@@ -384,7 +384,7 @@ export const addRecipeIngredients = (ingredients) => ({
 //----------------------------------RECIPE
 //----------------------------------RECIPESTEPS
 export const fetchRecipeSteps = () => (dispatch) => {
-    dispatch(recipeStepsLoading(true));
+    // dispatch(recipeStepsLoading(true));
 
     return fetch(baseUrl + "/steps", {
         method: 'GET',
@@ -432,7 +432,7 @@ export const addRecipeSteps = (recipe) => ({
 //----------------------------------RECIPE
 //----------------------------------MEALPLAN
 export const fetchMealPlan = () => (dispatch) => {
-    dispatch(mealPlanLoading(true));
+    // dispatch(mealPlanLoading(true));
 
     return fetch(baseUrl + "/mealplans", {
         method: 'GET',
@@ -479,7 +479,7 @@ export const addMealPlan = (mealplans) => ({
 //----------------------------------MEALPLAN
 //----------------------------------MEALPLANCOLLECTION
 export const fetchMealPlanCollection = () => (dispatch) => {
-    dispatch(mealPlanCollectionLoading(true));
+    // dispatch(mealPlanCollectionLoading(true));
 
     return fetch(baseUrl + "/mealplans", {
         method: 'GET',
