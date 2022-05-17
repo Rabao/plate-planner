@@ -250,9 +250,19 @@ function showStars(rating){
     }
 }
 
+function compare( a, b ) {
+    if ( a.id < b.id ){
+      return -1;
+    }
+    if ( a.last_nom > b.last_nom ){
+      return 1;
+    }
+    return 0;
+  }
+
 function RenderComments(props){
     
-   
+   props.target.sort(compare);
     const recipeComments = props.target.map((comment) => {
         //User Filter 
             const userObj = props.users.allUsers.filter((user) => user.id === comment.userId);
