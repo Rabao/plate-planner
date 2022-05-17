@@ -53,6 +53,13 @@ public class JdbcUserReviewDao implements UserReviewDao{
     }
 
     @Override
+    public boolean editReview(long id, int rating, String comment) {
+        String sql = "UPDATE user_reviews SET rating = ?, comment = ? " +
+                "WHERE id = ?";
+        return jdbcTemplate.update(sql, rating, comment, id) == 1;
+    }
+
+    @Override
     public boolean deleteReview(long id) {
         String sql = "DELETE FROM user_reviews WHERE id = ?";
         return jdbcTemplate.update(sql, id) == 1;

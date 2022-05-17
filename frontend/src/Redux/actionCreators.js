@@ -728,4 +728,35 @@ export const deleteCommentSuccess = (id) => ({
     type: ActionTypes.DELETE_COMMENT,
     payload: id
 })
+
+export const editComment = (id, rating, comment) => (dispatch) => {
+
+    return fetch(baseUrl + '/reviews/' + id + '?rating=' + rating + '&comment=' + comment, {
+        method: 'PUT'})
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then((id, rating, comment) => dispatch(deleteCommentSuccess(id, rating, comment)))
+    .catch(error => {throw(error)});
+}
+
+export const editCommentSuccess = (id, rating, comment) => ({
+    type: ActionTypes.DELETE_COMMENT,
+    payload: {
+        id: id,
+        rating: rating,
+        comment: comment
+    }
+})
 //----------------------------------COMMENTS

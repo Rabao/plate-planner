@@ -12,5 +12,7 @@ public interface UserReviewDao {
 
     boolean addReview(UserReview userReview);
 
+    boolean editReview(long id, int rating, String comment);
+
     boolean deleteReview(long id);
 }

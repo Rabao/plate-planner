@@ -5,7 +5,7 @@ import { Breadcrumb, Button, Col } from 'react-bootstrap'
 import {Modal, ModalBody, ModalHeader} from 'reactstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
-import { deleteComment } from '../../Redux/actionCreators';
+// import { deleteComment } from '../../Redux/actionCreators';
 
 
 export default class Recipes extends Component {
@@ -29,7 +29,8 @@ export default class Recipes extends Component {
                     comments={this.props.targetComments} user={this.props.user} users={this.props.users}
                     isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}
                     postComment={this.props.postComment}
-                    deleteComment={this.props.deleteComment}/>
+                    deleteComment={this.props.deleteComment}
+                    editComment={this.props.editComment}/>
                  </div>  
             )
         }
@@ -71,7 +72,7 @@ const Recipe = (props) => {
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
             {props.comments ? <RenderComments target={props.comments} authUser={props.user} users={props.users}
-            deleteComment={props.deleteComment}/> : <div>Null</div>}
+            deleteComment={props.deleteComment} editComment={props.editComment}/> : <div>Null</div>}
             
             <LocalForm onSubmit={(values) => handleSubmit(values)}>                        
                     <Col md={12}>
@@ -109,14 +110,17 @@ class EditDeleteComment extends Component{
     constructor(props){
         super(props);
         this.state = {
-            isModalOpen: false
+            isModalOpen: false,
+            activeModal: ''
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.handleSubmit = this.handleDelete.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
-    toggleModal(){
+    toggleModal(activeModal){
         this.setState({
+            activeModal: activeModal,
             isModalOpen: !this.state.isModalOpen
         });
     }
@@ -127,21 +131,60 @@ class EditDeleteComment extends Component{
         window.location.reload(false);
     }
 
+    handleEdit(id, values){
+        this.toggleModal();
+        this.props.editComment(id, values.rating, values.userComment);
+        window.location.reload(false);
+    }
+
     render(){
         return(
             <>
                 <div className="row">
                     <Col md={6}>
-                        <Button className="interface_buttons" >&#9997;</Button>
-                        <Button className="interface_buttons" onClick={this.toggleModal}>&#10060;</Button>
+                        <Button className="interface_buttons" onClick={() => this.toggleModal('edit')}>&#9997;</Button>
+                        <Button className="interface_buttons" onClick={() => this.toggleModal('delete')}>&#10060;</Button>
                     </Col>
-                    <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    {/* this.state.isModalOpen */}
+                    <Modal isOpen={this.state.activeModal === 'delete'} toggle={this.toggleModal}> 
                         <ModalHeader toggle={this.toggleModal}>Delete Comment?</ModalHeader>
                         <ModalBody>
                             <LocalForm onSubmit={() => this.handleDelete(this.props.comment.id)}>
                                 {this.props.comment.comment}<br></br>
                                 <Button type='submit' variant='danger'>&#10060;Delete</Button>
                             </LocalForm>
+                        </ModalBody>
+                    </Modal>
+                    <Modal isOpen={this.state.activeModal === 'edit'} toggle={this.toggleModal}> 
+                        <ModalHeader toggle={this.toggleModal}>Edit Comment?</ModalHeader>
+                        <ModalBody>
+                            <LocalForm onSubmit={(values) =>
+                                                this.handleEdit(this.props.comment.id, values)}>                        
+                                <Col md={12}>
+                                <label htmlFor="rating">Rating</label> 
+                                    <Control.select model='.rating' 
+                                    name="rating" 
+                                    className="form-control"
+                                    defaultValue={this.props.comment.rating}> 
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </Control.select>
+                                </Col>                                     
+                                <Col md={12}>
+                                <label htmlFor="userComment">Comment</label> 
+                                    <Control.textarea model='.userComment' 
+                                    name="userComment" 
+                                    rows="6" 
+                                    className="form-control"
+                                    defaultValue={this.props.comment.comment}/>
+                                </Col>
+                                <Col md={12}>
+                                    <Button type='submit' variant='primary'>&#9997;Edit</Button>
+                                </Col>
+                        </LocalForm>
                         </ModalBody>
                     </Modal>
                 </div>
@@ -221,7 +264,8 @@ function RenderComments(props){
                     <p className="stars">{showStars(comment.rating)}</p>
                     <div>{comment.date}</div>
                     {props.authUser.id === comment.userId ? <EditDeleteComment 
-                    deleteComment={props.deleteComment} comment={comment}/> : <div></div>}
+                    deleteComment={props.deleteComment} editComment={props.editComment}
+                    comment={comment}/> : <div></div>}
                 </div>
              )
     });

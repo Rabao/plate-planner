@@ -283,10 +283,18 @@ public class MealPlanController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value="reviews/{id}", method = RequestMethod.DELETE )
-    public void deleteReview(@PathVariable long id)
+    public boolean deleteReview(@PathVariable long id)
             throws ReviewNotFoundException {
-        userReviewDao.deleteReview(id);
+        return userReviewDao.deleteReview(id);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value="reviews/{id}", method = RequestMethod.PUT)
+    public boolean editReview(@PathVariable long id, @RequestParam int rating,
+                              @RequestParam String comment) throws ReviewNotFoundException{
+        return userReviewDao.editReview(id, rating, comment);
+    }
+
     /*****************************************************
      *                                                    *
      *                  USER REVIEW APIs                  *

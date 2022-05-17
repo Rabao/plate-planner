@@ -12,8 +12,9 @@ import Groceries from '../Pages/GroceryList'
 import MealPlans from '../Pages/MealPlans'
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries,
         fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, postRecipeIngredients,
-         postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients,
-        postComment, fetchComments, deleteComment, addGroceries, addIngredients, postIngredient,
+        postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients,
+        postComment, fetchComments, deleteComment, editComment,
+        addGroceries, addIngredients, postIngredient,
         addNutrition, fetchNutrition, postNutrition, addMealPlan, 
         addMealPlanCollection, addRecipe, } from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
@@ -42,6 +43,7 @@ const mapDispatchToProps = (dispatch) => ({
     addToken: () => { dispatch(addToken()) },
     deleteUser: () => { dispatch(deleteUser())},
     deleteComment: (id) => { dispatch(deleteComment(id))},
+    editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
 
     // Fetch methods
     fetchUsers: () => {dispatch(fetchUsers())},
@@ -140,7 +142,8 @@ class Main extends Component {
                 commentsLoading={this.props.comments.isLoading}
                 commentsErrMess={this.props.comments.errMess}  
                 postComment={this.props.postComment}
-                deleteComment={this.props.deleteComment}/>
+                deleteComment={this.props.deleteComment}
+                editComment={this.props.editComment}/>
             ) 
         }
 

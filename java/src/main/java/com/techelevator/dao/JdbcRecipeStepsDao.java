@@ -21,7 +21,7 @@ public class JdbcRecipeStepsDao implements RecipeStepsDao {
     @Override
     public List<RecipeSteps> listRecipeSteps() {
         List<RecipeSteps> steps = new ArrayList<>();
-        String sql = "SELECT recipe_id, step_num, steps FROM recipe_steps ";
+        String sql = "SELECT recipe_id, step_num, step FROM recipe_steps ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
@@ -47,7 +47,7 @@ public class JdbcRecipeStepsDao implements RecipeStepsDao {
 
     @Override
     public boolean addRecipeSteps(RecipeSteps recipeSteps) {
-        String sql = "INSERT INTO recipe_steps (recipe_id, step_num, steps) " +
+        String sql = "INSERT INTO recipe_steps (recipe_id, step_num, step) " +
                 "VALUES (?, ?, ?)";
         return jdbcTemplate.update(sql,recipeSteps.getRecipeId(),recipeSteps.getStepNum(),recipeSteps.getSteps()) == 1;
     }
@@ -56,7 +56,7 @@ public class JdbcRecipeStepsDao implements RecipeStepsDao {
         RecipeSteps steps = new RecipeSteps();
         steps.setRecipeId(rs.getLong("recipe_id"));
         steps.setStepNum(rs.getInt("step_num"));
-        steps.setSteps(rs.getString("steps"));
+        steps.setSteps(rs.getString("step"));
         return steps;
     };
 }

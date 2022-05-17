@@ -60,3 +60,4 @@ export const ADD_COMMENT = 'ADD_COMMENT';
 export const DELETE_COMMENT = 'DELETECOMMENT';
 export const ADD_COMMENTS = 'ADD_COMMENTS';
 export const COMMENTS_FAILED = 'COMMENTS_FAILED';
+export const EDIT_COMMENT = 'EDIT_COMMENT';

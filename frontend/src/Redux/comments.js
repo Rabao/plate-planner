@@ -22,12 +22,19 @@ export const Comments = (state = {
 
         case ActionTypes.ADD_COMMENT:
             return{...state, comments: state.comments.concat(action.payload)};
+
+        case ActionTypes.EDIT_COMMENT:
+            return{...state, comments: state.comments.filter((comment) => {
+                if(comment.id === action.payload.id){
+                    comment.rating = action.payload.rating;
+                    comment.comment = action.payload.comment;
+                }
+                return comment;
+            })}
         
         case ActionTypes.DELETE_COMMENT:
             return{
                 ...state, comments: state.comments.filter((comment, index) => index !== action.payload)}
-            
-            // return state.filter((comments, i) => i !== action.payload.id);
     
         default:
             return state;
