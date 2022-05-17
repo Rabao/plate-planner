@@ -13,6 +13,8 @@ public interface RecipeDao {
 
     List<Recipe> listRecipesByType(String type);
 
+//    boolean addImage(byte[] image);
+
     boolean addRecipe(Recipe recipe);
 
     boolean deleteRecipe(long id);

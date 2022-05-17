@@ -10,9 +10,9 @@ import RecipesList from '../Pages/RecipesList'
 import AddRecipe from '../Pages/AddRecipe'
 import Groceries from '../Pages/GroceryList'
 import MealPlans from '../Pages/MealPlans'
-import {addToken, deleteUser, fetchUsers,
-        fetchIngredients, fetchGroceries, fetchMealPlan, 
-        fetchMealPlanCollection, fetchRecipe, fetchRecipeSteps, fetchRecipeIngredients,
+import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries,
+        fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, postRecipeIngredients,
+         postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients,
         postComment, fetchComments, deleteComment, addGroceries, addIngredients, postIngredient,
         addNutrition, fetchNutrition, postNutrition, addMealPlan, 
         addMealPlanCollection, addRecipe, } from '../../Redux/actionCreators'
@@ -59,8 +59,10 @@ const mapDispatchToProps = (dispatch) => ({
     fetchNutrition: () => {dispatch(fetchNutrition())},
 
     //Post methods
-    postComment: (recipeId, userId, rating, comment) => 
-        {dispatch(postComment(recipeId, userId, rating, comment))},
+    postComment: (id, recipeId, userId, rating, comment) => 
+        {dispatch(postComment(id, recipeId, userId, rating, comment))},
+    postRecipe: (name, numSteps, image, notes, userId, type) => 
+        {dispatch(postRecipe(name, numSteps, image, notes, userId, type))},
     postNutrition: (serving_size, calories, calories_fat, total_fat, 
         saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, 
         dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,
@@ -70,6 +72,10 @@ const mapDispatchToProps = (dispatch) => ({
             dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,
             vitB6, cobalamin, magnesium))},
     postIngredient: (name, type) => {dispatch(postIngredient(name, type))},
+    postRecipeSteps: (recipeId, stepNum, steps) => {dispatch(postRecipeSteps(recipeId, stepNum, steps))},
+    postRecipeIngredients: (recipeId, ingredientId, ingredientName, measurement, unit) => 
+        {dispatch(postRecipeIngredients(recipeId, ingredientId, ingredientName, measurement, unit))}
+
 
     //Add methods
     // addGroceries: () => {dispatch(addGroceries())},
@@ -148,7 +154,12 @@ class Main extends Component {
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/register'element={<Register/>}/>
                         <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
-                        <Route exact path='/add/recipe' element={<AddRecipe />}/>
+                        <Route exact path='/add/recipe' element={<AddRecipe 
+                            postRecipe={this.props.postRecipe}  
+                            postSteps={this.props.postRecipeSteps}
+                            postIngredients={this.props.postRecipeIngredients}  
+                            authUser={this.props.user} 
+                            recipes={this.props.recipe.recipe}/>}/>
                         <Route path='/recipes/:id' element={<RecipeWithId/>}/>
                         <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
                         <Route path='/ingredients/:id' element={<IngredientWithId/>}/>

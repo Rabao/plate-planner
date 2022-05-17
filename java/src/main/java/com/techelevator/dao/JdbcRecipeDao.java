@@ -83,12 +83,18 @@ public class JdbcRecipeDao implements RecipeDao{
 
     @Override
     public boolean addRecipe(Recipe recipe) {
-        String sql = "INSERT INTO recipes (id, name, num_of_steps, image, notes, user_id, type ) " +
-                "VALUES (DEFAULT, ?, ?, ?, ?, ?, ? )";
-        return jdbcTemplate.update(sql,recipe.getName(),recipe.getNumOfSteps(),
-                recipe.getImage(), recipe.getNotes(), recipe.getUserId(),
-                recipe.getType()) == 1;
+        String sql = "INSERT INTO recipes (id, name, num_of_steps, notes, user_id, type ) " +
+                "VALUES (?, ?, ?, ?, ?, ? )";
+        return jdbcTemplate.update(sql,recipe.getId(), recipe.getName(),recipe.getNumOfSteps(),
+                recipe.getNotes(), recipe.getUserId(), recipe.getType()) == 1;
     }
+
+//    @Override
+//    public boolean addImage(long id, byte[] image) {
+//        String sql = "ALTER TABLE recipes ALTER COLUMN image WHERE id = ?" +
+//                "VALUES (?, ?)";
+//        return jdbcTemplate.update(sql,recipe.getImage()) == 1;
+//    }
 
     @Override
     public boolean deleteRecipe(long id) {

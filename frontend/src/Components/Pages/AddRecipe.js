@@ -1,82 +1,98 @@
-import React, { Component, useEffect, useState } from 'react'
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import {Link} from 'react-router-dom'
-import { Breadcrumb, Col } from 'react-bootstrap'
+import React, {useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+import { Breadcrumb, Col, Button } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
-import {useDropzone} from 'react-dropzone';
+import axios from 'axios';
 
-const thumbsContainer = {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 0
-  };
-  
-  const thumb = {
-    display: 'inline-flex',
-    borderRadius: 2,
-    border: '1px solid #eaeaea',
-    marginBottom: 8,
-    marginRight: 8,
-    width: 100,
-    height: 100,
-    padding: 4,
-    boxSizing: 'border-box'
-  };
-  
-  const thumbInner = {
-    display: 'flex',
-    minWidth: 0,
-    overflow: 'hidden'
-  };
-  
-  const img = {
-    display: 'block',
-    width: 'auto',
-    height: '100%'
-  };
-  
 
-function AddRecipe() {
+function AddRecipe(props) {
 
-    const [files, setFiles] = useState([]);
-    const {getRootProps, getInputProps} = useDropzone({
-      accept: {
-        'image/*': []
-      },
-      onDrop: acceptedFiles => {
-        setFiles(acceptedFiles.map(file => Object.assign(file, {
-          preview: URL.createObjectURL(file)
-        })));
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const navigate = useNavigate();
+
+     let pageRedirect= false;
+
+     function fileSelectedHangler (event) {
+        setSelectedFile(event.target.files[0]);
+     }
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
       }
-    });
+
+     function assignId() {
+        let postId = getRandomInt(40000);
+
+        props.recipes.map((recipe) => {
+            if(recipe.id === postId || postId === 0){
+               postId = Math.random();
+              }}
+        )
+
+        return postId;
+     }
     
-    const thumbs = files.map(file => (
-      <div style={thumb} key={file.name}>
-        <div style={thumbInner}>
-          <img
-            src={file.preview}
-            style={img}
-            // Revoke data uri after image is loaded
-            onLoad={() => { URL.revokeObjectURL(file.preview) }}
-          />
-        </div>
-      </div>
-    ));
-  
-    useEffect(() => {
-      // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-      return () => files.forEach(file => URL.revokeObjectURL(file.preview));
-    }, []);
+     function handleSubmit() {
+        const name = document.getElementById('name');
+        const type = document.getElementById('type');
+        const notes = document.getElementById('notes');
+        const qty = document.getElementsByClassName('qty'); //Measurement quantity (fills measurement parameter in postIngredients)
+        const unit = document.getElementsByClassName('unit-measure');
+        const steps = document.getElementsByClassName('recipe-steps');
+        const ingredients = document.getElementsByClassName('recipe-ingredients');
+        assignId()
+        let stepNum = 1;
+        let id = assignId()
+        const path = '/recipes/';
+        // const filePath = 'C:/Users/howel/Desktop/Final Capstone/WIP/capstone/frontend/src/Assets/Uploads';
+        // const fd = new FormData();
+        // fd.append('image', selectedFile, selectedFile.name);
+        // axios.post(filePath, fd).then(res => {
+        //     console.log(res)
+        // });
 
+        props.postRecipe(id,name.value,stepNum,'',notes.value,props.authUser.id,type.value);
+
+        for(let i=0; i< steps.length; i++){     
+            props.postSteps(id,stepNum,steps[i].value)
+            stepNum++;             
+        }
+
+        for(let i=0; i< ingredients.length; i++){
+            props.postIngredients(id,1,ingredients[i].value,qty[i].value,unit[i].value)
+        }
+
+       
+        setTimeout(() => {
+        pageRedirect= true;
+        if(pageRedirect === true){
+            navigate(path); 
+        }}, 50)
+    }
+
+    let numSteps = 0;
+    let stepsHtmlIdent = "steps" + numSteps;
+    let stepsMode = ".steps" + numSteps;
+    
     const renderStepsInput = () => {
-
         const addStep = () => {         
+            numSteps++;
+            stepsHtmlIdent = "steps" + numSteps;
+            stepsMode = ".steps" + numSteps;
+            stepText = <div className="form-inline" id="steps" key={stepArr.length}>
+                        <Control.text model={stepsMode} name={stepsHtmlIdent}  className="recipe-steps"/><button class="remove-step-button" onClick={() => {removeStep()}}>-</button>
+                        </div>
+
             stepArr.push(stepText);
+            console.log(stepsHtmlIdent); 
         }
 
         const removeStep = () => {
+            numSteps--;
+            stepsHtmlIdent = "steps" + numSteps;
+            stepsMode = ".steps" + numSteps;
             stepArr.pop(stepText);
         }
         
@@ -84,28 +100,92 @@ function AddRecipe() {
             while(stepArr.length > 0){
                 stepArr.pop(stepText)
             }
+            numSteps=0;
+            stepsHtmlIdent = "";
+            stepsMode = "";
         }
 
-        let stepText = <div className="form-inline">
-                            <Control.text model=".steps" name="steps" className="recipe-steps"/><button id="remove-step-button" onClick={() => {removeStep()}}>-</button>
-                        </div>
         let stepArr =[]
+        let stepText = <div></div>
+        
         return(
-                <div>
-                    <label htmlFor="steps">Steps</label> 
-                    {stepArr}
-                    <Col><button onClick={() => {addStep()}}>Add New Step</button><button onClick={() => {removeAll()}}>Remove All</button></Col>     
-                </div>
+            <div>
+                <label htmlFor="steps">Steps</label> 
+                {stepArr}
+                <Col><button onClick={() => {addStep()}}>Add New Step</button><button onClick={() => {removeAll()}}>Remove All</button></Col>     
+            </div>
         )
+
     }
 
+    let numIngredients = 0;
+    let qtyHtmlIdent = "qty" + numIngredients;
+    let qtyMode = ".qty" + numIngredients;
+    let unitHtmlIdent = "unit" + numIngredients;
+    let unitMode = ".unit" + numIngredients;
+    let nameHtmlIdent = "name" + numIngredients;
+    let nameMode = ".name" + numIngredients;
+    
     const renderIngredientsInput = () => {
 
-        const addIngredient = () => {         
+        const addIngredient = () => { 
+            numIngredients++;
+             qtyHtmlIdent = "qty" + numIngredients;
+             qtyMode = ".qty" + numIngredients;
+             unitHtmlIdent = "unit" + numIngredients;
+             unitMode = ".unit" + numIngredients;
+             nameHtmlIdent = "name" + numIngredients;
+             nameMode = ".name" + numIngredients;
+            
+            let ingredientText = <div className="form-inline" key={ingredientArr.length}>
+                        <Control.text type="number" model={qtyMode} name={qtyHtmlIdent} className="qty ingredients-controls"/>
+                        <Control.select model={unitMode} name={unitHtmlIdent} className="unit-measure ingredients-controls" >
+                            <option disabled>Volume</option>
+                            <option disabled></option>
+                            <option active>Teaspoon</option>
+                            <option>Tablespoon</option>
+                            <option>Fluid Ounce</option>
+                            <option>Gill</option>
+                            <option>Cup</option>
+                            <option>Pint</option>
+                            <option>Quart</option>
+                            <option>Gallon</option>
+                            <option>Milliliter</option>
+                            <option>Liter</option>
+                            <option>Deciliter</option>
+                            <option disabled></option>
+                            <option disabled>──────────</option>
+                            <option disabled>Mass/Weight</option>
+                            <option disabled></option>
+                            <option>Pound</option>
+                            <option>Ounce</option>
+                            <option>Milligram</option>
+                            <option>Gram</option>
+                            <option>Kilogram</option>
+                            <option disabled></option>
+                            <option disabled>──────────</option>
+                            <option disabled>Length</option>
+                            <option disabled></option>
+                            <option>Millimeter</option>
+                            <option>Centimeter</option>
+                            <option>Meter</option>
+                            <option>Inch</option>
+                        </Control.select>
+                        <Control.text model={nameMode} name={nameHtmlIdent} id="ingredient" className="recipe-ingredients ingredients-controls"/>
+                        <button id="remove-ingredient-button" onClick={() => {removeIngredient()}}>-</button>
+                    </div>
+
             ingredientArr.push(ingredientText);
         }
 
         const removeIngredient = () => {
+            numIngredients--;
+            qtyHtmlIdent = "qty" + numIngredients;
+            qtyMode = ".qty" + numIngredients;
+            unitHtmlIdent = "unit" + numIngredients;
+            unitMode = ".unit" + numIngredients;
+            nameHtmlIdent = "name" + numIngredients;
+            nameMode = ".name" + numIngredients;
             ingredientArr.pop(ingredientText);
         }
         
@@ -113,47 +193,18 @@ function AddRecipe() {
             while(ingredientArr.length > 0){
                 ingredientArr.pop(ingredientText)
             }
+            numSteps=0;
+            qtyHtmlIdent = "";
+            qtyMode = "";
+            unitHtmlIdent = "";
+            unitMode = "";
+            nameHtmlIdent = "";
+            nameMode = "";
         }
 
-        let ingredientText = <div className="form-inline">
-                            <Control.text type="number" model=".ingredient-qty" name="ingredient-qty" className="recipe-ingredients"/>
-                            <Control.select type=""model=".ingredient-unit" name="ingredient-unit" className="recipe-ingredients">
-                                <option>Unit of Measurement</option>
-                                <option disabled>Volume</option>
-                                <option disabled></option>
-                                <option>Teaspoon</option>
-                                <option>Tablespoon</option>
-                                <option>Fluid Ounce</option>
-                                <option>Gill</option>
-                                <option>Cup</option>
-                                <option>Pint</option>
-                                <option>Quart</option>
-                                <option>Gallon</option>
-                                <option>Milliliter</option>
-                                <option>Liter</option>
-                                <option>Deciliter</option>
-                                <option disabled></option>
-                                <option disabled>──────────</option>
-                                <option disabled>Mass/Weight</option>
-                                <option disabled></option>
-                                <option>Pound</option>
-                                <option>Ounce</option>
-                                <option>Milligram</option>
-                                <option>Gram</option>
-                                <option>Kilogram</option>
-                                <option disabled></option>
-                                <option disabled>──────────</option>
-                                <option disabled>Length</option>
-                                <option disabled></option>
-                                <option>Millimeter</option>
-                                <option>Centimeter</option>
-                                <option>Meter</option>
-                                <option>Inch</option>
-                            </Control.select>
-                            <Control.text model=".ingredient-name" name="ingredient-name" className="recipe-ingredients"/>
-                            <button id="remove-step-button" onClick={() => {removeIngredient()}}>-</button>
-                        </div>
         let ingredientArr =[]
+        let ingredientText = <div></div>
+        
         return(
                 <div>
                     <label htmlFor="steps">Ingredients</label> 
@@ -181,45 +232,56 @@ function AddRecipe() {
                     <h5>Author a New Recipe</h5>
                         <div className="row">
                             <div className="col">
-                            <LocalForm >                        
-                                <Col md={12}>
-                                <label htmlFor="title">Recipe Title</label> 
-                                    <Control.text model='.title' 
-                                    name="title" 
-                                    className="recipe-forms"/> 
+        
+                            <LocalForm id="recipe-form">
+                                                
+                                <Col md={10}>
+                                <label htmlFor="name">Recipe Title</label> 
+                                    <Control.text model='.name' 
+                                    name="name" 
+                                    className="recipe-title"
+                                    id="name"/> 
                                 </Col>
-                                <div className="row">                                   
-                                <Col md={6}>
-                                <div className="steps-container">
-                                    {renderIngredientsInput()}
-                                    {renderStepsInput()}
-                                </div>
+                               
+                                <Col md={2}>
+                           
+                                <label htmlFor="type">Meal Type</label> 
+                                <Control.select model=".type" name="type" id="type" className="recipe-type">
+                                        <option value="Breakfast" active>Breakfast</option>
+                                        <option value="Brunch">Brunch</option>
+                                        <option value="Lunch">Lunch</option>
+                                        <option value="Dinner">Dinner</option>
+                                        <option value="Snack">Snack</option>
+                                        <option value="Dessert">Dessert</option>
+                                        <option value="Drink">Drink</option>
+                                </Control.select>
                                 </Col>
-                                <Col md={6}>
-                                    <div className="image-dropzone">
-                                        <section className="container">
-                                            <div {...getRootProps({className: 'dropzone'})}>
-                                                <input {...getInputProps()} />
-                                                <p>Drag 'n' drop some files here, or click to select files</p>
-                                            </div>
-                                            <aside style={thumbsContainer}>
-                                                {thumbs}
-                                            </aside>
-                                        </section>
+                               
+                                <div className="row">                             
+                                    <Col md={6}>
+                                    <div className="steps-container">
+                                        {renderIngredientsInput()}
+                                        {renderStepsInput()}
                                     </div>
-                                </Col>
+                                    </Col>
+                                    <Col md={6}>
+                                        <input type="file" onChange={(e) => {fileSelectedHangler(e)}} />
+                                    </Col>
                                 </div>
                                 <Col md={12}>
-                                <label htmlFor="title">Notes</label> 
+                              
+                                <label htmlFor="notes">Notes</label> 
                                     <Control.textarea model='.notes' 
                                         name="notes"
                                         rows="12" 
-                                        className="recipe-forms"/> 
+                                        id="notes"
+                                        className="recipe-forms"/>
+                          
                                 </Col>  
                                 <Col md={8}>
-                                    <button type='submit' color="primary">Post Recipe</button>
+                                    <Button type="submit" form="recipe-form" onClick={() => {handleSubmit()}}>Post Recipe</Button>
                                 </Col>
-                            </LocalForm>
+                                </LocalForm>
                         </div>
                     </div>
                 </div>

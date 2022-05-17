@@ -142,6 +142,12 @@ public class MealPlanController {
         recipeDao.addRecipe(recipe);
     }
 
+//    @ResponseStatus(HttpStatus.ACCEPTED)
+//    @PutMapping(value="recipes")
+//    public void addImage(@PathVariable long id, @Valid @RequestBody byte[] image){
+//        recipeDao.addImage(image);
+//    }
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value="recipes/{id}", method = RequestMethod.DELETE )
     public void deleteRecipe(@PathVariable long id) throws NutritionNotFoundException {

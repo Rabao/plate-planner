@@ -1,5 +1,6 @@
 import * as ActionTypes from './ActionTypes'
 import { baseUrl } from '../Shared/baseUrl'
+import history from './history';
 
 //----------------------------------USER AUTH
 export const fetchUsers = () => (dispatch) => {
@@ -287,6 +288,45 @@ export const addGroceries = (mealplans) => ({
 });
 //----------------------------------GROCERIES
 //----------------------------------RECIPE
+export const postRecipe = (id, name, numSteps, image, notes, userId, type) => (dispatch) => {
+    const newRecipe = {
+        id:id,
+        name: name,
+        numSteps: numSteps,
+        image: image,
+        notes: notes,
+        userId: userId,
+        type: type
+    }
+    newRecipe.date = new Date().toISOString();
+
+    return fetch(baseUrl + '/recipes', {
+        method: 'POST',
+        body: JSON.stringify(newRecipe),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            let error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+            }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then(response => dispatch(addRecipe(response)))
+    .catch(error => {console.log('Author recipe ', error.message)
+        alert('Your recipe could not be published.\nError: ' + error.message)});
+};
+
 export const fetchRecipe = () => (dispatch) => {
     // dispatch(recipeLoading(true));
 
@@ -334,6 +374,42 @@ export const addRecipe = (recipe) => ({
     payload: recipe
 });
 //-------------------
+export const postRecipeIngredients = (recipeId, ingredientId, ingredientName, measurement, unit) => (dispatch) => {
+    const newRecipe = {
+        recipeId: recipeId,
+        ingredientId: ingredientId,
+        ingredientName: ingredientName,
+        measurement: measurement,
+        unit: unit
+    }
+
+    return fetch(baseUrl + '/recipes/ingredients', {
+        method: 'POST',
+        body: JSON.stringify(newRecipe),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            let error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+            }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then(ingredients => dispatch(addRecipeIngredients(ingredients)))
+    .catch(error => {console.log('Recipe ingredients ', error.message)
+        alert('Your recipe ingredients could not be published.\nError: ' + error.message)});
+};
+
 export const fetchRecipeIngredients = () => (dispatch) => {
     // dispatch(recipeIngredientsLoading(true));
 
@@ -383,6 +459,40 @@ export const addRecipeIngredients = (ingredients) => ({
 
 //----------------------------------RECIPE
 //----------------------------------RECIPESTEPS
+export const postRecipeSteps = (recipeId, stepNum, steps) => (dispatch) => {
+    const newRecipe = {
+        recipeId: recipeId,
+        stepNum: stepNum,
+        steps: steps
+    }
+
+    return fetch(baseUrl + '/steps', {
+        method: 'POST',
+        body: JSON.stringify(newRecipe),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            let error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+            }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then(steps => dispatch(addRecipeSteps(steps)))
+    .catch(error => {console.log('Recipe steps ', error.message)
+        alert('Your recipe steps could not be published.\nError: ' + error.message)});
+};
+
 export const fetchRecipeSteps = () => (dispatch) => {
     // dispatch(recipeStepsLoading(true));
 
@@ -425,9 +535,9 @@ export const deleteRecipeSteps = () => ({
     type: ActionTypes.DELETE_RECIPESTEPS
 });
 
-export const addRecipeSteps = (recipe) => ({
+export const addRecipeSteps = (steps) => ({
     type: ActionTypes.ADD_RECIPESTEPS,
-    payload: recipe
+    payload: steps
 });
 //----------------------------------RECIPE
 //----------------------------------MEALPLAN

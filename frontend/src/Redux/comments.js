@@ -21,14 +21,11 @@ export const Comments = (state = {
                 comments: []}
 
         case ActionTypes.ADD_COMMENT:
-            let comment = action.payload;
-            return {...state, comments: state.comments.concat(comment)};
+            return{...state, comments: state.comments.concat(action.payload)};
         
         case ActionTypes.DELETE_COMMENT:
             return{
-                comments: state.comments.filter(comment => 
-                    comment.id !== action.payload
-            )}
+                ...state, comments: state.comments.filter((comment, index) => index !== action.payload)}
             
             // return state.filter((comments, i) => i !== action.payload.id);
     

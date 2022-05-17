@@ -47,14 +47,14 @@ const Recipe = (props) => {
         props.postComment( recipeId, userId, values.rating, values.userComment);
     }
 
-    if(props.isLoading){
-    return(<div className="container">
-            <div className="row">
-                <Loader/>
-            </div>
-        </div>);     
+    // if(props.isLoading){
+    // return(<div className="container">
+    //         <div className="row">
+    //             <Loader/>
+    //         </div>
+    //     </div>);     
         
-    } else if (props.errMess) {
+    if (props.errMess) {
         return(<div className="container">
         <div className="row">
             <h4>{props.errMess}</h4>
@@ -123,7 +123,6 @@ class EditDeleteComment extends Component{
     handleDelete(id){
         this.toggleModal();
         this.props.deleteComment(id);
-        // console.log(id);
     }
 
     render(){
@@ -137,7 +136,7 @@ class EditDeleteComment extends Component{
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                         <ModalHeader toggle={this.toggleModal}>Delete Comment?</ModalHeader>
                         <ModalBody>
-                            <LocalForm onSubmit={(values) => this.handleDelete(this.props.comment.id)}>
+                            <LocalForm onSubmit={() => this.handleDelete(this.props.comment.id)}>
                                 {this.props.comment.comment}<br></br>
                                 <Button type='submit' variant='danger'>&#10060;Delete</Button>
                             </LocalForm>
@@ -209,18 +208,18 @@ function showStars(rating){
 function RenderComments(props){
     
    
-    const recipeComments = props.target.map((comment, index) => {
+    const recipeComments = props.target.map((comment) => {
         //User Filter 
             const userObj = props.users.allUsers.filter((user) => user.id === comment.userId);
 
         return (  
-        <div id="user-comment" key={index}>
+        <div id="user-comment" key={comment.id}>
                     <p className="username">{userObj[0].username}</p>
                     <p className="comment-text">{comment.comment}</p>
                     <p className="stars">{showStars(comment.rating)}</p>
+                    <div>{comment.date}</div>
                     {props.authUser.id === comment.userId ? <EditDeleteComment 
                     deleteComment={props.deleteComment} comment={comment}/> : <div></div>}
-                    {/* <div>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</div> */}
                 </div>
              )
     });

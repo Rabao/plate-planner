@@ -15,12 +15,12 @@ function RecipeCollection(props)  {
    }
 
   const enumRecipeCollection = (props) => {
-        const map = props.collection.map((recipe) => {
+        const map = props.collection.map((recipe, index) => {
 
             if(recipe != null){
                 return(
                     <div className="col" md={4}>
-                        <div key={recipe.id} className="recipe-collection" style={{cursor:'pointer'}} onClick={() => {handleClick(recipe)}}>
+                        <div key={index} className="recipe-collection" style={{cursor:'pointer'}} onClick={() => {handleClick(recipe)}}>
                             <div id="recipe-collection-text"><p>{recipe.name}</p></div>
                             <img src={recipe.image}/>
                         </div>            
