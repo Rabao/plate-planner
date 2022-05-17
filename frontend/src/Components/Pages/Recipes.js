@@ -254,7 +254,7 @@ function compare( a, b ) {
     if ( a.id < b.id ){
       return -1;
     }
-    if ( a.last_nom > b.last_nom ){
+    if ( a.id > b.id ){
       return 1;
     }
     return 0;
