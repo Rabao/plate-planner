@@ -591,4 +591,31 @@ export const commentsFailed = (errmess) => ({
     type: ActionTypes.ADD_COMMENTS,
     payload: errmess
 });
+
+export const deleteComment = (id) => (dispatch) => {
+
+    return fetch(baseUrl + '/reviews/' + id, {
+        method: 'DELETE'})
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then(id => dispatch(deleteCommentSuccess(id)))
+    .catch(error => {throw(error)});
+}
+
+export const deleteCommentSuccess = (id) => ({
+    type: ActionTypes.DELETE_COMMENT,
+    payload: id
+})
 //----------------------------------COMMENTS

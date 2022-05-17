@@ -20,7 +20,7 @@ public class JdbcUserReviewDao implements UserReviewDao{
     @Override
     public List<UserReview> getListOfReviewsByRecipe() {
         List<UserReview> reviews = new ArrayList<>();
-        String sql = "SELECT recipe_id, user_id, rating, comment FROM user_reviews ";
+        String sql = "SELECT id, recipe_id, user_id, rating, comment FROM user_reviews ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
@@ -33,7 +33,7 @@ public class JdbcUserReviewDao implements UserReviewDao{
     @Override
     public List<UserReview> getListOfReviewByUser(long userId) {
         List<UserReview> reviews = new ArrayList<>();
-        String sql = "SELECT recipe_id, user_id, rating, comment FROM user_reviews " +
+        String sql = "SELECT id, recipe_id, user_id, rating, comment FROM user_reviews " +
                 "WHERE user_id = ?";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
@@ -46,8 +46,8 @@ public class JdbcUserReviewDao implements UserReviewDao{
 
     @Override
     public boolean addReview(UserReview userReview) {
-        String sql = "INSERT INTO user_reviews (recipe_id, user_id, rating, comment) " +
-                "VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO user_reviews (id, recipe_id, user_id, rating, comment) " +
+                "VALUES (DEFAULT, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql,userReview.getRecipeId(),userReview.getUserId(),
                 userReview.getRating(), userReview.getComment()) == 1;
     }
@@ -60,6 +60,7 @@ public class JdbcUserReviewDao implements UserReviewDao{
 
     private UserReview mapRowToReview(SqlRowSet rs) {
         UserReview list = new UserReview();
+        list.setId(rs.getLong("id"));
         list.setRecipeId(rs.getInt("recipe_id"));
         list.setUserId(rs.getInt("user_id"));
         list.setRating(rs.getInt("rating"));

@@ -5,6 +5,7 @@ import { Breadcrumb, Button, Col } from 'react-bootstrap'
 import {Modal, ModalBody, ModalHeader} from 'reactstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
+import { deleteComment } from '../../Redux/actionCreators';
 
 
 export default class Recipes extends Component {
@@ -27,7 +28,8 @@ export default class Recipes extends Component {
                     <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps} ingredients={this.props.targetIngredients}
                     comments={this.props.targetComments} user={this.props.user} users={this.props.users}
                     isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}
-                    postComment={this.props.postComment}/>
+                    postComment={this.props.postComment}
+                    deleteComment={this.props.deleteComment}/>
                  </div>  
             )
         }
@@ -67,7 +69,8 @@ const Recipe = (props) => {
             {props.ingredients ?<Ingredients ingredients={props.ingredients} recipe={props.recipe}/> : <div>Null</div>}
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
-            {props.comments ? <RenderComments target={props.comments} authUser={props.user} users={props.users}/> : <div>Null</div>}
+            {props.comments ? <RenderComments target={props.comments} authUser={props.user} users={props.users}
+            deleteComment={props.deleteComment}/> : <div>Null</div>}
             
             <LocalForm onSubmit={(values) => handleSubmit(values)}>                        
                     <Col md={12}>
@@ -108,18 +111,19 @@ class EditDeleteComment extends Component{
             isModalOpen: false
         };
         this.toggleModal = this.toggleModal.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleSubmit = this.handleDelete.bind(this);
     }
 
     toggleModal(){
         this.setState({
             isModalOpen: !this.state.isModalOpen
         });
-        console.log(this.state.isModalOpen);
     }
 
-    handleSubmit(values){
+    handleDelete(id){
         this.toggleModal();
+        this.props.deleteComment(id);
+        // console.log(id);
     }
 
     render(){
@@ -132,7 +136,12 @@ class EditDeleteComment extends Component{
                     </Col>
                     <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                         <ModalHeader toggle={this.toggleModal}>Delete Comment?</ModalHeader>
-                        <ModalBody>test</ModalBody>
+                        <ModalBody>
+                            <LocalForm onSubmit={(values) => this.handleDelete(this.props.comment.id)}>
+                                {this.props.comment.comment}<br></br>
+                                <Button type='submit' variant='danger'>&#10060;Delete</Button>
+                            </LocalForm>
+                        </ModalBody>
                     </Modal>
                 </div>
             </>
@@ -201,7 +210,6 @@ function RenderComments(props){
     
    
     const recipeComments = props.target.map((comment, index) => {
-        console.log(props.users.allUsers)
         //User Filter 
             const userObj = props.users.allUsers.filter((user) => user.id === comment.userId);
 
@@ -210,7 +218,8 @@ function RenderComments(props){
                     <p className="username">{userObj[0].username}</p>
                     <p className="comment-text">{comment.comment}</p>
                     <p className="stars">{showStars(comment.rating)}</p>
-                    {props.authUser.id === comment.userId ? <EditDeleteComment/> : <div></div>}
+                    {props.authUser.id === comment.userId ? <EditDeleteComment 
+                    deleteComment={props.deleteComment} comment={comment}/> : <div></div>}
                     {/* <div>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</div> */}
                 </div>
              )
