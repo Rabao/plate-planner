@@ -85,14 +85,16 @@ function GroceryList() {
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    handleSubmit(values){
-        this.props.postIngredient(values.product, values.type);
-        this.props.postNutrition(values.serving,values.calories,
-            values.fromfat, values.total_fat, values.satfat,
-            values.trans_fat, values.cholesterol, values.sodium, values.potassium, 
-            values.carbs, values.fiber, values.sugar, values.sugar_alcohol,
-            values.protein, values.vitC, values.calcium, values.iron,
-            values.vitD, values.vitB6, values.cobalamin, values.magnesium);
+    handleSubmit(found, values){
+        if(!found){
+            this.props.postIngredient(values.product, values.type);
+            this.props.postNutrition(values.serving,values.calories,
+                values.fromfat, values.total_fat, values.satfat,
+                values.trans_fat, values.cholesterol, values.sodium, values.potassium, 
+                values.carbs, values.fiber, values.sugar, values.sugar_alcohol,
+                values.protein, values.vitC, values.calcium, values.iron,
+                values.vitD, values.vitB6, values.cobalamin, values.magnesium);
+        }
     }
 
     handleInputChange(){
@@ -150,13 +152,15 @@ function GroceryList() {
             const magnesium = document.getElementById('magnesium');
             magnesium.value = this.props.nutrition[i].magnesium;
         }
+        return found;
     }
 
     render(){
+        let found = false;
         return (
             <>
             <h5>Add to List</h5>
-            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+            <LocalForm onSubmit={(values) => this.handleSubmit(found, values)}>
                 <Row className="form-group">
                     <Col md={8}>
                         <label htmlFor="product">Product</label> 
@@ -164,7 +168,7 @@ function GroceryList() {
                             id="product" 
                             name="product" 
                             className="form-control"
-                            onChange={this.handleInputChange}/>
+                            onChange={found = this.handleInputChange}/>
                     </Col>
                     <Col md={2}>
                         <label htmlFor="type">Type</label> 
