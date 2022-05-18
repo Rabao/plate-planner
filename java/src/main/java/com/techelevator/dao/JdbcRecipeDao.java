@@ -89,13 +89,6 @@ public class JdbcRecipeDao implements RecipeDao{
                 recipe.getNotes(), recipe.getUserId(), recipe.getType()) == 1;
     }
 
-//    @Override
-//    public boolean addImage(long id, byte[] image) {
-//        String sql = "ALTER TABLE recipes ALTER COLUMN image WHERE id = ?" +
-//                "VALUES (?, ?)";
-//        return jdbcTemplate.update(sql,recipe.getImage()) == 1;
-//    }
-
     @Override
     public boolean deleteRecipe(long id) {
         String sql = "DELETE FROM recipes WHERE id = ? ";

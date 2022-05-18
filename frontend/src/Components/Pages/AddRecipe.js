@@ -123,7 +123,6 @@ function AddRecipe(props) {
                         </div>
 
             stepArr.push(stepText);
-            console.log(stepsHtmlIdent); 
         }
 
         const removeStep = () => {

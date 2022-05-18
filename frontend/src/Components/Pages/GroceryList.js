@@ -57,15 +57,15 @@ class AddItem extends Component{
         const GroceryList = () => {
 
            
-            liObj = this.state.listState.map((item) => {
+            liObj = this.state.listState.map((item, index) => {
                 
                 if(item != null){
                     return(
-                <li className="component-list-item" key={this.state.listState.length}>
+                <li className="component-list-item" key={index}>
                     <div className="col" md={11}>
                         <div className="row">
                                 <div className="col" md={10}>
-                                    {item.name}
+                                    {item[index].name}
                                 </div>
                         <div className="col" md={1}>
                             <div className="checklist-complete">
@@ -75,17 +75,20 @@ class AddItem extends Component{
                                 </div>
                             </div>
                         <div className="checklist-quantity">
-                            <label>Quantity</label><input type="number" name="qty" value={item.qty}></input> 
+                            <label>Quantity</label><input type="number" name="qty" defaultValue={item[index].qty}></input> 
                         </div>
                     </div>
                 </div>         
             </div>
         </li>
-        )} else {
-        return(<div></div>)}
+         )} else {return(
+         <div></div>)}
+        
+    //    listArr.push(liObj);
+    //     return(listArr)
             })  
-        return(liObj) 
-    }
+            return(liObj) 
+        }
      
         let listArr = [];
         let liObj = <div></div>;

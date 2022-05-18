@@ -34,7 +34,7 @@ public class MealPlanController {
     private IngredientsDao ingredientsDao;
     private NutritionDao nutritionDao;
     private RecipeDao recipeDao;
-//    private GroceryListDao groceryListDao;
+    private GroceryListDao groceryListDao;
     private UserReviewDao userReviewDao;
     private RecipeStepsDao recipeStepsDao;
     private RecipeIngredientsDao recipeIngredientsDao;
@@ -43,12 +43,11 @@ public class MealPlanController {
 
     public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao,
                               RecipeDao recipeDao, RecipeStepsDao recipeStepsDao, RecipeIngredientsDao recipeIngredientsDao,
-//                              GroceryListDao groceryListDao,
-                              UserDao userDao, UserReviewDao userReviewDao) {
+                              GroceryListDao groceryListDao, UserDao userDao, UserReviewDao userReviewDao) {
         this.ingredientsDao = ingredientsDao;
         this.nutritionDao = nutritionDao;
         this.recipeDao = recipeDao;
-//        this.groceryListDao = groceryListDao;
+        this.groceryListDao = groceryListDao;
         this.userDao = userDao;
         this.userReviewDao = userReviewDao;
         this.recipeStepsDao = recipeStepsDao;
@@ -163,12 +162,6 @@ public class MealPlanController {
         recipeDao.addRecipe(recipe);
     }
 
-//    @ResponseStatus(HttpStatus.ACCEPTED)
-//    @PutMapping(value="recipes")
-//    public void addImage(@PathVariable long id, @Valid @RequestBody byte[] image){
-//        recipeDao.addImage(image);
-//    }
-
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value="recipes/{id}", method = RequestMethod.DELETE )
     public void deleteRecipe(@PathVariable long id) throws NutritionNotFoundException {
@@ -239,41 +232,41 @@ public class MealPlanController {
      *                                                    *
      *****************************************************/
 
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping(value="groceries")
-//    public List<GroceryList> listGroceryLists(){
-//        return groceryListDao.listGroceryLists();
-//    }
-//
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping(value="groceries/{userId}")
-//    public List<GroceryList> listGroceryListByUser(@PathVariable long userId){
-//        return groceryListDao.listGroceryListsByUser(userId);
-//    }
-//
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping(value="groceries/{id}")
-//    public GroceryList getGroceryList(@PathVariable long id){
-//        return groceryListDao.getGroceryList(id);
-//    }
-//
-////    @ResponseStatus(HttpStatus.CREATED)
-////    @PostMapping(value="groceries")
-////    public void addNewGroceryList(@Valid @RequestBody GroceryList groceryList){
-////        groceryListDao.addNewGroceryList(groceryList);
-////    }
-//
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping(value="groceries/{userId}")
-//    public void addNewItemToGroceryList(@PathVariable long userId, @Valid @RequestBody GroceryList groceryList){
-//        groceryListDao.addNewItemToGroceryList(userId,groceryList);
-//    }
-//
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @RequestMapping(value="groceries/{id}", method = RequestMethod.DELETE )
-//    public void deleteGroceryList(@PathVariable long id) throws GroceryListNotFoundException {
-//        groceryListDao.deleteGroceryList(id);
-//    }
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="groceries")
+    public List<GroceryList> listGroceryLists(){
+        return groceryListDao.listGroceryLists();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="groceries/{userId}")
+    public List<GroceryList> listGroceryListByUser(@PathVariable long userId){
+        return groceryListDao.listGroceryListsByUser(userId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="groceries/{id}")
+    public GroceryList getGroceryList(@PathVariable long id){
+        return groceryListDao.getGroceryList(id);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="groceries")
+    public void addNewGroceryList(@Valid @RequestBody GroceryList groceryList){
+        groceryListDao.addNewGroceryList(groceryList);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="groceries/{userId}")
+    public void addNewItemToGroceryList(@PathVariable long userId, @Valid @RequestBody GroceryList groceryList){
+        groceryListDao.addNewItemToGroceryList(userId,groceryList);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value="groceries/{id}", method = RequestMethod.DELETE )
+    public void deleteGroceryList(@PathVariable long id) throws GroceryListNotFoundException {
+        groceryListDao.deleteGroceryList(id);
+    }
     /*****************************************************
      *                                                    *
      *                  GROCERY APIs                      *
@@ -327,7 +320,7 @@ public class MealPlanController {
      *                  USER REVIEW APIs                  *
      *                                                    *
      *****************************************************/
-//
+
 //    @PutMapping(value="/cards/{id}")
 //    public void update(@PathVariable int id, @RequestBody CatCard card) throws CatCardNotFoundException {
 //        catCardDao.update(id, card);
