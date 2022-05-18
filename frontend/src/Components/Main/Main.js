@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch) => ({
         {dispatch(postRecipeIngredients(recipeId, ingredient_id, ingredient_name, measurement, unit))},
     postGroceries: (ingredient_id, ingredient_name,qty, user_id) =>
         {dispatch(postGroceries(ingredient_id, ingredient_name,
-            qty, user_id))}
+            qty, user_id))},
 
     //Add methods
     // addGroceries: () => {dispatch(addGroceries())},

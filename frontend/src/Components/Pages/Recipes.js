@@ -293,7 +293,7 @@ function RenderComments(props){
 
 function Ingredients(props) { 
     const recipeIngredients = props.ingredients.map((ingredient, index) => {
-
+        let img = props.recipe.image;
         let item = ''
 
         if(ingredient.unit>1){

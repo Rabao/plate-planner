@@ -578,6 +578,40 @@ export const addRecipeSteps = (steps) => ({
     type: ActionTypes.ADD_RECIPESTEPS,
     payload: steps
 });
+
+// export const postImage = (data) => (dispatch) => {
+//     const newImage = {
+//         data: data,
+//     }
+
+//     return fetch(baseUrl + '/upload', {
+//         method: 'POST',
+
+//     })
+//     .then(response => {
+//         if (response.ok) {
+//             return response;
+//         } else {
+//             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+//             error.response = response;
+//             throw error;
+//             }
+//     },  
+//     error => {
+//         let errmess = new Error(error.message);
+//         throw errmess;
+//     })
+//     .then(response => response.text())
+//     .then(response => dispatch(addImage(response)))
+//     .catch(error => {console.log('Author recipe ', error.message)
+//         alert('Your image could not be uploaded.\nError: ' + error.message)});
+// };
+
+// export const addImage = (image) => ({
+//     type: ActionTypes.ADD_IMAGE,
+//     payload: image
+// });
+
 //----------------------------------RECIPE
 //----------------------------------MEALPLAN
 export const fetchMealPlan = () => (dispatch) => {

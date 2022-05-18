@@ -2,39 +2,60 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.*;
 import com.techelevator.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import static java.nio.file.Files.copy;
+import static java.nio.file.Paths.get;
+
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController()
 @RequestMapping("/")
 public class MealPlanController {
 
+    private static final Logger logger = Logger.getLogger(MealPlanController.class.getName());
+
     private IngredientsDao ingredientsDao;
     private NutritionDao nutritionDao;
     private RecipeDao recipeDao;
-    private GroceryListDao groceryListDao;
+//    private GroceryListDao groceryListDao;
     private UserReviewDao userReviewDao;
     private RecipeStepsDao recipeStepsDao;
     private RecipeIngredientsDao recipeIngredientsDao;
     private UserDao userDao;
 
+
     public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao,
                               RecipeDao recipeDao, RecipeStepsDao recipeStepsDao, RecipeIngredientsDao recipeIngredientsDao,
-                              GroceryListDao groceryListDao, UserDao userDao, UserReviewDao userReviewDao) {
+//                              GroceryListDao groceryListDao,
+                              UserDao userDao, UserReviewDao userReviewDao) {
         this.ingredientsDao = ingredientsDao;
         this.nutritionDao = nutritionDao;
         this.recipeDao = recipeDao;
-        this.groceryListDao = groceryListDao;
+//        this.groceryListDao = groceryListDao;
         this.userDao = userDao;
         this.userReviewDao = userReviewDao;
         this.recipeStepsDao = recipeStepsDao;
         this.recipeIngredientsDao = recipeIngredientsDao;
+
     }
+
 
     /*****************************************************
     *                                                    *
@@ -218,41 +239,41 @@ public class MealPlanController {
      *                                                    *
      *****************************************************/
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value="groceries")
-    public List<GroceryList> listGroceryLists(){
-        return groceryListDao.listGroceryLists();
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value="groceries/{userId}")
-    public List<GroceryList> listGroceryListByUser(@PathVariable long userId){
-        return groceryListDao.listGroceryListsByUser(userId);
-    }
-
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value="groceries/{id}")
-    public GroceryList getGroceryList(@PathVariable long id){
-        return groceryListDao.getGroceryList(id);
-    }
-
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping(value="groceries")
-//    public void addNewGroceryList(@Valid @RequestBody GroceryList groceryList){
-//        groceryListDao.addNewGroceryList(groceryList);
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping(value="groceries")
+//    public List<GroceryList> listGroceryLists(){
+//        return groceryListDao.listGroceryLists();
 //    }
-
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value="groceries/{userId}")
-    public void addNewItemToGroceryList(@PathVariable long userId, @Valid @RequestBody GroceryList groceryList){
-        groceryListDao.addNewItemToGroceryList(userId,groceryList);
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(value="groceries/{id}", method = RequestMethod.DELETE )
-    public void deleteGroceryList(@PathVariable long id) throws GroceryListNotFoundException {
-        groceryListDao.deleteGroceryList(id);
-    }
+//
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping(value="groceries/{userId}")
+//    public List<GroceryList> listGroceryListByUser(@PathVariable long userId){
+//        return groceryListDao.listGroceryListsByUser(userId);
+//    }
+//
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping(value="groceries/{id}")
+//    public GroceryList getGroceryList(@PathVariable long id){
+//        return groceryListDao.getGroceryList(id);
+//    }
+//
+////    @ResponseStatus(HttpStatus.CREATED)
+////    @PostMapping(value="groceries")
+////    public void addNewGroceryList(@Valid @RequestBody GroceryList groceryList){
+////        groceryListDao.addNewGroceryList(groceryList);
+////    }
+//
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @PostMapping(value="groceries/{userId}")
+//    public void addNewItemToGroceryList(@PathVariable long userId, @Valid @RequestBody GroceryList groceryList){
+//        groceryListDao.addNewItemToGroceryList(userId,groceryList);
+//    }
+//
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    @RequestMapping(value="groceries/{id}", method = RequestMethod.DELETE )
+//    public void deleteGroceryList(@PathVariable long id) throws GroceryListNotFoundException {
+//        groceryListDao.deleteGroceryList(id);
+//    }
     /*****************************************************
      *                                                    *
      *                  GROCERY APIs                      *

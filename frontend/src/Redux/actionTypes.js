@@ -33,6 +33,9 @@ export const DELETE_RECIPE = 'DELETE_RECIPE';
 export const RECIPE_LOADING = 'RECIPE_LOADING';
 export const RECIPE_FAILED = 'RECIPE_FAILED';
 
+export const ADD_IMAGE = 'ADD_IMAGE';
+
+
 //----------------------------------RECIPESTEPS
 export const ADD_RECIPESTEPS = 'ADD_RECIPESTEPS';
 export const DELETE_RECIPESTEPS = 'DELETE_RECIPESTEPS';

@@ -20,8 +20,23 @@ function RecipesList(props) {
         }
     }
 
+    function getBase64(file) {
+        let document = "";
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            document = reader.result;
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+
+        return document;
+    }
+
     function renderRecipes(){
         const map = props.recipes.map((recipe) => {
+                let img = recipe.image;
                 console.log(recipe)
                 return(
                 <div className="row recipe-result" key={recipe.id}  onClick={() => {handleClick(recipe)}}>
@@ -30,7 +45,7 @@ function RecipesList(props) {
                             <tr id="recipe-title"><h6>{recipe.name}</h6></tr>
                             <tr id="recipe-note"><p>{recipe.notes}</p></tr>
                         </td>
-                        <td id="recipe-img-td"><img src={recipe.image}/></td>
+                        <td id="recipe-img-td"><img src={getBase64(img)}/></td>
                     </table>
                 </div>
                     )
