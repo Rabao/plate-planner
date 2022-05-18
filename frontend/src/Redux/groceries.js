@@ -30,6 +30,9 @@ export const Groceries = (state = {
                 errMess: action.payload,
                 groceries: []}
 
+        case ActionTypes.ADD_GROCERY:
+            return{...state, groceries: state.groceries.concat(action.payload)};
+
         default:
             return state;
     }

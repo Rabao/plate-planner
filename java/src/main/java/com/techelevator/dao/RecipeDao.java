@@ -9,7 +9,7 @@ public interface RecipeDao {
 
     List<Recipe> listRecipe();
 
-    List<Recipe> listRecipesByIngredient(long ingredientId);
+    List<Recipe> listRecipesByIngredient(long ingredient_id);
 
     List<Recipe> listRecipesByType(String type);
 

@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {FaCheck} from 'react-icons/fa';
 // import { Form, FormGroup, Input } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
+let found = false;
 
 export default function Groceries(props) {
     return(
@@ -17,10 +18,14 @@ export default function Groceries(props) {
             </Breadcrumb.Item>
         </Breadcrumb>
         <div className='component-body'>
-            <GroceryList/>
+            <GroceryList
+                user={props.user}
+                groceries={props.groceries}/>
             <AddItem 
+                authUser={props.user}
                 ingredients={props.ingredients}
                 nutrition={props.nutrition}
+                postGroceries={props.postGroceries}
                 postIngredient={props.postIngredient}
                 postNutrition={props.postNutrition}/>
         </div>
@@ -28,14 +33,16 @@ export default function Groceries(props) {
     )
 }
 
-function GroceryList() {
+function GroceryList(props) {
 
     
     return (
       <> 
           <div className='row'>
               <div className='col' md={12}>              
-                   <List />
+                   <List 
+                        user={props.user}
+                        groceries={props.groceries}/>
               </div>
           </div>
       </>
@@ -95,11 +102,13 @@ function GroceryList() {
                 values.protein, values.vitC, values.calcium, values.iron,
                 values.vitD, values.vitB6, values.cobalamin, values.magnesium);
         }
+        this.props.postGroceries(1, values.product,
+            values.quantity, this.props.authUser.id)
     }
 
     handleInputChange(){
         const product = document.getElementById('product');
-        let found = false;
+        found = false;
         let i = -1;
         do{
             i++;
@@ -152,11 +161,10 @@ function GroceryList() {
             const magnesium = document.getElementById('magnesium');
             magnesium.value = this.props.nutrition[i].magnesium;
         }
-        return found;
+        console.log(found);
     }
 
     render(){
-        let found = false;
         return (
             <>
             <h5>Add to List</h5>
@@ -167,8 +175,8 @@ function GroceryList() {
                         <Control.text model='.product' 
                             id="product" 
                             name="product" 
-                            className="form-control"
-                            onChange={found = this.handleInputChange}/>
+                            className="form-control"/>
+                            {/* onChange={this.handleInputChange}/> */}
                     </Col>
                     <Col md={2}>
                         <label htmlFor="type">Type</label> 

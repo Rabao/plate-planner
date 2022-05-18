@@ -19,6 +19,7 @@ export const ADD_GROCERIES = 'ADD_GROCERIES';
 export const DELETE_GROCERIES = 'DELETE_GROCERIES';
 export const GROCERIES_LOADING = 'GROCERIES_LOADING';
 export const GROCERIES_FAILED = 'GROCERIES_FAILED';
+export const ADD_GROCERY = 'ADD_GROCERY';
 
 //----------------------------------NUTRITION
 export const ADD_NUTRITION = 'ADD_NUTRITION';

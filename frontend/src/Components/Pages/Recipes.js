@@ -297,9 +297,9 @@ function Ingredients(props) {
         let item = ''
 
         if(ingredient.unit>1){
-            item = " " + ingredient.unit + " " + ingredient.ingredientName;
+            item = " " + ingredient.unit + " " + ingredient.ingredient_name;
         } else {
-            item = " " + ingredient.unit + "s " + ingredient.ingredientName;
+            item = " " + ingredient.unit + "s " + ingredient.ingredient_name;
         }
 
         return (  

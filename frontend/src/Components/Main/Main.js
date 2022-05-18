@@ -13,7 +13,7 @@ import MealPlans from '../Pages/MealPlans'
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries,
         fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, postRecipeIngredients,
         postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients,
-        postComment, fetchComments, deleteComment, editComment,
+        postComment, fetchComments, deleteComment, editComment, postGroceries,
         addGroceries, addIngredients, postIngredient,
         addNutrition, fetchNutrition, postNutrition, addMealPlan, 
         addMealPlanCollection, addRecipe, } from '../../Redux/actionCreators'
@@ -75,9 +75,11 @@ const mapDispatchToProps = (dispatch) => ({
             vitB6, cobalamin, magnesium))},
     postIngredient: (name, type) => {dispatch(postIngredient(name, type))},
     postRecipeSteps: (recipeId, stepNum, steps) => {dispatch(postRecipeSteps(recipeId, stepNum, steps))},
-    postRecipeIngredients: (recipeId, ingredientId, ingredientName, measurement, unit) => 
-        {dispatch(postRecipeIngredients(recipeId, ingredientId, ingredientName, measurement, unit))}
-
+    postRecipeIngredients: (recipeId, ingredient_id, ingredient_name, measurement, unit) => 
+        {dispatch(postRecipeIngredients(recipeId, ingredient_id, ingredient_name, measurement, unit))},
+    postGroceries: (ingredient_id, ingredient_name,qty, user_id) =>
+        {dispatch(postGroceries(ingredient_id, ingredient_name,
+            qty, user_id))}
 
     //Add methods
     // addGroceries: () => {dispatch(addGroceries())},
@@ -166,11 +168,14 @@ class Main extends Component {
                         <Route path='/recipes/:id' element={<RecipeWithId/>}/>
                         <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
                         <Route path='/ingredients/:id' element={<IngredientWithId/>}/>
-                        <Route path='/groceries' element={<Groceries 
+                        <Route path='/groceries' element={<Groceries
+                            user={this.props.user}
+                            groceries={this.props.groceries.groceries}
                             ingredients={this.props.ingredients.ingredients}
                             nutrition={this.props.nutrition.nutrition}
 							postIngredient={this.props.postIngredient}
-							postNutrition={this.props.postNutrition}/>}/>
+							postNutrition={this.props.postNutrition}
+                            postGroceries={this.props.postGroceries}/>}/>
                         <Route path='/mealplans' element={<MealPlans/>}/>
                         <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>
                         <Route path='' element={<Navigate to='/login' />} />

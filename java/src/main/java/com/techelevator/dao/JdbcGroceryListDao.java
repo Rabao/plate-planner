@@ -21,7 +21,8 @@ public class JdbcGroceryListDao implements GroceryListDao{
     @Override
     public GroceryList getGroceryList(long id) {
         GroceryList list = null;
-        String sql = "SELECT list_id, ingredient_id, ingredient_name, qty FROM grocery_list WHERE list_id = ? ";
+        String sql = "SELECT list_id, ingredient_id, ingredient_name, qty, " +
+                "user_id, complete FROM grocery_list WHERE list_id = ? ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql,id);
         if(results.next()) {
@@ -36,7 +37,8 @@ public class JdbcGroceryListDao implements GroceryListDao{
     @Override
     public List<GroceryList> listGroceryLists() {
         List<GroceryList> lists = new ArrayList<>();
-        String sql = "SELECT list_id, ingredient_id, ingredient_name, qty FROM grocery_list ";
+        String sql = "SELECT list_id, ingredient_id, ingredient_name, qty " +
+                "user_id, complete FROM grocery_list ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
@@ -47,15 +49,34 @@ public class JdbcGroceryListDao implements GroceryListDao{
     }
 
     @Override
+    public List<GroceryList> listGroceryListsByUser(long userId) {
+        List<GroceryList> lists = new ArrayList<>();
+        String sql = "SELECT list_id, ingredient_id, ingredient_name, qty " +
+                "user_id, complete FROM grocery_list WHERE list_id = ? ";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+        while(results.next()) {
+            GroceryList listItem = mapRowToGroceryList(results);
+            lists.add(listItem);
+        }
+        return lists;
+    }
+
+    @Override
     public boolean addNewGroceryList(GroceryList groceryList) {
-        String sql = "INSERT INTO grocery_list (list_id, ingredient_id, ingredient_name, qty) VALUES (DEFAULT, ?, ?, ?)";
-        return jdbcTemplate.update(sql,groceryList.getIngredientId(),groceryList.getIngredientName(),groceryList.getQty()) == 1;
+//        String sql = "INSERT INTO grocery_list (list_id, ingredient_id, ingredient_name, " +
+//                "qty, user_id, complete) VALUES (DEFAULT, ?, ?, ?, ?, false)";
+//        return jdbcTemplate.update(sql,groceryList.getIngredientId(),groceryList.getIngredientName(),
+//                groceryList.getQty(), groceryList.getUserId()) == 1;
+        return false;
     }
 
     @Override
     public boolean addNewItemToGroceryList(long id, GroceryList groceryList) {
-        String sql = "INSERT INTO grocery_list (list_id, ingredient_id, ingredient_name, qty) VALUES (?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, id, groceryList.getIngredientId(),groceryList.getIngredientName(),groceryList.getQty()) == 1;
+        String sql = "INSERT INTO grocery_list (list_id, ingredient_id, ingredient_name, " +
+                "qty, user_id, complete) VALUES (DEFAULT, ?, ?, ?, ?, false)";
+        return jdbcTemplate.update(sql,groceryList.getIngredientId(),groceryList.getIngredientName(),
+                groceryList.getQty(), groceryList.getUserId()) == 1;
     }
 
     @Override
@@ -70,6 +91,8 @@ public class JdbcGroceryListDao implements GroceryListDao{
         list.setIngredientId(rs.getLong("ingredient_id"));
         list.setIngredientName(rs.getString("ingredient_name"));
         list.setQty(rs.getInt("qty"));
+        list.setUserId(rs.getLong("user_id"));
+        list.setComplete(rs.getBoolean("complete"));
         return list;
     };
 }

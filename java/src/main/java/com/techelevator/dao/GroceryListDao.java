@@ -10,6 +10,8 @@ public interface GroceryListDao {
 
     List<GroceryList> listGroceryLists();
 
+    List<GroceryList> listGroceryListsByUser(long userId);
+
     boolean addNewGroceryList(GroceryList groceryList);
 
     boolean addNewItemToGroceryList(long id, GroceryList groceryList);

@@ -34,6 +34,21 @@ public class JdbcIngredientsDao implements IngredientsDao{
     }
 
     @Override
+    public long getIngredientIdByName(String name) {
+        Ingredients ingredient = null;
+        String sql = "SELECT id, name, type FROM ingredients WHERE name = ? ";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql,name);
+        if(results.next()) {
+            ingredient = mapRowToIngredient(results);
+        } else {
+            throw new IngredientNotFoundException();
+        }
+
+        return ingredient.getId();
+    }
+
+    @Override
     public List<Ingredients> listIngredient() {
         List<Ingredients> ingredients = new ArrayList<>();
         String sql = "SELECT id, name, type FROM ingredients ";

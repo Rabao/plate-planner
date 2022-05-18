@@ -219,31 +219,37 @@ public class MealPlanController {
      *****************************************************/
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value="lists")
+    @GetMapping(value="groceries")
     public List<GroceryList> listGroceryLists(){
         return groceryListDao.listGroceryLists();
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value="lists/{id}")
+    @GetMapping(value="groceries/{userId}")
+    public List<GroceryList> listGroceryListByUser(@PathVariable long userId){
+        return groceryListDao.listGroceryListsByUser(userId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="groceries/{id}")
     public GroceryList getGroceryList(@PathVariable long id){
         return groceryListDao.getGroceryList(id);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value="lists")
-    public void addNewGroceryList(@Valid @RequestBody GroceryList groceryList){
-        groceryListDao.addNewGroceryList(groceryList);
-    }
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @PostMapping(value="groceries")
+//    public void addNewGroceryList(@Valid @RequestBody GroceryList groceryList){
+//        groceryListDao.addNewGroceryList(groceryList);
+//    }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value="lists/{id}")
-    public void addNewItemToGroceryList(@PathVariable long id, @Valid @RequestBody GroceryList groceryList){
-        groceryListDao.addNewItemToGroceryList(id,groceryList);
+    @PostMapping(value="groceries/{userId}")
+    public void addNewItemToGroceryList(@PathVariable long userId, @Valid @RequestBody GroceryList groceryList){
+        groceryListDao.addNewItemToGroceryList(userId,groceryList);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @RequestMapping(value="lists/{id}", method = RequestMethod.DELETE )
+    @RequestMapping(value="groceries/{id}", method = RequestMethod.DELETE )
     public void deleteGroceryList(@PathVariable long id) throws GroceryListNotFoundException {
         groceryListDao.deleteGroceryList(id);
     }

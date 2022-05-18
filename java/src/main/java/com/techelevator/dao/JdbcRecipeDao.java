@@ -49,7 +49,7 @@ public class JdbcRecipeDao implements RecipeDao{
     }
 
     @Override
-    public List<Recipe> listRecipesByIngredient(long ingredientId) {
+    public List<Recipe> listRecipesByIngredient(long ingredient_id) {
         List<Recipe> recipes = new ArrayList<>();
         String sql = "SELECT * " +
                 "FROM recipes AS r " +
@@ -59,7 +59,7 @@ public class JdbcRecipeDao implements RecipeDao{
                 "ON i.id = ri.ingredient_id " +
                 "WHERE i.id = ?";
 
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, ingredientId);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, ingredient_id);
         while(results.next()) {
             Recipe recipe = mapRowToRecipe(results);
             recipes.add(recipe);

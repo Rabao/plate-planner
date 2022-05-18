@@ -281,10 +281,49 @@ export const groceriesFailed = (errmess) => ({
 export const deleteGroceries = () => ({
     type: ActionTypes.DELETE_GROCERIES
 });
+export const postGroceries = (ingredient_id, ingredient_name,
+    qty, user_id) => (dispatch) => {
+    const newGrocery = {
+        ingredientId: ingredient_id,
+        ingredientName: ingredient_name,
+        qty: qty,
+        userId: user_id
+    }
+    return fetch(baseUrl + '/groceries/' + user_id, {
+        method: 'POST',
+        body: JSON.stringify(newGrocery),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            let error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+            }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then(response => dispatch(addGrocery(response)))
+    .catch(error => {console.log('Adding grocery: ', error.message)
+        alert('Your grocery could not be added.\nError: ' + error.message)});
+};
 
-export const addGroceries = (mealplans) => ({
+export const addGroceries = (groceries) => ({
     type: ActionTypes.ADD_GROCERIES,
-    payload: mealplans
+    payload: groceries
+});
+
+export const addGrocery = (groceries) => ({
+    type: ActionTypes.ADD_GROCERY,
+    payload: groceries
 });
 //----------------------------------GROCERIES
 //----------------------------------RECIPE
@@ -374,11 +413,11 @@ export const addRecipe = (recipe) => ({
     payload: recipe
 });
 //-------------------
-export const postRecipeIngredients = (recipeId, ingredientId, ingredientName, measurement, unit) => (dispatch) => {
+export const postRecipeIngredients = (recipeId, ingredient_id, ingredient_name, measurement, unit) => (dispatch) => {
     const newRecipe = {
         recipeId: recipeId,
-        ingredientId: ingredientId,
-        ingredientName: ingredientName,
+        ingredient_id: ingredient_id,
+        ingredient_name: ingredient_name,
         measurement: measurement,
         unit: unit
     }
