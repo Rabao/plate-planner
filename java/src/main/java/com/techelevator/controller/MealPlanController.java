@@ -250,11 +250,11 @@ public class MealPlanController {
         return groceryListDao.getGroceryList(id);
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value="groceries")
-    public void addNewGroceryList(@Valid @RequestBody GroceryList groceryList){
-        groceryListDao.addNewGroceryList(groceryList);
-    }
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @PostMapping(value="groceries")
+//    public void addNewGroceryList(@Valid @RequestBody GroceryList groceryList){
+//        groceryListDao.addNewGroceryList(groceryList);
+//    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value="groceries/{userId}")
