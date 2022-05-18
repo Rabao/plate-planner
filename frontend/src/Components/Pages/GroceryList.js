@@ -41,6 +41,7 @@ class AddItem extends Component{
     constructor(props){
         super(props);
         this.state= {
+            didUpdate: false,
             listState: []
         }
 
@@ -54,7 +55,12 @@ class AddItem extends Component{
     renderGroceryList() {
 
         const GroceryList = () => {
+
+           
             liObj = this.state.listState.map((item) => {
+                
+                if(item != null){
+                    return(
                 <li className="component-list-item" key={this.state.listState.length}>
                     <div className="col" md={11}>
                         <div className="row">
@@ -75,17 +81,18 @@ class AddItem extends Component{
                 </div>         
             </div>
         </li>
-        listArr.push(liObj);
-        return(listArr)
-            })   
-        }
+        )} else {
+        return(<div></div>)}
+            })  
+        return(liObj) 
+    }
      
         let listArr = [];
         let liObj = <div></div>;
 
         return(
             <ul className="component-list">
-                {listArr}
+                {GroceryList()}
             </ul> 
         )
     }
@@ -96,7 +103,10 @@ class AddItem extends Component{
             qty: values.quantity,
             type: values.type
         }]
-        this.setState({ listState: [...this.state.listState, produce]})
+        this.setState({ 
+                    didUpdate: !this.state.didUpdate, 
+                    listState: [...this.state.listState, produce]})
+
     }
 
     handleSubmit(found, values){

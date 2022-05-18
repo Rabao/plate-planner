@@ -24,7 +24,7 @@ function AddRecipe(props) {
     let nameMode = ".name" + numIngredients;
 
     const [selectedFile, setSelectedFile] = useState();
-    
+
     function handleChange(event) {
         setSelectedFile(document.getElementById('img-input').files[0]); 
         console.log("THIS IS THE SELECTED FILE: " + selectedFile);
@@ -105,7 +105,7 @@ function AddRecipe(props) {
         setTimeout(() => {
         pageRedirect= true;
         if(pageRedirect === true){
-            navigate(path); 
+            navigate(path + id); 
         }}, 300)
     }
 
