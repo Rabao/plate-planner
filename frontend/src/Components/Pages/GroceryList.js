@@ -53,19 +53,18 @@ class AddItem extends Component{
     Will iterate through the above list format and present DB items in a list. 
   */
     renderGroceryList() {
-
+        let groceryId=0;
         const GroceryList = () => {
 
            
             liObj = this.state.listState.map((item, index) => {
-                
                 if(item != null){
                     return(
-                <li className="component-list-item" key={index}>
+                <li className="component-list-item" key={groceryId}>
                     <div className="col" md={11}>
                         <div className="row">
                                 <div className="col" md={10}>
-                                    {item[index].name}
+                                    {item[groceryId].name}
                                 </div>
                         <div className="col" md={1}>
                             <div className="checklist-complete">
@@ -75,7 +74,7 @@ class AddItem extends Component{
                                 </div>
                             </div>
                         <div className="checklist-quantity">
-                            <label>Quantity</label><input type="number" name="qty" defaultValue={item[index].qty}></input> 
+                            <label>Quantity</label><input type="number" name="qty" defaultValue={item[groceryId].qty}></input> 
                         </div>
                     </div>
                 </div>         
@@ -87,6 +86,7 @@ class AddItem extends Component{
     //    listArr.push(liObj);
     //     return(listArr)
             })  
+            groceryId++;
             return(liObj) 
         }
      
@@ -113,23 +113,25 @@ class AddItem extends Component{
     }
 
     handleSubmit(found, values){
-        // if(!found){
-        //     this.props.postIngredient(values.product, values.type);
-        //     this.props.postNutrition(values.serving,values.calories,
-        //         values.fromfat, values.total_fat, values.satfat,
-        //         values.trans_fat, values.cholesterol, values.sodium, values.potassium, 
-        //         values.carbs, values.fiber, values.sugar, values.sugar_alcohol,
-        //         values.protein, values.vitC, values.calcium, values.iron,
-        //         values.vitD, values.vitB6, values.cobalamin, values.magnesium);
-        // }
+        if(!found){
+            const product = document.getElementById('product');
+            this.props.postIngredient(product.value, values.type);
+            this.props.postNutrition(values.serving,values.calories,
+                values.fromfat, values.total_fat, values.satfat,
+                values.trans_fat, values.cholesterol, values.sodium, values.potassium, 
+                values.carbs, values.fiber, values.sugar, values.sugar_alcohol,
+                values.protein, values.vitC, values.calcium, values.iron,
+                values.vitD, values.vitB6, values.cobalamin, values.magnesium);
+        }
         // this.props.postGroceries(1, values.product,
         //     values.quantity, this.props.authUser.id)
+        // window.location.reload(false);
+        setTimeout(() => {{
+            console.log(this.state.listState);
+            }}, 300)
         
         this.addToGroceryList(values);
 
-        setTimeout(() => {{
-        console.log(this.state.listState);
-        }}, 300)
     }
 
     handleInputChange(){
@@ -140,54 +142,54 @@ class AddItem extends Component{
             i++;
             if(product.value == this.props.ingredients[i].name)
                 found = true;
-        }while(!found && i<this.props.ingredients.length);
+        }while(!found && i<this.props.ingredients.length-1);
         if(found){
             const type = document.getElementById('type');
-            type.value = this.props.ingredients[i].type;
             const serving = document.getElementById('serving');
-            serving.value = this.props.nutrition[i].serving_size;
             const calories = document.getElementById('calories');
-            calories.value = this.props.nutrition[i].calories;
             const fromfat = document.getElementById('fromfat');
-            fromfat.value = this.props.nutrition[i].calories_fat;
             const total_fat = document.getElementById('total_fat');
-            total_fat.value = this.props.nutrition[i].total_fat;
             const satfat = document.getElementById('satfat');
-            satfat.value = this.props.nutrition[i].saturated_fat;
             const trans_fat = document.getElementById('trans_fat');
-            trans_fat.value = this.props.nutrition[i].trans_fat;
             const cholesterol = document.getElementById('cholesterol');
-            cholesterol.value = this.props.nutrition[i].cholesterol;
             const sodium = document.getElementById('sodium');
-            sodium.value = this.props.nutrition[i].sodium;
             const potassium = document.getElementById('potassium');
-            potassium.value = this.props.nutrition[i].potassium;
             const carbs = document.getElementById('carbs');
-            carbs.value = this.props.nutrition[i].total_carbs;
             const fiber = document.getElementById('fiber');
-            fiber.value = this.props.nutrition[i].dietary_fiber;
             const sugar = document.getElementById('sugar');
-            sugar.value = this.props.nutrition[i].sugar;
             const sugar_alcohol = document.getElementById('sugar_alcohol');
-            sugar_alcohol.value = this.props.nutrition[i].sugar_alcohol;
             const protein = document.getElementById('protein');
-            protein.value = this.props.nutrition[i].protein;
             const vitC = document.getElementById('vitC');
-            vitC.value = this.props.nutrition[i].vitC;
             const calcium = document.getElementById('calcium');
-            calcium.value = this.props.nutrition[i].calcium;
             const iron = document.getElementById('iron');
-            iron.value = this.props.nutrition[i].iron;
             const vitD = document.getElementById('vitD');
-            vitD.value = this.props.nutrition[i].vitD;
             const vitB6 = document.getElementById('vitB6');
-            vitB6.value = this.props.nutrition[i].vitB6;
             const cobalamin = document.getElementById('cobalamin');
-            cobalamin.value = this.props.nutrition[i].cobalamin;
             const magnesium = document.getElementById('magnesium');
+            type.value = this.props.ingredients[i].type;
+            serving.value = this.props.nutrition[i].serving_size;
+            calories.value = this.props.nutrition[i].calories;
+            fromfat.value = this.props.nutrition[i].calories_fat;
+            total_fat.value = this.props.nutrition[i].total_fat;
+            satfat.value = this.props.nutrition[i].saturated_fat;
+            trans_fat.value = this.props.nutrition[i].trans_fat;
+            cholesterol.value = this.props.nutrition[i].cholesterol;
+            sodium.value = this.props.nutrition[i].sodium;
+            potassium.value = this.props.nutrition[i].potassium;
+            carbs.value = this.props.nutrition[i].total_carbs;
+            fiber.value = this.props.nutrition[i].dietary_fiber;
+            sugar.value = this.props.nutrition[i].sugar;
+            sugar_alcohol.value = this.props.nutrition[i].sugar_alcohol;
+            protein.value = this.props.nutrition[i].protein;
+            vitC.value = this.props.nutrition[i].vitC;
+            calcium.value = this.props.nutrition[i].calcium;
+            iron.value = this.props.nutrition[i].iron;
+            vitD.value = this.props.nutrition[i].vitD;
+            vitB6.value = this.props.nutrition[i].vitB6;
+            cobalamin.value = this.props.nutrition[i].cobalamin;
             magnesium.value = this.props.nutrition[i].magnesium;
         }
-        console.log(found);
+        // console.log(found);
     }
 
     render(){
@@ -210,8 +212,8 @@ class AddItem extends Component{
                         <Control.text model='.product' 
                             id="product" 
                             name="product" 
-                            className="form-control"/>
-                            {/* onChange={this.handleInputChange}/> */}
+                            className="form-control"
+                            onChange={this.handleInputChange}/>
                     </Col>
                     <Col md={2}>
                         <label htmlFor="type">Type</label> 
