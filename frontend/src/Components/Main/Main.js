@@ -10,6 +10,7 @@ import RecipesList from '../Pages/RecipesList'
 import AddRecipe from '../Pages/AddRecipe'
 import Groceries from '../Pages/GroceryList'
 import MealPlans from '../Pages/MealPlans'
+import Dashboard from '../Pages/Dashboard';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries,
         fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, postRecipeIngredients,
         postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients,
@@ -158,6 +159,7 @@ class Main extends Component {
                     <Routes>
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/register'element={<Register/>}/>
+                        <Route path='/user' element={<Dashboard user={this.props.user}/>}/>
                         <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
                         <Route exact path='/add/recipe' element={<AddRecipe 
                             postRecipe={this.props.postRecipe}  

@@ -30,7 +30,7 @@ public class FilesController {
     @Autowired
     FilesStorageService storageService;
 
-    public static final String DIRECTORY = "frontend/public";
+    public static final String DIRECTORY = "frontend/public/recipes/";
 
     @PostMapping("/upload")
     public ResponseEntity<List<String>> uploadFiles(@RequestParam("file") List<MultipartFile> multipartFiles) throws IOException {

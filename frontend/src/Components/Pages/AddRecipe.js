@@ -24,119 +24,7 @@ function AddRecipe(props) {
     let nameMode = ".name" + numIngredients;
 
     const [selectedFile, setSelectedFile] = useState();
-    // let blob = '';
-    // function fileSelectedHandler (event) {
-    //     setSelectedFile(event.target.files[0]);
-    //     onFileUpload();
-    // }
-
-
-    // function onFileUpload() {
-    //     // const formData = new FormData();
-
-    //     // formData.append(
-    //     //     "file",
-    //     //     selectedFile,
-    //     //     selectedFile.name
-    //     // );
-
-    //     // console.log(selectedFile);
-    //     axios.post("/uploads/file", formData);
-
-    // }
-
-
-    // const createImage = (newImage) => axios.post("/uploads/file", newImage);
-
-    // const createPost = async (post) => {
-    //     try {
-    //     await createImage(post);
-    //     } catch (error) {
-    //     console.log(error.message);
-    //     }
-    // };
-
-    // const convertToBase64 = (file) => {
-    //     return new Promise((resolve, reject) => {
-    //     const fileReader = new FileReader();
-    //     fileReader.readAsDataURL(file);
-    //     fileReader.onload = () => {
-    //         resolve(fileReader.result);
-    //     };
-    //     fileReader.onerror = (error) => {
-    //         reject(error);
-    //     };
-    //     });
-        
-    // };
-    // const handleFileUpload = async (e) => {
-    //     if(e.target.files[0].size > 2097152){
-    //         alert("File exceeds 2MB limit!");
-    //         document.getElementById("img-input").value = "";       
-    //     }
-    //     const file = e.target.files[0];
-    //     base64Img = await convertToBase64(file);
-    //     setSelectedFile({ ...selectedFile, myFile: base64Img });
-    //     console.log(base64Img);
-    // };
-
-    // let newB64 = "";
-    // const handleChange = (e) => {
-    //     const imgInput = document.getElementById('img-input');
-    //     imgInput.addEventListener('change', function (e) {        
-    //         // setSelectedFile(imgInput.files[0]);
-    //         const reader = new FileReader();
-    //         reader.onload = function () {
-    //         newB64 = new Image()
-    //         newB64.src = reader.result    
-
-    //         setTimeout(() => {{
-    //             blob = b64toBlob(newB64); 
-    //             }}, 500)
-           
-    //         // document.getElementById('preview-image-container').appendChild(newB64)
-            
-    //         }
-    //         reader.readAsDataURL(imgInput.files[0])
-    //         reader.readAsText(imgInput.files[0])
-    //     }, false)
-
-    // }
-
-    // function urlB64ToUint8Array(base64String) {
-    //     const padding = '='.repeat((4 - base64String.length % 4) % 4);
-    //     const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
     
-    //     const rawData = window.atob(base64);
-    //     const outputArray = new Uint8Array(rawData.length);
-    
-    //     for (let i = 0; i < rawData.length; ++i) {
-    //         outputArray[i] = rawData.charCodeAt(i);
-    //     }
-    
-    //     return outputArray;
-    // }
-    // const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
-    //     const byteCharacters = atob(b64Data);
-    //     const byteArrays = [];
-      
-    //     for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    //       const slice = byteCharacters.slice(offset, offset + sliceSize);
-      
-    //       const byteNumbers = new Array(slice.length);
-    //       for (let i = 0; i < slice.length; i++) {
-    //         byteNumbers[i] = slice.charCodeAt(i);
-    //       }
-      
-    //       const byteArray = new Uint8Array(byteNumbers);
-    //       byteArrays.push(byteArray);
-    //     }
-      
-    //      const blob = new Blob(byteArrays, {type: contentType});
-    //     return blob;
-    //   }
-
-
     function handleChange(event) {
         setSelectedFile(document.getElementById('img-input').files[0]); 
         console.log("THIS IS THE SELECTED FILE: " + selectedFile);
@@ -191,7 +79,7 @@ function AddRecipe(props) {
 
         let data = new FormData()
         data.append('file', selectedFile)
-        filePath = '/' + selectedFile.name;
+        filePath = '/recipes/' + selectedFile.name;
         
         console.log(filePath)
         
@@ -214,11 +102,11 @@ function AddRecipe(props) {
             props.postIngredients(id,1,ingredients[i].value,qty[i].value,unit[i].value)
         }
 
-        // setTimeout(() => {
-        // pageRedirect= true;
-        // if(pageRedirect === true){
-        //     navigate(path); 
-        // }}, 100)
+        setTimeout(() => {
+        pageRedirect= true;
+        if(pageRedirect === true){
+            navigate(path); 
+        }}, 300)
     }
 
     
@@ -295,7 +183,7 @@ function AddRecipe(props) {
                             <option>Gallon</option>
                             <option>Milliliter</option>
                             <option>Liter</option>
-                            <option>Deciliter</option>
+                            <option>Whole</option>
                             <option disabled></option>
                             <option disabled>──────────</option>
                             <option disabled>Mass/Weight</option>
@@ -310,6 +198,7 @@ function AddRecipe(props) {
                             <option disabled>Length</option>
                             <option disabled></option>
                             <option>Slice</option>
+                            <option>Half</option>
                             <option>Millimeter</option>
                             <option>Centimeter</option>
                             <option>Meter</option>

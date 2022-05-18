@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import {Breadcrumb, Row, Col} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import {FaCheck} from 'react-icons/fa';
@@ -7,6 +7,8 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 let found = false;
 
 export default function Groceries(props) {
+    
+
     return(
         <div className='container'>
         <Breadcrumb>
@@ -18,13 +20,14 @@ export default function Groceries(props) {
             </Breadcrumb.Item>
         </Breadcrumb>
         <div className='component-body'>
-            <GroceryList
+            {/* <GroceryList
                 user={props.user}
-                groceries={props.groceries}/>
+                groceries={props.groceries}/> */}
             <AddItem 
                 authUser={props.user}
                 ingredients={props.ingredients}
                 nutrition={props.nutrition}
+                groceries={props.groceries}
                 postGroceries={props.postGroceries}
                 postIngredient={props.postIngredient}
                 postNutrition={props.postNutrition}/>
@@ -33,77 +36,87 @@ export default function Groceries(props) {
     )
 }
 
-function GroceryList(props) {
-
-    
-    return (
-      <> 
-          <div className='row'>
-              <div className='col' md={12}>              
-                   <List 
-                        user={props.user}
-                        groceries={props.groceries}/>
-              </div>
-          </div>
-      </>
-    );
-  }
-
-  /*
-    Will iterate through the above list format and present DB items in a list. 
-  */
-  function List() {
-      return (
-          <>
-          <h5>Grocery List</h5> 
-            <ul className="component-list">
-                <li className="component-list-item">
-                <div className="col" md={11}>
-                    <div className="row">
-                            <div className="col" md={10}>
-                                Eggo Waffles
-                            </div>
-                            <div className="col" md={1}>
-                                <div className="checklist-complete">
-                                    <label>Complete</label>
-                                    <div className="checklist-check-box">
-                                        <FaCheck className="check"/>
-                                    </div>
-                                </div>
-                                <div className="checklist-quantity">
-                                    <label>Quantity</label><input type="number" name="qty"></input> 
-                                </div>
-                        </div>
-                        </div>         
-                    </div>
-                </li>
-            </ul>
-        </>
-      )
-  }
-
 //   If the ingredient/ grocery item exists, auto-complete fields. Else, add to DB.
-  class AddItem extends Component{
-
+class AddItem extends Component{
     constructor(props){
         super(props);
-        
+        this.state= {
+            listState: []
+        }
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    handleSubmit(found, values){
-        if(!found){
-            this.props.postIngredient(values.product, values.type);
-            this.props.postNutrition(values.serving,values.calories,
-                values.fromfat, values.total_fat, values.satfat,
-                values.trans_fat, values.cholesterol, values.sodium, values.potassium, 
-                values.carbs, values.fiber, values.sugar, values.sugar_alcohol,
-                values.protein, values.vitC, values.calcium, values.iron,
-                values.vitD, values.vitB6, values.cobalamin, values.magnesium);
+     /*
+    Will iterate through the above list format and present DB items in a list. 
+  */
+    renderGroceryList() {
+
+        const GroceryList = () => {
+            liObj = this.state.listState.map((item) => {
+                <li className="component-list-item" key={this.state.listState.length}>
+                    <div className="col" md={11}>
+                        <div className="row">
+                                <div className="col" md={10}>
+                                    {item.name}
+                                </div>
+                        <div className="col" md={1}>
+                            <div className="checklist-complete">
+                                <label>Complete</label>
+                                <div className="checklist-check-box">
+                                    <FaCheck className="check"/>
+                                </div>
+                            </div>
+                        <div className="checklist-quantity">
+                            <label>Quantity</label><input type="number" name="qty" value={item.qty}></input> 
+                        </div>
+                    </div>
+                </div>         
+            </div>
+        </li>
+        listArr.push(liObj);
+        return(listArr)
+            })   
         }
-        this.props.postGroceries(1, values.product,
-            values.quantity, this.props.authUser.id)
+     
+        let listArr = [];
+        let liObj = <div></div>;
+
+        return(
+            <ul className="component-list">
+                {listArr}
+            </ul> 
+        )
+    }
+
+    addToGroceryList(values){
+        let produce = [{
+            name: values.product,
+            qty: values.quantity,
+            type: values.type
+        }]
+        this.setState({ listState: [...this.state.listState, produce]})
+    }
+
+    handleSubmit(found, values){
+        // if(!found){
+        //     this.props.postIngredient(values.product, values.type);
+        //     this.props.postNutrition(values.serving,values.calories,
+        //         values.fromfat, values.total_fat, values.satfat,
+        //         values.trans_fat, values.cholesterol, values.sodium, values.potassium, 
+        //         values.carbs, values.fiber, values.sugar, values.sugar_alcohol,
+        //         values.protein, values.vitC, values.calcium, values.iron,
+        //         values.vitD, values.vitB6, values.cobalamin, values.magnesium);
+        // }
+        // this.props.postGroceries(1, values.product,
+        //     values.quantity, this.props.authUser.id)
+        
+        this.addToGroceryList(values);
+
+        setTimeout(() => {{
+        console.log(this.state.listState);
+        }}, 300)
     }
 
     handleInputChange(){
@@ -167,6 +180,15 @@ function GroceryList(props) {
     render(){
         return (
             <>
+            <div className='row'>
+                  <div className='col' md={12}>              
+                        <h5>Grocery List</h5>
+                            {this.renderGroceryList()}
+                         <div className='row'>
+                             <button>Save List</button><button>Reset List</button>
+                         </div>
+                  </div>
+              </div>
             <h5>Add to List</h5>
             <LocalForm onSubmit={(values) => this.handleSubmit(found, values)}>
                 <Row className="form-group">

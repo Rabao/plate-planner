@@ -31,6 +31,7 @@ export default class Header extends Component {
                                                 <span id="header-welcome">{navText}</span>
                                             </Dropdown.Toggle>    
                                                 <Dropdown.Menu>
+                                                    <Dropdown.Item as={Link} to='/user'>Dashboard</Dropdown.Item>
                                                     <Dropdown.Item as={Link} to='/add/recipe'>Author Recipe</Dropdown.Item>
                                                     <Dropdown.Item to='/login' onClick={this.props.handleLogout}>Logout</Dropdown.Item>  
                                                 </Dropdown.Menu>                              
