@@ -281,10 +281,9 @@ export const groceriesFailed = (errmess) => ({
 export const deleteGroceries = () => ({
     type: ActionTypes.DELETE_GROCERIES
 });
-export const postGroceries = (ingredient_id, ingredient_name,
+export const postGroceries = (ingredient_name,
     qty, user_id) => (dispatch) => {
     const newGrocery = {
-        ingredientId: ingredient_id,
         ingredientName: ingredient_name,
         qty: qty,
         userId: user_id

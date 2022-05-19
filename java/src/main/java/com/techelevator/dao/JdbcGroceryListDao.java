@@ -37,8 +37,7 @@ public class JdbcGroceryListDao implements GroceryListDao{
     @Override
     public List<GroceryList> listGroceryLists() {
         List<GroceryList> lists = new ArrayList<>();
-        String sql = "SELECT list_id, ingredient_id, ingredient_name, qty " +
-                "user_id, complete FROM grocery_list ";
+        String sql = "SELECT * FROM grocery_list ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
