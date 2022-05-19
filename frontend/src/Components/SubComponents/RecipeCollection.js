@@ -20,8 +20,8 @@ function RecipeCollection(props)  {
             if(recipe != null){
                 return(
                     <div className="col" md={4}>
-                        <div key={index} className="recipe-collection" style={{cursor:'pointer'}} onClick={() => {handleClick(recipe)}}>
-                            <div id="recipe-collection-text"><p>{recipe.name}</p></div>
+                      <div id="recipe-collection-text"><p><mark>{recipe.name}</mark></p></div>
+                        <div key={index} className="recipe-collection" onClick={() => {handleClick(recipe)}}>  
                             <img src={recipe.image}/>
                         </div>            
                     </div>
@@ -39,6 +39,15 @@ function RecipeCollection(props)  {
   
     return (
       <div className="container">
+                    <h3>Try Something New</h3>
+                    <label htmlFor='filters'>Filters:</label>
+                    <ul className="filters">
+                        <li>Breakfast</li>
+                        <li>Lunch</li>
+                        <li>Dinner</li>
+                        <li>Snack</li>
+                        <li>Dessert</li>
+                    </ul>
           <div className="row">
             {enumRecipeCollection(props)}
         </div>

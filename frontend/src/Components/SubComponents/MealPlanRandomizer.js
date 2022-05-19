@@ -1,18 +1,33 @@
 import React from 'react';
+import {Link, useNavigate} from 'react-router-dom'
+import { Breadcrumb, Col, Button } from 'react-bootstrap'
+import { Control, LocalForm, Errors } from 'react-redux-form';
 
 export const MealPlanRandomizer = () => {
   return (
     <>
-    <LocalForm id="target-nutrition">                         
-            <label htmlFor="name">Target Caloric Intake</label> 
-                <Control.text model='.name' 
+    <LocalForm id="target-nutrition">
+        <div className="row">                       
+            <label htmlFor="name">Target Caloric Intake</label>
+            <Col md={2}> 
+                <Control.text type="number" model='.name' 
                 name="name" 
                 className="recipe-title"
                 id="name"/> 
             </Col>
-            
+            <label htmlFor="name">In How Many Meals?</label>
+            <Col md={2}> 
+                <Control.text type="number" model='.name' 
+                name="name" 
+                className="recipe-title"
+                id="name"/> 
+            </Col>
             <Col md={2}>
+                <div>Shuffle</div>
         
+            </Col>
+        </div>
+        {/* </div>  
             <label htmlFor="type">Meal Type</label> 
             <Control.select model=".type" name="type" id="type" className="recipe-type">
                     <option value="Breakfast" active>Breakfast</option>
@@ -49,7 +64,7 @@ export const MealPlanRandomizer = () => {
             </Col>  
             <Col md={8}>
                 <Button type="submit" form="recipe-form" onClick={() => {handleSubmit()}}>Post Recipe</Button>
-            </Col>
+            </Col> */}
         </LocalForm>
     </>
   );

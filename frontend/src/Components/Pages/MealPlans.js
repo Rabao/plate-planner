@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Breadcrumb} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
+import { MealPlanRandomizer } from '../SubComponents/MealPlanRandomizer';
 
 function MealPlans(props) {
     return(
@@ -19,7 +20,7 @@ function MealPlans(props) {
                 <div className="col" md={4} id="generate-plan">
                 <aside>
                     <h5>Generate Plans</h5>
-
+                    <MealPlanRandomizer/>
                 </aside>
                 </div>
                 <div className="col" md={8} id="plan-dash">

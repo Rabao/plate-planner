@@ -11,47 +11,23 @@ function Home(props) {
                 </div>
                     <div className="container dashboard">
                         <div className="row">
-                            <div className="col" md={3}>
-                                <div className="card ">
-                                        <div className="card-body">
-                                            <Link to='/recipes'>Recipes</Link>
-                                        </div>
-                                    </div>
+                            <div className="col" md={6}>
+                                <Link to='/recipes'><button as={Link} to='/recipes' className="main-page-buttons">Recipes</button></Link>
                                 </div>
-                            <div className="col" md={3}>
-                                <div className="card">
-                                    <div className="card-body">
-                                    <Link to='/groceries'>Groceries</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col" md={3}>
-                                <div className="card">
-                                    <div className="card-body">
-                                    <Link to='/mealplans'>Meal Plans</Link>
-                                    </div>
-                                </div>
+                            <div className="col" md={6}>
+                                <Link to='/mealplans'><button className="main-page-buttons">Meal Plans</button></Link>
                             </div>           
-                            <div className="col" md={3}>
+                            {/* <div className="col" md={3}>
                                 <div className="card">
                                     <div className="card-body">
                                     <Link to='/ingredients'>Ingredients</Link>
                                     </div>
                                 </div>
-                            </div>                         
+                            </div>                          */}
                         </div>
                     </div>
                 </div>
                 <div className="container">
-                    <h3>Try Something New</h3>
-                    <label htmlFor='filters'>Filters:</label>
-                    <ul className="filters">
-                        <li>Breakfast</li>
-                        <li>Lunch</li>
-                        <li>Dinner</li>
-                        <li>Snack</li>
-                        <li>Dessert</li>
-                    </ul>
                     <RecipeCollection collection={props.collection}/>
                 </div>
         </div>

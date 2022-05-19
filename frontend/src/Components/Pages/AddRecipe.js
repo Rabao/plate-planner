@@ -24,6 +24,13 @@ function AddRecipe(props) {
     let nameMode = ".name" + numIngredients;
 
     const [selectedFile, setSelectedFile] = useState();
+    const [currentFile, setCurrentFile] = useState(undefined);
+
+    function onDrop(file){
+        if (file.length > 0) {
+            setSelectedFile(file);
+          }
+    }
 
     function handleChange(event) {
         setSelectedFile(document.getElementById('img-input').files[0]); 
@@ -265,29 +272,27 @@ function AddRecipe(props) {
                             <div className="col">
         
                             <LocalForm id="recipe-form">
-                                                
-                                <Col md={10}>
-                                <label htmlFor="name">Recipe Title</label> 
-                                    <Control.text model='.name' 
-                                    name="name" 
-                                    className="recipe-title"
-                                    id="name"/> 
-                                </Col>
-                               
-                                <Col md={2}>
-                           
-                                <label htmlFor="type">Meal Type</label> 
-                                <Control.select model=".type" name="type" id="type" className="recipe-type">
-                                        <option value="Breakfast" active>Breakfast</option>
-                                        <option value="Brunch">Brunch</option>
-                                        <option value="Lunch">Lunch</option>
-                                        <option value="Dinner">Dinner</option>
-                                        <option value="Snack">Snack</option>
-                                        <option value="Dessert">Dessert</option>
-                                        <option value="Drink">Drink</option>
-                                </Control.select>
-                                </Col>
-                               
+                                <div className="row">                
+                                    <Col md={10}>
+                                    <label htmlFor="name">Recipe Title</label><br/> 
+                                        <Control.text model='.name' 
+                                        name="name" 
+                                        className="recipe-title"
+                                        id="name"/> 
+                                    </Col>
+                                    <Col md={2}>
+                                    <label htmlFor="type">Meal Type</label><br/> 
+                                    <Control.select model=".type" name="type" id="type" className="recipe-type">
+                                            <option value="Breakfast" active>Breakfast</option>
+                                            <option value="Brunch">Brunch</option>
+                                            <option value="Lunch">Lunch</option>
+                                            <option value="Dinner">Dinner</option>
+                                            <option value="Snack">Snack</option>
+                                            <option value="Dessert">Dessert</option>
+                                            <option value="Drink">Drink</option>
+                                    </Control.select>
+                                    </Col>
+                                </div>
                                 <div className="row">                             
                                     <Col md={6}>
                                     <div className="steps-container">
@@ -296,19 +301,21 @@ function AddRecipe(props) {
                                     </div>
                                     </Col>
                                     <Col md={6}>
+                                    <div class="image-dropzone" onDrop={(file) => {onDrop(file)}}>
                                         <input type="file" id="img-input" 
                                         accept=".jpg, .jpeg, .png, .bmp"
                                         onChange={(e) => {handleChange(e)}}/>
                                         <div id="preview-image-container"></div>
+                                    </div>  
                                     </Col>
                                 </div>
                                 <Col md={12}>
-                                <label htmlFor="notes">Notes</label> 
+                                <label htmlFor="notes">Notes</label>
                                     <Control.textarea model='.notes' 
                                         name="notes"
                                         rows="12" 
                                         id="notes"
-                                        className="recipe-forms"/>                 
+                                        className="recipe-forms"/>             
                                 </Col>  
                                 <Col md={8}>
                                     <Button type="submit" form="recipe-form" onClick={() => {handleSubmit()}}>Post Recipe</Button>

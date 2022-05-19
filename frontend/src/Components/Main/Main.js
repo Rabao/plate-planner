@@ -146,7 +146,8 @@ class Main extends Component {
                 commentsErrMess={this.props.comments.errMess}  
                 postComment={this.props.postComment}
                 deleteComment={this.props.deleteComment}
-                editComment={this.props.editComment}/>
+                editComment={this.props.editComment}
+                nutrition={this.props.nutrition.nutrition}/>
             ) 
         }
 
@@ -180,7 +181,7 @@ class Main extends Component {
                             postGroceries={this.props.postGroceries}/>}/>
                         <Route path='/mealplans' element={<MealPlans/>}/>
                         <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>
-                        <Route path='' element={<Navigate to='/login' />} />
+                        <Route path='' element={<Navigate to='/home' />} />
                     </Routes>
                 </div>
             <Footer/>

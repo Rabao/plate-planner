@@ -5,7 +5,7 @@ import { Breadcrumb, Button, Col } from 'react-bootstrap'
 import {Modal, ModalBody, ModalHeader} from 'reactstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
-// import { deleteComment } from '../../Redux/actionCreators';
+import DailyValue from '../SubComponents/DailyValue';
 
 
 export default class Recipes extends Component {
@@ -93,7 +93,8 @@ const Recipe = (props) => {
                         <Control.textarea model='.userComment' 
                         name="userComment" 
                         rows="6" 
-                        className="form-control"/>
+                        className="form-control"
+                        />
                     </Col>
                     <Col md={12}>
                         <button type='submit' color="primary">Post Comment</button>
@@ -141,10 +142,10 @@ class EditDeleteComment extends Component{
         return(
             <>
                 <div className="row">
-                    <Col md={6}>
-                        <Button className="interface_buttons" onClick={() => this.toggleModal('edit')}>&#9997;</Button>
-                        <Button className="interface_buttons" onClick={() => this.toggleModal('delete')}>&#10060;</Button>
-                    </Col>
+                    <div className="col" md={6}>
+                        <button className="interface-button" onClick={() => this.toggleModal('edit')}>&#9997; EDIT</button>
+                        <button className="interface-button" onClick={() => this.toggleModal('delete')}>&#10060; DELETE</button>
+                    </div>
                     {/* this.state.isModalOpen */}
                     <Modal isOpen={this.state.activeModal === 'delete'} toggle={this.toggleModal}> 
                         <ModalHeader toggle={this.toggleModal}>Delete Comment?</ModalHeader>
@@ -179,6 +180,7 @@ class EditDeleteComment extends Component{
                                     name="userComment" 
                                     rows="6" 
                                     className="form-control"
+                                    id="userComment"
                                     defaultValue={this.props.comment.comment}/>
                                 </Col>
                                 <Col md={12}>
@@ -266,13 +268,12 @@ function RenderComments(props){
     const recipeComments = props.target.map((comment) => {
         //User Filter 
             const userObj = props.users.allUsers.filter((user) => user.id === comment.userId);
-
         return (  
         <div id="user-comment" key={comment.id}>
-                    <p className="username">{userObj[0].username}</p>
-                    <p className="comment-text">{comment.comment}</p>
-                    <p className="stars">{showStars(comment.rating)}</p>
-                    <div>{comment.date}</div>
+            <div className="row"><p className="username">{userObj[0].username}<span className="stars">{showStars(comment.rating)}</span></p></div>
+                    <p>{console.log(comment.date)}</p>
+                    <hr/>
+                    <p className="comment-text">{comment.comment}</p> 
                     {props.authUser.id === comment.userId ? <EditDeleteComment 
                     deleteComment={props.deleteComment} editComment={props.editComment}
                     comment={comment}/> : <div></div>}
@@ -296,7 +297,7 @@ function Ingredients(props) {
         let img = props.recipe.image;
         let item = ''
 
-        if(ingredient.unit>1){
+        if(ingredient.measurement<2){
             item = " " + ingredient.unit + " " + ingredient.ingredient_name;
         } else {
             item = " " + ingredient.unit + "s " + ingredient.ingredient_name;
@@ -305,7 +306,7 @@ function Ingredients(props) {
         return (  
                 <div id="recipe-ingredients" key={index}>
                     <p className="recipe-ingredient-text">
-                        <span id="ingredient-measurement">{ingredient.measurement}</span>
+                        <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>
                         {item}
                     </p>
                 </div>
@@ -318,13 +319,14 @@ function Ingredients(props) {
               <div className='col' md={7}>
                    <h5>Ingredients</h5>
                    {recipeIngredients}
+                   
               </div>
               <div className='col' id="recipe-pg-img-container" md={5}>
-                  <img id="recipe-pg-img" src={props.recipe.image}></img>
+                  <img id="recipe-pg-img" src={props.recipe.image}></img>      
               </div>
+              <DailyValue ingredients={props.ingredients}/>
           </div>
-      
-    );
+        );
   }
 
 function RecipeSteps(props) {
@@ -338,7 +340,7 @@ function RecipeSteps(props) {
     return ( <div className='row' >         
                 <div className='col' md={12}>
                     <h5>Recipe Steps</h5>
-                    <ol>   
+                    <ol id="recipe-steps-list">   
                         {recipeSteps} 
                     </ol>
                 </div>
