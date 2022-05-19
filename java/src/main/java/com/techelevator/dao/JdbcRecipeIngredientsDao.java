@@ -47,8 +47,8 @@ public class JdbcRecipeIngredientsDao implements RecipeIngredientsDao {
 
     private RecipeIngredients mapRowToRecipeIngredients(SqlRowSet rs) {
         RecipeIngredients ingredients = new RecipeIngredients();
-        ingredients.setRecipeId(rs.getInt("recipe_id"));
-        ingredients.setIngredientId(rs.getInt("ingredient_id"));
+        ingredients.setRecipeId(rs.getLong("recipe_id"));
+        ingredients.setIngredientId(rs.getLong("ingredient_id"));
         ingredients.setIngredientName(rs.getString("ingredient_name"));
         ingredients.setMeasurement(rs.getDouble("measurement"));
         ingredients.setUnit(rs.getString("unit"));

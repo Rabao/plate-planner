@@ -64,8 +64,8 @@ const mapDispatchToProps = (dispatch) => ({
     //Post methods
     postComment: (id, recipeId, userId, rating, comment) => 
         {dispatch(postComment(id, recipeId, userId, rating, comment))},
-    postRecipe: (name, numSteps, image, notes, userId, type) => 
-        {dispatch(postRecipe(name, numSteps, image, notes, userId, type))},
+    postRecipe: (id, name, numSteps, image, notes, userId, type) => 
+        {dispatch(postRecipe(id, name, numSteps, image, notes, userId, type))},
     postNutrition: (serving_size, calories, calories_fat, total_fat, 
         saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, 
         dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,

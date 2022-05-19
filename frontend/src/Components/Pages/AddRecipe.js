@@ -71,7 +71,7 @@ function AddRecipe(props) {
 
         //---------------------------------------------------------------------DOM ACCESSORS
         const name = document.getElementById('name');
-        const type = document.getElementById('type');
+        const type = document.getElementsByClassName('recipe-type');
         const notes = document.getElementById('notes');
         const qty = document.getElementsByClassName('qty'); //Measurement quantity (fills measurement parameter in postIngredients)
         const unit = document.getElementsByClassName('unit-measure');
@@ -86,7 +86,7 @@ function AddRecipe(props) {
 
         let data = new FormData()
         data.append('file', selectedFile)
-        filePath = '/recipes/' + selectedFile.name;
+        filePath = '/recipes-images/' + selectedFile.name;
         
         console.log(filePath)
         
@@ -95,11 +95,11 @@ function AddRecipe(props) {
           body: data
         })
         
-        //------------------------------------------------------------------SUBMISSION LOGIC
+        // ------------------------------------------------------------------SUBMISSION LOGIC
    
-        console.log("THIS IS THE FILE PATH:" + filePath);
-        props.postRecipe(id,name.value,stepNum,filePath,notes.value,props.authUser.id,type.value);
-        
+        props.postRecipe(id,name.value,stepNum,filePath,notes.value,props.authUser.id,type[0].value);
+       
+
         for(let i=0; i< steps.length; i++){     
             props.postSteps(id,stepNum,steps[i].value)
             stepNum++;             
@@ -281,16 +281,16 @@ function AddRecipe(props) {
                                         id="name"/> 
                                     </Col>
                                     <Col md={2}>
-                                    <label htmlFor="type">Meal Type</label><br/> 
-                                    <Control.select model=".type" name="type" id="type" className="recipe-type">
-                                            <option value="Breakfast" active>Breakfast</option>
-                                            <option value="Brunch">Brunch</option>
-                                            <option value="Lunch">Lunch</option>
-                                            <option value="Dinner">Dinner</option>
-                                            <option value="Snack">Snack</option>
-                                            <option value="Dessert">Dessert</option>
-                                            <option value="Drink">Drink</option>
-                                    </Control.select>
+                                    <label htmlFor="recipe-type">Meal Type</label><br/> 
+                                    <select model=".recipe-type" name="recipe-type" className="recipe-type" defaultValue={"Breakfast"}>
+                                            <option>Breakfast</option>
+                                            <option>Brunch</option>
+                                            <option>Lunch</option>
+                                            <option>Dinner</option>
+                                            <option>Snack</option>
+                                            <option>Dessert</option>
+                                            <option>Drink</option>
+                                    </select>
                                     </Col>
                                 </div>
                                 <div className="row">                             
