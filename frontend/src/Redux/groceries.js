@@ -33,6 +33,14 @@ export const Groceries = (state = {
         case ActionTypes.ADD_GROCERY:
             return{...state, groceries: state.groceries.concat(action.payload)};
 
+        case ActionTypes.TOGGLE_GROCERY:
+            return{...state, groceries: state.groceries.filter((grocery) => {
+                if(grocery.id === action.payload){
+                    grocery.complete = !grocery.complete
+                }
+                return grocery;
+            })}
+
         default:
             return state;
     }

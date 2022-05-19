@@ -325,6 +325,33 @@ export const addGrocery = (groceries) => ({
     type: ActionTypes.ADD_GROCERY,
     payload: groceries
 });
+
+export const toggleGrocery = (list_id) => (dispatch) => {
+
+    return fetch(baseUrl + '/groceries/' + list_id, {
+        method: 'PUT'})
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then((id, rating, comment) => dispatch(toggleGrocerySuccess(id)))
+    .catch(error => {throw(error)});
+}
+
+export const toggleGrocerySuccess = (id) => ({
+    type: ActionTypes.TOGGLE_GROCERY,
+    payload: id
+})
 //----------------------------------GROCERIES
 //----------------------------------RECIPE
 export const postRecipe = (id, name, numSteps, image, notes, userId, type) => (dispatch) => {
@@ -820,12 +847,12 @@ export const editComment = (id, rating, comment) => (dispatch) => {
         throw errmess;
     })
     .then(response => response.text())
-    .then((id, rating, comment) => dispatch(deleteCommentSuccess(id, rating, comment)))
+    .then((id, rating, comment) => dispatch(editCommentSuccess(id, rating, comment)))
     .catch(error => {throw(error)});
 }
 
 export const editCommentSuccess = (id, rating, comment) => ({
-    type: ActionTypes.DELETE_COMMENT,
+    type: ActionTypes.EDIT_COMMENT,
     payload: {
         id: id,
         rating: rating,
