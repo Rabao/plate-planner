@@ -53,11 +53,42 @@ class AddItem extends Component{
     Will iterate through the above list format and present DB items in a list. 
   */
     renderGroceryList() {
+        const CurrentGroceryList = () => {
+            liObj1 = this.props.groceries.map((grocery, index) => {
+                if(grocery != null){
+                    console.log(grocery)
+                    return(
+                <li className="component-list-item" key={index}>
+                    <div className="col" md={11}>
+                        <div className="row">
+                                <div className="col" md={10}>
+                                    {grocery.ingredientName}
+                                </div>
+                        <div className="col" md={1}>
+                            <div className="checklist-complete">
+                                <label>Complete</label>
+                                <div className="checklist-check-box">
+                                    <input type="checkbox" id="complete" name="complete" value="complete" />
+                                </div>
+                            </div>
+                        <div className="checklist-quantity">
+                            <label>Quantity</label><input type="number" name="qty" defaultValue={grocery.qty}></input> 
+                        </div>
+                    </div>
+                </div>         
+            </div>
+        </li>
+         )} 
+         else {
+             return(<div></div>)
+            }
+            })  
+        }
+        
         let groceryId=0;
         const GroceryList = () => {
-
            
-            liObj = this.state.listState.map((item, index) => {
+            liObj2 = this.state.listState.map((item, index) => {
                 if(item != null){
                     return(
                 <li className="component-list-item" key={groceryId}>
@@ -80,25 +111,40 @@ class AddItem extends Component{
                 </div>         
             </div>
         </li>
-         )} else {return(
-         <div></div>)}
+         )} 
+         else {
+             return(<div></div>)
+            }
         
     //    listArr.push(liObj);
     //     return(listArr)
             })  
             groceryId++;
-            return(liObj) 
+            return(<div>{liObj1}{liObj2}</div>) 
         }
      
         let listArr = [];
-        let liObj = <div></div>;
+        let liObj1 = <div></div>;
+        let liObj2 = <div></div>;
 
         return(
             <ul className="component-list">
+                {CurrentGroceryList()}
                 {GroceryList()}
             </ul> 
         )
     }
+
+    // addFromGroceryList(name, qty, type){
+    //     let produce = [{
+    //         name: name,
+    //         qty: qty,
+    //         type: type
+    //     }]
+    //     this.setState({ 
+    //                 listState: [...this.state.listState, produce]})
+
+    // }
 
     addToGroceryList(values){
         let produce = [{
@@ -124,7 +170,7 @@ class AddItem extends Component{
                 values.vitD, values.vitB6, values.cobalamin, values.magnesium);
         }
         console.log("userid="+this.props.authUser.id);
-        this.props.postGroceries(1, values.product,
+        this.props.postGroceries(values.product,
             values.quantity, this.props.authUser.id)
         // setTimeout(() => {{
         //     console.log(this.state.listState);

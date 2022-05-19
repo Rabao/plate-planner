@@ -78,8 +78,8 @@ const mapDispatchToProps = (dispatch) => ({
     postRecipeSteps: (recipeId, stepNum, steps) => {dispatch(postRecipeSteps(recipeId, stepNum, steps))},
     postRecipeIngredients: (recipeId, ingredient_id, ingredient_name, measurement, unit) => 
         {dispatch(postRecipeIngredients(recipeId, ingredient_id, ingredient_name, measurement, unit))},
-    postGroceries: (ingredient_id, ingredient_name,qty, user_id) =>
-        {dispatch(postGroceries(ingredient_id, ingredient_name,
+    postGroceries: (ingredient_name,qty, user_id) =>
+        {dispatch(postGroceries(ingredient_name,
             qty, user_id))},
 
     //Add methods
