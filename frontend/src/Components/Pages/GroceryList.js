@@ -70,7 +70,7 @@ class AddItem extends Component{
                             <div className="checklist-complete">
                                 <label>Complete</label>
                                 <div className="checklist-check-box">
-                                    <FaCheck className="check"/>
+                                    <input type="checkbox" id="complete" name="complete" value="complete" />
                                 </div>
                             </div>
                         <div className="checklist-quantity">
@@ -113,9 +113,9 @@ class AddItem extends Component{
     }
 
     handleSubmit(found, values){
+        // const product = document.getElementById('product');
         if(!found){
-            const product = document.getElementById('product');
-            this.props.postIngredient(product.value, values.type);
+            this.props.postIngredient(values.product, values.type);
             this.props.postNutrition(values.serving,values.calories,
                 values.fromfat, values.total_fat, values.satfat,
                 values.trans_fat, values.cholesterol, values.sodium, values.potassium, 
@@ -123,12 +123,12 @@ class AddItem extends Component{
                 values.protein, values.vitC, values.calcium, values.iron,
                 values.vitD, values.vitB6, values.cobalamin, values.magnesium);
         }
-        // this.props.postGroceries(1, values.product,
-        //     values.quantity, this.props.authUser.id)
-        // window.location.reload(false);
-        setTimeout(() => {{
-            console.log(this.state.listState);
-            }}, 300)
+        console.log("userid="+this.props.authUser.id);
+        this.props.postGroceries(1, values.product,
+            values.quantity, this.props.authUser.id)
+        // setTimeout(() => {{
+        //     console.log(this.state.listState);
+        //     }}, 300)
         
         this.addToGroceryList(values);
 
@@ -200,7 +200,11 @@ class AddItem extends Component{
                         <h5>Grocery List</h5>
                             {this.renderGroceryList()}
                          <div className='row'>
-                             <button>Save List</button><button>Reset List</button>
+                             <LocalForm>
+                                {/* <button>Save List</button> */}
+                                <button type='submit'>Remove Completed</button>
+                                <button>Reset List</button>
+                             </LocalForm>
                          </div>
                   </div>
               </div>

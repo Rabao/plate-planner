@@ -262,6 +262,12 @@ public class MealPlanController {
         groceryListDao.addNewItemToGroceryList(userId,groceryList);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(value="groceries/{id}")
+    public boolean toggleGroceryComplete(@PathVariable long id) throws GroceryListNotFoundException {
+        return groceryListDao.toggleGroceryComplete(id);
+    }
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value="groceries/{id}", method = RequestMethod.DELETE )
     public void deleteGroceryList(@PathVariable long id) throws GroceryListNotFoundException {

@@ -14,6 +14,8 @@ public interface GroceryListDao {
 
     boolean addNewGroceryList(GroceryList groceryList);
 
+    boolean toggleGroceryComplete(long id);
+
     boolean addNewItemToGroceryList(long id, GroceryList groceryList);
 
     boolean deleteGroceryList(long id);
