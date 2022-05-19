@@ -63,7 +63,7 @@ class AddItem extends Component{
                     <div className="col" md={11}>
                         <div className="row">
                                 <div className="col" md={10}>
-                                    {grocery.ingredientName}
+                                    {grocery.ingredientName!=undefined}
                                 </div>
                         <div className="col" md={1}>
                             <div className="checklist-complete">

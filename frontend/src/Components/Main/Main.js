@@ -76,8 +76,8 @@ const mapDispatchToProps = (dispatch) => ({
             vitB6, cobalamin, magnesium))},
     postIngredient: (name, type) => {dispatch(postIngredient(name, type))},
     postRecipeSteps: (recipeId, stepNum, steps) => {dispatch(postRecipeSteps(recipeId, stepNum, steps))},
-    postRecipeIngredients: (recipeId, ingredient_id, ingredient_name, measurement, unit) => 
-        {dispatch(postRecipeIngredients(recipeId, ingredient_id, ingredient_name, measurement, unit))},
+    postRecipeIngredients: (recipeId, ingredientId, ingredientName, measurement, unit) => 
+        {dispatch(postRecipeIngredients(recipeId, ingredientId, ingredientName, measurement, unit))},
     postGroceries: (ingredient_name,qty, user_id) =>
         {dispatch(postGroceries(ingredient_name,
             qty, user_id))},
@@ -151,6 +151,20 @@ class Main extends Component {
             ) 
         }
 
+        const NewRecipe = () => {
+            const {id} = useParams();
+           
+            return(
+                <AddRecipe 
+                targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
+                postRecipe={this.props.postRecipe}  
+                postSteps={this.props.postRecipeSteps}
+                postIngredients={this.props.postRecipeIngredients}  
+                authUser={this.props.user} 
+                recipes={this.props.recipe.recipe}/>
+            ) 
+        }
+
 // filter(comments => comments.recipeId === parseInt(id,10))
         return(
             <div>
@@ -162,12 +176,14 @@ class Main extends Component {
                         <Route path='/register'element={<Register/>}/>
                         <Route path='/user' element={<Dashboard user={this.props.user}/>}/>
                         <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
-                        <Route exact path='/add/recipe' element={<AddRecipe 
+                        {/* <Route exact path='/add/recipe' element={<AddRecipe 
+                            targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
                             postRecipe={this.props.postRecipe}  
                             postSteps={this.props.postRecipeSteps}
                             postIngredients={this.props.postRecipeIngredients}  
                             authUser={this.props.user} 
-                            recipes={this.props.recipe.recipe}/>}/>
+                            recipes={this.props.recipe.recipe}/>}/> */}
+                        <Route exact path='/add/recipe' element={<NewRecipe/>}/>
                         <Route path='/recipes/:id' element={<RecipeWithId/>}/>
                         <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
                         <Route path='/ingredients/:id' element={<IngredientWithId/>}/>

@@ -24,7 +24,6 @@ function AddRecipe(props) {
     let nameMode = ".name" + numIngredients;
 
     const [selectedFile, setSelectedFile] = useState();
-    const [currentFile, setCurrentFile] = useState(undefined);
 
     function onDrop(file){
         if (file.length > 0) {
@@ -34,7 +33,6 @@ function AddRecipe(props) {
 
     function handleChange(event) {
         setSelectedFile(document.getElementById('img-input').files[0]); 
-        console.log("THIS IS THE SELECTED FILE: " + selectedFile);
     }
 
     //-------------------------------------------------------------------RECIPE ID GENERATOR
@@ -98,7 +96,6 @@ function AddRecipe(props) {
         // ------------------------------------------------------------------SUBMISSION LOGIC
    
         props.postRecipe(id,name.value,stepNum,filePath,notes.value,props.authUser.id,type[0].value);
-       
 
         for(let i=0; i< steps.length; i++){     
             props.postSteps(id,stepNum,steps[i].value)
@@ -112,8 +109,8 @@ function AddRecipe(props) {
         setTimeout(() => {
         pageRedirect= true;
         if(pageRedirect === true){
-            navigate(path + id); 
-        }}, 300)
+            navigate(path); 
+        }}, 500)
     }
 
     

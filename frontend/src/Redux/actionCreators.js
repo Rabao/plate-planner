@@ -352,7 +352,7 @@ export const toggleGrocerySuccess = (id) => ({
     payload: id
 })
 //----------------------------------GROCERIES
-//----------------------------------RECIPE
+//-------------------------------------RECIPE
 export const postRecipe = (id, name, numSteps, image, notes, userId, type) => (dispatch) => {
     const newRecipe = {
         id:id,
@@ -439,11 +439,11 @@ export const addRecipe = (recipe) => ({
     payload: recipe
 });
 //-------------------
-export const postRecipeIngredients = (recipeId, ingredient_id, ingredient_name, measurement, unit) => (dispatch) => {
+export const postRecipeIngredients = (recipeId, ingredientId, ingredientName, measurement, unit) => (dispatch) => {
     const newRecipe = {
         recipeId: recipeId,
-        ingredient_id: ingredient_id,
-        ingredient_name: ingredient_name,
+        ingredientId: ingredientId,
+        ingredientName: ingredientName,
         measurement: measurement,
         unit: unit
     }
