@@ -376,6 +376,27 @@ h5 {
   padding: fit-content;
   
 }
+/*------------------------ Grocery List CSS --------------------------*/
+.complete {
+  width: 80%;
+  left: 0;
+  text-decoration: line-through;
+  background-color: #9e9891;
+  opacity: .75;
+  transition:150ms;
+}
+
+.unchecked {
+ cursor: pointer;
+ opacity: 0;
+}
+
+.checked {
+  cursor: pointer;
+  color: #001135;
+  opacity: 1;
+ }
+
 /*-------------------------- Dashboard CSS ---------------------------*/
 .avatar {
   height: 150px;
@@ -389,3 +410,4 @@ h5 {
   max-width: 150%;
   max-height: 150%;
 }
+

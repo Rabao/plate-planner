@@ -42,7 +42,8 @@ class AddItem extends Component{
         super(props);
         this.state= {
             didUpdate: false,
-            listState: []
+            listState: [],
+            isClicked: false,
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,53 +51,69 @@ class AddItem extends Component{
     }
 
      /*
-    Will iterate through the above list format and present DB items in a list. 
+    Will iterate through the list format and present DB items in a list. 
   */
     renderGroceryList() {
+        let liObj = <div></div>;
+        let groceryId = 0;
 
         const GroceryList = () => {
+            let liClass = "component-list-item";
+            // {!this.state.isClicked ? liClass = "component-list-item" 
+            // : liClass = "component-list-item complete"}
 
-           
-            liObj = this.state.listState.map((item, index) => {
+            liObj = this.state.listState.map((item) => {       
                 
-                if(item != null){
-                    return(
-                <li className="component-list-item" key={index}>
-                    <div className="col" md={11}>
-                        <div className="row">
-                                <div className="col" md={10}>
-                                    {item[index].name}
-                                </div>
-                        <div className="col" md={1}>
-                            <div className="checklist-complete">
-                                <label>Complete</label>
-                                <div className="checklist-check-box">
-                                    <FaCheck className="check"/>
-                                </div>
+                    if(item != null){
+                                    return(
+                                <li className={liClass} key={groceryId}>
+                                    <div className="col" md={11}>
+                                        <div className="row">
+                                                <div className="col" md={10}>
+                                                    <p>{item[groceryId].name}</p> 
+                                                </div>
+                                        <div className="col" md={1}>
+                                            <div className="checklist-complete">
+                                                <label>Bought</label>
+                                                <div className="checklist-check-box" onClick={(e) => {isComplete(e)}}>
+                                                {!this.state.isClicked ? <FaCheck className="check unchecked"/> 
+                                                :  <FaCheck className="check checked"/> }
+                                                </div>
+                                            </div>
+                                        <div className="checklist-quantity">
+                                        {!this.state.isClicked ? <label>Quantity</label>: <React.Fragment></React.Fragment>}
+                                            {!this.state.isClicked ? 
+                                            <input type="number" name="qty" defaultValue={item[groceryId].qty} /> 
+                                            : <React.Fragment></React.Fragment>}
+                                        </div>
+                                    </div>
+                                </div>         
                             </div>
-                        <div className="checklist-quantity">
-                            <label>Quantity</label><input type="number" name="qty" defaultValue={item[index].qty}></input> 
-                        </div>
-                    </div>
-                </div>         
-            </div>
-        </li>
-         )} else {return(
-         <div></div>)}
-        
-    //    listArr.push(liObj);
-    //     return(listArr)
-            })  
-            return(liObj) 
+                        </li> 
+                ) } else {
+                    return(
+                        <div></div>)
+                        }
+                    }
+                    )  
+                   
+                    console.log(groceryId);
+                    groceryId+= 1;
+                    return(liObj) 
+                    
         }
-     
-        let listArr = [];
-        let liObj = <div></div>;
+        
+        
+        const isComplete = (e) => {
+            this.setState({isClicked: !this.state.isClicked});       
+        }
 
         return(
-            <ul className="component-list">
-                {GroceryList()}
-            </ul> 
+            <div>
+                <ul className="component-list">
+                    {GroceryList()}
+                </ul>
+            </div> 
         )
     }
 
@@ -106,10 +123,10 @@ class AddItem extends Component{
             qty: values.quantity,
             type: values.type
         }]
+
         this.setState({ 
                     didUpdate: !this.state.didUpdate, 
                     listState: [...this.state.listState, produce]})
-
     }
 
     handleSubmit(found, values){
@@ -125,9 +142,10 @@ class AddItem extends Component{
         // this.props.postGroceries(1, values.product,
         //     values.quantity, this.props.authUser.id)
         
-        this.addToGroceryList(values);
-
+       
+        
         setTimeout(() => {{
+        this.addToGroceryList(values);
         console.log(this.state.listState);
         }}, 300)
     }
@@ -197,9 +215,6 @@ class AddItem extends Component{
                   <div className='col' md={12}>              
                         <h5>Grocery List</h5>
                             {this.renderGroceryList()}
-                         <div className='row'>
-                             <button>Save List</button><button>Reset List</button>
-                         </div>
                   </div>
               </div>
             <h5>Add to List</h5>
