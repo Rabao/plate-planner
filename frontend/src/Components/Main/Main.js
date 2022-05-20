@@ -69,14 +69,14 @@ const mapDispatchToProps = (dispatch) => ({
         {dispatch(postComment(id, recipeId, userId, rating, comment))},
     postRecipe: (id, name, numSteps, image, notes, userId, type) => 
         {dispatch(postRecipe(id, name, numSteps, image, notes, userId, type))},
-    postNutrition: (serving_size, calories, calories_fat, total_fat, 
-        saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, 
-        dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,
-        vitB6, cobalamin, magnesium) => 
-        {dispatch(postNutrition(serving_size, calories, calories_fat, total_fat, 
-            saturated_fat, trans_fat, cholesterol, sodium, potassium, total_carbs, 
-            dietary_fiber, sugar, sugar_alcohol, protein, vitC, calcium, iron, vitD,
-            vitB6, cobalamin, magnesium))},
+    postNutrition: (servingSize, servingSizeQty, servingSizeQtyUnit, servingSizeWeight, servingSizeUnit, calories, caloriesFat,
+        totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, 
+        protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium,
+        copper, manganese, chromium, molybdenum, chloride) => 
+        {dispatch(postNutrition(servingSize, servingSizeQty, servingSizeQtyUnit, servingSizeWeight, servingSizeUnit, calories, caloriesFat,
+            totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, 
+            protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium,
+            copper, manganese, chromium, molybdenum, chloride))},
     postIngredient: (name, type) => {dispatch(postIngredient(name, type))},
     postRecipeSteps: (recipeId, stepNum, steps) => {dispatch(postRecipeSteps(recipeId, stepNum, steps))},
     postRecipeIngredients: (recipeId, ingredientId, ingredientName, measurement, unit) => 

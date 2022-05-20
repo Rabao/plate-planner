@@ -132,7 +132,7 @@ export const postIngredient = (name,type) => (dispatch) => {
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(response => dispatch(addIngredients(response)))
     .catch(error => {console.log('Post ingredient ', error.message)
         alert('Your ingredient could not be added.\nError: ' + error.message)});
@@ -162,7 +162,7 @@ export const fetchNutrition = () => (dispatch) => {
             let errmess = new Error(error.message);
             throw errmess;
         })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(nutrition => dispatch(addNutrition(nutrition)))
         .catch(error => dispatch(nutritionFailed(error.message)));
 }
@@ -185,32 +185,55 @@ export const addNutrition = (nutrition) => ({
     payload: nutrition
 });
 
-export const postNutrition = (serving_size, calories, calories_fat,
-    total_fat, saturated_fat, trans_fat, cholesterol, sodium, potassium, 
-    total_carbs, dietary_fiber, sugar, sugar_alcohol, protein, vitC,
-    calcium, iron, vitD, vitB6, cobalamin, magnesium) => (dispatch) => {
+export const postNutrition = (servingSize, servingSizeQty, servingSizeQtyUnit, servingSizeWeight, servingSizeUnit, calories, caloriesFat,
+    totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, 
+    protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium,
+    copper, manganese, chromium, molybdenum, chloride) => (dispatch) => {
     const newNutrition = {
-        serving_size: serving_size,
+
+        servingSize: servingSize,
+        servingSizeQty: servingSizeQty,
+        servingSizeQtyUnit: servingSizeQtyUnit,
+        servingSizeWeight: servingSizeWeight,
+        servingSizeUnit: servingSizeUnit,
         calories: calories,
-        calories_fat: calories_fat,
-        total_fat: total_fat,
-        saturated_fat: saturated_fat,
-        trans_fat: trans_fat,
+        caloriesFat: caloriesFat,
+        totalFat: totalFat,
+        saturatedFat: saturatedFat,
+        transFat: transFat,
+        polyFat: polyFat,
+        monoFat: monoFat,
         cholesterol: cholesterol,
         sodium: sodium,
         potassium: potassium,
-        total_carbs: total_carbs,
-        dietary_fiber: dietary_fiber,
+        totalCarbs: totalCarbs,
+        dietaryFiber: dietaryFiber,
         sugar: sugar,
-        sugar_alcohol: sugar_alcohol,
+        sugarAlcohol: sugarAlcohol,
+        addedSugar: addedSugar,
         protein: protein,
+        vitA: vitA,
+        vitB6: vitB6,
+        vitB12: vitB12,
         vitC: vitC,
+        vitD: vitD,
+        vitE: vitE,
+        vitK: vitK,
         calcium: calcium,
         iron: iron,
-        vitD: vitD,
-        vitB6: vitB6,
-        cobalamin: cobalamin,
-        magnesium: magnesium
+        magnesium: magnesium,
+        thiamine: thiamine,
+        biotin: biotin,
+        pantoAcid: pantoAcid,
+        phosphorous: phosphorous,
+        iodine: iodine,
+        zinc: zinc,
+        selenium: selenium,
+        copper: copper,
+        manganese: manganese,
+        chromium: chromium,
+        molybdenum: molybdenum,
+        chloride: chloride
     }
 
     return fetch(baseUrl + '/nutrition', {
@@ -234,7 +257,7 @@ export const postNutrition = (serving_size, calories, calories_fat,
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(response => dispatch(addNutrition(response)))
     .catch(error => {console.log('Post nutrition ', error.message)
         alert('Your nutrition could not be added.\nError: ' + error.message)});
@@ -312,7 +335,7 @@ export const deleteGroceries = () => ({
 export const postGroceries = (ingredient_name,
     qty, user_id) => (dispatch) => {
     const newGrocery = {
-        ingredientName: ingredient_name,
+        ingredient_name: ingredient_name,
         qty: qty,
         userId: user_id
     }
