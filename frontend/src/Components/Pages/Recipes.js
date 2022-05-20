@@ -26,8 +26,12 @@ export default class Recipes extends Component {
                         </Breadcrumb.Item>
                     </Breadcrumb>
                     {console.log("THIS IS: " + this.props.targetIngredients)}
-                    <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps} ingredients={this.props.targetIngredients}
-                    comments={this.props.targetComments} user={this.props.user} users={this.props.users} nutrition={this.props.nutrition}
+                    <Recipe recipe={this.props.targetRecipe}
+                    recipeSteps={this.props.targetRecipeSteps}
+                    ingredients={this.props.targetIngredients}
+                    allIngredients={this.props.ingredients}
+                    comments={this.props.targetComments} user={this.props.user}
+                    users={this.props.users} nutrition={this.props.nutrition}
                     isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}
                     postComment={this.props.postComment}
                     deleteComment={this.props.deleteComment}
@@ -69,7 +73,7 @@ const Recipe = (props) => {
         <div>
             {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>Null</h3>}
             <div className='component-body'>
-            {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} recipe={props.recipe} nutrition={props.nutrition}/> : <div>Null</div>}
+            {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} allIngredients={props.allIngredients} recipe={props.recipe} nutrition={props.nutrition}/> : <div>Null</div>}
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
             {props.comments ? <RenderComments target={props.comments} authUser={props.user} users={props.users}
@@ -407,6 +411,12 @@ function RenderComments(props){
 // }
 
 function Ingredients(props) { 
+    
+
+    const getIngredientFromId = (id) => {
+        return props.allIngredients.filter(ingredients => ingredients.id === parseInt(id,10))[0].name;
+    }
+
     const recipeIngredients = props.ingredients.map((ingredient, index) => {
 
         let item = '';
@@ -417,11 +427,13 @@ function Ingredients(props) {
             item = " " + ingredient.unit + "s ";
         }
 
+        console.log(getIngredientFromId(ingredient.ingredientId));
+
         return (  
                 <div id="recipe-ingredients" key={index}>
                     <p className="recipe-ingredient-text">
                         <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
-                            trigger="mouseenter" interactive position="bottom" html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{ingredient.ingredientName}</span></Tooltip>
+                            trigger="mouseenter" interactive position="bottom" html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{getIngredientFromId(ingredient.ingredientId)}</span></Tooltip>
                     </p>
                 </div>
              )
@@ -442,7 +454,9 @@ function Ingredients(props) {
               <DailyValue ingredients={props.ingredients}/>
           </div>
         );
-  }
+}
+
+
 
 function RecipeSteps(props) {
 

@@ -147,6 +147,7 @@ class Main extends Component {
                 users={this.props.allUsers}
 
                 targetIngredients={this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10))}
+                ingredients={this.props.ingredients.ingredients}
                 targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
                 commentsLoading={this.props.comments.isLoading}
                 commentsErrMess={this.props.comments.errMess}  
@@ -194,7 +195,8 @@ class Main extends Component {
                         <Route path='/ingredients/:id' element={<IngredientWithId/>}/>
                         <Route path='/groceries' element={<Groceries
                             user={this.props.user}
-                            groceries={this.props.groceries.groceries}
+                            groceries={this.props.groceries.groceries.filter(
+                                (grocery) => grocery.userId === parseInt(this.props.user.id,10))}
                             ingredients={this.props.ingredients.ingredients}
                             nutrition={this.props.nutrition.nutrition}
 							postIngredient={this.props.postIngredient}

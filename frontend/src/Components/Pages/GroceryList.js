@@ -39,6 +39,16 @@ export default function Groceries(props) {
     )
 }
 
+function compare( a, b ) {
+    if ( a.listId < b.listId ){
+      return -1;
+    }
+    if ( a.listId > b.listId ){
+      return 1;
+    }
+    return 0;
+  }
+
 //   If the ingredient/ grocery item exists, auto-complete fields. Else, add to DB.
 class AddItem extends Component{
     constructor(props){
@@ -59,6 +69,7 @@ class AddItem extends Component{
     Will iterate through the list format and present DB items in a list. 
   */
     renderGroceryList() {
+        this.props.groceries.sort(compare);
         const CurrentGroceryList = () => {
             liObj1 = this.props.groceries.map((grocery, index) => {
                 if(grocery.ingredientName!=undefined){
