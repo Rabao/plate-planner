@@ -241,6 +241,34 @@ export const postNutrition = (serving_size, calories, calories_fat,
 };
 //----------------------------------NUTRITION
 //----------------------------------GROCERIES
+export const fetchGrocery = (id) => (dispatch) => {
+    // dispatch(groceriesLoading(true));
+
+    return fetch(baseUrl + "/groceries/" + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+        })
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(groceries => dispatch(addGroceries(groceries)))
+    .catch(error => dispatch(groceriesFailed(error.message)));
+}
+
 export const fetchGroceries = () => (dispatch) => {
     // dispatch(groceriesLoading(true));
 
@@ -326,7 +354,6 @@ export const addGrocery = (groceries) => ({
 });
 
 export const toggleGrocery = (list_id) => (dispatch) => {
-
     return fetch(baseUrl + '/groceries/' + list_id, {
         method: 'PUT'})
         .then(response => {
@@ -343,13 +370,43 @@ export const toggleGrocery = (list_id) => (dispatch) => {
         throw errmess;
     })
     .then(response => response.text())
-    .then((id, rating, comment) => dispatch(toggleGrocerySuccess(id)))
+    .then((id) => dispatch(toggleGrocerySuccess(id)))
+    .catch(error => {throw(error)});
+}
+
+export const toggleFetchGrocery = (name, qty) => (dispatch) => {
+
+    return fetch(baseUrl + '/groceries/' + name + '/' + qty, {
+        method: 'PUT'})
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then((name, qty) => dispatch(toggleFetchGrocerySuccess(name, qty)))
     .catch(error => {throw(error)});
 }
 
 export const toggleGrocerySuccess = (id) => ({
     type: ActionTypes.TOGGLE_GROCERY,
     payload: id
+})
+
+export const toggleFetchGrocerySuccess = (name, qty) => ({
+    type: ActionTypes.TOGGLE_FETCH_GROCERY,
+    payload: {
+        name: name,
+        qty: qty
+    }
 })
 //----------------------------------GROCERIES
 //-------------------------------------RECIPE

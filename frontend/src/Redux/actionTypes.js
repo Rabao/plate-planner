@@ -21,6 +21,7 @@ export const GROCERIES_LOADING = 'GROCERIES_LOADING';
 export const GROCERIES_FAILED = 'GROCERIES_FAILED';
 export const ADD_GROCERY = 'ADD_GROCERY';
 export const TOGGLE_GROCERY = 'TOGGLE_GROCERY';
+export const TOGGLE_FETCH_GROCERY = 'TOGGLE_FETCH_GROCERY';
 
 //----------------------------------NUTRITION
 export const ADD_NUTRITION = 'ADD_NUTRITION';

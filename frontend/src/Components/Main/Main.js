@@ -11,8 +11,8 @@ import AddRecipe from '../Pages/AddRecipe'
 import Groceries from '../Pages/GroceryList'
 import MealPlans from '../Pages/MealPlans'
 import Dashboard from '../Pages/Dashboard';
-import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries,
-        fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, postRecipeIngredients,
+import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
+        toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, postRecipeIngredients,
         postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients,
         postComment, fetchComments, deleteComment, editComment, postGroceries,
         addGroceries, addIngredients, postIngredient,
@@ -45,11 +45,14 @@ const mapDispatchToProps = (dispatch) => ({
     deleteUser: () => { dispatch(deleteUser())},
     deleteComment: (id) => { dispatch(deleteComment(id))},
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
+    toggleGrocery: (id) => { dispatch(toggleGrocery(id)) },
+    toggleFetchGrocery: (name, qty) => {dispatch(toggleFetchGrocery(name, qty))},
 
     // Fetch methods
     fetchUsers: () => {dispatch(fetchUsers())},
     fetchIngredients: () => {dispatch(fetchIngredients())},
     fetchGroceries: () => {dispatch(fetchGroceries())},
+    fetchGrocery: (id) => {dispatch(fetchGrocery(id))},
     fetchMealPlanCollection: () => {dispatch(fetchMealPlanCollection())},
     fetchComments: () => {dispatch(fetchComments())},
     // fetchRecipeCollection: () => {dispatch(fetchRecipeCollection())},
@@ -194,7 +197,10 @@ class Main extends Component {
                             nutrition={this.props.nutrition.nutrition}
 							postIngredient={this.props.postIngredient}
 							postNutrition={this.props.postNutrition}
-                            postGroceries={this.props.postGroceries}/>}/>
+                            postGroceries={this.props.postGroceries}
+                            toggleGrocery={this.props.toggleGrocery}
+                            fetchGrocery={this.props.fetchGrocery}
+                            toggleFetchGrocery={this.props.toggleFetchGrocery}/>}/>
                         <Route path='/mealplans' element={<MealPlans/>}/>
                         <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>
                         <Route path='' element={<Navigate to='/home' />} />
