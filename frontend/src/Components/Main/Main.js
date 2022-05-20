@@ -147,6 +147,7 @@ class Main extends Component {
                 users={this.props.allUsers}
 
                 targetIngredients={this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10))}
+                ingredients={this.props.ingredients.ingredients}
                 targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
                 commentsLoading={this.props.comments.isLoading}
                 commentsErrMess={this.props.comments.errMess}  
