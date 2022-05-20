@@ -4,7 +4,7 @@ import { Breadcrumb, Col, Button } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
 import axios from 'axios';
-
+import DailyValueCalculator from '../SubComponents/DailyValueCalculator';
 
 function AddRecipe(props) {
     const navigate = useNavigate();
@@ -24,6 +24,9 @@ function AddRecipe(props) {
     let nameMode = ".name" + numIngredients;
 
     const [selectedFile, setSelectedFile] = useState();
+    const [toggle, setToggle] = useState(false);
+
+    const dvCalc = document.getElementsByClassName('toggle-dvcalc')[0];
 
     function onDrop(file){
         if (file.length > 0) {
@@ -33,6 +36,20 @@ function AddRecipe(props) {
 
     function handleChange(event) {
         setSelectedFile(document.getElementById('img-input').files[0]); 
+    }
+
+    function handleToggle(e) {
+
+        if(dvCalc.classList.contains('close')){
+            dvCalc.classList.remove('close');
+            dvCalc.classList.add('open');
+        } else {
+            dvCalc.classList.remove('open');
+            dvCalc.classList.add('close');
+        }
+
+        setToggle({ toggle: !this.state.toggle })
+
     }
 
     //-------------------------------------------------------------------RECIPE ID GENERATOR
@@ -123,7 +140,7 @@ function AddRecipe(props) {
             stepsHtmlIdent = "steps" + numSteps;
             stepsMode = ".steps" + numSteps;
             stepText = <div className="form-inline" id="steps" key={stepArr.length}>
-                        <Control.text model={stepsMode} name={stepsHtmlIdent}  className="recipe-steps"/><button class="remove-step-button" onClick={() => {removeStep()}}>-</button>
+                        <Control.text model={stepsMode} name={stepsHtmlIdent}  className="recipe-steps"/><button class="submit-button-small" onClick={() => {removeStep()}}>Remove</button>
                         </div>
 
             stepArr.push(stepText);
@@ -152,7 +169,7 @@ function AddRecipe(props) {
             <div>
                 <label htmlFor="steps">Steps</label> 
                 {stepArr}
-                <Col><button onClick={() => {addStep()}}>Add New Step</button><button onClick={() => {removeAll()}}>Remove All</button></Col>     
+                <div className="submit-button-interface col"><button class="submit-buttons" onClick={() => {addStep()}}>Add New Step</button><button class="submit-buttons" onClick={() => {removeAll()}}>Remove All</button></div>     
             </div>
         )
 
@@ -208,7 +225,7 @@ function AddRecipe(props) {
                             <option>Inch</option>
                         </Control.select>
                         <Control.text model={nameMode} name={nameHtmlIdent} id="ingredient" className="recipe-ingredients ingredients-controls"/>
-                        <button id="remove-ingredient-button" onClick={() => {removeIngredient()}}>-</button>
+                        <button class="submit-button-small" onClick={() => {removeIngredient()}}>Remove</button>
                     </div>
 
             ingredientArr.push(ingredientText);
@@ -245,7 +262,7 @@ function AddRecipe(props) {
                 <div>
                     <label htmlFor="steps">Ingredients</label> 
                     {ingredientArr}
-                    <Col><button onClick={() => {addIngredient()}}>Add Ingredient</button><button onClick={() => {removeAll()}}>Remove All</button></Col>     
+                    <div className="submit-button-interface col"><button class="submit-buttons" onClick={() => {addIngredient()}}>Add Ingredient</button><button class="submit-buttons" onClick={() => {removeAll()}}>Remove All</button></div>     
                 </div>
         )
     }
@@ -295,6 +312,8 @@ function AddRecipe(props) {
                                     <div className="steps-container">
                                         {renderIngredientsInput()}
                                         {renderStepsInput()}
+                                        <div className="dvcalc" onClick={(e) => {handleToggle(e)}}><span>Add Nutritional Value Details</span></div><div className="toggle-dvcalc close"><DailyValueCalculator/></div>
+                                        {/* <DailyValueCalculator/> */}
                                     </div>
                                     </Col>
                                     <Col md={6}>
@@ -315,7 +334,7 @@ function AddRecipe(props) {
                                         className="recipe-forms"/>             
                                 </Col>  
                                 <Col md={8}>
-                                    <Button type="submit" form="recipe-form" onClick={() => {handleSubmit()}}>Post Recipe</Button>
+                                    <button class="submit-buttons" type="submit" form="recipe-form" onClick={() => {handleSubmit()}}>Post Recipe</button>
                                 </Col>
                                 </LocalForm>
                         </div>

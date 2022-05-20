@@ -136,6 +136,8 @@ class Main extends Component {
         const RecipeWithId = () => {
             const {id} = useParams();
            
+            // const tInId = tIngredients.ingredientId;
+            // targetNutrition={this.props.nutrition.nutrition.filter((tNutrition) => tNutrition.id === parseInt(tIngredients.ingredientId,10))}
             return(
                 <Recipes targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
                 targetRecipeSteps={this.props.recipeSteps.recipeSteps.filter(steps => steps.recipeId === parseInt(id,10))}
@@ -143,6 +145,7 @@ class Main extends Component {
                 recipeErrMess={this.props.recipe.errMess}
                 user={this.props.user}
                 users={this.props.allUsers}
+
                 targetIngredients={this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10))}
                 targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
                 commentsLoading={this.props.comments.isLoading}
@@ -150,23 +153,23 @@ class Main extends Component {
                 postComment={this.props.postComment}
                 deleteComment={this.props.deleteComment}
                 editComment={this.props.editComment}
-                nutrition={this.props.nutrition.nutrition}/>
+                nutrition={this.props.nutrition.nutrition.filter((tNutrition) => tNutrition.id === 79)}/>
             ) 
         }
 
-        const NewRecipe = () => {
-            const {id} = useParams();
+        // const NewRecipe = () => {
+        //     const {id} = useParams();
            
-            return(
-                <AddRecipe 
-                targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
-                postRecipe={this.props.postRecipe}  
-                postSteps={this.props.postRecipeSteps}
-                postIngredients={this.props.postRecipeIngredients}  
-                authUser={this.props.user} 
-                recipes={this.props.recipe.recipe}/>
-            ) 
-        }
+        //     return(
+        //         <AddRecipe 
+        //         targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
+        //         postRecipe={this.props.postRecipe}  
+        //         postSteps={this.props.postRecipeSteps}
+        //         postIngredients={this.props.postRecipeIngredients}  
+        //         authUser={this.props.user} 
+        //         recipes={this.props.recipe.recipe}/>
+        //     ) 
+        // }
 
 // filter(comments => comments.recipeId === parseInt(id,10))
         return(
@@ -179,14 +182,13 @@ class Main extends Component {
                         <Route path='/register'element={<Register/>}/>
                         <Route path='/user' element={<Dashboard user={this.props.user}/>}/>
                         <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
-                        {/* <Route exact path='/add/recipe' element={<AddRecipe 
-                            targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
+                        <Route exact path='/add/recipe' element={<AddRecipe 
                             postRecipe={this.props.postRecipe}  
                             postSteps={this.props.postRecipeSteps}
                             postIngredients={this.props.postRecipeIngredients}  
                             authUser={this.props.user} 
-                            recipes={this.props.recipe.recipe}/>}/> */}
-                        <Route exact path='/add/recipe' element={<NewRecipe/>}/>
+                            recipes={this.props.recipe.recipe}/>}/>
+                        {/* <Route exact path='/add/recipe' element={<NewRecipe/>}/> */}
                         <Route path='/recipes/:id' element={<RecipeWithId/>}/>
                         <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
                         <Route path='/ingredients/:id' element={<IngredientWithId/>}/>

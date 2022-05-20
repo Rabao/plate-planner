@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
-import { Breadcrumb, Button, Col } from 'react-bootstrap'
-import {Modal, ModalBody, ModalHeader} from 'reactstrap'
+import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
+import { Breadcrumb, Button, Col } from 'react-bootstrap';
+import {Modal, ModalBody, ModalHeader} from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
 import IngredientsData from './Ingredients';
@@ -25,13 +25,13 @@ export default class Recipes extends Component {
                             Recipes
                         </Breadcrumb.Item>
                     </Breadcrumb>
-                    {/* {alert(this.props.user.username)} */}
+                    {console.log("THIS IS: " + this.props.targetIngredients)}
                     <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps} ingredients={this.props.targetIngredients}
                     comments={this.props.targetComments} user={this.props.user} users={this.props.users} nutrition={this.props.nutrition}
                     isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}
                     postComment={this.props.postComment}
                     deleteComment={this.props.deleteComment}
-                    editComment={this.props.editComment}/>
+                    editComment={this.props.editComment} />
                  </div>  
             )
         }
@@ -69,7 +69,7 @@ const Recipe = (props) => {
         <div>
             {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>Null</h3>}
             <div className='component-body'>
-            {props.ingredients ?<Ingredients ingredients={props.ingredients} recipe={props.recipe}/> : <div>Null</div>}
+            {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} recipe={props.recipe} nutrition={props.nutrition}/> : <div>Null</div>}
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
             {props.comments ? <RenderComments target={props.comments} authUser={props.user} users={props.users}
@@ -272,7 +272,6 @@ function RenderComments(props){
         return (  
         <div id="user-comment" key={comment.id}>
             <div className="row"><p className="username">{userObj[0].username}<span className="stars">{showStars(comment.rating)}</span></p></div>
-                    <p>{console.log(comment.date)}</p>
                     <hr/>
                     <p className="comment-text">{comment.comment}</p> 
                     {props.authUser.id === comment.userId ? <EditDeleteComment 
@@ -293,34 +292,123 @@ function RenderComments(props){
     )
 }
 
-function IngredientNutrition(ingredient, nutrition) {
-    // console.log("Mouse has entered!" +  ingredient)
-    return(
-    <table>
-        <tr>
-            <th>Ingredient</th>
-           
-        </tr>
-        <tr>
-            <td>Serving Size</td>
-  
-        </tr>
-        <tr>
-            <td>Calories</td>
-          
-        </tr>
-        <tr>
-            <td>Calories from Fat</td>
+ function IngredientNutrition(ingredient, nutrition)  {
+    //    const nutrition = this.state.targNute;
+    // console.log("NUT" + nutrition.serving_size)
+   let tNutrition= nutrition.filter(nute => nute.id === ingredient.ingredientId);
+//    let targ = JSON.parse(targetNutrition);
     
-        </tr>
-    </table>
+   console.log("TARGETED: " + JSON.stringify(tNutrition))
+    return(
+        <div>
+
+        { tNutrition.id === ingredient.ingredientId ?
+            <table>
+                <tr>
+                    <th>Ingredient</th>
+                    <th>{ingredient.ingredientName}</th>
+                </tr>
+                <tr>
+                    <td>Serving Size</td>
+                    <td>{tNutrition.serving_size}</td> 
+                </tr>
+                <tr>
+                    <td>Calories</td>
+                    <td>{tNutrition.calories}</td>
+                </tr>
+                <tr>
+                    <td>Calories from Fat</td>
+                    <td>{tNutrition.calories_fat}</td>
+                </tr>
+                <tr>
+                    <td>Total Fat</td>
+                    <td>{tNutrition.total_fat}g</td>
+                </tr>
+                <tr>
+                    <td>Saturated Fat</td>
+                    <td>{tNutrition.saturated_fat}g</td>
+                </tr>
+                <tr>
+                    <td>Trans Fat</td>
+                    <td>{tNutrition.trans_fat}g</td>
+                </tr>
+                <tr>
+                    <td>Cholesterol</td>
+                    <td>{tNutrition.cholesterol}mg</td>
+                </tr>
+                <tr>
+                    <td>Sodium</td>
+                    <td>{tNutrition.sodium}mg</td>
+                </tr>
+                <tr>
+                    <td>Potassium</td>
+                    <td>{tNutrition.potassium}mg</td>
+                </tr>
+                <tr>
+                    <td>Total Carbohydrates</td>
+                    <td>{tNutrition.total_carbs}g</td>
+                </tr>
+                <tr>
+                    <td>Dietary Fiber</td>
+                    <td>{tNutrition.dietary_fiber}g</td>
+                </tr>
+                <tr>
+                    <td>Sugar</td>
+                    <td>{tNutrition.sugar}g</td>
+                </tr>
+                <tr>
+                    <td>Sugar Alcohol</td>
+                    <td>{tNutrition.sugar_alcohol}g</td>
+                </tr>
+                <tr>
+                    <td>Protein</td>
+                    <td>{tNutrition.protein}g</td>
+                </tr>
+                <tr>
+                    <td>Vitamin C</td>
+                    <td>{tNutrition.vitC}%</td>
+                </tr>
+                <tr>
+                    <td>Calcium</td>
+                    <td>{tNutrition.calcium}%</td>
+                </tr>
+                <tr>
+                    <td>Iron</td>
+                    <td>{tNutrition.iron}%</td>
+                </tr>
+                <tr>
+                    <td>Vitamin D</td>
+                    <td>{tNutrition.vitD}%</td>
+                </tr>
+                <tr>
+                    <td>Vitamin B6</td>
+                    <td>{tNutrition.vitB6}%</td>
+                </tr>
+                <tr>
+                    <td>Cobalamin</td>
+                    <td>{tNutrition.cobalamin}%</td>
+                </tr>
+                <tr>
+                    <td>Magnesium</td>
+                    <td>{tNutrition.magnesium}%</td>
+                </tr> 
+            </table>
+        
+        : 
+        
+        <div> Nutrition data not found. </div>} 
+    </div>
     )
     
 }
+    
+// function renderThis(ingredient) {
+//     return(<div>{ingredient}</div>)
+// }
 
 function Ingredients(props) { 
     const recipeIngredients = props.ingredients.map((ingredient, index) => {
-        let img = props.recipe.image;
+
         let item = '';
 
         if(ingredient.measurement<2){
@@ -333,11 +421,11 @@ function Ingredients(props) {
                 <div id="recipe-ingredients" key={index}>
                     <p className="recipe-ingredient-text">
                         <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
-                            trigger="mouseenter" interactive position="bottom" html={(<div>{IngredientNutrition(ingredient.ingredientName, props.nutrition)}</div>)}><span>{ingredient.ingredientName}</span></Tooltip>
-                          {/* <span>{ingredient.ingredientName}</span> */}
+                            trigger="mouseenter" interactive position="bottom" html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{ingredient.ingredientName}</span></Tooltip>
                     </p>
                 </div>
              )
+         
     });
     
     return (    

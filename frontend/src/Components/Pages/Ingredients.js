@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-
 const IngredientsData = (props) => {
     if(props.ingredient!=null&&props.nutrition!=null)
     return(
