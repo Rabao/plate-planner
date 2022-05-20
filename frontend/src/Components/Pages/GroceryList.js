@@ -201,16 +201,9 @@ class AddItem extends Component{
                 values.chloride);
                 
             console.log(this.props.nutrition)
-            // this.props.postNutrition(values.serving,values.calories,
-            //     values.fromfat, values.total_fat, values.satfat,
-            //     values.trans_fat, values.cholesterol, values.sodium, values.potassium, 
-            //     values.carbs, values.fiber, values.sugar, values.sugar_alcohol,
-            //     values.protein, values.vitC, values.calcium, values.iron,
-            //     values.vitD, values.vitB6, values.cobalamin, values.magnesium);
-            //     console.log(this.props.nutrition)
         }
-        // this.props.postGroceries(values.product,
-        //     values.quantity, this.props.authUser.id)
+        this.props.postGroceries(values.product,
+            values.quantity, this.props.authUser.id)
         // setTimeout(() => {{
         //     console.log(this.state.listState);
         //     }}, 300)

@@ -158,20 +158,6 @@ class Main extends Component {
             ) 
         }
 
-        // const NewRecipe = () => {
-        //     const {id} = useParams();
-           
-        //     return(
-        //         <AddRecipe 
-        //         targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
-        //         postRecipe={this.props.postRecipe}  
-        //         postSteps={this.props.postRecipeSteps}
-        //         postIngredients={this.props.postRecipeIngredients}  
-        //         authUser={this.props.user} 
-        //         recipes={this.props.recipe.recipe}/>
-        //     ) 
-        // }
-
 // filter(comments => comments.recipeId === parseInt(id,10))
         return(
             <div>
