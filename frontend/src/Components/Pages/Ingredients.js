@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 
-const ingredients = (props) => {
+const IngredientsData = (props) => {
     if(props.ingredient!=null&&props.nutrition!=null)
     return(
         <table>
@@ -103,4 +103,4 @@ const ingredients = (props) => {
     )
 }
 
-export default ingredients;
+export default IngredientsData;

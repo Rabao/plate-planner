@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { createStore, combineReducers, applyMiddleware } from 'redux';
 import {Link} from 'react-router-dom'
 import { Breadcrumb, Button, Col } from 'react-bootstrap'
 import {Modal, ModalBody, ModalHeader} from 'reactstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
+import IngredientsData from './Ingredients';
 import DailyValue from '../SubComponents/DailyValue';
-
+import {Tooltip} from 'react-tippy';
+import 'react-tippy/dist/tippy.css';
 
 export default class Recipes extends Component {
     constructor(props){
@@ -26,7 +27,7 @@ export default class Recipes extends Component {
                     </Breadcrumb>
                     {/* {alert(this.props.user.username)} */}
                     <Recipe recipe={this.props.targetRecipe} recipeSteps={this.props.targetRecipeSteps} ingredients={this.props.targetIngredients}
-                    comments={this.props.targetComments} user={this.props.user} users={this.props.users}
+                    comments={this.props.targetComments} user={this.props.user} users={this.props.users} nutrition={this.props.nutrition}
                     isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}
                     postComment={this.props.postComment}
                     deleteComment={this.props.deleteComment}
@@ -292,22 +293,48 @@ function RenderComments(props){
     )
 }
 
+function IngredientNutrition(ingredient, nutrition) {
+    // console.log("Mouse has entered!" +  ingredient)
+    return(
+    <table>
+        <tr>
+            <th>Ingredient</th>
+           
+        </tr>
+        <tr>
+            <td>Serving Size</td>
+  
+        </tr>
+        <tr>
+            <td>Calories</td>
+          
+        </tr>
+        <tr>
+            <td>Calories from Fat</td>
+    
+        </tr>
+    </table>
+    )
+    
+}
+
 function Ingredients(props) { 
     const recipeIngredients = props.ingredients.map((ingredient, index) => {
         let img = props.recipe.image;
-        let item = ''
+        let item = '';
 
         if(ingredient.measurement<2){
-            item = " " + ingredient.unit + " " + ingredient.ingredient_name;
+            item = " " + ingredient.unit + " ";
         } else {
-            item = " " + ingredient.unit + "s " + ingredient.ingredient_name;
+            item = " " + ingredient.unit + "s ";
         }
 
         return (  
                 <div id="recipe-ingredients" key={index}>
                     <p className="recipe-ingredient-text">
-                        <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>
-                        {item}
+                        <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
+                            trigger="mouseenter" interactive position="bottom" html={(<div>{IngredientNutrition(ingredient.ingredientName, props.nutrition)}</div>)}><span>{ingredient.ingredientName}</span></Tooltip>
+                          {/* <span>{ingredient.ingredientName}</span> */}
                     </p>
                 </div>
              )

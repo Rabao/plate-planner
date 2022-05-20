@@ -169,7 +169,7 @@ class AddItem extends Component{
                 values.protein, values.vitC, values.calcium, values.iron,
                 values.vitD, values.vitB6, values.cobalamin, values.magnesium);
         }
-        console.log("userid="+this.props.authUser.id);
+
         this.props.postGroceries(values.product,
             values.quantity, this.props.authUser.id)
         // setTimeout(() => {{
