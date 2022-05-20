@@ -29,8 +29,11 @@ export default function Groceries(props) {
                 nutrition={props.nutrition}
                 groceries={props.groceries}
                 postGroceries={props.postGroceries}
+                toggleGrocery={props.toggleGrocery}
                 postIngredient={props.postIngredient}
-                postNutrition={props.postNutrition}/>
+                postNutrition={props.postNutrition}
+                fetchGrocery={props.fetchGrocery}
+                toggleFetchGrocery={props.toggleFetchGrocery}/>
         </div>
       </div>
     )
@@ -48,6 +51,7 @@ class AddItem extends Component{
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleToggle = this.handleToggle.bind(this);
     }
 
      /*
@@ -56,20 +60,24 @@ class AddItem extends Component{
     renderGroceryList() {
         const CurrentGroceryList = () => {
             liObj1 = this.props.groceries.map((grocery, index) => {
-                if(grocery != null){
-                    console.log(grocery)
+                if(grocery.ingredientName!=undefined){
                     return(
                 <li className="component-list-item" key={index}>
                     <div className="col" md={11}>
                         <div className="row">
                                 <div className="col" md={10}>
-                                    {grocery.ingredientName!=undefined}
+                                    {grocery.ingredientName}
                                 </div>
                         <div className="col" md={1}>
                             <div className="checklist-complete">
                                 <label>Complete</label>
                                 <div className="checklist-check-box">
-                                    <input type="checkbox" id="complete" name="complete" value="complete" />
+                                    <input type="checkbox" 
+                                    id="complete" 
+                                    name="complete" 
+                                    value="complete" 
+                                    defaultChecked={grocery.complete}
+                                    onClick={() => this.handleToggle(grocery.listId, '', '')}/>
                                 </div>
                             </div>
                         <div className="checklist-quantity">
@@ -102,7 +110,11 @@ class AddItem extends Component{
                         <div className="checklist-complete">
                                 <label>Complete</label>
                                 <div className="checklist-check-box">
-                                    <input type="checkbox" id="complete" name="complete" value="complete" />
+                                    <input type="checkbox"
+                                    id="complete"
+                                    name="complete"
+                                    value="yes"
+                                    onClick={() => this.handleToggle(-1,this.state.listState[index][0].name,this.state.listState[index][0].qty)}/>
                                 </div>
                             </div>
                         <div className="checklist-quantity">
@@ -136,23 +148,13 @@ class AddItem extends Component{
         )
     }
 
-    // addFromGroceryList(name, qty, type){
-    //     let produce = [{
-    //         name: name,
-    //         qty: qty,
-    //         type: type
-    //     }]
-    //     this.setState({ 
-    //                 listState: [...this.state.listState, produce]})
-
-    // }
-
     addToGroceryList(values){
         let produce = [{
             name: values.product,
             qty: values.quantity,
             type: values.type
         }]
+        // this.props.fetchGrocery();
 
         this.setState({ 
                     listState: [...this.state.listState, produce]})
@@ -169,7 +171,6 @@ class AddItem extends Component{
                 values.protein, values.vitC, values.calcium, values.iron,
                 values.vitD, values.vitB6, values.cobalamin, values.magnesium);
         }
-        console.log("userid="+this.props.authUser.id);
         this.props.postGroceries(values.product,
             values.quantity, this.props.authUser.id)
         // setTimeout(() => {{
@@ -178,6 +179,13 @@ class AddItem extends Component{
         
         this.addToGroceryList(values);
 
+    }
+
+    handleToggle(id, name, qty){
+        if(id>0)
+            this.props.toggleGrocery(id);
+        else
+            this.props.toggleFetchGrocery(name,qty);
     }
 
     handleInputChange(){
