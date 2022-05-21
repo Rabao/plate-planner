@@ -34,7 +34,8 @@ export default class Recipes extends Component {
                     isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}
                     postComment={this.props.postComment}
                     deleteComment={this.props.deleteComment}
-                    editComment={this.props.editComment} />
+                    editComment={this.props.editComment}
+                    postGroceries={this.props.postGroceries}/>
                  </div>  
             )
         }
@@ -73,7 +74,7 @@ const Recipe = (props) => {
             {console.log("NUTRITION: " + props.nutrition)}
             {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>Null</h3>}
             <div className='component-body'>
-            {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} allIngredients={props.allIngredients} recipe={props.recipe} nutrition={props.nutrition}/> : <div>Null</div>}
+            {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} allIngredients={props.allIngredients} recipe={props.recipe} nutrition={props.nutrition} postGroceries={props.postGroceries} authUser={props.user}/> : <div>Null</div>}
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
             {props.comments ? <RenderComments target={props.comments} authUser={props.user} users={props.users}
@@ -120,7 +121,8 @@ class EditDeleteComment extends Component{
             activeModal: ''
         };
         this.toggleModal = this.toggleModal.bind(this);
-        this.handleSubmit = this.handleDelete.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        // this.handleAddToList = this.handleAddToList.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
     }
 
@@ -297,10 +299,12 @@ function RenderComments(props){
 }
 
  function IngredientNutrition(ingredient, nutrition)  {
-
-    let tNutrition= nutrition.filter(nutrition => nutrition.id === ingredient.ingredientId)[0];
-    console.log("LOGGING:" + nutrition.id)
+    //    const nutrition = this.state.targNute;
+    // console.log("NUT" + nutrition.serving_size)
+   let tNutrition= nutrition.filter(nute => nute.id === ingredient.ingredientId)[0];
+//    let targ = JSON.parse(targetNutrition);
     
+//    console.log("TARGETED: " + JSON.stringify(tNutrition))
     return(
         <div>
 
@@ -409,7 +413,13 @@ function RenderComments(props){
 // }
 
 function Ingredients(props) { 
-     
+
+    const handleAddToList = (name) => {
+        console.log(name);
+        props.postGroceries(name, 1, props.authUser.id)
+    }
+    
+
     const getIngredientFromId = (id) => {
         return props.allIngredients.filter(ingredients => ingredients.id === parseInt(id,10))[0].name;
     }
@@ -424,15 +434,20 @@ function Ingredients(props) {
             item = " " + ingredient.unit + "s ";
         }
 
-        // console.log("LOGGING: " + getIngredientFromId(ingredient.ingredientId));
+        // console.log(props.nutrition);
 
         return (  
-                <div id="recipe-ingredients" key={index}>
+            <div id="recipe-ingredients" className='row' key={index}>
+                <div className='col' md={8}>
                     <p className="recipe-ingredient-text">
                         <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
                             trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{getIngredientFromId(ingredient.ingredientId)}</span></Tooltip>
                     </p>
                 </div>
+                <div className='col' md={4}>
+                    <button type='submit' onClick={() => handleAddToList(getIngredientFromId(ingredient.ingredientId))}>Add to Grocery List</button>
+                </div>
+            </div>
              )
 
          

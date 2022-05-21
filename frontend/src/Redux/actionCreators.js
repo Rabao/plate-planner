@@ -487,7 +487,7 @@ export const deleteGroceriesSuccess = (id) => ({
 export const postGroceries = (ingredientName,
     qty, user_id) => (dispatch) => {
     const newGrocery = {
-        ingredientName: ingredientName,
+        ingredient_name: ingredientName,
         qty: qty,
         userId: user_id
     }

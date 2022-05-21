@@ -157,7 +157,9 @@ class Main extends Component {
                 postComment={this.props.postComment}
                 deleteComment={this.props.deleteComment}
                 editComment={this.props.editComment}
-                nutrition={this.props.nutrition.nutrition}/>
+                nutrition={this.props.nutrition.nutrition}
+                postGroceries={this.props.postGroceries}/>
+                // .filter((tNutrition) => tNutrition.id === 79)}/>
             ) 
         }
 
@@ -175,6 +177,7 @@ class Main extends Component {
                         <Route exact path='/add/recipe' element={<AddRecipe 
                             postRecipe={this.props.postRecipe}  
                             postSteps={this.props.postRecipeSteps}
+                            postGroceries={this.props.postGroceries}
                             postIngredients={this.props.postRecipeIngredients} 
                             ingredients={this.props.ingredients.ingredients}
                             nutrition={this.props.nutrition.nutrition} 
