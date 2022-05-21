@@ -132,7 +132,7 @@ export const postIngredient = (name,type) => (dispatch) => {
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(response => dispatch(addIngredients(response)))
     .catch(error => {console.log('Post ingredient ', error.message)
         alert('Your ingredient could not be added.\nError: ' + error.message)});
@@ -162,7 +162,7 @@ export const fetchNutrition = () => (dispatch) => {
             let errmess = new Error(error.message);
             throw errmess;
         })
-        .then(response => response.text())
+        .then(response => response.json())
         .then(nutrition => dispatch(addNutrition(nutrition)))
         .catch(error => dispatch(nutritionFailed(error.message)));
 }
@@ -257,11 +257,108 @@ export const postNutrition = (servingSize, servingSizeQty, servingSizeQtyUnit, s
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(response => dispatch(addNutrition(response)))
     .catch(error => {console.log('Post nutrition ', error.message)
         alert('Your nutrition could not be added.\nError: ' + error.message)});
 };
+
+export const postRecipeNutrition = (servingSize, servingSizeQty, servingSizeQtyUnit, servingSizeWeight, servingSizeUnit, calories, caloriesFat,
+    totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, 
+    protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium,
+    copper, manganese, chromium, molybdenum, chloride, recipeId) => (dispatch) => {
+    const newNutrition = {
+
+        servingSize: servingSize,
+        servingSizeQty: servingSizeQty,
+        servingSizeQtyUnit: servingSizeQtyUnit,
+        servingSizeWeight: servingSizeWeight,
+        servingSizeUnit: servingSizeUnit,
+        calories: calories,
+        caloriesFat: caloriesFat,
+        totalFat: totalFat,
+        saturatedFat: saturatedFat,
+        transFat: transFat,
+        polyFat: polyFat,
+        monoFat: monoFat,
+        cholesterol: cholesterol,
+        sodium: sodium,
+        potassium: potassium,
+        totalCarbs: totalCarbs,
+        dietaryFiber: dietaryFiber,
+        sugar: sugar,
+        sugarAlcohol: sugarAlcohol,
+        addedSugar: addedSugar,
+        protein: protein,
+        vitA: vitA,
+        vitB6: vitB6,
+        vitB12: vitB12,
+        vitC: vitC,
+        vitD: vitD,
+        vitE: vitE,
+        vitK: vitK,
+        calcium: calcium,
+        iron: iron,
+        magnesium: magnesium,
+        thiamine: thiamine,
+        biotin: biotin,
+        pantoAcid: pantoAcid,
+        phosphorous: phosphorous,
+        iodine: iodine,
+        zinc: zinc,
+        selenium: selenium,
+        copper: copper,
+        manganese: manganese,
+        chromium: chromium,
+        molybdenum: molybdenum,
+        chloride: chloride,
+        recipeId: recipeId
+    }
+
+    return fetch(baseUrl + '/recipes/nutrition', {
+        method: 'POST',
+        body: JSON.stringify(newNutrition),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    })
+    .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            let error = new Error('Error ' + response.status + ': ' + response.statusText);
+            error.response = response;
+            throw error;
+            }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(response => dispatch(addRecipeNutrition(response)))
+    .catch(error => {console.log('Post recipe nutrition ', error.message)
+        alert('Your recipe nutrition could not be added.\nError: ' + error.message)});
+};
+
+export const recipeNutritionLoading = () => ({
+    type: ActionTypes.RECIPENUTRITION_LOADING
+});
+
+export const recipeNutritionFailed = (errmess) => ({
+    type: ActionTypes.RECIPENUTRITION_FAILED,
+    payload: errmess
+});
+
+export const deleteRecipeNutrition = () => ({
+    type: ActionTypes.DELETE_RECIPENUTRITION
+});
+
+export const addRecipeNutrition = (nutrition) => ({
+    type: ActionTypes.ADD_RECIPENUTRITION,
+    payload: nutrition
+});
 //----------------------------------NUTRITION
 //----------------------------------GROCERIES
 export const fetchGrocery = (id) => (dispatch) => {
@@ -332,14 +429,14 @@ export const groceriesFailed = (errmess) => ({
 export const deleteGroceries = () => ({
     type: ActionTypes.DELETE_GROCERIES
 });
-export const postGroceries = (ingredient_name,
-    qty, user_id) => (dispatch) => {
+export const postGroceries = (ingredientName,
+    qty, userId) => (dispatch) => {
     const newGrocery = {
-        ingredient_name: ingredient_name,
+        ingredientName: ingredientName,
         qty: qty,
-        userId: user_id
+        userId: userId
     }
-    return fetch(baseUrl + '/groceries/' + user_id, {
+    return fetch(baseUrl + '/groceries/' + userId, {
         method: 'POST',
         body: JSON.stringify(newGrocery),
         headers: {
@@ -360,7 +457,7 @@ export const postGroceries = (ingredient_name,
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(response => dispatch(addGrocery(response)))
     .catch(error => {console.log('Adding grocery: ', error.message)
         alert('Your grocery could not be added.\nError: ' + error.message)});
@@ -392,7 +489,7 @@ export const toggleGrocery = (list_id) => (dispatch) => {
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then((id) => dispatch(toggleGrocerySuccess(id)))
     .catch(error => {throw(error)});
 }
@@ -414,7 +511,7 @@ export const toggleFetchGrocery = (name, qty) => (dispatch) => {
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then((name, qty) => dispatch(toggleFetchGrocerySuccess(name, qty)))
     .catch(error => {throw(error)});
 }
@@ -466,7 +563,7 @@ export const postRecipe = (id, name, numSteps, image, notes, userId, type) => (d
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(response => dispatch(addRecipe(response)))
     .catch(error => {console.log('Author recipe ', error.message)
         alert('Your recipe could not be published.\nError: ' + error.message)});
@@ -549,7 +646,7 @@ export const postRecipeIngredients = (recipeId, ingredientId, ingredientName, me
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(ingredients => dispatch(addRecipeIngredients(ingredients)))
     .catch(error => {console.log('Recipe ingredients ', error.message)
         alert('Your recipe ingredients could not be published.\nError: ' + error.message)});
@@ -632,7 +729,7 @@ export const postRecipeSteps = (recipeId, stepNum, steps) => (dispatch) => {
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(steps => dispatch(addRecipeSteps(steps)))
     .catch(error => {console.log('Recipe steps ', error.message)
         alert('Your recipe steps could not be published.\nError: ' + error.message)});
@@ -845,7 +942,7 @@ export const postComment = (recipeId, userId, rating, comment) => (dispatch) => 
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(response => dispatch(addComment(response)))
     .catch(error => {console.log('Post comments ', error.message)
         alert('Your comment could not be posted.\nError: ' + error.message)});
@@ -898,7 +995,7 @@ export const deleteComment = (id) => (dispatch) => {
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(id => dispatch(deleteCommentSuccess(id)))
     .catch(error => {throw(error)});
 }
@@ -925,7 +1022,7 @@ export const editComment = (id, rating, comment) => (dispatch) => {
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then((id, rating, comment) => dispatch(editCommentSuccess(id, rating, comment)))
     .catch(error => {throw(error)});
 }

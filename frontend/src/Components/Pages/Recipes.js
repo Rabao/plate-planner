@@ -5,7 +5,7 @@ import {Modal, ModalBody, ModalHeader} from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
 import IngredientsData from './Ingredients';
-import DailyValue from '../SubComponents/DailyValue';
+import DailyValue from '../SubComponents/DailyValueDisplay';
 import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 

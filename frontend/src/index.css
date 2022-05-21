@@ -601,10 +601,19 @@ hr {
 
 }
 
+._open {
+  display: block;
+
+}
+
+._close {
+  display: none;
+}
+
 .dvcalc {
   margin-top: 15px;
   padding: 5px;
-  padding-bottom: 18px;
+  padding-bottom: 15px;
   text-align: center;
   background-image: linear-gradient(to bottom, rgba(	253, 251, 249, 0), #f5f1ed);
   border-radius: 0px 0px 15px 15px;
@@ -619,12 +628,17 @@ hr {
   font-weight: 600;
 }
 
-.toggle-dvcalc {
-  width: 95%;
+.toggle-dvcalc{
+  width: 100%;
   margin-top: 5px;
-  margin-left: 14px;
   padding: 5px;
   background-image: linear-gradient(to bottom, #f5f1ed, rgba(253, 251, 249, 0));
+
+}
+.toggle-dvcalcComponent {
+  width: 100%;
+  margin-top: 5px;
+  padding: 5px;
 }
 
 .submit-button-interface {

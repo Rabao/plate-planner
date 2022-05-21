@@ -5,10 +5,13 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
 import axios from 'axios';
 import DailyValueCalculator from '../SubComponents/DailyValueCalculator';
+import DailyValue from '../SubComponents/DailyValueDisplay';
+import AutoComplete from '../SubComponents/AutoComplete';
 
 function AddRecipe(props) {
     const navigate = useNavigate();
-    let pageRedirect= false;  
+    let pageRedirect= false;
+    let found = false;  
     let filePath= "";
 
     let numSteps = 0;
@@ -22,6 +25,94 @@ function AddRecipe(props) {
     let unitMode = ".unit" + numIngredients;
     let nameHtmlIdent = "name" + numIngredients;
     let nameMode = ".name" + numIngredients;
+
+    let totalServingContainer = 0;
+    let totalServingQuantity= 0;
+    let totalServingQuantityUnits= 0;
+    let totalServingSizeWeight= 0;
+    let totalServingSizeUnit= 0;
+    let totalCalories= 0;
+    let totalCaloriesFat= 0;
+    let totalTotalFat= 0;
+    let totalSaturatedFat= 0;
+    let totalTransFat= 0;
+    let totalPolyFat= 0;
+    let totalMonoFat= 0;
+    let totalCholesterol= 0;
+    let totalSodium= 0;
+    let totalTotalCarbs= 0;
+    let totalDietaryFiber= 0;
+    let totalSugar= 0;
+    let totalSugarAlcohol= 0;
+    let totalAddedSugar= 0;
+    let totalProtein= 0;
+    let totalVitA= 0;
+    let totalVitB6= 0;
+    let totalVitB12= 0;
+    let totalVitC= 0;
+    let totalVitD= 0;
+    let totalVitE= 0;
+    let totalVitK= 0;
+    let totalCalcium= 0;
+    let totalIron= 0;
+    let totalMagnesium= 0;
+    let totalThiamine= 0;
+    let totalBiotin= 0;
+    let totalPantoAcid= 0;
+    let totalPotassium= 0;
+    let totalPhosphorous= 0;
+    let totalIodine= 0;
+    let totalZinc= 0;
+    let totalSelenium= 0;
+    let totalCopper= 0;
+    let totalManganese= 0;
+    let totalChromium= 0;
+    let totalMolybdenum= 0;
+    let totalChloride= 0;
+
+    const servingContainer = document.getElementById('servingContainer');
+    const servingQuantity = document.getElementById('servingQuantity');
+    const servingQuantityUnits = document.getElementById('servingQuantityUnits');
+    const servingSizeWeight = document.getElementById('servingSizeWeight');
+    const servingSizeUnit = document.getElementById('servingSizeUnit');
+    const calories = document.getElementById('calories');
+    const caloriesFat = document.getElementById('caloriesFat');
+    const totalFat = document.getElementById('totalFat');
+    const saturatedFat = document.getElementById('saturatedFat');
+    const transFat = document.getElementById('transFat');
+    const polyFat = document.getElementById('polyFat');
+    const monoFat = document.getElementById('monoFat');
+    const cholesterol = document.getElementById('cholesterol');
+    const sodium = document.getElementById('sodium');
+    const totalCarbs = document.getElementById('totalCarbs');
+    const dietaryFiber = document.getElementById('dietaryFiber');
+    const sugar = document.getElementById('sugar');
+    const sugarAlcohol = document.getElementById('sugarAlcohol');
+    const addedSugar = document.getElementById('addedSugar');
+    const protein = document.getElementById('protein');
+    const vitA = document.getElementById('vitA');
+    const vitB6 = document.getElementById('vitB6');
+    const vitB12 = document.getElementById('vitB12');
+    const vitC = document.getElementById('vitC');
+    const vitD = document.getElementById('vitD');
+    const vitE = document.getElementById('vitE');
+    const vitK = document.getElementById('vitK');
+    const calcium = document.getElementById('calcium');
+    const iron = document.getElementById('iron');
+    const magnesium = document.getElementById('magnesium');
+    const thiamine = document.getElementById('thiamine');
+    const biotin = document.getElementById('biotin');
+    const pantoAcid = document.getElementById('pantoAcid');
+    const potassium = document.getElementById('potassium');
+    const phosphorous = document.getElementById('phosphorous');
+    const iodine = document.getElementById('iodine');
+    const zinc = document.getElementById('zinc');
+    const selenium = document.getElementById('selenium');
+    const copper = document.getElementById('copper');
+    const manganese = document.getElementById('manganese');
+    const chromium = document.getElementById('chromium');
+    const molybdenum = document.getElementById('molybdenum');
+    const chloride = document.getElementById('chloride');
 
     const [selectedFile, setSelectedFile] = useState();
     const [toggle, setToggle] = useState(false);
@@ -38,7 +129,7 @@ function AddRecipe(props) {
         setSelectedFile(document.getElementById('img-input').files[0]); 
     }
 
-    function handleToggle(e) {
+    function handleToggle() {
 
         if(dvCalc.classList.contains('close')){
             dvCalc.classList.remove('close');
@@ -48,9 +139,124 @@ function AddRecipe(props) {
             dvCalc.classList.add('close');
         }
 
-        setToggle({ toggle: !this.state.toggle })
+        setToggle({ toggle: !toggle })
 
     }
+
+
+    function handleInputChange() {
+        const product = document.getElementById('ingredient');
+        let i = -1;    
+       
+      
+        do{ 
+            i++;
+            console.log(props.ingredients[i].name)
+            if(product.value == props.ingredients[i].name)
+                found = true;
+        }while(!found);
+        if(found){
+            for(let i = 0; i < numIngredients; i++){
+
+                totalServingContainer+= parseInt(props.nutrition[i].servingSize); //SS by Container
+                totalServingQuantity+= parseInt(props.nutrition[i].servingSizeQty);
+                totalServingQuantityUnits+= parseInt(props.nutrition[i].servingSizeQtyUnit);
+                totalServingSizeWeight+= parseInt(props.nutrition[i].servingSizeWeight);
+                totalServingSizeUnit+= parseInt(props.nutrition[i].servingSizeUnit);
+                totalCalories+= parseInt(props.nutrition[i].calories);
+                totalCaloriesFat+= parseInt(props.nutrition[i].caloriesFat);
+                totalTotalFat+= parseInt(props.nutrition[i].totalFat);
+                totalSaturatedFat+= parseInt(props.nutrition[i].saturatedFat);
+                totalTransFat+= parseInt(props.nutrition[i].transFat); 
+                totalPolyFat+= parseInt(props.nutrition[i].polyFat);
+                totalMonoFat+= parseInt(props.nutrition[i].monoFat);
+                totalCholesterol+= parseInt(props.nutrition[i].cholesterol);
+                totalSodium+= parseInt(props.nutrition[i].sodium);
+                totalTotalCarbs+= parseInt(props.nutrition[i].totalCarbs);
+                totalDietaryFiber+= parseInt(props.nutrition[i].dietaryFiber);
+                totalSugar+= parseInt(props.nutrition[i].sugar);
+                totalSugarAlcohol+= parseInt(props.nutrition[i].sugarAlcohol);
+                totalAddedSugar+= parseInt(props.nutrition[i].addedSugar);
+                totalProtein+= parseInt(props.nutrition[i].protein);
+                totalVitA+= parseInt(props.nutrition[i].vitA);
+                totalVitB6+= parseInt(props.nutrition[i].vitB6);
+                totalVitB12+= parseInt(props.nutrition[i].vitB12);
+                totalVitC+= parseInt(props.nutrition[i].vitC);
+                totalVitD+= parseInt(props.ingredients[i].vitD);
+                totalVitE+= parseInt(props.nutrition[i].vitE);
+                totalVitK+= parseInt(props.nutrition[i].vitK);
+                totalCalcium+= parseInt(props.nutrition[i].calcium);
+                totalIron+= parseInt(props.nutrition[i].iron);
+                totalMagnesium+= parseInt(props.nutrition[i].magnesium);
+                totalThiamine+= parseInt(props.nutrition[i].thiamine);
+                totalBiotin+= parseInt(props.nutrition[i].biotin);
+                totalPantoAcid+= parseInt(props.nutrition[i].pantoAcid);
+                totalPotassium+= parseInt(props.nutrition[i].potassium);
+                totalPhosphorous+= parseInt(props.nutrition[i].phosphorous);
+                totalIodine+= parseInt(props.nutrition[i].iodine);
+                totalZinc+= parseInt(props.nutrition[i].zinc);
+                totalSelenium+= parseInt(props.nutrition[i].selenium);
+                totalCopper+= parseInt(props.nutrition[i].copper);
+                totalManganese+= parseInt(props.nutrition[i].manganese);
+                totalChromium+= parseInt(props.nutrition[i].chromium);
+                totalMolybdenum+= parseInt(props.nutrition[i].molybdenum);
+                totalChloride+= parseInt(props.nutrition[i].chloride);
+                
+            }
+
+            console.log("counter: " + totalServingContainer);
+            servingContainer.value = totalServingContainer;
+            servingQuantity.value = totalServingQuantity;
+            servingQuantityUnits.value = totalServingQuantityUnits;
+            servingSizeWeight.value = totalServingSizeWeight;
+            servingSizeUnit.value = totalServingSizeUnit;
+            calories.value =totalCalories;
+            caloriesFat.value = totalCaloriesFat;
+            totalFat.value = totalTotalFat;
+            saturatedFat.value = totalSaturatedFat;
+            transFat.value = totalTransFat;
+            polyFat.value = totalPolyFat;
+            monoFat.value = totalMonoFat;
+            cholesterol.value = totalCholesterol;
+            sodium.value = totalSodium;
+    
+            totalCarbs.value = totalTotalCarbs;
+            dietaryFiber.value = totalDietaryFiber;
+            sugar.value = totalSugar;
+            sugarAlcohol.value = totalSugarAlcohol;
+            addedSugar.value = totalAddedSugar;
+            protein.value = totalProtein;
+            vitA.value = totalVitA;
+            vitB6.value = totalVitB6;
+            vitB12.value = totalVitB12;
+            vitC.value = totalVitC;
+            vitD.value = totalVitD;
+            vitE.value = totalVitE;
+            vitK.value = totalVitK;
+    
+            calcium.value = totalCalcium;
+            iron.value = totalIron;
+            magnesium.value = totalMagnesium;
+            thiamine.value = totalThiamine;
+    
+            biotin.value = totalBiotin;
+            pantoAcid.value = totalPantoAcid;
+            potassium.value = totalPotassium;
+            phosphorous.value = totalPhosphorous;
+            iodine.value = totalIodine;
+            zinc.value = totalZinc;
+            selenium.value = totalSelenium;
+            copper.value = totalCopper;
+            manganese.value = totalManganese;
+    
+            chromium.value = totalChromium;
+            molybdenum.value = totalMolybdenum;
+            chloride.value = totalChloride;
+    
+            }
+        }
+        // console.log(found);
+
 
     //-------------------------------------------------------------------RECIPE ID GENERATOR
     //-------------------------------------------------------------------RECIPE ID GENERATOR
@@ -224,7 +430,7 @@ function AddRecipe(props) {
                             <option>Meter</option>
                             <option>Inch</option>
                         </Control.select>
-                        <Control.text model={nameMode} name={nameHtmlIdent} id="ingredient" className="recipe-ingredients ingredients-controls"/>
+                        <Control.text model={nameMode} name={nameHtmlIdent} id="ingredient" className="recipe-ingredients ingredients-controls" onChange={(e) => {handleInputChange(e)}}/>
                         <button class="submit-button-small" onClick={() => {removeIngredient()}}>Remove</button>
                     </div>
 
@@ -312,17 +518,24 @@ function AddRecipe(props) {
                                     <div className="steps-container">
                                         {renderIngredientsInput()}
                                         {renderStepsInput()}
-                                        <div className="dvcalc" onClick={(e) => {handleToggle(e)}}><span>Add Nutritional Value Details</span></div><div className="toggle-dvcalc close"><DailyValueCalculator/></div>
-                                        {/* <DailyValueCalculator/> */}
+                                        {console.log("ingredients " + props.ingredients[0].name)}
+                                        <div className="dvcalc" onClick={(e) => {handleToggle(e)}}><span>Add Nutritional Value Details</span></div><div 
+                                        className="toggle-dvcalc close"><DailyValueCalculator 
+                                        ingredients={props.ingredients} nutrition={props.nutrition}
+                                        found={found}/>
+                                       </div>
                                     </div>
                                     </Col>
                                     <Col md={6}>
-                                    <div class="image-dropzone" onDrop={(file) => {onDrop(file)}}>
+                                    <div className="image-dropzone" onDrop={(file) => {onDrop(file)}}>
                                         <input type="file" id="img-input" 
                                         accept=".jpg, .jpeg, .png, .bmp"
                                         onChange={(e) => {handleChange(e)}}/>
                                         <div id="preview-image-container"></div>
-                                    </div>  
+                                    </div>
+                                    <div className="container">
+                                        <DailyValue/>
+                                        </div> 
                                     </Col>
                                 </div>
                                 <Col md={12}>
@@ -346,4 +559,5 @@ function AddRecipe(props) {
     )
 
 }
+
 export default AddRecipe;

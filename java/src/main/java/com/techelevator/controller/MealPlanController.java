@@ -39,11 +39,12 @@ public class MealPlanController {
     private RecipeStepsDao recipeStepsDao;
     private RecipeIngredientsDao recipeIngredientsDao;
     private UserDao userDao;
+    private RecipeNutritionDao recipeNutritionDao;
 
 
     public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao,
                               RecipeDao recipeDao, RecipeStepsDao recipeStepsDao, RecipeIngredientsDao recipeIngredientsDao,
-                              GroceryListDao groceryListDao, UserDao userDao, UserReviewDao userReviewDao) {
+                              GroceryListDao groceryListDao, UserDao userDao, UserReviewDao userReviewDao, RecipeNutritionDao recipeNutritionDao) {
         this.ingredientsDao = ingredientsDao;
         this.nutritionDao = nutritionDao;
         this.recipeDao = recipeDao;
@@ -52,6 +53,7 @@ public class MealPlanController {
         this.userReviewDao = userReviewDao;
         this.recipeStepsDao = recipeStepsDao;
         this.recipeIngredientsDao = recipeIngredientsDao;
+        this.recipeNutritionDao = recipeNutritionDao;
 
     }
 
@@ -126,6 +128,31 @@ public class MealPlanController {
     public void deleteNutrition(@PathVariable long id) throws NutritionNotFoundException {
         nutritionDao.deleteNutrition(id);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="recipes/nutrition")
+    public List<RecipeNutrition> listRecipeNutrition(){
+        return recipeNutritionDao.listRecipeNutrition();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="recipes/nutrition/{id}")
+    public RecipeNutrition getRecipeNutrition(@PathVariable long id){
+        return recipeNutritionDao.getRecipeNutrition(id);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="recipes/nutrition")
+    public void addRecipeNutrition(@Valid @RequestBody RecipeNutrition nutrition){
+        recipeNutritionDao.addRecipeNutrition(nutrition);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value="recipes/nutrition/{id}", method = RequestMethod.DELETE )
+    public void deleteRecipeNutrition(@PathVariable long id) throws RecipeNutritionNotFoundException {
+        recipeNutritionDao.deleteRecipeNutrition(id);
+    }
+
 
     /*****************************************************
      *                                                    *

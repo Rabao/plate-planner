@@ -11,6 +11,7 @@ import AddRecipe from '../Pages/AddRecipe'
 import Groceries from '../Pages/GroceryList'
 import MealPlans from '../Pages/MealPlans'
 import Dashboard from '../Pages/Dashboard';
+import DailyValueCalculator from '../SubComponents/DailyValueCalculator';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
         toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, postRecipeIngredients,
         postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients,
@@ -23,6 +24,7 @@ import { withRouter } from '../WithRouer/WithRouter';
 import IngredientsList from '../Pages/IngredientsList';
 import Ingredients from '../Pages/Ingredients';
 import Loader from '../SubComponents/Loader/Loader';
+import AutoComplete from '../SubComponents/AutoComplete';
 
 const mapStateToProps = state => {
     return {
@@ -81,9 +83,9 @@ const mapDispatchToProps = (dispatch) => ({
     postRecipeSteps: (recipeId, stepNum, steps) => {dispatch(postRecipeSteps(recipeId, stepNum, steps))},
     postRecipeIngredients: (recipeId, ingredientId, ingredientName, measurement, unit) => 
         {dispatch(postRecipeIngredients(recipeId, ingredientId, ingredientName, measurement, unit))},
-    postGroceries: (ingredient_name,qty, user_id) =>
-        {dispatch(postGroceries(ingredient_name,
-            qty, user_id))},
+    postGroceries: (ingredientName,qty, userId) =>
+        {dispatch(postGroceries(ingredientName,
+            qty, userId))},
 
     //Add methods
     // addGroceries: () => {dispatch(addGroceries())},
@@ -145,7 +147,6 @@ class Main extends Component {
                 recipeErrMess={this.props.recipe.errMess}
                 user={this.props.user}
                 users={this.props.allUsers}
-
                 targetIngredients={this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10))}
                 ingredients={this.props.ingredients.ingredients}
                 targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
@@ -172,7 +173,9 @@ class Main extends Component {
                         <Route exact path='/add/recipe' element={<AddRecipe 
                             postRecipe={this.props.postRecipe}  
                             postSteps={this.props.postRecipeSteps}
-                            postIngredients={this.props.postRecipeIngredients}  
+                            postIngredients={this.props.postRecipeIngredients} 
+                            ingredients={this.props.ingredients.ingredients}
+                            nutrition={this.props.nutrition.nutrition} 
                             authUser={this.props.user} 
                             recipes={this.props.recipe.recipe}/>}/>
                         {/* <Route exact path='/add/recipe' element={<NewRecipe/>}/> */}
@@ -192,7 +195,9 @@ class Main extends Component {
                             fetchGrocery={this.props.fetchGrocery}
                             toggleFetchGrocery={this.props.toggleFetchGrocery}/>}/>
                         <Route path='/mealplans' element={<MealPlans/>}/>
+                        <Route path='/dvcalc' element={<DailyValueCalculator ingredients={this.props.ingredients.ingredients}/>}/>
                         <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>
+                        
                         <Route path='' element={<Navigate to='/home' />} />
                     </Routes>
                 </div>

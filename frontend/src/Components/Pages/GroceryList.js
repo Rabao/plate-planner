@@ -75,6 +75,7 @@ class AddItem extends Component{
                 if(grocery.ingredientName!=undefined){
                     return(
                 <li className="component-list-item" key={index}>
+                    {console.log("INDEX: " + index)}
                     <div className="col" md={11}>
                         <div className="row">
                                 <div className="col" md={10}>
@@ -113,6 +114,7 @@ class AddItem extends Component{
                 if(item != null){
                     return(
                 <li className="component-list-item" key={groceryId}>
+                    {console.log("INDEX: " + index)}
                     <div className="col" md={11}>
                         <div className="row">
                                 <div className="col" md={10}>
@@ -160,7 +162,7 @@ class AddItem extends Component{
         )
     }
 
-    handleVitaminToggle(e) {
+    handleVitaminToggle() {
         const dvCalc = document.getElementsByClassName('toggle-dvcalc')[0];
 
         if(dvCalc.classList.contains('close')){
@@ -199,8 +201,6 @@ class AddItem extends Component{
                 values.calcium, values.iron, values.magnesium, values.thiamine, values.biotin, values.pantoAcid, values.phosphorous,
                 values.iodine, values.zinc, values.selenium, values.copper, values.manganese, values.chromium, values.molybdenum, 
                 values.chloride);
-                
-            console.log(this.props.nutrition)
         }
         this.props.postGroceries(values.product,
             values.quantity, this.props.authUser.id)
@@ -221,12 +221,14 @@ class AddItem extends Component{
 
     handleInputChange(){
         const product = document.getElementById('product');
+        console.log(this.props.nutrition)
         found = false;
         let i = -1;
         do{
             i++;
             if(product.value == this.props.ingredients[i].name)
                 found = true;
+                console.log(JSON.stringify("NUTRITION: " + JSON.stringify(this.props.nutrition[i])))
         }while(!found && i<this.props.ingredients.length-1);
         if(found){
             const type = document.getElementById('type');
@@ -324,7 +326,8 @@ class AddItem extends Component{
             chloride.value = this.props.nutrition[i].chloride;
 
         }
-        // console.log(found);
+        // console.log(found)
+          
     }
 
     render(){
