@@ -13,7 +13,7 @@ import MealPlans from '../Pages/MealPlans'
 import Dashboard from '../Pages/Dashboard';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
         toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, postRecipeIngredients,
-        postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients, deleteCompletedGroceries,
+        postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients, deleteGroceries, deleteCompletedGroceries,
         postComment, fetchComments, deleteComment, editComment, postGroceries,
         addGroceries, addIngredients, postIngredient,
         addNutrition, fetchNutrition, postNutrition, addMealPlan, 
@@ -45,6 +45,7 @@ const mapDispatchToProps = (dispatch) => ({
     deleteUser: () => { dispatch(deleteUser())},
     deleteComment: (id) => { dispatch(deleteComment(id))},
     deleteCompletedGroceries: (id) => {dispatch(deleteCompletedGroceries(id))},
+    deleteGroceries: (id) => {dispatch(deleteGroceries(id))},
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
     toggleGrocery: (id) => { dispatch(toggleGrocery(id)) },
     toggleFetchGrocery: (name, qty) => {dispatch(toggleFetchGrocery(name, qty))},
@@ -190,6 +191,7 @@ class Main extends Component {
 							postNutrition={this.props.postNutrition}
                             postGroceries={this.props.postGroceries}
                             toggleGrocery={this.props.toggleGrocery}
+                            deleteGroceries={this.props.deleteGroceries}
                             deleteCompletedGroceries={this.props.deleteCompletedGroceries}
                             fetchGrocery={this.props.fetchGrocery}
                             toggleFetchGrocery={this.props.toggleFetchGrocery}/>}/>

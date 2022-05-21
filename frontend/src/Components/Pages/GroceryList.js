@@ -31,6 +31,7 @@ export default function Groceries(props) {
                 postGroceries={props.postGroceries}
                 toggleGrocery={props.toggleGrocery}
                 deleteCompletedGroceries={props.deleteCompletedGroceries}
+                deleteGroceries={props.deleteGroceries}
                 postIngredient={props.postIngredient}
                 postNutrition={props.postNutrition}
                 fetchGrocery={props.fetchGrocery}
@@ -63,6 +64,7 @@ class AddItem extends Component{
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.deleteCompleted = this.deleteCompleted.bind(this);
+        this.deleteAll = this.deleteAll.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
     }
@@ -211,10 +213,15 @@ class AddItem extends Component{
         this.addToGroceryList(values);
 
     }
+    
+    deleteAll(){
+        this.props.deleteGroceries(this.props.authUser.id);
+        window.location.reload(false);
+    }
 
     deleteCompleted(){
-        console.log('clicked');
         this.props.deleteCompletedGroceries(this.props.authUser.id);
+        window.location.reload(false);
     }
 
     handleToggle(id, name, qty){
@@ -342,7 +349,9 @@ class AddItem extends Component{
                              <LocalForm onSubmit={this.deleteCompleted}>
                                 {/* <button>Save List</button> */}
                                 <button type='submit' class="submit-buttons">Remove Completed</button>
-                                <button class="submit-buttons">Reset List</button>
+                             </LocalForm>
+                             <LocalForm onSubmit={this.deleteAll}>
+                                <button type='submit' class="submit-buttons">Reset List</button>
                              </LocalForm>
                          </div>
                   </div>
