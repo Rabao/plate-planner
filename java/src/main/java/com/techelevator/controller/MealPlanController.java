@@ -280,6 +280,12 @@ public class MealPlanController {
     public void deleteGroceryList(@PathVariable long id) throws GroceryListNotFoundException {
         groceryListDao.deleteGroceryList(id);
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value="groceries/completed/{id}", method = RequestMethod.DELETE )
+    public void deleteCompletedGrocery(@PathVariable long id) throws GroceryListNotFoundException {
+        groceryListDao.deleteCompletedGrocery(id);
+    }
     /*****************************************************
      *                                                    *
      *                  GROCERY APIs                      *

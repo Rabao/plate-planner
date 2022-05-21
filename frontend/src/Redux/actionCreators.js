@@ -329,9 +329,54 @@ export const groceriesFailed = (errmess) => ({
     payload: errmess
 });
 
-export const deleteGroceries = () => ({
-    type: ActionTypes.DELETE_GROCERIES
-});
+export const deleteGroceries = (id) => (dispatch) => {
+
+    return fetch(baseUrl + '/groceries/' + id, {
+        method: 'DELETE'})
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then(id => dispatch(deleteGroceriesSuccess(id)))
+    .catch(error => {throw(error)});
+}
+
+export const deleteCompletedGroceries = (id) => (dispatch) => {
+
+    return fetch(baseUrl + '/groceries/completed' + id, {
+        method: 'DELETE'})
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then(id => dispatch(deleteGroceriesSuccess(id)))
+    .catch(error => {throw(error)});
+}
+
+export const deleteGroceriesSuccess = (id) => ({
+    type: ActionTypes.DELETE_GROCERIES,
+    payload: id
+})
 export const postGroceries = (ingredient_name,
     qty, user_id) => (dispatch) => {
     const newGrocery = {

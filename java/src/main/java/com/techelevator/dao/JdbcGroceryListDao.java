@@ -95,7 +95,14 @@ public class JdbcGroceryListDao implements GroceryListDao{
 
     @Override
     public boolean deleteGroceryList(long id) {
-        String sql = "DELETE FROM grocery_list WHERE list_id = ? ";
+        String sql = "DELETE FROM grocery_list WHERE user_id = ? ";
+        return jdbcTemplate.update(sql, id) == 1;
+    }
+
+    @Override
+    public boolean deleteCompletedGrocery(long id) {
+        String sql = "DELETE FROM grocery_list WHERE complete = true " +
+                "& user_id = ?";
         return jdbcTemplate.update(sql, id) == 1;
     }
 

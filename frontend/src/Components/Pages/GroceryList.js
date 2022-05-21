@@ -212,6 +212,10 @@ class AddItem extends Component{
 
     }
 
+    deleteCompleted(){
+        
+    }
+
     handleToggle(id, name, qty){
         if(id>0)
             this.props.toggleGrocery(id);
@@ -335,7 +339,7 @@ class AddItem extends Component{
                         <h5>Grocery List</h5>
                             {this.renderGroceryList()}
                          <div className='row'>
-                             <LocalForm>
+                             <LocalForm onSubmit={this.deleteCompleted}>
                                 {/* <button>Save List</button> */}
                                 <button type='submit' class="submit-buttons">Remove Completed</button>
                                 <button class="submit-buttons">Reset List</button>
