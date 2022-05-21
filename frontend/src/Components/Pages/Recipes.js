@@ -25,7 +25,6 @@ export default class Recipes extends Component {
                             Recipes
                         </Breadcrumb.Item>
                     </Breadcrumb>
-                    {console.log("THIS IS: " + this.props.targetIngredients)}
                     <Recipe recipe={this.props.targetRecipe}
                     recipeSteps={this.props.targetRecipeSteps}
                     ingredients={this.props.targetIngredients}
@@ -71,6 +70,7 @@ const Recipe = (props) => {
     } else { 
     return(
         <div>
+            {console.log("NUTRITION: " + props.nutrition)}
             {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>Null</h3>}
             <div className='component-body'>
             {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} allIngredients={props.allIngredients} recipe={props.recipe} nutrition={props.nutrition}/> : <div>Null</div>}
@@ -297,12 +297,10 @@ function RenderComments(props){
 }
 
  function IngredientNutrition(ingredient, nutrition)  {
-    //    const nutrition = this.state.targNute;
-    // console.log("NUT" + nutrition.serving_size)
-   let tNutrition= nutrition.filter(nute => nute.id === ingredient.ingredientId);
-//    let targ = JSON.parse(targetNutrition);
+
+    let tNutrition= nutrition.filter(nutrition => nutrition.id === ingredient.ingredientId)[0];
+    console.log("LOGGING:" + nutrition.id)
     
-   console.log("TARGETED: " + JSON.stringify(tNutrition))
     return(
         <div>
 
@@ -400,7 +398,7 @@ function RenderComments(props){
         
         : 
         
-        <div> Nutrition data not found. </div>} 
+        <div> Nutrition data not found. </div>}
     </div>
     )
     
@@ -411,8 +409,7 @@ function RenderComments(props){
 // }
 
 function Ingredients(props) { 
-    
-
+     
     const getIngredientFromId = (id) => {
         return props.allIngredients.filter(ingredients => ingredients.id === parseInt(id,10))[0].name;
     }
@@ -427,7 +424,7 @@ function Ingredients(props) {
             item = " " + ingredient.unit + "s ";
         }
 
-        console.log(getIngredientFromId(ingredient.ingredientId));
+        // console.log("LOGGING: " + getIngredientFromId(ingredient.ingredientId));
 
         return (  
                 <div id="recipe-ingredients" key={index}>
@@ -437,6 +434,7 @@ function Ingredients(props) {
                     </p>
                 </div>
              )
+
          
     });
     
