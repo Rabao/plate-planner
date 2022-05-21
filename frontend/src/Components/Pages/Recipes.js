@@ -430,7 +430,7 @@ function Ingredients(props) {
                 <div id="recipe-ingredients" key={index}>
                     <p className="recipe-ingredient-text">
                         <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
-                            trigger="mouseenter" arrow="true" position="bottom-end" max-width={'1000px'} html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{getIngredientFromId(ingredient.ingredientId)}</span></Tooltip>
+                            trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{getIngredientFromId(ingredient.ingredientId)}</span></Tooltip>
                     </p>
                 </div>
              )

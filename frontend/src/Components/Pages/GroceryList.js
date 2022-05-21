@@ -243,14 +243,14 @@ class AddItem extends Component{
 
     handleInputChange(){
         const product = document.getElementById('product');
-        console.log(this.props.nutrition)
+        
         found = false;
         let i = -1;
         do{
             i++;
             if(product.value == this.props.ingredients[i].name)
                 found = true;
-                console.log(JSON.stringify("NUTRITION: " + JSON.stringify(this.props.nutrition[i])))
+        
         }while(!found && i<this.props.ingredients.length-1);
         if(found){
             const type = document.getElementById('type');
