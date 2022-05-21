@@ -310,7 +310,7 @@ function RenderComments(props){
             <table>
                 <tr>
                     <th>Ingredient</th>
-                    <th>{ingredient.ingredientName}</th>
+                    <th>{ingredient.ingredient_name}</th>
                 </tr>
                 <tr>
                     <td>Serving Size</td>

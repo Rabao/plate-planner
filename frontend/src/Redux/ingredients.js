@@ -14,6 +14,9 @@ export const Ingredients = (state = {
                 isLoading: false,
                 errMess: null,
                 ingredients: action.payload}
+                
+        case ActionTypes.ADD_INGREDIENT:
+            return{...state, ingredients: state.ingredients.concat(action.payload)};
         
         case ActionTypes.DELETE_INGREDIENTS:
             return { ...state, id: null, ingredients: '', authorities: [] }

@@ -65,7 +65,7 @@ public class JdbcGroceryListDao implements GroceryListDao{
     public boolean addNewGroceryList(GroceryList groceryList) {
 //        String sql = "INSERT INTO grocery_list (list_id, ingredient_id, ingredient_name, " +
 //                "qty, user_id, complete) VALUES (DEFAULT, ?, ?, ?, ?, false)";
-//        return jdbcTemplate.update(sql,groceryList.getIngredientId(),groceryList.getIngredientName(),
+//        return jdbcTemplate.update(sql,groceryList.getIngredientId(),groceryList.getingredient_name(),
 //                groceryList.getQty(), groceryList.getUserId()) == 1;
         return false;
     }
@@ -87,10 +87,10 @@ public class JdbcGroceryListDao implements GroceryListDao{
     @Override
     public boolean addNewItemToGroceryList(long id, GroceryList groceryList) {
         String sql = "INSERT INTO grocery_list (list_id, ingredient_id, ingredient_name, " +
-                "qty, user_id, complete) VALUES (DEFAULT, (select id from ingredients where name = ?)" +
+                "qty, user_id, complete) VALUES (DEFAULT, (select id from ingredients where name = ? LIMIT 1)" +
                 ", ?, ?, ?, false)";
-        return jdbcTemplate.update(sql,groceryList.getIngredientName(),
-                groceryList.getIngredientName(),groceryList.getQty(), groceryList.getUserId()) == 1;
+        return jdbcTemplate.update(sql,groceryList.getingredient_name(),
+                groceryList.getingredient_name(),groceryList.getQty(), groceryList.getUserId()) == 1;
     }
 
     @Override
@@ -102,7 +102,7 @@ public class JdbcGroceryListDao implements GroceryListDao{
     @Override
     public boolean deleteCompletedGrocery(long id) {
         String sql = "DELETE FROM grocery_list WHERE complete = true " +
-                "& user_id = ?";
+                "AND user_id = ?";
         return jdbcTemplate.update(sql, id) == 1;
     }
 
@@ -110,7 +110,7 @@ public class JdbcGroceryListDao implements GroceryListDao{
         GroceryList list = new GroceryList();
         list.setListId(rs.getLong("list_id"));
         list.setIngredientId(rs.getLong("ingredient_id"));
-        list.setIngredientName(rs.getString("ingredient_name"));
+        list.setingredient_name(rs.getString("ingredient_name"));
         list.setQty(rs.getInt("qty"));
         list.setUserId(rs.getLong("user_id"));
         list.setComplete(rs.getBoolean("complete"));

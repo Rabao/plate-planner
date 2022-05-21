@@ -30,6 +30,7 @@ export default function Groceries(props) {
                 groceries={props.groceries}
                 postGroceries={props.postGroceries}
                 toggleGrocery={props.toggleGrocery}
+                deleteCompletedGroceries={props.deleteCompletedGroceries}
                 postIngredient={props.postIngredient}
                 postNutrition={props.postNutrition}
                 fetchGrocery={props.fetchGrocery}
@@ -61,6 +62,7 @@ class AddItem extends Component{
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.deleteCompleted = this.deleteCompleted.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
     }
@@ -72,13 +74,13 @@ class AddItem extends Component{
         this.props.groceries.sort(compare);
         const CurrentGroceryList = () => {
             liObj1 = this.props.groceries.map((grocery, index) => {
-                if(grocery.ingredientName!=undefined){
+                if(grocery.ingredient_name!=undefined){
                     return(
                 <li className="component-list-item" key={index}>
                     <div className="col" md={11}>
                         <div className="row">
                                 <div className="col" md={10}>
-                                    {grocery.ingredientName}
+                                    {grocery.ingredient_name}
                                 </div>
                         <div className="col" md={1}>
                             <div className="checklist-complete">
@@ -199,8 +201,6 @@ class AddItem extends Component{
                 values.calcium, values.iron, values.magnesium, values.thiamine, values.biotin, values.pantoAcid, values.phosphorous,
                 values.iodine, values.zinc, values.selenium, values.copper, values.manganese, values.chromium, values.molybdenum, 
                 values.chloride);
-                
-            console.log(this.props.nutrition)
         }
         this.props.postGroceries(values.product,
             values.quantity, this.props.authUser.id)
@@ -213,7 +213,8 @@ class AddItem extends Component{
     }
 
     deleteCompleted(){
-        
+        console.log('clicked');
+        this.props.deleteCompletedGroceries(this.props.authUser.id);
     }
 
     handleToggle(id, name, qty){
@@ -328,7 +329,6 @@ class AddItem extends Component{
             chloride.value = this.props.nutrition[i].chloride;
 
         }
-        // console.log(found);
     }
 
     render(){
