@@ -157,7 +157,8 @@ class Main extends Component {
                 postComment={this.props.postComment}
                 deleteComment={this.props.deleteComment}
                 editComment={this.props.editComment}
-                nutrition={this.props.nutrition.nutrition.filter((tNutrition) => tNutrition.id === 79)}/>
+                nutrition={this.props.nutrition.nutrition}/>
+                // .filter((tNutrition) => tNutrition.id === 79)}/>
             ) 
         }
 

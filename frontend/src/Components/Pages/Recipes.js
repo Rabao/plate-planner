@@ -299,7 +299,7 @@ function RenderComments(props){
  function IngredientNutrition(ingredient, nutrition)  {
     //    const nutrition = this.state.targNute;
     // console.log("NUT" + nutrition.serving_size)
-   let tNutrition= nutrition.filter(nute => nute.id === ingredient.ingredientId);
+   let tNutrition= nutrition.filter(nute => nute.id === ingredient.ingredientId)[0];
 //    let targ = JSON.parse(targetNutrition);
     
    console.log("TARGETED: " + JSON.stringify(tNutrition))
@@ -427,7 +427,7 @@ function Ingredients(props) {
             item = " " + ingredient.unit + "s ";
         }
 
-        console.log(getIngredientFromId(ingredient.ingredientId));
+        // console.log(props.nutrition);
 
         return (  
                 <div id="recipe-ingredients" key={index}>
