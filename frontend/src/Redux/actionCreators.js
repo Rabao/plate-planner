@@ -105,6 +105,11 @@ export const addIngredients = (ingredients) => ({
     payload: ingredients
 });
 
+export const addIngredient = (ingredients) => ({
+    type: ActionTypes.ADD_INGREDIENT,
+    payload: ingredients
+});
+
 export const postIngredient = (name,type) => (dispatch) => {
     const newIngredient = {
         name: name,
@@ -133,7 +138,7 @@ export const postIngredient = (name,type) => (dispatch) => {
         throw errmess;
     })
     .then(response => response.json())
-    .then(response => dispatch(addIngredients(response)))
+    .then(response => dispatch(addIngredient(response)))
     .catch(error => {console.log('Post ingredient ', error.message)
         alert('Your ingredient could not be added.\nError: ' + error.message)});
 };
@@ -163,7 +168,7 @@ export const fetchNutrition = () => (dispatch) => {
             throw errmess;
         })
         .then(response => response.json())
-        .then(nutrition => dispatch(addNutrition(nutrition)))
+        .then(nutrition => dispatch(addNutritions(nutrition)))
         .catch(error => dispatch(nutritionFailed(error.message)));
 }
 
@@ -178,6 +183,11 @@ export const nutritionFailed = (errmess) => ({
 
 export const deleteNutrition = () => ({
     type: ActionTypes.DELETE_NUTRITION
+});
+
+export const addNutritions = (nutrition) => ({
+    type: ActionTypes.ADD_NUTRITIONS,
+    payload: nutrition
 });
 
 export const addNutrition = (nutrition) => ({
@@ -426,17 +436,62 @@ export const groceriesFailed = (errmess) => ({
     payload: errmess
 });
 
-export const deleteGroceries = () => ({
-    type: ActionTypes.DELETE_GROCERIES
-});
+export const deleteGroceries = (id) => (dispatch) => {
+
+    return fetch(baseUrl + '/groceries/' + id, {
+        method: 'DELETE'})
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then(id => dispatch(deleteGroceriesSuccess(id)))
+    .catch(error => {throw(error)});
+}
+
+export const deleteCompletedGroceries = (id) => (dispatch) => {
+
+    return fetch(baseUrl + '/groceries/completed/' + id, {
+        method: 'DELETE'})
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.text())
+    .then(id => dispatch(deleteGroceriesSuccess(id)))
+    .catch(error => {throw(error)});
+}
+
+export const deleteGroceriesSuccess = (id) => ({
+    type: ActionTypes.DELETE_GROCERIES,
+    payload: id
+})
 export const postGroceries = (ingredientName,
-    qty, userId) => (dispatch) => {
+    qty, user_id) => (dispatch) => {
     const newGrocery = {
         ingredientName: ingredientName,
         qty: qty,
-        userId: userId
+        userId: user_id
     }
-    return fetch(baseUrl + '/groceries/' + userId, {
+    return fetch(baseUrl + '/groceries/' + user_id, {
         method: 'POST',
         body: JSON.stringify(newGrocery),
         headers: {
@@ -616,11 +671,11 @@ export const addRecipe = (recipe) => ({
     payload: recipe
 });
 //-------------------
-export const postRecipeIngredients = (recipeId, ingredientId, ingredientName, measurement, unit) => (dispatch) => {
+export const postRecipeIngredients = (recipeId, ingredientId, ingredient_name, measurement, unit) => (dispatch) => {
     const newRecipe = {
         recipeId: recipeId,
         ingredientId: ingredientId,
-        ingredientName: ingredientName,
+        ingredient_name: ingredient_name,
         measurement: measurement,
         unit: unit
     }

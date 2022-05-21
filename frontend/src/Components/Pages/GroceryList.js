@@ -5,6 +5,7 @@ import {FaCheck} from 'react-icons/fa';
 // import { Form, FormGroup, Input } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 let found = false;
+let currentNutrition = [];
 
 export default function Groceries(props) {
     
@@ -30,6 +31,8 @@ export default function Groceries(props) {
                 groceries={props.groceries}
                 postGroceries={props.postGroceries}
                 toggleGrocery={props.toggleGrocery}
+                deleteCompletedGroceries={props.deleteCompletedGroceries}
+                deleteGroceries={props.deleteGroceries}
                 postIngredient={props.postIngredient}
                 postNutrition={props.postNutrition}
                 fetchGrocery={props.fetchGrocery}
@@ -61,8 +64,11 @@ class AddItem extends Component{
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.deleteCompleted = this.deleteCompleted.bind(this);
+        this.deleteAll = this.deleteAll.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleToggle = this.handleToggle.bind(this);
+        this.findNutrition = this.findNutrition.bind(this);
     }
 
      /*
@@ -72,14 +78,14 @@ class AddItem extends Component{
         this.props.groceries.sort(compare);
         const CurrentGroceryList = () => {
             liObj1 = this.props.groceries.map((grocery, index) => {
-                if(grocery.ingredientName!=undefined){
+                if(grocery.ingredient_name!=undefined){
                     return(
                 <li className="component-list-item" key={index}>
                     {console.log("INDEX: " + index)}
                     <div className="col" md={11}>
                         <div className="row">
                                 <div className="col" md={10}>
-                                    {grocery.ingredientName}
+                                    {grocery.ingredient_name}
                                 </div>
                         <div className="col" md={1}>
                             <div className="checklist-complete">
@@ -211,12 +217,28 @@ class AddItem extends Component{
         this.addToGroceryList(values);
 
     }
+    
+    deleteAll(){
+        this.props.deleteGroceries(this.props.authUser.id);
+        window.location.reload(false);
+    }
+
+    deleteCompleted(){
+        this.props.deleteCompletedGroceries(this.props.authUser.id);
+        window.location.reload(false);
+    }
 
     handleToggle(id, name, qty){
         if(id>0)
             this.props.toggleGrocery(id);
         else
             this.props.toggleFetchGrocery(name,qty);
+    }
+    
+    findNutrition(id){
+        // return this.props.nutrition.filter()
+        currentNutrition = this.props.nutrition.filter(
+            (nutrient) => nutrient.id === parseInt(id,10))[0]
     }
 
     handleInputChange(){
@@ -276,58 +298,58 @@ class AddItem extends Component{
             const molybdenum = document.getElementById('molybdenum');
             const chloride = document.getElementById('chloride');
 
+            this.findNutrition(this.props.ingredients[i].id);
+
             type.value = this.props.ingredients[i].type;
-            servingContainer.value = this.props.nutrition[i].servingSize; //SS by Container
-            servingQuantity.value = this.props.nutrition[i].servingSizeQty;
-            servingQuantityUnits.value = this.props.nutrition[i].servingSizeQtyUnit;
-            servingSizeWeight.value = this.props.nutrition[i].servingSizeWeight;
-            servingSizeUnit.value = this.props.nutrition[i].servingSizeUnit;
-            calories.value = this.props.nutrition[i].calories;
-            caloriesFat.value = this.props.nutrition[i].caloriesFat;
-            totalFat.value = this.props.nutrition[i].totalFat;
-            saturatedFat.value = this.props.nutrition[i].saturatedFat;
-            transFat.value = this.props.nutrition[i].transFat;
-            polyFat.value = this.props.nutrition[i].polyFat;
-            monoFat.value = this.props.nutrition[i].monoFat;
-            cholesterol.value = this.props.nutrition[i].cholesterol;
-            sodium.value = this.props.nutrition[i].sodium;
+            servingContainer.value = currentNutrition.servingSize; //SS by Container
+            servingQuantity.value = currentNutrition.servingSizeQty;
+            servingQuantityUnits.value = currentNutrition.servingSizeQtyUnit;
+            servingSizeWeight.value = currentNutrition.servingSizeWeight;
+            servingSizeUnit.value = currentNutrition.servingSizeUnit;
+            calories.value = currentNutrition.calories;
+            caloriesFat.value = currentNutrition.caloriesFat;
+            totalFat.value = currentNutrition.totalFat;
+            saturatedFat.value = currentNutrition.saturatedFat;
+            transFat.value = currentNutrition.transFat;
+            polyFat.value = currentNutrition.polyFat;
+            monoFat.value = currentNutrition.monoFat;
+            cholesterol.value = currentNutrition.cholesterol;
+            sodium.value = currentNutrition.sodium;
 
-            totalCarbs.value = this.props.nutrition[i].totalCarbs;
-            dietaryFiber.value = this.props.nutrition[i].dietaryFiber;
-            sugar.value = this.props.nutrition[i].sugar;
-            sugarAlcohol.value = this.props.nutrition[i].sugarAlcohol;
-            addedSugar.value = this.props.nutrition[i].addedSugar;
-            protein.value = this.props.nutrition[i].protein;
-            vitA.value = this.props.nutrition[i].vitA;
-            vitB6.value = this.props.nutrition[i].vitB6;
-            vitB12.value = this.props.nutrition[i].vitB12;
-            vitC.value = this.props.nutrition[i].vitC;
+            totalCarbs.value = currentNutrition.totalCarbs;
+            dietaryFiber.value = currentNutrition.dietaryFiber;
+            sugar.value = currentNutrition.sugar;
+            sugarAlcohol.value = currentNutrition.sugarAlcohol;
+            addedSugar.value = currentNutrition.addedSugar;
+            protein.value = currentNutrition.protein;
+            vitA.value = currentNutrition.vitA;
+            vitB6.value = currentNutrition.vitB6;
+            vitB12.value = currentNutrition.vitB12;
+            vitC.value = currentNutrition.vitC;
             vitD.value = this.props.ingredients[i].vitD;
-            vitE.value = this.props.nutrition[i].vitE;
-            vitK.value = this.props.nutrition[i].vitK;
+            vitE.value = currentNutrition.vitE;
+            vitK.value = currentNutrition.vitK;
 
-            calcium.value = this.props.nutrition[i].calcium;
-            iron.value = this.props.nutrition[i].iron;
-            magnesium.value = this.props.nutrition[i].magnesium;
-            thiamine.value = this.props.nutrition[i].thiamine;
+            calcium.value = currentNutrition.calcium;
+            iron.value = currentNutrition.iron;
+            magnesium.value = currentNutrition.magnesium;
+            thiamine.value = currentNutrition.thiamine;
 
-            biotin.value = this.props.nutrition[i].biotin;
-            pantoAcid.value = this.props.nutrition[i].pantoAcid;
-            potassium.value = this.props.nutrition[i].potassium;
-            phosphorous.value = this.props.nutrition[i].phosphorous;
-            iodine.value = this.props.nutrition[i].iodine;
-            zinc.value = this.props.nutrition[i].zinc;
-            selenium.value = this.props.nutrition[i].selenium;
-            copper.value = this.props.nutrition[i].copper;
-            manganese.value = this.props.nutrition[i].manganese;
+            biotin.value = currentNutrition.biotin;
+            pantoAcid.value = currentNutrition.pantoAcid;
+            potassium.value = currentNutrition.potassium;
+            phosphorous.value = currentNutrition.phosphorous;
+            iodine.value = currentNutrition.iodine;
+            zinc.value = currentNutrition.zinc;
+            selenium.value = currentNutrition.selenium;
+            copper.value = currentNutrition.copper;
+            manganese.value = currentNutrition.manganese;
 
-            chromium.value = this.props.nutrition[i].chromium;
-            molybdenum.value = this.props.nutrition[i].molybdenum;
-            chloride.value = this.props.nutrition[i].chloride;
+            chromium.value = currentNutrition.chromium;
+            molybdenum.value = currentNutrition.molybdenum;
+            chloride.value = currentNutrition.chloride;
 
         }
-        // console.log(found)
-          
     }
 
     render(){
@@ -338,11 +360,9 @@ class AddItem extends Component{
                         <h5>Grocery List</h5>
                             {this.renderGroceryList()}
                          <div className='row'>
-                             <LocalForm>
                                 {/* <button>Save List</button> */}
-                                <button type='submit' class="submit-buttons">Remove Completed</button>
-                                <button class="submit-buttons">Reset List</button>
-                             </LocalForm>
+                                <button type='submit' onClick={this.deleteCompleted} class="submit-buttons">Remove Completed</button>
+                                <button type='submit' onClick={this.deleteAll} class="submit-buttons">Reset List</button>
                          </div>
                   </div>
               </div>

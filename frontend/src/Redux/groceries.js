@@ -14,9 +14,13 @@ export const Groceries = (state = {
                 isLoading: false,
                 errMess: null,
                 groceries: action.payload}
+
+            case ActionTypes.ADD_GROCERY:
+                return{...state, groceries: state.groceries.concat(action.payload)};
         
         case ActionTypes.DELETE_GROCERIES:
-            return { ...state, id: null, groceries: '', authorities: [] }
+            return{
+                ...state, groceries: state.groceries.filter((grocery, index) => index !== action.payload)}
 
         case ActionTypes.GROCERIES_LOADING:
            return{...state,
@@ -29,9 +33,6 @@ export const Groceries = (state = {
                 isLoading: false,
                 errMess: action.payload,
                 groceries: []}
-
-        case ActionTypes.ADD_GROCERY:
-            return{...state, groceries: state.groceries.concat(action.payload)};
 
         case ActionTypes.TOGGLE_GROCERY:
             return{...state, groceries: state.groceries.filter((grocery) => {

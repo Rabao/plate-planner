@@ -14,7 +14,7 @@ import Dashboard from '../Pages/Dashboard';
 import DailyValueCalculator from '../SubComponents/DailyValueCalculator';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
         toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, postRecipeIngredients,
-        postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients,
+        postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients, deleteGroceries, deleteCompletedGroceries,
         postComment, fetchComments, deleteComment, editComment, postGroceries,
         addGroceries, addIngredients, postIngredient,
         addNutrition, fetchNutrition, postNutrition, addMealPlan, 
@@ -46,6 +46,8 @@ const mapDispatchToProps = (dispatch) => ({
     addToken: () => { dispatch(addToken()) },
     deleteUser: () => { dispatch(deleteUser())},
     deleteComment: (id) => { dispatch(deleteComment(id))},
+    deleteCompletedGroceries: (id) => {dispatch(deleteCompletedGroceries(id))},
+    deleteGroceries: (id) => {dispatch(deleteGroceries(id))},
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
     toggleGrocery: (id) => { dispatch(toggleGrocery(id)) },
     toggleFetchGrocery: (name, qty) => {dispatch(toggleFetchGrocery(name, qty))},
@@ -81,11 +83,11 @@ const mapDispatchToProps = (dispatch) => ({
             copper, manganese, chromium, molybdenum, chloride))},
     postIngredient: (name, type) => {dispatch(postIngredient(name, type))},
     postRecipeSteps: (recipeId, stepNum, steps) => {dispatch(postRecipeSteps(recipeId, stepNum, steps))},
-    postRecipeIngredients: (recipeId, ingredientId, ingredientName, measurement, unit) => 
-        {dispatch(postRecipeIngredients(recipeId, ingredientId, ingredientName, measurement, unit))},
-    postGroceries: (ingredientName,qty, userId) =>
-        {dispatch(postGroceries(ingredientName,
-            qty, userId))},
+    postRecipeIngredients: (recipeId, ingredientId, ingredient_name, measurement, unit) => 
+        {dispatch(postRecipeIngredients(recipeId, ingredientId, ingredient_name, measurement, unit))},
+    postGroceries: (ingredient_name,qty, user_id) =>
+        {dispatch(postGroceries(ingredient_name,
+            qty, user_id))},
 
     //Add methods
     // addGroceries: () => {dispatch(addGroceries())},
@@ -184,14 +186,16 @@ class Main extends Component {
                         <Route path='/ingredients/:id' element={<IngredientWithId/>}/>
                         <Route path='/groceries' element={<Groceries
                             user={this.props.user}
-                            groceries={this.props.groceries.groceries.filter(
-                                (grocery) => grocery.userId === parseInt(this.props.user.id,10))}
+                            groceries={this.props.groceries.groceries
+                                .filter((grocery) => grocery.userId === parseInt(this.props.user.id,10))}
                             ingredients={this.props.ingredients.ingredients}
                             nutrition={this.props.nutrition.nutrition}
 							postIngredient={this.props.postIngredient}
 							postNutrition={this.props.postNutrition}
                             postGroceries={this.props.postGroceries}
                             toggleGrocery={this.props.toggleGrocery}
+                            deleteGroceries={this.props.deleteGroceries}
+                            deleteCompletedGroceries={this.props.deleteCompletedGroceries}
                             fetchGrocery={this.props.fetchGrocery}
                             toggleFetchGrocery={this.props.toggleFetchGrocery}/>}/>
                         <Route path='/mealplans' element={<MealPlans/>}/>

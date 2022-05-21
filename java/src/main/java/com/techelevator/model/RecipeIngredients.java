@@ -33,11 +33,11 @@ public class RecipeIngredients {
         this.ingredient_id = ingredient_id;
     }
 
-    public String getIngredientName() {
+    public String getingredient_name() {
         return ingredient_name;
     }
 
-    public void setIngredientName(String ingredient_name) {
+    public void setingredient_name(String ingredient_name) {
         this.ingredient_name = ingredient_name;
     }
 

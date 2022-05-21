@@ -36,7 +36,7 @@ public class JdbcRecipeIngredientsDao implements RecipeIngredientsDao {
         String sql = "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, ingredient_name, measurement, unit) " +
                 "VALUES (?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql,recipeIngredients.getRecipeId(),recipeIngredients.getIngredientId(),
-                recipeIngredients.getIngredientName(),recipeIngredients.getMeasurement(),recipeIngredients.getUnit()) == 1;
+                recipeIngredients.getingredient_name(),recipeIngredients.getMeasurement(),recipeIngredients.getUnit()) == 1;
     }
 
     @Override
@@ -49,7 +49,7 @@ public class JdbcRecipeIngredientsDao implements RecipeIngredientsDao {
         RecipeIngredients ingredients = new RecipeIngredients();
         ingredients.setRecipeId(rs.getLong("recipe_id"));
         ingredients.setIngredientId(rs.getLong("ingredient_id"));
-        ingredients.setIngredientName(rs.getString("ingredient_name"));
+        ingredients.setingredient_name(rs.getString("ingredient_name"));
         ingredients.setMeasurement(rs.getDouble("measurement"));
         ingredients.setUnit(rs.getString("unit"));
         return ingredients;
