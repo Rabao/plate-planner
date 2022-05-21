@@ -346,13 +346,9 @@ class AddItem extends Component{
                         <h5>Grocery List</h5>
                             {this.renderGroceryList()}
                          <div className='row'>
-                             <LocalForm onSubmit={this.deleteCompleted}>
                                 {/* <button>Save List</button> */}
-                                <button type='submit' class="submit-buttons">Remove Completed</button>
-                             </LocalForm>
-                             <LocalForm onSubmit={this.deleteAll}>
-                                <button type='submit' class="submit-buttons">Reset List</button>
-                             </LocalForm>
+                                <button type='submit' onClick={this.deleteCompleted} class="submit-buttons">Remove Completed</button>
+                                <button type='submit' onClick={this.deleteAll} class="submit-buttons">Reset List</button>
                          </div>
                   </div>
               </div>
