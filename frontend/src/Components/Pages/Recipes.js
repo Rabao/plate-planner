@@ -25,7 +25,6 @@ export default class Recipes extends Component {
                             Recipes
                         </Breadcrumb.Item>
                     </Breadcrumb>
-                    {console.log("THIS IS: " + this.props.targetIngredients)}
                     <Recipe recipe={this.props.targetRecipe}
                     recipeSteps={this.props.targetRecipeSteps}
                     ingredients={this.props.targetIngredients}
@@ -72,6 +71,7 @@ const Recipe = (props) => {
     } else { 
     return(
         <div>
+            {console.log("NUTRITION: " + props.nutrition)}
             {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>Null</h3>}
             <div className='component-body'>
             {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} allIngredients={props.allIngredients} recipe={props.recipe} nutrition={props.nutrition} postGroceries={props.postGroceries} authUser={props.user}/> : <div>Null</div>}
@@ -402,7 +402,7 @@ function RenderComments(props){
         
         : 
         
-        <div> Nutrition data not found. </div>} 
+        <div> Nutrition data not found. </div>}
     </div>
     )
     
@@ -441,7 +441,7 @@ function Ingredients(props) {
                 <div className='col' md={8}>
                     <p className="recipe-ingredient-text">
                         <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
-                            trigger="mouseenter" interactive position="bottom" html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{getIngredientFromId(ingredient.ingredientId)}</span></Tooltip>
+                            trigger="mouseenter" arrow="true" position="bottom-end" max-width={'1000px'} html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{getIngredientFromId(ingredient.ingredientId)}</span></Tooltip>
                     </p>
                 </div>
                 <div className='col' md={4}>
@@ -449,6 +449,7 @@ function Ingredients(props) {
                 </div>
             </div>
              )
+
          
     });
     

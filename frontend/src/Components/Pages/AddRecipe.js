@@ -204,7 +204,7 @@ function AddRecipe(props) {
                 
             }
 
-            console.log("counter: " + totalServingContainer);
+ 
             servingContainer.value = totalServingContainer;
             servingQuantity.value = totalServingQuantity;
             servingQuantityUnits.value = totalServingQuantityUnits;
