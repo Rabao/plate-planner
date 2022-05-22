@@ -153,43 +153,6 @@ const DailyValueCalculator = (props) => {
                     </Col>
                 </Row> */}
                 <Row className="form-group">
-                    <Col md={3}>
-                        <label htmlFor="servingContainer">Serving Size per Container</label> 
-                        <Control.text model='.servingContainer' 
-                            id="servingContainer" 
-                            name="servingContainer" 
-                            className="form-control"/>
-                    </Col>
-                    <Col md={2}>
-                        <label htmlFor="servingQuantity">Serving Size Qty</label> 
-                        <Control.text model='.servingQuantity' 
-                            id="servingQuantity" 
-                            name="servingQuantity" 
-                            className="form-control"/>
-                    </Col>
-                    <Col md={3}>
-                        <label htmlFor="servingQuantityUnits">Serving Size Quantity Units</label> 
-                        <Control.text model='.servingQuantityUnits' 
-                            id="servingQuantityUnits" 
-                            name="servingQuantityUnits" 
-                            className="form-control"/>
-                    </Col>
-                    <Col md={2}>
-                        <label htmlFor="servingSizeWeight">Serving Size Wt</label> 
-                        <Control.text model='.servingSizeWeight' 
-                            id="servingSizeWeight" 
-                            name="servingSizeWeight" 
-                            className="form-control"/>
-                    </Col>
-                    <Col md={2}>
-                        <label htmlFor="servingSizeUnit">Serving Size Unit</label> 
-                        <Control.text model='.servingSizeUnit' 
-                            id="servingSizeUnit" 
-                            name="servingSizeUnit" 
-                            className="form-control"/>
-                    </Col>
-                </Row>
-                <Row className="form-group">
                     <Col md={6}>
                         <label htmlFor="calories">Calories</label> 
                             <Control.text model='.calories' 

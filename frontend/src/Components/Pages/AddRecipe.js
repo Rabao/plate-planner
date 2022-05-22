@@ -392,8 +392,45 @@ function AddRecipe(props) {
             super(props);
             this.state = {
                 values: [],
-                // index: [],
-                found: false
+                totalValue: [{
+                                totalCalories: 0,
+                                totalCaloriesFat: 0,
+                                totalTotalFat: 0,
+                                totalSaturatedFat: 0,
+                                totalTransFat: 0, 
+                                totalPolyFat: 0,
+                                totalMonoFat: 0,
+                                totalCholesterol: 0,
+                                totalSodium: 0,
+                                totalTotalCarbs: 0,
+                                totalDietaryFiber: 0,
+                                totalSugar: 0,
+                                totalSugarAlcohol: 0,
+                                totalAddedSugar: 0,
+                                totalProtein: 0,
+                                totalVitA: 0,
+                                totalVitB6: 0,
+                                totalVitB12: 0,
+                                totalVitC: 0,
+                                totalVitD: 0,
+                                totalVitE: 0,
+                                totalVitK: 0,
+                                totalCalcium: 0,
+                                totalIron: 0,
+                                totalMagnesium: 0,
+                                totalThiamine: 0,
+                                totalBiotin: 0,
+                                totalPantoAcid: 0,
+                                totalPotassium: 0,
+                                totalPhosphorous: 0,
+                                totalIodine: 0,
+                                totalZinc: 0,
+                                totalSelenium: 0,
+                                totalCopper: 0,
+                                totalManganese: 0,
+                                totalChromium: 0,
+                                totalMolybdenum: 0,
+                                totalChloride: 0}],
             };
 
           }
@@ -470,55 +507,50 @@ function AddRecipe(props) {
           
      handleInputChange(x, e) {
 
-        let totalServingContainer = 0;
-        let totalServingQuantity= 0;
-        let totalServingQuantityUnits= 0;
-        let totalServingSizeWeight= 0;
-        let totalServingSizeUnit= 0;
-        let totalCalories= 0;
-        let totalCaloriesFat= 0;
-        let totalTotalFat= 0;
-        let totalSaturatedFat= 0;
-        let totalTransFat= 0;
-        let totalPolyFat= 0;
-        let totalMonoFat= 0;
-        let totalCholesterol= 0;
-        let totalSodium= 0;
-        let totalTotalCarbs= 0;
-        let totalDietaryFiber= 0;
-        let totalSugar= 0;
-        let totalSugarAlcohol= 0;
-        let totalAddedSugar= 0;
-        let totalProtein= 0;
-        let totalVitA= 0;
-        let totalVitB6= 0;
-        let totalVitB12= 0;
-        let totalVitC= 0;
-        let totalVitD= 0;
-        let totalVitE= 0;
-        let totalVitK= 0;
-        let totalCalcium= 0;
-        let totalIron= 0;
-        let totalMagnesium= 0;
-        let totalThiamine= 0;
-        let totalBiotin= 0;
-        let totalPantoAcid= 0;
-        let totalPotassium= 0;
-        let totalPhosphorous= 0;
-        let totalIodine= 0;
-        let totalZinc= 0;
-        let totalSelenium= 0;
-        let totalCopper= 0;
-        let totalManganese= 0;
-        let totalChromium= 0;
-        let totalMolybdenum= 0;
-        let totalChloride= 0;
+        // let totalServingContainer = 0;
+        // let totalServingQuantity= 0;
+        // let totalServingQuantityUnits= 0;
+        // let totalServingSizeWeight= 0;
+        // let totalServingSizeUnit= 0;
+        // let totalCalories= 0;
+        // let totalCaloriesFat= 0;
+        // let totalTotalFat= 0;
+        // let totalSaturatedFat= 0;
+        // let totalTransFat= 0;
+        // let totalPolyFat= 0;
+        // let totalMonoFat= 0;
+        // let totalCholesterol= 0;
+        // let totalSodium= 0;
+        // let totalTotalCarbs= 0;
+        // let totalDietaryFiber= 0;
+        // let totalSugar= 0;
+        // let totalSugarAlcohol= 0;
+        // let totalAddedSugar= 0;
+        // let totalProtein= 0;
+        // let totalVitA= 0;
+        // let totalVitB6= 0;
+        // let totalVitB12= 0;
+        // let totalVitC= 0;
+        // let totalVitD= 0;
+        // let totalVitE= 0;
+        // let totalVitK= 0;
+        // let totalCalcium= 0;
+        // let totalIron= 0;
+        // let totalMagnesium= 0;
+        // let totalThiamine= 0;
+        // let totalBiotin= 0;
+        // let totalPantoAcid= 0;
+        // let totalPotassium= 0;
+        // let totalPhosphorous= 0;
+        // let totalIodine= 0;
+        // let totalZinc= 0;
+        // let totalSelenium= 0;
+        // let totalCopper= 0;
+        // let totalManganese= 0;
+        // let totalChromium= 0;
+        // let totalMolybdenum= 0;
+        // let totalChloride= 0;
     
-        const servingContainer = document.getElementById('servingContainer');
-        const servingQuantity = document.getElementById('servingQuantity');
-        const servingQuantityUnits = document.getElementById('servingQuantityUnits');
-        const servingSizeWeight = document.getElementById('servingSizeWeight');
-        const servingSizeUnit = document.getElementById('servingSizeUnit');
         const calories = document.getElementById('calories');
         const caloriesFat = document.getElementById('caloriesFat');
         const totalFat = document.getElementById('totalFat');
@@ -565,104 +597,203 @@ function AddRecipe(props) {
         let values = [...this.state.values];
         values[x] = e.target.value;
         this.setState({values});
-  
+
+
         props.ingredients.map((ingredient, index) => {
 
          if(values[x] == ingredient.name){
+            
+            this.setState(prevState => ({ totalValue: [...prevState.totalValue, 
 
-            totalServingContainer+= parseInt(props.nutrition[index].servingSize); //SS by Container
-            totalServingQuantity+= parseInt(props.nutrition[index].servingSizeQty);
-            totalServingQuantityUnits+= parseInt(props.nutrition[index].servingSizeQtyUnit);
-            totalServingSizeWeight+= parseInt(props.nutrition[index].servingSizeWeight);
-            totalServingSizeUnit+= parseInt(props.nutrition[index].servingSizeUnit);
-            totalCalories+= parseInt(props.nutrition[index].calories);
-            totalCaloriesFat+= parseInt(props.nutrition[index].caloriesFat);
-            totalTotalFat+= parseInt(props.nutrition[index].totalFat);
-            totalSaturatedFat+= parseInt(props.nutrition[index].saturatedFat);
-            totalTransFat+= parseInt(props.nutrition[index].transFat); 
-            totalPolyFat+= parseInt(props.nutrition[index].polyFat);
-            totalMonoFat+= parseInt(props.nutrition[index].monoFat);
-            totalCholesterol+= parseInt(props.nutrition[index].cholesterol);
-            totalSodium+= parseInt(props.nutrition[index].sodium);
-            totalTotalCarbs+= parseInt(props.nutrition[index].totalCarbs);
-            totalDietaryFiber+= parseInt(props.nutrition[index].dietaryFiber);
-            totalSugar+= parseInt(props.nutrition[index].sugar);
-            totalSugarAlcohol+= parseInt(props.nutrition[index].sugarAlcohol);
-            totalAddedSugar+= parseInt(props.nutrition[index].addedSugar);
-            totalProtein+= parseInt(props.nutrition[index].protein);
-            totalVitA+= parseInt(props.nutrition[index].vitA);
-            totalVitB6+= parseInt(props.nutrition[index].vitB6);
-            totalVitB12+= parseInt(props.nutrition[index].vitB12);
-            totalVitC+= parseInt(props.nutrition[index].vitC);
-            totalVitD+= parseInt(props.ingredients[index].vitD);
-            totalVitE+= parseInt(props.nutrition[index].vitE);
-            totalVitK+= parseInt(props.nutrition[index].vitK);
-            totalCalcium+= parseInt(props.nutrition[index].calcium);
-            totalIron+= parseInt(props.nutrition[index].iron);
-            totalMagnesium+= parseInt(props.nutrition[index].magnesium);
-            totalThiamine+= parseInt(props.nutrition[index].thiamine);
-            totalBiotin+= parseInt(props.nutrition[index].biotin);
-            totalPantoAcid+= parseInt(props.nutrition[index].pantoAcid);
-            totalPotassium+= parseInt(props.nutrition[index].potassium);
-            totalPhosphorous+= parseInt(props.nutrition[index].phosphorous);
-            totalIodine+= parseInt(props.nutrition[index].iodine);
-            totalZinc+= parseInt(props.nutrition[index].zinc);
-            totalSelenium+= parseInt(props.nutrition[index].selenium);
-            totalCopper+= parseInt(props.nutrition[index].copper);
-            totalManganese+= parseInt(props.nutrition[index].manganese);
-            totalChromium+= parseInt(props.nutrition[index].chromium);
-            totalMolybdenum+= parseInt(props.nutrition[index].molybdenum);
-            totalChloride+= parseInt(props.nutrition[index].chloride);    
+
+            {
+            totalCalories: this.state.totalValue[x].totalCalories + parseInt(props.nutrition[index].calories),
+            totalCaloriesFat: this.state.totalValue[x].totalCaloriesFat + parseInt(props.nutrition[index].caloriesFat),
+            totalTotalFat: this.state.totalValue[x].totalTotalFat + parseInt(props.nutrition[index].totalFat),
+            totalSaturatedFat: this.state.totalValue[x].totalSaturatedFat + parseInt(props.nutrition[index].saturatedFat),
+            totalTransFat: this.state.totalValue[x].totalTransFat + parseInt(props.nutrition[index].transFat), 
+            totalPolyFat: this.state.totalValue[x].totalPolyFat + parseInt(props.nutrition[index].polyFat),
+            totalMonoFat: this.state.totalValue[x].totalMonoFat + parseInt(props.nutrition[index].monoFat),
+            totalCholesterol: this.state.totalValue[x].totalCholesterol + parseInt(props.nutrition[index].cholesterol),
+            totalSodium: this.state.totalValue[x].totalSodium + parseInt(props.nutrition[index].sodium),
+            totalTotalCarbs: this.state.totalValue[x].totalTotalCarbs + parseInt(props.nutrition[index].totalCarbs),
+            totalDietaryFiber: this.state.totalValue[x].totalDietaryFiber + parseInt(props.nutrition[index].dietaryFiber),
+            totalSugar: this.state.totalValue[x].totalSugar + parseInt(props.nutrition[index].sugar),
+            totalSugarAlcohol: this.state.totalValue[x].totalSugarAlcohol + parseInt(props.nutrition[index].sugarAlcohol),
+            totalAddedSugar: this.state.totalValue[x].totalAddedSugar + parseInt(props.nutrition[index].addedSugar),
+            totalProtein: this.state.totalValue[x].totalProtein + parseInt(props.nutrition[index].protein),
+            totalVitA: this.state.totalValue[x].totalVitA + parseInt(props.nutrition[index].vitA),
+            totalVitB6: this.state.totalValue[x].totalVitB6 + parseInt(props.nutrition[index].vitB6),
+            totalVitB12: this.state.totalValue[x].totalVitB12 + parseInt(props.nutrition[index].vitB12),
+            totalVitC: this.state.totalValue[x].totalVitC + parseInt(props.nutrition[index].vitC),
+            totalVitD: this.state.totalValue[x].totalVitD + parseInt(props.nutrition[index].vitD),
+            totalVitE: this.state.totalValue[x].totalVitE + parseInt(props.nutrition[index].vitE),
+            totalVitK: this.state.totalValue[x].totalVitK + parseInt(props.nutrition[index].vitK),
+            totalCalcium: this.state.totalValue[x].totalCalcium + parseInt(props.nutrition[index].calcium),
+            totalIron: this.state.totalValue[x].totalIron + parseInt(props.nutrition[index].iron),
+            totalMagnesium: this.state.totalValue[x].totalMagnesium + parseInt(props.nutrition[index].magnesium),
+            totalThiamine: this.state.totalValue[x].totalThiamine + parseInt(props.nutrition[index].thiamine),
+            totalBiotin: this.state.totalValue[x].totalBiotin + parseInt(props.nutrition[index].biotin),
+            totalPantoAcid: this.state.totalValue[x].totalPantoAcid + parseInt(props.nutrition[index].pantoAcid),
+            totalPotassium: this.state.totalValue[x].totalPotassium + parseInt(props.nutrition[index].potassium),
+            totalPhosphorous: this.state.totalValue[x].totalPhosphorous + parseInt(props.nutrition[index].phosphorous),
+            totalIodine: this.state.totalValue[x].totalIodine + parseInt(props.nutrition[index].iodine),
+            totalZinc: this.state.totalValue[x].totalZinc + parseInt(props.nutrition[index].zinc),
+            totalSelenium: this.state.totalValue[x].totalSelenium + parseInt(props.nutrition[index].selenium),
+            totalCopper: this.state.totalValue[x].totalCopper + parseInt(props.nutrition[index].copper),
+            totalManganese: this.state.totalValue[x].totalManganese + parseInt(props.nutrition[index].manganese),
+            totalChromium: this.state.totalValue[x].totalChromium + parseInt(props.nutrition[index].chromium),
+            totalMolybdenum: this.state.totalValue[x].totalMolybdenum + parseInt(props.nutrition[index].molybdenum),
+            totalChloride: this.state.totalValue[x].totalChloride + parseInt(props.nutrition[index].chloride)} ]
+      
+            })) 
+
+            console.log(this.state.totalValue)
+
         }
 
+        
+        // totalServingContainer+= parseInt(props.nutrition[index].servingSize); //SS by Container
+        // totalServingQuantity+= parseInt(props.nutrition[index].servingSizeQty);
+        // totalServingQuantityUnits+= parseInt(props.nutrition[index].servingSizeQtyUnit);
+        // totalServingSizeWeight+= parseInt(props.nutrition[index].servingSizeWeight);
+        // totalServingSizeUnit+= parseInt(props.nutrition[index].servingSizeUnit);
+        // totalCalories+= parseInt(props.nutrition[index].calories);
+        // totalCaloriesFat+= parseInt(props.nutrition[index].caloriesFat);
+        // totalTotalFat+= parseInt(props.nutrition[index].totalFat);
+        // totalSaturatedFat+= parseInt(props.nutrition[index].saturatedFat);
+        // totalTransFat+= parseInt(props.nutrition[index].transFat); 
+        // totalPolyFat+= parseInt(props.nutrition[index].polyFat);
+        // totalMonoFat+= parseInt(props.nutrition[index].monoFat);
+        // totalCholesterol+= parseInt(props.nutrition[index].cholesterol);
+        // totalSodium+= parseInt(props.nutrition[index].sodium);
+        // totalTotalCarbs+= parseInt(props.nutrition[index].totalCarbs);
+        // totalDietaryFiber+= parseInt(props.nutrition[index].dietaryFiber);
+        // totalSugar+= parseInt(props.nutrition[index].sugar);
+        // totalSugarAlcohol+= parseInt(props.nutrition[index].sugarAlcohol);
+        // totalAddedSugar+= parseInt(props.nutrition[index].addedSugar);
+        // totalProtein+= parseInt(props.nutrition[index].protein);
+        // totalVitA+= parseInt(props.nutrition[index].vitA);
+        // totalVitB6+= parseInt(props.nutrition[index].vitB6);
+        // totalVitB12+= parseInt(props.nutrition[index].vitB12);
+        // totalVitC+= parseInt(props.nutrition[index].vitC);
+        // totalVitD+= parseInt(props.ingredients[index].vitD);
+        // totalVitE+= parseInt(props.nutrition[index].vitE);
+        // totalVitK+= parseInt(props.nutrition[index].vitK);
+        // totalCalcium+= parseInt(props.nutrition[index].calcium);
+        // totalIron+= parseInt(props.nutrition[index].iron);
+        // totalMagnesium+= parseInt(props.nutrition[index].magnesium);
+        // totalThiamine+= parseInt(props.nutrition[index].thiamine);
+        // totalBiotin+= parseInt(props.nutrition[index].biotin);
+        // totalPantoAcid+= parseInt(props.nutrition[index].pantoAcid);
+        // totalPotassium+= parseInt(props.nutrition[index].potassium);
+        // totalPhosphorous+= parseInt(props.nutrition[index].phosphorous);
+        // totalIodine+= parseInt(props.nutrition[index].iodine);
+        // totalZinc+= parseInt(props.nutrition[index].zinc);
+        // totalSelenium+= parseInt(props.nutrition[index].selenium);
+        // totalCopper+= parseInt(props.nutrition[index].copper);
+        // totalManganese+= parseInt(props.nutrition[index].manganese);
+        // totalChromium+= parseInt(props.nutrition[index].chromium);
+        // totalMolybdenum+= parseInt(props.nutrition[index].molybdenum);
+        // totalChloride+= parseInt(props.nutrition[index].chloride);    
 
-        servingContainer.value = totalServingContainer;
-        servingQuantity.value = totalServingQuantity;
-        servingQuantityUnits.value = totalServingQuantityUnits;
-        servingSizeWeight.value = totalServingSizeWeight;
-        servingSizeUnit.value = totalServingSizeUnit;
-        calories.value =totalCalories;
-        caloriesFat.value = totalCaloriesFat;
-        totalFat.value = totalTotalFat;
-        saturatedFat.value = totalSaturatedFat;
-        transFat.value = totalTransFat;
-        polyFat.value = totalPolyFat;
-        monoFat.value = totalMonoFat;
-        cholesterol.value = totalCholesterol;
-        sodium.value = totalSodium;
+        
+        calories.value = this.state.totalValue[x].totalCalories;
+        caloriesFat.value = this.state.totalValue[x].totalCaloriesFat;
+        totalFat.value = this.state.totalValue[x].totalTotalFat;
+        saturatedFat.value = this.state.totalValue[x].totalSaturatedFat;
+        transFat.value = this.state.totalValue[x].totalTransFat;
+        polyFat.value = this.state.totalValue[x].totalPolyFat;
+        monoFat.value = this.state.totalValue[x].totalMonoFat;
+        cholesterol.value = this.state.totalValue[x].totalCholesterol;
+        sodium.value = this.state.totalValue[x].totalSodium;
 
-        totalCarbs.value = totalTotalCarbs;
-        dietaryFiber.value = totalDietaryFiber;
-        sugar.value = totalSugar;
-        sugarAlcohol.value = totalSugarAlcohol;
-        addedSugar.value = totalAddedSugar;
-        protein.value = totalProtein;
-        vitA.value = totalVitA;
-        vitB6.value = totalVitB6;
-        vitB12.value = totalVitB12;
-        vitC.value = totalVitC;
-        vitD.value = totalVitD;
-        vitE.value = totalVitE;
-        vitK.value = totalVitK;
+        totalCarbs.value = this.state.totalValue[x].totalTotalCarbs;
+        dietaryFiber.value = this.state.totalValue[x].totalDietaryFiber;
+        sugar.value = this.state.totalValue[x].totalSugar;
+        sugarAlcohol.value = this.state.totalValue[x].totalSugarAlcohol;
+        addedSugar.value = this.state.totalValue[x].totalAddedSugar;
+        protein.value = this.state.totalValue[x].totalProtein;
+        vitA.value = this.state.totalValue[x].totalVitA;
+        vitB6.value = this.state.totalValue[x].totalVitB6;
+        vitB12.value = this.state.totalValue[x].totalVitB12;
+        vitC.value = this.state.totalValue[x].totalVitC;
+        vitD.value = this.state.totalValue[x].totalVitD;
+        vitE.value = this.state.totalValue[x].totalVitE;
+        vitK.value = this.state.totalValue[x].totalVitK;
 
-        calcium.value = totalCalcium;
-        iron.value = totalIron;
-        magnesium.value = totalMagnesium;
-        thiamine.value = totalThiamine;
+        calcium.value = this.state.totalValue[x].totalCalcium;
+        iron.value = this.state.totalValue[x].totalIron;
+        magnesium.value = this.state.totalValue[x].totalMagnesium;
+        thiamine.value = this.state.totalValue[x].totalThiamine;
 
-        biotin.value = totalBiotin;
-        pantoAcid.value = totalPantoAcid;
-        potassium.value = totalPotassium;
-        phosphorous.value = totalPhosphorous;
-        iodine.value = totalIodine;
-        zinc.value = totalZinc;
-        selenium.value = totalSelenium;
-        copper.value = totalCopper;
-        manganese.value = totalManganese;
+        biotin.value = this.state.totalValue[x].totalBiotin;
+        pantoAcid.value = this.state.totalValue[x].totalPantoAcid;
+        potassium.value = this.state.totalValue[x].totalPotassium;
+        phosphorous.value = this.state.totalValue[x].totalPhosphorous;
+        iodine.value = this.state.totalValue[x].totalIodine;
+        zinc.value = this.state.totalValue[x].totalZinc;
+        selenium.value = this.state.totalValue[x].totalSelenium;
+        copper.value = this.state.totalValue[x].totalCopper;
+        manganese.value = this.state.totalValue[x].totalManganese;
 
-        chromium.value = totalChromium;
-        molybdenum.value = totalMolybdenum;
-        chloride.value = totalChloride;
+        chromium.value = this.state.totalValue[x].totalChromium;
+        molybdenum.value = this.state.totalValue[x].totalMolybdenum;
+        chloride.value = this.state.totalValue[x].totalChloride;
+
+        // servingContainer.value = totalServingContainer;
+        // servingQuantity.value = totalServingQuantity;
+        // servingQuantityUnits.value = totalServingQuantityUnits;
+        // servingSizeWeight.value = totalServingSizeWeight;
+        // servingSizeUnit.value = totalServingSizeUnit;
+        // calories.value =totalCalories;
+        // caloriesFat.value = totalCaloriesFat;
+        // totalFat.value = totalTotalFat;
+        // saturatedFat.value = totalSaturatedFat;
+        // transFat.value = totalTransFat;
+        // polyFat.value = totalPolyFat;
+        // monoFat.value = totalMonoFat;
+        // cholesterol.value = totalCholesterol;
+        // sodium.value = totalSodium;
+
+        // totalCarbs.value = totalTotalCarbs;
+        // dietaryFiber.value = totalDietaryFiber;
+        // sugar.value = totalSugar;
+        // sugarAlcohol.value = totalSugarAlcohol;
+        // addedSugar.value = totalAddedSugar;
+        // protein.value = totalProtein;
+        // vitA.value = totalVitA;
+        // vitB6.value = totalVitB6;
+        // vitB12.value = totalVitB12;
+        // vitC.value = totalVitC;
+        // vitD.value = totalVitD;
+        // vitE.value = totalVitE;
+        // vitK.value = totalVitK;
+
+        // calcium.value = totalCalcium;
+        // iron.value = totalIron;
+        // magnesium.value = totalMagnesium;
+        // thiamine.value = totalThiamine;
+
+        // biotin.value = totalBiotin;
+        // pantoAcid.value = totalPantoAcid;
+        // potassium.value = totalPotassium;
+        // phosphorous.value = totalPhosphorous;
+        // iodine.value = totalIodine;
+        // zinc.value = totalZinc;
+        // selenium.value = totalSelenium;
+        // copper.value = totalCopper;
+        // manganese.value = totalManganese;
+
+        // chromium.value = totalChromium;
+        // molybdenum.value = totalMolybdenum;
+        // chloride.value = totalChloride;
+
+
+        
+
+
+
     });
     }   
     }

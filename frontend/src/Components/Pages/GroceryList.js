@@ -325,7 +325,7 @@ class AddItem extends Component{
             vitB6.value = currentNutrition.vitB6;
             vitB12.value = currentNutrition.vitB12;
             vitC.value = currentNutrition.vitC;
-            vitD.value = this.props.ingredients[i].vitD;
+            vitD.value = currentNutrition.vitD;
             vitE.value = currentNutrition.vitE;
             vitK.value = currentNutrition.vitK;
 
