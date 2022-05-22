@@ -390,7 +390,11 @@ function AddRecipe(props) {
     class RenderIngredientsInput extends Component {
         constructor(props) {
             super(props);
-            this.state = {values: []};
+            this.state = {
+                values: [],
+                // index: [],
+                found: false
+            };
 
           }
           
@@ -432,7 +436,7 @@ function AddRecipe(props) {
                                 <option>Meter</option>
                                 <option>Inch</option>
                             </Control.select>
-                            <Control.text model={".ingredient"+i} name={"ingredient"+i}  id="ingredient" className="recipe-ingredients ingredients-controls" onChange={this.handleInputChange.bind(this,i)}/>
+                            <Control.text model={".ingredient"+i} value={el||''} name={"ingredient"+i} className="recipe-ingredients ingredients-controls" onChange={this.handleInputChange.bind(this,i)}/>
                         <button class="submit-button-small" onClick={this.removeClick.bind(this)}>Remove</button></div>      
              )
           }
@@ -464,7 +468,7 @@ function AddRecipe(props) {
             );
         }
           
-     handleInputChange(e) {
+     handleInputChange(x, e) {
 
         let totalServingContainer = 0;
         let totalServingQuantity= 0;
@@ -554,65 +558,61 @@ function AddRecipe(props) {
         const molybdenum = document.getElementById('molybdenum');
         const chloride = document.getElementById('chloride');
 
-        let product = document.getElementById('ingredient');
+        const product = document.getElementsByClassName('recipe-ingredients');
         
-     
-        
+   
 
-        found = false;
-        let i = -1;
-        do{
-            i++;
-            if(product.value == props.ingredients[i].name)
-                found = true;
-        
-        }while((!found && i< props.ingredients.length-1) && e.target.select());
-        if(found){
-            
-            totalServingContainer+= parseInt(props.nutrition[i].servingSize); //SS by Container
-            totalServingQuantity+= parseInt(props.nutrition[i].servingSizeQty);
-            totalServingQuantityUnits+= parseInt(props.nutrition[i].servingSizeQtyUnit);
-            totalServingSizeWeight+= parseInt(props.nutrition[i].servingSizeWeight);
-            totalServingSizeUnit+= parseInt(props.nutrition[i].servingSizeUnit);
-            totalCalories+= parseInt(props.nutrition[i].calories);
-            totalCaloriesFat+= parseInt(props.nutrition[i].caloriesFat);
-            totalTotalFat+= parseInt(props.nutrition[i].totalFat);
-            totalSaturatedFat+= parseInt(props.nutrition[i].saturatedFat);
-            totalTransFat+= parseInt(props.nutrition[i].transFat); 
-            totalPolyFat+= parseInt(props.nutrition[i].polyFat);
-            totalMonoFat+= parseInt(props.nutrition[i].monoFat);
-            totalCholesterol+= parseInt(props.nutrition[i].cholesterol);
-            totalSodium+= parseInt(props.nutrition[i].sodium);
-            totalTotalCarbs+= parseInt(props.nutrition[i].totalCarbs);
-            totalDietaryFiber+= parseInt(props.nutrition[i].dietaryFiber);
-            totalSugar+= parseInt(props.nutrition[i].sugar);
-            totalSugarAlcohol+= parseInt(props.nutrition[i].sugarAlcohol);
-            totalAddedSugar+= parseInt(props.nutrition[i].addedSugar);
-            totalProtein+= parseInt(props.nutrition[i].protein);
-            totalVitA+= parseInt(props.nutrition[i].vitA);
-            totalVitB6+= parseInt(props.nutrition[i].vitB6);
-            totalVitB12+= parseInt(props.nutrition[i].vitB12);
-            totalVitC+= parseInt(props.nutrition[i].vitC);
-            totalVitD+= parseInt(props.ingredients[i].vitD);
-            totalVitE+= parseInt(props.nutrition[i].vitE);
-            totalVitK+= parseInt(props.nutrition[i].vitK);
-            totalCalcium+= parseInt(props.nutrition[i].calcium);
-            totalIron+= parseInt(props.nutrition[i].iron);
-            totalMagnesium+= parseInt(props.nutrition[i].magnesium);
-            totalThiamine+= parseInt(props.nutrition[i].thiamine);
-            totalBiotin+= parseInt(props.nutrition[i].biotin);
-            totalPantoAcid+= parseInt(props.nutrition[i].pantoAcid);
-            totalPotassium+= parseInt(props.nutrition[i].potassium);
-            totalPhosphorous+= parseInt(props.nutrition[i].phosphorous);
-            totalIodine+= parseInt(props.nutrition[i].iodine);
-            totalZinc+= parseInt(props.nutrition[i].zinc);
-            totalSelenium+= parseInt(props.nutrition[i].selenium);
-            totalCopper+= parseInt(props.nutrition[i].copper);
-            totalManganese+= parseInt(props.nutrition[i].manganese);
-            totalChromium+= parseInt(props.nutrition[i].chromium);
-            totalMolybdenum+= parseInt(props.nutrition[i].molybdenum);
-            totalChloride+= parseInt(props.nutrition[i].chloride);
-            
+        let values = [...this.state.values];
+        values[x] = e.target.value;
+        this.setState({values});
+  
+        props.ingredients.map((ingredient, index) => {
+
+         if(values[x] == ingredient.name){
+
+            totalServingContainer+= parseInt(props.nutrition[index].servingSize); //SS by Container
+            totalServingQuantity+= parseInt(props.nutrition[index].servingSizeQty);
+            totalServingQuantityUnits+= parseInt(props.nutrition[index].servingSizeQtyUnit);
+            totalServingSizeWeight+= parseInt(props.nutrition[index].servingSizeWeight);
+            totalServingSizeUnit+= parseInt(props.nutrition[index].servingSizeUnit);
+            totalCalories+= parseInt(props.nutrition[index].calories);
+            totalCaloriesFat+= parseInt(props.nutrition[index].caloriesFat);
+            totalTotalFat+= parseInt(props.nutrition[index].totalFat);
+            totalSaturatedFat+= parseInt(props.nutrition[index].saturatedFat);
+            totalTransFat+= parseInt(props.nutrition[index].transFat); 
+            totalPolyFat+= parseInt(props.nutrition[index].polyFat);
+            totalMonoFat+= parseInt(props.nutrition[index].monoFat);
+            totalCholesterol+= parseInt(props.nutrition[index].cholesterol);
+            totalSodium+= parseInt(props.nutrition[index].sodium);
+            totalTotalCarbs+= parseInt(props.nutrition[index].totalCarbs);
+            totalDietaryFiber+= parseInt(props.nutrition[index].dietaryFiber);
+            totalSugar+= parseInt(props.nutrition[index].sugar);
+            totalSugarAlcohol+= parseInt(props.nutrition[index].sugarAlcohol);
+            totalAddedSugar+= parseInt(props.nutrition[index].addedSugar);
+            totalProtein+= parseInt(props.nutrition[index].protein);
+            totalVitA+= parseInt(props.nutrition[index].vitA);
+            totalVitB6+= parseInt(props.nutrition[index].vitB6);
+            totalVitB12+= parseInt(props.nutrition[index].vitB12);
+            totalVitC+= parseInt(props.nutrition[index].vitC);
+            totalVitD+= parseInt(props.ingredients[index].vitD);
+            totalVitE+= parseInt(props.nutrition[index].vitE);
+            totalVitK+= parseInt(props.nutrition[index].vitK);
+            totalCalcium+= parseInt(props.nutrition[index].calcium);
+            totalIron+= parseInt(props.nutrition[index].iron);
+            totalMagnesium+= parseInt(props.nutrition[index].magnesium);
+            totalThiamine+= parseInt(props.nutrition[index].thiamine);
+            totalBiotin+= parseInt(props.nutrition[index].biotin);
+            totalPantoAcid+= parseInt(props.nutrition[index].pantoAcid);
+            totalPotassium+= parseInt(props.nutrition[index].potassium);
+            totalPhosphorous+= parseInt(props.nutrition[index].phosphorous);
+            totalIodine+= parseInt(props.nutrition[index].iodine);
+            totalZinc+= parseInt(props.nutrition[index].zinc);
+            totalSelenium+= parseInt(props.nutrition[index].selenium);
+            totalCopper+= parseInt(props.nutrition[index].copper);
+            totalManganese+= parseInt(props.nutrition[index].manganese);
+            totalChromium+= parseInt(props.nutrition[index].chromium);
+            totalMolybdenum+= parseInt(props.nutrition[index].molybdenum);
+            totalChloride+= parseInt(props.nutrition[index].chloride);    
         }
 
 
@@ -663,104 +663,9 @@ function AddRecipe(props) {
         chromium.value = totalChromium;
         molybdenum.value = totalMolybdenum;
         chloride.value = totalChloride;
-
-        
+    });
     }   
-
-
-    //     renderInterface(){
-    //         let ingredientInputArr = this.state.values.map((i)=> {
-    //             <div className="form-inline" key={i}>
-                            // <Control.text type="number" model={qtyMode} name={qtyHtmlIdent} className="qty ingredients-controls"/>
-                            // <Control.select model={unitMode} name={unitHtmlIdent} className="unit-measure ingredients-controls" >
-                            //     <option disabled>Volume</option>
-                            //     <option disabled></option>
-                            //     <option active>Teaspoon</option>
-                            //     <option>Tablespoon</option>
-                            //     <option>Fluid Ounce</option>
-                            //     <option>Gill</option>
-                            //     <option>Cup</option>
-                            //     <option>Pint</option>
-                            //     <option>Quart</option>
-                            //     <option>Gallon</option>
-                            //     <option>Milliliter</option>
-                            //     <option>Liter</option>
-                            //     <option>Whole</option>
-                            //     <option disabled></option>
-                            //     <option disabled>──────────</option>
-                            //     <option disabled>Mass/Weight</option>
-                            //     <option disabled></option>
-                            //     <option>Pound</option>
-                            //     <option>Ounce</option>
-                            //     <option>Milligram</option>
-                            //     <option>Gram</option>
-                            //     <option>Kilogram</option>
-                            //     <option disabled></option>
-                            //     <option disabled>──────────</option>
-                            //     <option disabled>Length</option>
-                            //     <option disabled></option>
-                            //     <option>Slice</option>
-                            //     <option>Half</option>
-                            //     <option>Millimeter</option>
-                            //     <option>Centimeter</option>
-                            //     <option>Meter</option>
-                            //     <option>Inch</option>
-                            // </Control.select>
-                            // <Control.text model={nameMode} name={nameHtmlIdent} id="ingredient" className="recipe-ingredients ingredients-controls" onBlur={() => {this.handleInputChange.bind(this, i)}}/>
-                            // <button class="submit-button-small" onClick={() => {this.removeIngredient()}}>Remove</button>
-    //                     </div> 
-    //                 })
-
-    //          return(ingredientInputArr)
-    //     }
-
-
-
-    //     addIngredient(){ 
-    //         this.setState(prevState => ({values: [...prevState.values, '']}));
-    //     }
-
-    //     removeIngredient(i) {
-    //         let values = [...this.state.values];
-    //         values.splice(i,1);
-    //         this.setState({values});
-    //         // numIngredients--;
-    //         // qtyHtmlIdent = "qty" + numIngredients;
-    //         // qtyMode = ".qty" + numIngredients;
-    //         // unitHtmlIdent = "unit" + numIngredients;
-    //         // unitMode = ".unit" + numIngredients;
-    //         // nameHtmlIdent = "name" + numIngredients;
-    //         // nameMode = ".name" + numIngredients;
-    //         // ingredientArr.pop(ingredientText);
-    //     }
-        
-    //     removeAll = () => {
-    //         let values = [];
-    //         this.setState({values});
-    //         // while(ingredientArr.length > 0){
-    //         //     ingredientArr.pop(ingredientText)
-    //         // }
-    //         // numSteps=0;
-    //         // qtyHtmlIdent = "";
-    //         // qtyMode = "";
-    //         // unitHtmlIdent = "";
-    //         // unitMode = "";
-    //         // nameHtmlIdent = "";
-    //         // nameMode = "";
-    //     }
-        
-    //     // let ingredientArr =[]
-    //     // let ingredientText = <div></div>
-        
-    //     render(){
-    //      return(
-    //             <div>
-    //                 <label htmlFor="steps">Ingredients</label> 
-    //                 {this.renderInterface()}
-    //                 <div className="submit-button-interface col"><button class="submit-buttons" onClick={() => {this.addIngredient()}}>Add Ingredient</button><button class="submit-buttons" onClick={() => {this.removeAll()}}>Remove All</button></div>     
-    //             </div>
-    //     )
-        }
+    }
    
 
     //-------------------------------------------------------------RENDER FORM COMPONENT
