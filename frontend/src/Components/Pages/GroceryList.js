@@ -81,7 +81,6 @@ class AddItem extends Component{
                 if(grocery.ingredient_name!=undefined){
                     return(
                 <li className="component-list-item" key={index}>
-                    {console.log("INDEX: " + index)}
                     <div className="col" md={11}>
                         <div className="row">
                                 <div className="col" md={10}>
