@@ -9,14 +9,14 @@ export const MealPlanRandomizer = () => {
     <LocalForm id="target-nutrition">
         <div className="row">                       
             <label htmlFor="name">Target Caloric Intake</label>
-            <Col md={2}> 
+            <Col md={3}> 
                 <Control.text type="number" model='.name' 
                 name="name" 
                 className="recipe-title"
                 id="name"/> 
             </Col>
             <label htmlFor="name">In How Many Meals?</label>
-            <Col md={2}> 
+            <Col md={3}> 
                 <Control.text type="number" model='.name' 
                 name="name" 
                 className="recipe-title"

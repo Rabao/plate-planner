@@ -2,6 +2,23 @@ import React from 'react';
 import {Breadcrumb} from 'react-bootstrap'
 import {Link, useNavigate} from 'react-router-dom'
 
+export function MealList(props){
+    const map = props.recipes.map((recipe) => {
+            console.log(recipe)
+            return(
+                <div className="row recipe-result" key={recipe.id}>
+                    <table>
+                        <td id="recipe-text">
+                            <tr id="recipe-title"><h6>{recipe.name}</h6></tr>
+                        </td>
+                        <td id="recipe-img-td"><img src={recipe.image}/></td>
+                    </table>
+                </div>
+                    )
+            })
+            return(map)
+        }
+
 function RecipesList(props) {
 
     const navigate = useNavigate();

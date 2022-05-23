@@ -197,7 +197,10 @@ class Main extends Component {
                             deleteCompletedGroceries={this.props.deleteCompletedGroceries}
                             fetchGrocery={this.props.fetchGrocery}
                             toggleFetchGrocery={this.props.toggleFetchGrocery}/>}/>
-                        <Route path='/mealplans' element={<MealPlans/>}/>
+                        <Route path='/mealplans' element={<MealPlans
+                            groceries={this.props.groceries.groceries
+                                .filter((grocery) => grocery.userId === parseInt(this.props.user.id,10))}
+                            recipes={this.props.recipe.recipe}/>}/>
                         <Route path='/dvcalc' element={<DailyValueCalculator ingredients={this.props.ingredients.ingredients}/>}/>
                         <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>                   
                         <Route path='' element={<Navigate to='/home' />} />
