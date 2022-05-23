@@ -148,7 +148,6 @@ class EditDeleteComment extends Component{
         };
         this.toggleModal = this.toggleModal.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-        // this.handleAddToList = this.handleAddToList.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
     }
 
@@ -442,10 +441,17 @@ function checkList(e) {
     }  
 }
 
+function toggleButtonColor(e){
+    const addedContent = <RiPlayListAddFill/>
+    e.target.innerHTML = '&#x2714 Item Added';
+    e.target.classList.remove('submit-button-small')
+    e.target.classList.add('submitted-button-small')
+}
+
 function Ingredients(props) { 
 
-    const handleAddToList = (name) => {
-        console.log(name);
+    const handleAddToList = (e, name) => {
+        toggleButtonColor(e)
         props.postGroceries(name, 1, props.authUser.id)
     }
     
@@ -454,41 +460,44 @@ function Ingredients(props) {
         return props.allIngredients.filter(ingredients => ingredients.id === parseInt(id,10))[0].name;
     }
 
-    const recipeIngredients = props.ingredients.map((ingredient, index) => {
-
-        let item = '';
-
-        if(ingredient.measurement<2){
-            item = " " + ingredient.unit + " ";
-        } else {
-            item = " " + ingredient.unit + "s ";
-        }
-
-        // console.log(props.nutrition);
-
-        return (  
-            <div id="recipe-ingredients" className='row' key={index}>
-                <div className='col' md={8}>
-                    <p className="recipe-ingredient-text">
-                        <div id="ingredient-measurement" className="" onClick={(e) => checkList(e)}><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
-                            trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{getIngredientFromId(ingredient.ingredientId)}</span></Tooltip>
-                    </p>
-                </div>
-                <div className='col' md={4}>
-                    <button type='submit' class="submit-button-small" onClick={() => handleAddToList(getIngredientFromId(ingredient.ingredientId))}><RiPlayListAddFill/> Add to Grocery List</button>
-                </div>
-            </div>
-             )
-
-         
-    });
+    // const recipeIngredients = 
+    
     
     return (    
       
           <div className='row'>
               <div className='col' md={7}>
                    <h5>Ingredients</h5>
-                   {recipeIngredients}
+                   {
+                       props.ingredients.map((ingredient, index) => {
+
+                        let item = '';
+                
+                        if(ingredient.measurement<2){
+                            item = " " + ingredient.unit + " ";
+                        } else {
+                            item = " " + ingredient.unit + "s ";
+                        }
+                
+                        // console.log(props.nutrition);
+                
+                        return (  
+                            <div id="recipe-ingredients" className='row' key={index}>
+                                <div className='col' md={8}>
+                                    <p className="recipe-ingredient-text">
+                                        <div id="ingredient-measurement" className="" onClick={(e) => checkList(e)}><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
+                                            trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{getIngredientFromId(ingredient.ingredientId)}</span></Tooltip>
+                                    </p>
+                                </div>
+                                <div className='col' md={4}>
+                                    <button type='submit' class="submit-button-small" onClick={(e) => handleAddToList(e, getIngredientFromId(ingredient.ingredientId))}><RiPlayListAddFill/> Add to Grocery List</button>
+                                </div>
+                            </div>
+                             )
+                
+                         
+                    })
+                   }
                    
               </div>
               <div className='col' id="recipe-pg-img-container" md={5}>
@@ -498,6 +507,7 @@ function Ingredients(props) {
           </div>
         );
 }
+
 
 
 

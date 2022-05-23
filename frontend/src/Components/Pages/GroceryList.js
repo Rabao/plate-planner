@@ -454,7 +454,7 @@ class AddItem extends Component{
                             model='.quantity' 
                             id="quantity" 
                             name="quantity" 
-                            defaultValue={0}
+                            defaultValue={1}
                             className="form-control"/>
                     </Col>
                 </Row>
