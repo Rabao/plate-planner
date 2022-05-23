@@ -21,10 +21,10 @@ export default class Recipes extends Component {
                 <div className='container'>
                     <Breadcrumb>
                         <Breadcrumb.Item>
-                            <Link to="/home">Home</Link>  
+                            <Link to="/recipes">Recipes</Link>  
                         </Breadcrumb.Item>
                         <Breadcrumb.Item active>
-                            Recipes
+                            {this.props.targetRecipe.name}
                         </Breadcrumb.Item>
                     </Breadcrumb>
                     <Recipe recipe={this.props.targetRecipe}
@@ -442,7 +442,6 @@ function checkList(e) {
 }
 
 function toggleButtonColor(e){
-    const addedContent = <RiPlayListAddFill/>
     e.target.innerHTML = '&#x2714 Item Added';
     e.target.classList.remove('submit-button-small')
     e.target.classList.add('submitted-button-small')
