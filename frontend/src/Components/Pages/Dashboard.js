@@ -116,7 +116,7 @@ class EditDeleteRecipe extends Component{
                         <button type="button" className="dashboard-interface-button" onClick={() => this.toggleModal('delete')}>&#10060; DELETE</button>
                 </div>
                 <Modal isOpen={this.state.activeModal === 'delete'} toggle={this.toggleModal}> 
-                        <ModalHeader toggle={this.toggleModal}>Delete Recipe?</ModalHeader>
+                        <ModalHeader style={{borderBottom:0}} toggle={this.toggleModal}>Delete Recipe?</ModalHeader>
                         <ModalBody>
                             <LocalForm onSubmit={() => this.handleDelete(recipe.id)}>
                                 {recipe.name}<br></br>

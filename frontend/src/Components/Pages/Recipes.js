@@ -50,8 +50,7 @@ const Recipe = (props) => {
 
     const recipeId = props.recipe.id;
     const userId = props.user.id;
-    const authorAvatar = props.users.allUsers.filter((user) => user.id === props.recipe.userId)[0].avatars;
-    // const authorObj = props.users.allUsers.filter((user) => user.id === props.recipe.userId);
+    const authorAvatar = props.users.allUsers.filter((user) => user.id === props.recipe.userId)[0].avatar;
     function handleSubmit(values) {
         props.postComment( recipeId, userId, values.rating, values.userComment);
         window.location.reload(false);
@@ -78,7 +77,7 @@ const Recipe = (props) => {
     } else { 
     return(
         <div>
-            {/* {console.log("GETFROMID: " + getAuthorFromId(props.recipe.userId))} */}
+            {console.log("AVATAR: "+JSON.stringify(props.users.allUsers.filter((user) => user.id === 1)))}
             <div className="row">
                 <div className="recipe-info-name" md={9}>
                 {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>Null</h3>}
@@ -88,7 +87,7 @@ const Recipe = (props) => {
                 </div>
                 
                 {getAuthorFromId(props.recipe.userId) ? 
-
+                
                 <div className="author-info-avatar" md={1}>
                         <div className="avatar">
                             { authorAvatar ? <img src={authorAvatar}/> : <img src="/avatars/noavatar.png"/>}

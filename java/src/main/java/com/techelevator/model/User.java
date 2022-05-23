@@ -15,14 +15,16 @@ public class User {
    @JsonIgnore
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
+   private String avatar;
 
    public User() { }
 
-   public User(Long id, String username, String password, String authorities) {
+   public User(Long id, String username, String password, String authorities,  String avatar) {
       this.id = id;
       this.username = username;
       this.password = password;
       this.activated = true;
+      this.avatar = avatar;
    }
 
    public Long getId() {
@@ -98,5 +100,13 @@ public class User {
               ", activated=" + activated +
               ", authorities=" + authorities +
               '}';
+   }
+
+   public String getAvatar() {
+      return avatar;
+   }
+
+   public void setAvatar(String avatar) {
+      this.avatar = avatar;
    }
 }

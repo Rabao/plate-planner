@@ -7,6 +7,7 @@ import axios from 'axios';
 import DailyValueCalculator from '../SubComponents/DailyValueCalculator';
 import DailyValue from '../SubComponents/DailyValueDisplay';
 import AutoComplete from '../SubComponents/AutoComplete';
+import FileUploader from '../SubComponents/FileUploader';
 
 function AddRecipe(props) {
     const navigate = useNavigate();
@@ -19,14 +20,6 @@ function AddRecipe(props) {
     let stepsMode = ".steps" + numSteps;
 
     let ingredientType = '';
-
-    // let numIngredients = 0;
-    // let qtyHtmlIdent = "qty" + numIngredients;
-    // let qtyMode = ".qty" + numIngredients;
-    // let unitHtmlIdent = "unit" + numIngredients;
-    // let unitMode = ".unit" + numIngredients;
-    // let nameHtmlIdent = "name" + numIngredients;
-    // let nameMode = ".name" + numIngredients;
 
     const servingContainer = document.getElementById('servingContainer');
     const servingQuantity = document.getElementById('servingQuantity');
@@ -73,6 +66,7 @@ function AddRecipe(props) {
     const chloride = document.getElementById('chloride');
 
     const [selectedFile, setSelectedFile] = useState();
+    const [activeCollapse, setActiveCollapse] = useState();
     const [toggle, setToggle] = useState(false);
 
     const dvCalc = document.getElementsByClassName('toggle-dvcalc')[0];
@@ -84,23 +78,10 @@ function AddRecipe(props) {
     }
 
     function handleChange(event) {
-        setSelectedFile(document.getElementById('img-input').files[0]); 
+        
+        setSelectedFile(document.getElementById('img-input').files[0]);
     }
-
-    function handleToggle() {
-
-        if(dvCalc.classList.contains('close')){
-            dvCalc.classList.remove('close');
-            dvCalc.classList.add('open');
-        } else {
-            dvCalc.classList.remove('open');
-            dvCalc.classList.add('close');
-        }
-
-        setToggle({ toggle: !toggle })
-
-    }
-
+   
     //-------------------------------------------------------------------RECIPE ID GENERATOR
     //-------------------------------------------------------------------RECIPE ID GENERATOR
     //-------------------------------------------------------------------RECIPE ID GENERATOR
@@ -589,20 +570,21 @@ function AddRecipe(props) {
                                         <RenderIngredientsInput/>
                                         {renderStepsInput()}
                                         {console.log("ingredients " + props.ingredients[0].name)}
-                                        <div className="dvcalc" onClick={(e) => {handleToggle(e)}}><span>Add Nutritional Value Details</span></div><div 
-                                        className="toggle-dvcalc close"><DailyValueCalculator 
+                                        <div><DailyValueCalculator 
                                         ingredients={props.ingredients} nutrition={props.nutrition}
                                         found={found}/>
                                        </div>
                                     </div>
                                     </Col>
                                     <Col md={6}>
-                                    <div className="image-dropzone" onDrop={(file) => {onDrop(file)}}>
+                                    {/* <div className="image-dropzone">
+                                        <span></span>
                                         <input type="file" id="img-input" 
                                         accept=".jpg, .jpeg, .png, .bmp"
                                         onChange={(e) => {handleChange(e)}}/>
                                         <div id="preview-image-container"></div>
-                                    </div>
+                                    </div> */}
+                                    <FileUploader/>
                                     <div className="container">
                                         <DailyValue/>
                                         </div> 
