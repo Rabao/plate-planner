@@ -64,18 +64,18 @@ function AddRecipe(props) {
     const chromium = document.getElementById('chromium');
     const molybdenum = document.getElementById('molybdenum');
     const chloride = document.getElementById('chloride');
+    
+    let currentNutrition = [];
 
     const [selectedFile, setSelectedFile] = useState();
-    const [activeCollapse, setActiveCollapse] = useState();
-    const [toggle, setToggle] = useState(false);
 
     const dvCalc = document.getElementsByClassName('toggle-dvcalc')[0];
 
-    function onDrop(file){
-        if (file.length > 0) {
-            setSelectedFile(file);
-          }
-    }
+    // function onDrop(file){
+    //     if (file.length > 0) {
+    //         setSelectedFile(file);
+    //       }
+    // }
 
     function handleChange(event) {
         
@@ -192,6 +192,8 @@ function AddRecipe(props) {
             stepsHtmlIdent = "steps" + numSteps;
             stepsMode = ".steps" + numSteps;
             stepArr.pop(stepText);
+
+
         }
         
         const removeAll = () => {
@@ -319,7 +321,7 @@ function AddRecipe(props) {
                                 <option>Inch</option>
                             </Control.select>
                             <Control.text model={".ingredient"+i} value={el||''} name={"ingredient"+i} className="recipe-ingredients ingredients-controls" onChange={this.handleInputChange.bind(this,i)} />
-                        <button class="submit-button-small" onClick={this.removeClick.bind(this)}>Remove</button></div>      
+                        <button class="submit-button-small" onClick={this.removeClick.bind(this,i)}>Remove</button></div>      
              )
           }
           
@@ -349,6 +351,12 @@ function AddRecipe(props) {
    
             );
         }
+
+    findNutrition(id){
+        // return this.props.nutrition.filter()
+        currentNutrition = props.nutrition.filter(
+            (nutrient) => nutrient.id === parseInt(id,10))[0]
+    }
           
      handleInputChange(x, event) {
 
@@ -368,61 +376,62 @@ function AddRecipe(props) {
             console.log(props.nutrition[index].servingContainer)
             const qty = document.getElementsByClassName('qty');
 
+            this.findNutrition(ingredient.id);
+
             console.log("QTY: " + qty[x].value)
 
-                this.setState(prevState => ({ totalValue: [...prevState.totalValue, 
-                    {
+                // this.setState(prevState => ({ totalValue: [...prevState.totalValue, 
+                //     {
                             
-                        totalServingContainer: props.nutrition[index].servingContainer,
-                        totalServingQuantity: this.state.totalValue[x].totalServingQuantity + (qty.value * parseFloat(props.nutrition[index].servingQuantity)),
-                        totalServingQuantityUnits: props.nutrition[index].servingQuantityUnits,
-                        totalServingSizeWeight: this.state.totalValue[x].totalServingSizeWeight + (qty.value * parseInt(props.nutrition[index].servingSizeWeight)),
-                        totalServingSizeUnit: props.nutrition[index].servingSizeUnit,
-                        totalCalories: this.state.totalValue[x].totalCalories + (qty.value * parseFloat(props.nutrition[index].calories)),
-                        totalCaloriesFat: this.state.totalValue[x].totalCaloriesFat + (qty.value * parseFloat(props.nutrition[index].caloriesFat)),
-                        totalTotalFat: this.state.totalValue[x].totalTotalFat + (qty.value * parseFloat(props.nutrition[index].totalFat)),
-                        totalSaturatedFat: this.state.totalValue[x].totalSaturatedFat + (qty.value * parseFloat(props.nutrition[index].saturatedFat)),
-                        totalTransFat: this.state.totalValue[x].totalTransFat + (qty.value * parseFloat(props.nutrition[index].transFat)), 
-                        totalPolyFat: this.state.totalValue[x].totalPolyFat + (qty.value * parseFloat(props.nutrition[index].polyFat)),
-                        totalMonoFat: this.state.totalValue[x].totalMonoFat + (qty.value * parseFloat(props.nutrition[index].monoFat)),
-                        totalCholesterol: this.state.totalValue[x].totalCholesterol + (qty.value * parseFloat(props.nutrition[index].cholesterol)),
-                        totalSodium: this.state.totalValue[x].totalSodium + (qty.value * parseFloat(props.nutrition[index].sodium)),
-                        totalTotalCarbs: this.state.totalValue[x].totalTotalCarbs + (qty.value * parseFloat(props.nutrition[index].totalCarbs)),
-                        totalDietaryFiber: this.state.totalValue[x].totalDietaryFiber + (qty.value * parseFloat(props.nutrition[index].dietaryFiber)),
-                        totalSugar: this.state.totalValue[x].totalSugar + (qty.value * parseFloat(props.nutrition[index].sugar)),
-                        totalSugarAlcohol: this.state.totalValue[x].totalSugarAlcohol + (qty.value * parseFloat(props.nutrition[index].sugarAlcohol)),
-                        totalAddedSugar: this.state.totalValue[x].totalAddedSugar + (qty.value * parseFloat(props.nutrition[index].addedSugar)),
-                        totalProtein: this.state.totalValue[x].totalProtein + (qty.value * parseFloat(props.nutrition[index].protein)),
-                        totalVitA: this.state.totalValue[x].totalVitA + (qty.value * parseInt(props.nutrition[index].vitA)),
-                        totalVitB6: this.state.totalValue[x].totalVitB6 + (qty.value * parseInt(props.nutrition[index].vitB6)),
-                        totalVitB12: this.state.totalValue[x].totalVitB12 + (qty.value * parseInt(props.nutrition[index].vitB12)),
-                        totalVitC: this.state.totalValue[x].totalVitC + (qty.value * parseInt(props.nutrition[index].vitC)),
-                        totalVitD: this.state.totalValue[x].totalVitD + (qty.value * parseInt(props.nutrition[index].vitD)),
-                        totalVitE: this.state.totalValue[x].totalVitE + (qty.value * parseInt(props.nutrition[index].vitE)),
-                        totalVitK: this.state.totalValue[x].totalVitK + (qty.value * parseInt(props.nutrition[index].vitK)),
-                        totalCalcium: this.state.totalValue[x].totalCalcium + (qty.value * parseInt(props.nutrition[index].calcium)),
-                        totalIron: this.state.totalValue[x].totalIron + (qty.value * parseInt(props.nutrition[index].iron)),
-                        totalMagnesium: this.state.totalValue[x].totalMagnesium + (qty.value * parseInt(props.nutrition[index].magnesium)),
-                        totalThiamine: this.state.totalValue[x].totalThiamine + (qty.value * parseInt(props.nutrition[index].thiamine)),
-                        totalBiotin: this.state.totalValue[x].totalBiotin + (qty.value * parseInt(props.nutrition[index].biotin)),
-                        totalPantoAcid: this.state.totalValue[x].totalPantoAcid + (qty.value * parseInt(props.nutrition[index].pantoAcid)),
-                        totalPotassium: this.state.totalValue[x].totalPotassium + (qty.value * parseInt(props.nutrition[index].potassium)),
-                        totalPhosphorous: this.state.totalValue[x].totalPhosphorous + (qty.value * parseInt(props.nutrition[index].phosphorous)),
-                        totalIodine: this.state.totalValue[x].totalIodine + (qty.value * parseInt(props.nutrition[index].iodine)),
-                        totalZinc: this.state.totalValue[x].totalZinc + (qty.value * parseInt(props.nutrition[index].zinc)),
-                        totalSelenium: this.state.totalValue[x].totalSelenium + (qty.value * parseInt(props.nutrition[index].selenium)),
-                        totalCopper: this.state.totalValue[x].totalCopper + (qty.value * parseInt(props.nutrition[index].copper)),
-                        totalManganese: this.state.totalValue[x].totalManganese + (qty.value * parseInt(props.nutrition[index].manganese)),
-                        totalChromium: this.state.totalValue[x].totalChromium + (qty.value * parseInt(props.nutrition[index].chromium)),
-                        totalMolybdenum: this.state.totalValue[x].totalMolybdenum + (qty.value * parseInt(props.nutrition[index].molybdenum)),
-                        totalChloride: this.state.totalValue[x].totalChloride + (qty.value * parseInt(props.nutrition[index].chloride))   }]
+                //         totalServingContainer: props.nutrition[index].servingContainer,
+                //         totalServingQuantity: this.state.totalValue[x].totalServingQuantity + (qty.value * totalServingQuantity),
+                //         totalServingQuantityUnits: props.nutrition[index].servingQuantityUnits,
+                //         totalServingSizeWeight: this.state.totalValue[x].totalServingSizeWeight + (qty.value * totalServingSizeWeight),
+                //         totalServingSizeUnit: props.nutrition[index].servingSizeUnit,
+                //         totalCalories: this.state.totalValue[x].totalCalories + (qty.value * totalCalories),
+                //         totalCaloriesFat: this.state.totalValue[x].totalCaloriesFat + (qty.value * parseFloat(props.nutrition[index].caloriesFat)),
+                //         totalTotalFat: this.state.totalValue[x].totalTotalFat + (qty.value * parseFloat(props.nutrition[index].totalFat)),
+                //         totalSaturatedFat: this.state.totalValue[x].totalSaturatedFat + (qty.value * parseFloat(props.nutrition[index].saturatedFat)),
+                //         totalTransFat: this.state.totalValue[x].totalTransFat + (qty.value * parseFloat(props.nutrition[index].transFat)), 
+                //         totalPolyFat: this.state.totalValue[x].totalPolyFat + (qty.value * parseFloat(props.nutrition[index].polyFat)),
+                //         totalMonoFat: this.state.totalValue[x].totalMonoFat + (qty.value * parseFloat(props.nutrition[index].monoFat)),
+                //         totalCholesterol: this.state.totalValue[x].totalCholesterol + (qty.value * parseFloat(props.nutrition[index].cholesterol)),
+                //         totalSodium: this.state.totalValue[x].totalSodium + (qty.value * parseFloat(props.nutrition[index].sodium)),
+                //         totalTotalCarbs: this.state.totalValue[x].totalTotalCarbs + (qty.value * parseFloat(props.nutrition[index].totalCarbs)),
+                //         totalDietaryFiber: this.state.totalValue[x].totalDietaryFiber + (qty.value * parseFloat(props.nutrition[index].dietaryFiber)),
+                //         totalSugar: this.state.totalValue[x].totalSugar + (qty.value * parseFloat(props.nutrition[index].sugar)),
+                //         totalSugarAlcohol: this.state.totalValue[x].totalSugarAlcohol + (qty.value * parseFloat(props.nutrition[index].sugarAlcohol)),
+                //         totalAddedSugar: this.state.totalValue[x].totalAddedSugar + (qty.value * parseFloat(props.nutrition[index].addedSugar)),
+                //         totalProtein: this.state.totalValue[x].totalProtein + (qty.value * parseFloat(props.nutrition[index].protein)),
+                //         totalVitA: this.state.totalValue[x].totalVitA + (qty.value * parseInt(props.nutrition[index].vitA)),
+                //         totalVitB6: this.state.totalValue[x].totalVitB6 + (qty.value * parseInt(props.nutrition[index].vitB6)),
+                //         totalVitB12: this.state.totalValue[x].totalVitB12 + (qty.value * parseInt(props.nutrition[index].vitB12)),
+                //         totalVitC: this.state.totalValue[x].totalVitC + (qty.value * parseInt(props.nutrition[index].vitC)),
+                //         totalVitD: this.state.totalValue[x].totalVitD + (qty.value * parseInt(props.nutrition[index].vitD)),
+                //         totalVitE: this.state.totalValue[x].totalVitE + (qty.value * parseInt(props.nutrition[index].vitE)),
+                //         totalVitK: this.state.totalValue[x].totalVitK + (qty.value * parseInt(props.nutrition[index].vitK)),
+                //         totalCalcium: this.state.totalValue[x].totalCalcium + (qty.value * parseInt(props.nutrition[index].calcium)),
+                //         totalIron: this.state.totalValue[x].totalIron + (qty.value * parseInt(props.nutrition[index].iron)),
+                //         totalMagnesium: this.state.totalValue[x].totalMagnesium + (qty.value * parseInt(props.nutrition[index].magnesium)),
+                //         totalThiamine: this.state.totalValue[x].totalThiamine + (qty.value * parseInt(props.nutrition[index].thiamine)),
+                //         totalBiotin: this.state.totalValue[x].totalBiotin + (qty.value * parseInt(props.nutrition[index].biotin)),
+                //         totalPantoAcid: this.state.totalValue[x].totalPantoAcid + (qty.value * parseInt(props.nutrition[index].pantoAcid)),
+                //         totalPotassium: this.state.totalValue[x].totalPotassium + (qty.value * parseInt(props.nutrition[index].potassium)),
+                //         totalPhosphorous: this.state.totalValue[x].totalPhosphorous + (qty.value * parseInt(props.nutrition[index].phosphorous)),
+                //         totalIodine: this.state.totalValue[x].totalIodine + (qty.value * parseInt(props.nutrition[index].iodine)),
+                //         totalZinc: this.state.totalValue[x].totalZinc + (qty.value * parseInt(props.nutrition[index].zinc)),
+                //         totalSelenium: this.state.totalValue[x].totalSelenium + (qty.value * parseInt(props.nutrition[index].selenium)),
+                //         totalCopper: this.state.totalValue[x].totalCopper + (qty.value * parseInt(props.nutrition[index].copper)),
+                //         totalManganese: this.state.totalValue[x].totalManganese + (qty.value * parseInt(props.nutrition[index].manganese)),
+                //         totalChromium: this.state.totalValue[x].totalChromium + (qty.value * parseInt(props.nutrition[index].chromium)),
+                //         totalMolybdenum: this.state.totalValue[x].totalMolybdenum + (qty.value * parseInt(props.nutrition[index].molybdenum)),
+                //         totalChloride: this.state.totalValue[x].totalChloride + (qty.value * parseInt(props.nutrition[index].chloride))   }]
                 
-                    })) 
+                //     })) 
                
             // this.setState(prevState => ({ totalValue: [...prevState.totalValue, 
             // {
-                
-                
+                            
             //     totalServingContainer: props.nutrition[index].servingContainer,
             //     totalServingQuantity: this.state.totalValue[x].totalServingQuantity + parseFloat(props.nutrition[index].servingQuantity),
             //     totalServingQuantityUnits: props.nutrition[index].servingQuantityUnits,
@@ -469,6 +478,55 @@ function AddRecipe(props) {
         
             // })) 
 
+                           
+            this.setState(prevState => ({ totalValue: [...prevState.totalValue, 
+                {
+                                
+                    totalServingContainer: props.nutrition[index].servingContainer,
+                    totalServingQuantity: this.state.totalValue[x].totalServingQuantity + currentNutrition.servingQuantity,
+                    totalServingQuantityUnits: props.nutrition[index].servingQuantityUnits,
+                    totalServingSizeWeight: this.state.totalValue[x].totalServingSizeWeight + currentNutrition.servingSizeWeight,
+                    totalServingSizeUnit: props.nutrition[index].servingSizeUnit,
+                    totalCalories: this.state.totalValue[x].totalCalories + currentNutrition.calories,
+                    totalCaloriesFat: this.state.totalValue[x].totalCaloriesFat + currentNutrition.caloriesFat,
+                    totalTotalFat: this.state.totalValue[x].totalTotalFat + currentNutrition.totalFat,
+                    totalSaturatedFat: this.state.totalValue[x].totalSaturatedFat + currentNutrition.saturatedFat,
+                    totalTransFat: this.state.totalValue[x].totalTransFat + currentNutrition.transFat, 
+                    totalPolyFat: this.state.totalValue[x].totalPolyFat + currentNutrition.polyFat,
+                    totalMonoFat: this.state.totalValue[x].totalMonoFat + currentNutrition.monoFat,
+                    totalCholesterol: this.state.totalValue[x].totalCholesterol + currentNutrition.cholesterol,
+                    totalSodium: this.state.totalValue[x].totalSodium + currentNutrition.sodium,
+                    totalTotalCarbs: this.state.totalValue[x].totalTotalCarbs + currentNutrition.totalCarbs,
+                    totalDietaryFiber: this.state.totalValue[x].totalDietaryFiber + currentNutrition.dietaryFiber,
+                    totalSugar: this.state.totalValue[x].totalSugar + currentNutrition.sugar,
+                    totalSugarAlcohol: this.state.totalValue[x].totalSugarAlcohol + currentNutrition.sugarAlcohol,
+                    totalAddedSugar: this.state.totalValue[x].totalAddedSugar + currentNutrition.addedSugar,
+                    totalProtein: this.state.totalValue[x].totalProtein + currentNutrition.protein,
+                    totalVitA: this.state.totalValue[x].totalVitA + currentNutrition.vitA,
+                    totalVitB6: this.state.totalValue[x].totalVitB6 + currentNutrition.vitB6,
+                    totalVitB12: this.state.totalValue[x].totalVitB12 + currentNutrition.vitB12,
+                    totalVitC: this.state.totalValue[x].totalVitC + currentNutrition.vitC,
+                    totalVitD: this.state.totalValue[x].totalVitD + currentNutrition.vitD,
+                    totalVitE: this.state.totalValue[x].totalVitE + currentNutrition.vitE,
+                    totalVitK: this.state.totalValue[x].totalVitK + currentNutrition.vitK,
+                    totalCalcium: this.state.totalValue[x].totalCalcium + currentNutrition.calcium,
+                    totalIron: this.state.totalValue[x].totalIron + currentNutrition.iron,
+                    totalMagnesium: this.state.totalValue[x].totalMagnesium + currentNutrition.magnesium,
+                    totalThiamine: this.state.totalValue[x].totalThiamine + currentNutrition.thiamine,
+                    totalBiotin: this.state.totalValue[x].totalBiotin + currentNutrition.biotin,
+                    totalPantoAcid: this.state.totalValue[x].totalPantoAcid + currentNutrition.pantoAcid,
+                    totalPotassium: this.state.totalValue[x].totalPotassium + currentNutrition.potassium,
+                    totalPhosphorous: this.state.totalValue[x].totalPhosphorous + currentNutrition.phosphorous,
+                    totalIodine: this.state.totalValue[x].totalIodine + currentNutrition.iodine,
+                    totalZinc: this.state.totalValue[x].totalZinc + currentNutrition.zinc,
+                    totalSelenium: this.state.totalValue[x].totalSelenium + currentNutrition.selenium,
+                    totalCopper: this.state.totalValue[x].totalCopper + currentNutrition.copper,
+                    totalManganese: this.state.totalValue[x].totalManganese + currentNutrition.manganese,
+                    totalChromium: this.state.totalValue[x].totalChromium + currentNutrition.chromium,
+                    totalMolybdenum: this.state.totalValue[x].totalMolybdenum + currentNutrition.molybdenum,
+                    totalChloride: this.state.totalValue[x].totalChloride + currentNutrition.chloride   }]
+            
+                })) 
         }   
 
         servingContainer.value = this.state.totalValue[x].totalServingContainer;

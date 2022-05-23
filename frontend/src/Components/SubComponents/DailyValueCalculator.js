@@ -6,7 +6,6 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 const DailyValueCalculator = (props) => {
     //Elevate to AddRecipe
     //Create state machines for aggregating nutrition
-    // let found = false;
 
     const [toggle, setToggle] = useState(false);
     const dvCalc = document.getElementsByClassName('toggle-dvcalc')[0];
@@ -376,10 +375,5 @@ const DailyValueCalculator = (props) => {
         </>
     );
 }
-
-//  //Calculator will take nutritional values and add them up, return them to the table above.
-// function CalculateValues(props) {
-//     console.log(props.ingredients);
-// }
 
 export default DailyValueCalculator; 
