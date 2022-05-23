@@ -16,11 +16,9 @@ export const Recipe = (state = {
                 errMess: null,
                 recipe: action.payload}
 
-        // case ActionTypes.DELETE_RECIPE:
-        //     return { ...state, 
-        //         id: action.payload.id, 
-        //         recipe: '', 
-        //         authorities: [] }
+        case ActionTypes.DELETE_COMMENT:
+            return{
+                ...state, recipe: state.recipe.filter((recipe, index) => index !== action.payload)}
 
         case ActionTypes.RECIPE_LOADING:
             return{...state,

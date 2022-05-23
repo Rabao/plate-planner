@@ -8,6 +8,8 @@ import IngredientsData from './Ingredients';
 import DailyValue from '../SubComponents/DailyValueDisplay';
 import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
+import {RiPlayListAddFill} from 'react-icons/ri';
+
 
 export default class Recipes extends Component {
     constructor(props){
@@ -48,10 +50,15 @@ const Recipe = (props) => {
 
     const recipeId = props.recipe.id;
     const userId = props.user.id;
-
+    const authorAvatar = props.users.allUsers.filter((user) => user.id === props.recipe.userId)[0].avatars;
+    // const authorObj = props.users.allUsers.filter((user) => user.id === props.recipe.userId);
     function handleSubmit(values) {
         props.postComment( recipeId, userId, values.rating, values.userComment);
         window.location.reload(false);
+    }
+
+    function getAuthorFromId(id) {
+        return props.users.allUsers.filter((user) => user.id === parseInt(id,10))[0].username;
     }
 
     // if(props.isLoading){
@@ -71,8 +78,28 @@ const Recipe = (props) => {
     } else { 
     return(
         <div>
-            {console.log("NUTRITION: " + props.nutrition)}
-            {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>Null</h3>}
+            {/* {console.log("GETFROMID: " + getAuthorFromId(props.recipe.userId))} */}
+            <div className="row">
+                <div className="recipe-info-name" md={9}>
+                {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>Null</h3>}
+                </div>
+                <div className="author-info-postedby" md={2}>
+                    <span>Written by:<h6>{getAuthorFromId(props.recipe.userId)}</h6></span> 
+                </div>
+                
+                {getAuthorFromId(props.recipe.userId) ? 
+
+                <div className="author-info-avatar" md={1}>
+                        <div className="avatar">
+                            { authorAvatar ? <img src={authorAvatar}/> : <img src="/avatars/noavatar.png"/>}
+                        </div>
+                </div>
+                
+                : 
+                
+                <h6>Null</h6>}
+                
+            </div>
             <div className='component-body'>
             {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} allIngredients={props.allIngredients} recipe={props.recipe} nutrition={props.nutrition} postGroceries={props.postGroceries} authUser={props.user}/> : <div>Null</div>}
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
@@ -103,7 +130,7 @@ const Recipe = (props) => {
                         />
                     </Col>
                     <Col md={12}>
-                        <button type='submit' color="primary">Post Comment</button>
+                        <button type='submit' className="submit-buttons">Post Comment</button>
                     </Col>
             </LocalForm>
             </div>
@@ -408,9 +435,13 @@ function RenderComments(props){
     
 }
     
-// function renderThis(ingredient) {
-//     return(<div>{ingredient}</div>)
-// }
+function checkList(e) {
+    if(e.target.classList.contains('complete')){
+        e.target.classList.remove('complete')
+    } else {
+        e.target.classList.add('complete')
+    }  
+}
 
 function Ingredients(props) { 
 
@@ -440,12 +471,12 @@ function Ingredients(props) {
             <div id="recipe-ingredients" className='row' key={index}>
                 <div className='col' md={8}>
                     <p className="recipe-ingredient-text">
-                        <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
+                        <div id="ingredient-measurement" className="" onClick={(e) => checkList(e)}><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
                             trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{getIngredientFromId(ingredient.ingredientId)}</span></Tooltip>
                     </p>
                 </div>
                 <div className='col' md={4}>
-                    <button type='submit' onClick={() => handleAddToList(getIngredientFromId(ingredient.ingredientId))}>Add to Grocery List</button>
+                    <button type='submit' class="submit-button-small" onClick={() => handleAddToList(getIngredientFromId(ingredient.ingredientId))}><RiPlayListAddFill/> Add to Grocery List</button>
                 </div>
             </div>
              )

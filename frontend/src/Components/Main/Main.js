@@ -13,8 +13,9 @@ import MealPlans from '../Pages/MealPlans'
 import Dashboard from '../Pages/Dashboard';
 import DailyValueCalculator from '../SubComponents/DailyValueCalculator';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
-        toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, postRecipeIngredients,
-        postRecipeSteps, fetchRecipeSteps, fetchRecipeIngredients, deleteGroceries, deleteCompletedGroceries,
+        toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, 
+        deleteRecipe, postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps, 
+        fetchRecipeIngredients, deleteGroceries, deleteCompletedGroceries,
         postComment, fetchComments, deleteComment, editComment, postGroceries,
         addGroceries, addIngredients, postIngredient,
         addNutrition, fetchNutrition, postNutrition, addMealPlan, 
@@ -46,6 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
     addToken: () => { dispatch(addToken()) },
     deleteUser: () => { dispatch(deleteUser())},
     deleteComment: (id) => { dispatch(deleteComment(id))},
+    deleteRecipe: (id) => { dispatch(deleteRecipe(id))},
     deleteCompletedGroceries: (id) => {dispatch(deleteCompletedGroceries(id))},
     deleteGroceries: (id) => {dispatch(deleteGroceries(id))},
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
@@ -59,7 +61,6 @@ const mapDispatchToProps = (dispatch) => ({
     fetchGrocery: (id) => {dispatch(fetchGrocery(id))},
     fetchMealPlanCollection: () => {dispatch(fetchMealPlanCollection())},
     fetchComments: () => {dispatch(fetchComments())},
-    // fetchRecipeCollection: () => {dispatch(fetchRecipeCollection())},
 
     // Fetch with parameters
     fetchMealPlan: () => {dispatch(fetchMealPlan())},
@@ -88,15 +89,13 @@ const mapDispatchToProps = (dispatch) => ({
     postGroceries: (ingredient_name,qty, user_id) =>
         {dispatch(postGroceries(ingredient_name,
             qty, user_id))},
-
-    //Add methods
-    // addGroceries: () => {dispatch(addGroceries())},
-    // addIngredients: () => {dispatch(addIngredients())},
-    // addNutrition: () => {dispatch(addNutrition())},
-    // addMealPlan: () => {dispatch(addMealPlan())},
-    // addMealPlanCollection: () => {dispatch(addMealPlanCollection())},
-    // addRecipe: () => {dispatch(addRecipe())},
-    // addRecipeCollection: () => {dispatch(addRecipeCollection())}
+    postRecipeNutrition: (servingSize, servingSizeQty, servingSizeQtyUnit, servingSizeWeight, servingSizeUnit, calories, caloriesFat, 
+        totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, 
+        addedSugar, protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, 
+        iodine, zinc, selenium, copper, manganese, chromium, molybdenum, chloride, recipeId) => {dispatch(postRecipeNutrition(servingSize, servingSizeQty, servingSizeQtyUnit, servingSizeWeight, servingSizeUnit, calories, caloriesFat, 
+            totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, 
+            addedSugar, protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, 
+            iodine, zinc, selenium, copper, manganese, chromium, molybdenum, chloride, recipeId))},
 });
 
 class Main extends Component {
@@ -140,8 +139,6 @@ class Main extends Component {
         const RecipeWithId = () => {
             const {id} = useParams();
            
-            // const tInId = tIngredients.ingredientId;
-            // targetNutrition={this.props.nutrition.nutrition.filter((tNutrition) => tNutrition.id === parseInt(tIngredients.ingredientId,10))}
             return(
                 <Recipes targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
                 targetRecipeSteps={this.props.recipeSteps.recipeSteps.filter(steps => steps.recipeId === parseInt(id,10))}
@@ -159,11 +156,10 @@ class Main extends Component {
                 editComment={this.props.editComment}
                 nutrition={this.props.nutrition.nutrition}
                 postGroceries={this.props.postGroceries}/>
-                // .filter((tNutrition) => tNutrition.id === 79)}/>
             ) 
         }
 
-// filter(comments => comments.recipeId === parseInt(id,10))
+
         return(
             <div>
                 {/* Passes the token and the handleLogout method to the Header component. */}
@@ -172,18 +168,18 @@ class Main extends Component {
                     <Routes>
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/register'element={<Register/>}/>
-                        <Route path='/user' element={<Dashboard user={this.props.user}/>}/>
+                        <Route path='/user' element={<Dashboard user={this.props.user} recipes={this.props.recipe.recipe} deleteRecipe={this.props.deleteRecipe}/>}/>
                         <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
                         <Route exact path='/add/recipe' element={<AddRecipe 
                             postRecipe={this.props.postRecipe}  
                             postSteps={this.props.postRecipeSteps}
                             postGroceries={this.props.postGroceries}
-                            postIngredients={this.props.postRecipeIngredients} 
+                            postIngredients={this.props.postRecipeIngredients}
+                            postRecipeNutrition={this.props.postRecipeNutrition} 
                             ingredients={this.props.ingredients.ingredients}
                             nutrition={this.props.nutrition.nutrition} 
                             authUser={this.props.user} 
                             recipes={this.props.recipe.recipe}/>}/>
-                        {/* <Route exact path='/add/recipe' element={<NewRecipe/>}/> */}
                         <Route path='/recipes/:id' element={<RecipeWithId/>}/>
                         <Route exact path='/ingredients' element={<IngredientsList collection={this.props.ingredients.ingredients} />}/>
                         <Route path='/ingredients/:id' element={<IngredientWithId/>}/>
@@ -203,8 +199,7 @@ class Main extends Component {
                             toggleFetchGrocery={this.props.toggleFetchGrocery}/>}/>
                         <Route path='/mealplans' element={<MealPlans/>}/>
                         <Route path='/dvcalc' element={<DailyValueCalculator ingredients={this.props.ingredients.ingredients}/>}/>
-                        <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>
-                        
+                        <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>                   
                         <Route path='' element={<Navigate to='/home' />} />
                     </Routes>
                 </div>

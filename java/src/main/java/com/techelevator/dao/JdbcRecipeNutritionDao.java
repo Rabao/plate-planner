@@ -27,7 +27,7 @@ public class JdbcRecipeNutritionDao implements RecipeNutritionDao{
                 "dietary_fiber, sugar, sugar_alcohol, added_sugar, protein, vitA, " +
                 "vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, " +
                 "biotin, panto_acid, phosphorous, iodine, zinc, selenium, copper, " +
-                "manganese, chromium, molybdenum, chloride FROM nutrition WHERE recipe_id = ?";
+                "manganese, chromium, molybdenum, chloride FROM recipe_nutrition WHERE recipe_id = ?";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql,id);
         if(results.next()) {
@@ -48,7 +48,7 @@ public class JdbcRecipeNutritionDao implements RecipeNutritionDao{
                 "dietary_fiber, sugar, sugar_alcohol, added_sugar, protein, vitA, " +
                 "vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, " +
                 "biotin, panto_acid, phosphorous, iodine, zinc, selenium, copper, " +
-                "manganese, chromium, molybdenum, chloride FROM nutrition";
+                "manganese, chromium, molybdenum, chloride FROM recipe_nutrition";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
@@ -60,16 +60,16 @@ public class JdbcRecipeNutritionDao implements RecipeNutritionDao{
 
     @Override
     public boolean addRecipeNutrition(RecipeNutrition nutrition) {
-        String sql = "INSERT INTO nutrition (id, recipe_id, serving_size, serving_size_qty, serving_size_qty_unit, serving_size_weight, " +
+        String sql = "INSERT INTO recipe_nutrition (id, serving_size, serving_size_qty, serving_size_qty_unit, serving_size_weight, " +
                 "serving_size_unit, calories, calories_fat, total_fat, saturated_fat, " +
                 "trans_fat, poly_fat, mono_fat, cholesterol, sodium, potassium, total_carbs, " +
                 "dietary_fiber, sugar, sugar_alcohol, added_sugar, protein, vitA, " +
                 "vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, " +
                 "biotin, panto_acid, phosphorous, iodine, zinc, selenium, copper, " +
-                "manganese, chromium, molybdenum, chloride) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+                "manganese, chromium, molybdenum, chloride, recipe_id) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
                 "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-                "?)";
-        return jdbcTemplate.update(sql, nutrition.getServingSize(), nutrition.getRecipeId(), nutrition.getServingSizeQty(), nutrition.getServingSizeQtyUnit(),
+                "?, ?)";
+        return jdbcTemplate.update(sql, nutrition.getServingSize(), nutrition.getServingSizeQty(), nutrition.getServingSizeQtyUnit(),
                 nutrition.getServingSizeWeight(), nutrition.getServingSizeUnit(), nutrition.getCalories(), nutrition.getCaloriesFat(),
                 nutrition.getTotalFat(), nutrition.getSaturatedFat(), nutrition.getTransFat(), nutrition.getPolyFat(), nutrition.getMonoFat(),
                 nutrition.getCholesterol(), nutrition.getSodium(), nutrition.getPotassium(), nutrition.getTotalCarbs(), nutrition.getDietaryFiber(),
@@ -77,12 +77,12 @@ public class JdbcRecipeNutritionDao implements RecipeNutritionDao{
                 nutrition.getVitB6(), nutrition.getVitB12(), nutrition.getVitC(), nutrition.getVitD(), nutrition.getVitE(), nutrition.getVitK(),
                 nutrition.getCalcium(), nutrition.getIron(), nutrition.getMagnesium(), nutrition.getThiamine(), nutrition.getBiotin(),
                 nutrition.getPantoAcid(), nutrition.getPhosphorous(), nutrition.getIodine(), nutrition.getZinc(), nutrition.getSelenium(),
-                nutrition.getCopper(), nutrition.getManganese(), nutrition.getChromium(), nutrition.getMolybdenum(), nutrition.getChloride()) == 1;
+                nutrition.getCopper(), nutrition.getManganese(), nutrition.getChromium(), nutrition.getMolybdenum(), nutrition.getChloride(), nutrition.getRecipeId()) == 1;
     }
 
     @Override
     public boolean deleteRecipeNutrition(long id) {
-        String sql = "DELETE FROM nutrition WHERE id = ? ";
+        String sql = "DELETE FROM recipe_nutrition WHERE id = ? ";
         return jdbcTemplate.update(sql, id) == 1;
     }
 

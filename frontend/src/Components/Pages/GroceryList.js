@@ -378,10 +378,75 @@ class AddItem extends Component{
                     </Col>
                     <Col md={2}>
                         <label htmlFor="type">Type</label> 
-                        <Control.text model='.type' 
-                            id="type" 
-                            name="type" 
-                            className="form-control"/>
+                        <Control.select model='.type' id="type" name="type" className="form-control">
+                                <option disabled>Beverages</option>
+                                <option disabled></option>
+                                <option active>Coffee</option>
+                                <option>Tea</option>
+                                <option>Juice</option>
+                                <option>Soft Drink</option>
+                                <option>Liquor</option>
+                                <option>Alcohol</option>
+                                <option>Water</option>
+                                <option disabled></option>
+                                <option disabled>──────────</option>
+                                <option disabled>Breads</option>
+                                <option disabled></option>
+                                <option>Store Bought</option>
+                                <option>Fresh Baked</option>
+                                <option disabled></option>
+                                <option disabled>──────────</option>
+                                <option disabled>Canned/ Bottled Goods</option>
+                                <option disabled></option>
+                                <option>Vegetables (Canned)</option>
+                                <option>Fruit (Canned)</option>
+                                <option>Meat (Canned)</option>
+                                <option>Sauce</option>
+                                <option>Condiment</option>
+                                <option disabled></option>
+                                <option disabled>──────────</option>
+                                <option disabled>Dairy</option>
+                                <option disabled></option>
+                                <option>Milk</option>
+                                <option>Cheese</option>
+                                <option>Eggs</option>
+                                <option>Yogurt</option>
+                                <option>Butter</option>
+                                <option>Frozen Dairy</option>
+                                <option disabled></option>
+                                <option disabled>──────────</option>
+                                <option disabled>Dry Goods</option>
+                                <option disabled></option>
+                                <option>Cereal</option>
+                                <option>Flour</option>
+                                <option>Sugar</option>
+                                <option>Pasta</option>
+                                <option>Seasoning</option>
+                                <option disabled></option>
+                                <option disabled>──────────</option>
+                                <option disabled>Frozen Foods</option>
+                                <option disabled></option>
+                                <option>Slice</option>
+                                <option>Half</option>
+                                <option>Millimeter</option>
+                                <option>Centimeter</option>
+                                <option>Meter</option>
+                                <option>Inch</option>
+                                <option disabled></option>
+                                <option disabled>──────────</option>
+                                <option disabled>Meat</option>
+                                <option disabled></option>
+                                <option>Lunch Meat</option>
+                                <option>Poultry</option>
+                                <option>Red Meat</option>
+                                <option>Seafood</option>
+                                <option disabled></option>
+                                <option disabled>──────────</option>
+                                <option disabled>Produce</option>
+                                <option disabled></option>
+                                <option>Fruit</option>
+                                <option>Vegetable</option>
+                        </Control.select>
                     </Col>
                     <Col md={2}>
                         <label htmlFor="quantity">Quantity</label> 

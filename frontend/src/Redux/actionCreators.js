@@ -277,7 +277,7 @@ export const postRecipeNutrition = (servingSize, servingSizeQty, servingSizeQtyU
     totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, 
     protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium,
     copper, manganese, chromium, molybdenum, chloride, recipeId) => (dispatch) => {
-    const newNutrition = {
+    const newRecipeNutrition = {
 
         servingSize: servingSize,
         servingSizeQty: servingSizeQty,
@@ -327,7 +327,7 @@ export const postRecipeNutrition = (servingSize, servingSizeQty, servingSizeQtyU
 
     return fetch(baseUrl + '/recipes/nutrition', {
         method: 'POST',
-        body: JSON.stringify(newNutrition),
+        body: JSON.stringify(newRecipeNutrition),
         headers: {
             'Content-Type': 'application/json'
         },
@@ -346,7 +346,7 @@ export const postRecipeNutrition = (servingSize, servingSizeQty, servingSizeQtyU
         let errmess = new Error(error.message);
         throw errmess;
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(response => dispatch(addRecipeNutrition(response)))
     .catch(error => {console.log('Post recipe nutrition ', error.message)
         alert('Your recipe nutrition could not be added.\nError: ' + error.message)});
@@ -662,9 +662,32 @@ export const recipeFailed = (errmess) => ({
     payload: errmess
 });
 
-export const deleteRecipe = () => ({
-    type: ActionTypes.DELETE_RECIPE
-});
+export const deleteRecipe = (id) => (dispatch) => {
+
+    return fetch(baseUrl + '/recipes/' + id, {
+        method: 'DELETE'})
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(id => dispatch(deleteRecipeSuccess(id)))
+    .catch(error => {throw(error)});
+}
+
+export const deleteRecipeSuccess = (id) => ({
+    type: ActionTypes.DELETE_RECIPE,
+    payload: id
+})
 
 export const addRecipe = (recipe) => ({
     type: ActionTypes.ADD_RECIPE,
