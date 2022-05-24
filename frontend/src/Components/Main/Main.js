@@ -138,14 +138,6 @@ class Main extends Component {
             );
         }
 
-        const RecipesListSearch = () => {
-            const {searchbar} = useParams();
-
-            return(
-                <RecipesList recipes={this.props.recipeSearch.recipeSearch} />
-            )
-        }
-
         const RecipeWithId = () => {
             const {id} = useParams();
            
@@ -182,7 +174,7 @@ class Main extends Component {
                         <Route path='/register'element={<Register/>}/>
                         <Route path='/user' element={<Dashboard user={this.props.user} recipes={this.props.recipe.recipe} deleteRecipe={this.props.deleteRecipe}/>}/>
                         <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
-                        <Route path='/recipes/search/:searchbar' element={<RecipesListSearch/>}/>
+                        <Route path='/recipes/search/:searchbar' element={<RecipesList recipes={this.props.recipe.recipeSearch} />}/>
                         <Route exact path='/add/recipe' element={<AddRecipe 
                             postRecipe={this.props.postRecipe}  
                             postSteps={this.props.postRecipeSteps}
