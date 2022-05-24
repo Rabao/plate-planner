@@ -459,6 +459,16 @@ hr {
   border-radius: 5px;
 }
 
+.recipe-tag{
+  margin-top: 10px;
+  text-align: center;
+  width: 100px;
+  margin-right: 1%;
+  border-radius: 50px;
+  border: solid rgb(114, 114, 114);
+  background: none;
+}
+
 .recipe-title{
   width:100%;
   padding: 5px;

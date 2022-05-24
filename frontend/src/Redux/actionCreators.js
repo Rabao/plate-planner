@@ -940,7 +940,55 @@ export const addRecipeSteps = (steps) => ({
     payload: steps
 });
 
-//----------------------------------RECIPE
+//----------------------------------RECIPESTEPS
+//----------------------------------RECIPETAGS
+export const fetchRecipeTags = () => (dispatch) => {
+    // dispatch(recipeStepsLoading(true));
+
+    return fetch(baseUrl + "/tags", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(tags => dispatch(addRecipeTags(tags)))
+        .catch(error => dispatch(recipeTagsFailed(error.message)));
+}
+
+export const recipeTagsLoading = (status) => ({
+    type: ActionTypes.RECIPETAGS_LOADING,
+    payload: status
+});
+
+export const recipeTagsFailed = (errmess) => ({
+    type: ActionTypes.RECIPETAGS_FAILED,
+    payload: errmess
+});
+
+export const deleteRecipeTags = () => ({
+    type: ActionTypes.DELETE_RECIPETAGS
+});
+
+export const addRecipeTags = (tags) => ({
+    type: ActionTypes.ADD_RECIPETAGS,
+    payload: tags
+});
+//----------------------------------RECIPETAGS
 //----------------------------------MEALPLAN
 export const fetchMealPlan = () => (dispatch) => {
     // dispatch(mealPlanLoading(true));

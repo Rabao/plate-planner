@@ -16,7 +16,7 @@ import DailyValueForm from '../SubComponents/DailyValueForm';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
         toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, 
         deleteRecipe, editRecipe, postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps, 
-        fetchRecipeIngredients, deleteGroceries, deleteCompletedGroceries,
+        fetchRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
         postComment, fetchComments, deleteComment, editComment, postGroceries,
         addGroceries, addIngredients, postIngredient, searchRecipe,
         addNutrition, fetchNutrition, postNutrition, addMealPlan, 
@@ -40,6 +40,7 @@ const mapStateToProps = state => {
         recipe: state.recipe,
         recipeSearch: state.recipeSearch,
         recipeSteps: state.recipeSteps,
+        recipeTags: state.recipeTags,
         recipeIngredients: state.recipeIngredients,
         mealPlan: state.mealPlan,
     }
@@ -64,14 +65,15 @@ const mapDispatchToProps = (dispatch) => ({
     fetchGrocery: (id) => {dispatch(fetchGrocery(id))},
     fetchMealPlanCollection: () => {dispatch(fetchMealPlanCollection())},
     fetchComments: () => {dispatch(fetchComments())},
-    searchRecipe: (search) => {dispatch(searchRecipe(search))},
 
     // Fetch with parameters
     fetchMealPlan: () => {dispatch(fetchMealPlan())},
     fetchRecipe: () => {dispatch(fetchRecipe())},
     fetchRecipeSteps: () => {dispatch(fetchRecipeSteps())},
+    fetchRecipeTags: () => {dispatch(fetchRecipeTags())},
     fetchRecipeIngredients: () => {dispatch(fetchRecipeIngredients())},
     fetchNutrition: () => {dispatch(fetchNutrition())},
+    searchRecipe: (search) => {dispatch(searchRecipe(search))},
 
     //Post methods
     postComment: (id, recipeId, userId, rating, comment) => 
@@ -114,6 +116,7 @@ class Main extends Component {
         this.props.fetchComments();
         this.props.fetchRecipe();
         this.props.fetchRecipeSteps();
+        this.props.fetchRecipeTags();
         this.props.fetchRecipeIngredients();
        
     }
@@ -147,6 +150,7 @@ class Main extends Component {
                 recipeErrMess={this.props.recipe.errMess}
                 user={this.props.user}
                 users={this.props.allUsers}
+                recipeTags={this.props.recipeTags.recipeTags.filter(tag => tag.recipeId === parseInt(id,10))}
                 targetIngredients={this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10))}
                 ingredients={this.props.ingredients.ingredients}
                 targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
@@ -169,6 +173,7 @@ class Main extends Component {
                 targetRecipeSteps={this.props.recipeSteps.recipeSteps.filter(steps => steps.recipeId === parseInt(id,10))}
                 recipeLoading={this.props.recipe.isLoading}
                 recipeErrMess={this.props.recipe.errMess}
+                recipeTags={this.props.recipeTags.recipeTags.filter(tag => tag.recipeId === parseInt(id,10))}
                 user={this.props.user}
                 targetIngredients={this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10))}
                 ingredients={this.props.ingredients.ingredients}

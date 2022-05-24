@@ -29,6 +29,7 @@ export default class Recipes extends Component {
                     </Breadcrumb>
                     <Recipe recipe={this.props.targetRecipe}
                     recipeSteps={this.props.targetRecipeSteps}
+                    recipeTags={this.props.recipeTags}
                     ingredients={this.props.targetIngredients}
                     allIngredients={this.props.ingredients}
                     comments={this.props.targetComments} user={this.props.user}
@@ -79,10 +80,10 @@ const Recipe = (props) => {
         <div>
             {console.log("AVATAR: "+JSON.stringify(props.users.allUsers.filter((user) => user.id === 1)))}
             <div className="row">
-                {console.log(props.recipe)}
                 {props.recipe ? 
                 <div className="recipe-info-name" md={9}>
-                    <h3>{props.recipe.name}</h3>  
+                    <h3>{props.recipe.name}</h3>
+                    {props.recipeTags ? <RecipeTags target={props.recipeTags}/> : <div></div>}  
                     {userId === props.recipe.userId ? <div id="manage-recipe-buttons" md={6}>
                         <Link to={"/edit/recipes/"+props.recipe.id}><button type="button" className="dashboard-interface-button" >&#9997; EDIT</button></Link>
                     </div> : <div></div>}
@@ -513,8 +514,23 @@ function Ingredients(props) {
         );
 }
 
+function RecipeTags(props) {
 
+    const recipeTags = props.target.map((tag) => {
+        return(
+                <em className='recipe-tag'>{tag.tag} </em>
+            )
+        });
 
+    return (
+        <div className='row' >
+            <div className='col' md={1}>          
+                {recipeTags} 
+            </div>
+        </div>
+
+    )
+}
 
 function RecipeSteps(props) {
 

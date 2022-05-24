@@ -40,11 +40,13 @@ public class MealPlanController {
     private RecipeIngredientsDao recipeIngredientsDao;
     private UserDao userDao;
     private RecipeNutritionDao recipeNutritionDao;
+    private RecipeTagDao recipeTagDao;
 
 
     public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao,
                               RecipeDao recipeDao, RecipeStepsDao recipeStepsDao, RecipeIngredientsDao recipeIngredientsDao,
-                              GroceryListDao groceryListDao, UserDao userDao, UserReviewDao userReviewDao, RecipeNutritionDao recipeNutritionDao) {
+                              GroceryListDao groceryListDao, UserDao userDao, UserReviewDao userReviewDao,
+                              RecipeNutritionDao recipeNutritionDao, RecipeTagDao recipeTagDao) {
         this.ingredientsDao = ingredientsDao;
         this.nutritionDao = nutritionDao;
         this.recipeDao = recipeDao;
@@ -54,6 +56,7 @@ public class MealPlanController {
         this.recipeStepsDao = recipeStepsDao;
         this.recipeIngredientsDao = recipeIngredientsDao;
         this.recipeNutritionDao = recipeNutritionDao;
+        this.recipeTagDao = recipeTagDao;
 
     }
 
@@ -370,6 +373,22 @@ public class MealPlanController {
     /*****************************************************
      *                                                    *
      *                  USER REVIEW APIs                  *
+     *                                                    *
+     *****************************************************/
+    /*****************************************************
+     *                                                    *
+     *                  RECIPE TAGS APIs                  *
+     *                                                    *
+     *****************************************************/
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="tags")
+    public List<RecipeTag> listRecipeTags(){
+        return recipeTagDao.listRecipeTags();
+    }
+
+    /*****************************************************
+     *                                                    *
+     *                  RECIPE TAGS APIs                  *
      *                                                    *
      *****************************************************/
 

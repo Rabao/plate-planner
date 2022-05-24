@@ -14,6 +14,7 @@ import { MealPlan } from "./mealPlans";
 import {Token} from './token'
 import {User} from './user'
 import { RecipeSteps } from './recipeSteps';
+import { RecipeTags } from './recipeTags';
 import { createForms } from 'react-redux-form';
 import { InitialFeedback } from "./forms";
 import { Users } from './users';
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
             nutrition: Nutrition,
             recipe: Recipe,
             recipeSteps: RecipeSteps,
+            recipeTags: RecipeTags,
             recipeIngredients: RecipeIngredients,
             mealPlan: MealPlan,
             ...createForms({
