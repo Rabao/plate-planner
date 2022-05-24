@@ -50,15 +50,15 @@ const Recipe = (props) => {
 
     const recipeId = props.recipe.id;
     const userId = props.user.id;
-    // const authorAvatar = props.users.allUsers.filter((user) => user.id === props.recipe.userId)[0].avatar;
+    const authorAvatar = props.users.allUsers.filter((user) => user.id === props.recipe.userId)[0].avatar;
     function handleSubmit(values) {
         props.postComment( recipeId, userId, values.rating, values.userComment);
         window.location.reload(false);
     }
 
-    // function getAuthorFromId(id) {
-    //     return props.users.allUsers.filter((user) => user.id === parseInt(id,10))[0].username;
-    // }
+    function getAuthorFromId(id) {
+        return props.users.allUsers.filter((user) => user.id === parseInt(id,10))[0].username;
+    }
 
     // if(props.isLoading){
     // return(<div className="container">
@@ -77,26 +77,26 @@ const Recipe = (props) => {
     } else { 
     return(
         <div>
-            {/* {console.log("AVATAR: "+JSON.stringify(props.users.allUsers.filter((user) => user.id === 1)))}
+            {console.log("AVATAR: "+JSON.stringify(props.users.allUsers.filter((user) => user.id === 1)))}
             <div className="row">
                 {console.log(props.recipe)}
                 {props.recipe ? 
                 <div className="recipe-info-name" md={9}>
                     <h3>{props.recipe.name}</h3>  
-                    <div id="manage-recipe-buttons" md={6}>
+                    {userId === props.recipe.userId ? <div id="manage-recipe-buttons" md={6}>
                         <Link to={"/edit/recipes/"+props.recipe.id}><button type="button" className="dashboard-interface-button" >&#9997; EDIT</button></Link>
-                    </div>
+                    </div> : <div></div>}
                  </div>
                 :
                 <div className="recipe-info-name" md={9}>     
                     <h3>Null</h3>
                 </div>
                 }
-                <div className="author-info-postedby" md={2}>
+                 <div className="author-info-postedby" md={2}>
                     <span>Written by:<h6>{getAuthorFromId(props.recipe.userId)}</h6></span> 
-                </div>
+                </div> 
                 
-                {getAuthorFromId(props.recipe.userId) ? 
+                 {getAuthorFromId(props.recipe.userId) ? 
                 
                 <div className="author-info-avatar" md={1}>
                         <div className="avatar">
@@ -106,9 +106,9 @@ const Recipe = (props) => {
                 
                 : 
                 
-                <h6>Null</h6>}
+                <h6>Null</h6>} 
                 
-            </div> */}
+            </div>
             <div className='component-body'>
             {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} allIngredients={props.allIngredients} recipe={props.recipe} nutrition={props.nutrition} postGroceries={props.postGroceries} authUser={props.user}/> : <div>Null</div>}
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
