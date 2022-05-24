@@ -39,8 +39,9 @@ public class JdbcRecipeDao implements RecipeDao{
     public List<Recipe> getRecipesBySearch(String searchbar) {
         List<Recipe> recipes = new ArrayList<>();
         String sql = "SELECT id, name, num_of_steps, image, notes, user_id, type " +
-                "FROM recipes WHERE LOWER(name) LIKE LOWER(?)";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, '%'+searchbar+'%');
+                "FROM recipes INNER JOIN recipe_tags ON recipes.id = recipe_tags.recipeId " +
+                "WHERE LOWER(recipe_tags.tag) LIKE LOWER(?) OR LOWER(name) LIKE LOWER(?)";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, '%'+searchbar+'%', '%'+searchbar+'%');
         while (results.next()) {
             Recipe recipe = mapRowToRecipe(results);
             recipes.add(recipe);
