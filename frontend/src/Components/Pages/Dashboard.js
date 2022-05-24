@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Breadcrumb} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+import {useNavigate, Link, Route, Routes} from 'react-router-dom';
 import {Modal, ModalBody, ModalHeader} from 'reactstrap';
 import { LocalForm } from 'react-redux-form';
 
@@ -68,6 +68,14 @@ export default class Dashboard extends Component{
     }
 }
 
+function DashEditRecipe(e){
+    const navigate = useNavigate();
+
+    return(
+        <button type="button" className="dashboard-interface-button" onClick={() => {navigate('/edit/recipes/'+e.id)}}>&#9997; EDIT</button>
+    )
+}
+
 class EditDeleteRecipe extends Component{
 
     constructor(props){
@@ -111,10 +119,10 @@ class EditDeleteRecipe extends Component{
                     <div key={recipe.id} className="dashboard-recipe-collection">  
                         <img src={recipe.image}/>
                     </div>
-                <div id="manage-recipe-buttons" md={6}>
-                        <button type="button" className="dashboard-interface-button" >&#9997; EDIT</button>
-                        <button type="button" className="dashboard-interface-button" onClick={() => this.toggleModal('delete')}>&#10060; DELETE</button>
-                </div>
+                    <div id="manage-recipe-buttons" md={6}>
+                            <DashEditRecipe id={recipe.id}/>
+                            <button type="button" className="dashboard-interface-button" onClick={() => this.toggleModal('delete')}>&#10060; DELETE</button>
+                    </div>
                 <Modal isOpen={this.state.activeModal === 'delete'} toggle={this.toggleModal}> 
                         <ModalHeader style={{borderBottom:0}} toggle={this.toggleModal}>Delete Recipe?</ModalHeader>
                         <ModalBody>
