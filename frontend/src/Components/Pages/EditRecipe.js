@@ -81,7 +81,7 @@ export default class EditRecipe extends Component {
                     
                 </div>
                 <div className='component-body'>
-                {this.props.ingredients && this.props.nutrition ?<Ingredients ingredients={this.props.ingredients} recipe={this.props.targetRecipe} nutrition={this.props.nutrition} authUser={this.props.user}/> : <div>Null</div>}
+                {this.Ingredients (this.props.ingredients, this.props.targetRecipe, this.props.nutrition, this.props.user)}
                 {this.RecipeSteps(this.props.targetRecipeSteps)}
                 {/* {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>} */}
                 {this.props.targetRecipe ?<Notes target={this.props.targetRecipe.notes}/> : <div>Null</div>}            
@@ -90,6 +90,79 @@ export default class EditRecipe extends Component {
         )
       }
     }
+
+
+    Ingredients() { 
+        const getIngredientFromId = (id) => {
+            return this.props.targetIngredients.filter(ingredients => ingredients.id === parseInt(id,10))[0].name;
+        }
+    
+        // const recipeIngredients = 
+        
+        
+        return (    
+          
+              <div className='row'>
+                  <div className='col' md={7}>
+                       <h5>Ingredients</h5>
+                       {
+                           this.props.targetIngredients.map((ingredient, i) => {
+                            // console.log(props.nutrition);
+                            
+                                    return (  
+                                        <div key={i}>
+                                        <Control.text type="number" model={".qty"+i} name={"qty"+i} className="qty ingredients-controls" defaultValue={ingredient.qty}/>
+                                        <Control.select model={".unit"+i} name={"unit"+i} className="unit-measure ingredients-controls" defaultValue={ingredient.type}>                                 
+                                            <option disabled>Volume</option>
+                                            <option disabled></option>
+                                            <option active>Teaspoon</option>                       
+                                            <option>Tablespoon</option>
+                                            <option>Fluid Ounce</option>
+                                            <option>Gill</option>
+                                            <option>Cup</option>
+                                            <option>Pint</option>
+                                            <option>Quart</option>
+                                            <option>Gallon</option>
+                                            <option>Milliliter</option>
+                                            <option>Liter</option>
+                                            <option disabled></option>
+                                            <option disabled>──────────</option>
+                                            <option disabled>Mass/Weight</option>
+                                            <option disabled></option>
+                                            <option>Pound</option>
+                                            <option>Ounce</option>
+                                            <option>Milligram</option>
+                                            <option>Gram</option>
+                                            <option>Kilogram</option>
+                                            <option>Whole</option>
+                                            <option disabled></option>
+                                            <option disabled>──────────</option>
+                                            <option disabled>Length</option>
+                                            <option disabled></option>
+                                            <option>Slice</option>
+                                            <option>Half</option>
+                                            <option>Millimeter</option>
+                                            <option>Centimeter</option>
+                                            <option>Meter</option>
+                                            <option>Inch</option>
+                                        </Control.select>
+                                        <input type="text" model={".ingredient"+i} defaultValue={ingredient.name} name={"ingredient"+i} className="recipe-ingredients ingredients-controls" />
+                                    </div>      
+                                 )
+                    
+                             
+                        })
+                       }
+                       
+                  </div>
+                  <div className='col' id="recipe-pg-img-container" md={5}>
+                      <img id="recipe-pg-img" src={this.props.targetRecipe.image}></img>      
+                  </div>
+                  <DailyValue ingredients={this.props.ingredients}/>
+              </div>
+            );
+    }
+    
 
 
 
@@ -169,55 +242,55 @@ export default class EditRecipe extends Component {
 
 
 
-function Ingredients(props) { 
-    const getIngredientFromId = (id) => {
-        return props.ingredients.filter(ingredients => ingredients.id === parseInt(id,10))[0].name;
-    }
+// function Ingredients(props) { 
+//     const getIngredientFromId = (id) => {
+//         return props.ingredients.filter(ingredients => ingredients.id === parseInt(id,10))[0].name;
+//     }
 
-    // const recipeIngredients = 
+//     // const recipeIngredients = 
     
     
-    return (    
+//     return (    
       
-          <div className='row'>
-              <div className='col' md={7}>
-                   <h5>Ingredients</h5>
-                   {
-                       props.ingredients.map((ingredient, index) => {
+//           <div className='row'>
+//               <div className='col' md={7}>
+//                    <h5>Ingredients</h5>
+//                    {
+//                        props.ingredients.map((ingredient, index) => {
 
-                        let item = '';
+//                         let item = '';
                 
-                        if(ingredient.measurement<2){
-                            item = " " + ingredient.unit + " ";
-                        } else {
-                            item = " " + ingredient.unit + "s ";
-                        }
+//                         if(ingredient.measurement<2){
+//                             item = " " + ingredient.unit + " ";
+//                         } else {
+//                             item = " " + ingredient.unit + "s ";
+//                         }
                 
-                        // console.log(props.nutrition);
+//                         // console.log(props.nutrition);
                 
-                        return (  
-                            <div id="recipe-ingredients" className='row' key={index}>
-                                <div className='col' md={8}>
-                                    <p className="recipe-ingredient-text">
-                                        <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
-                                            trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip"></div>)}><span>{getIngredientFromId(76)}</span></Tooltip>
-                                    </p>
-                                </div>
-                            </div>
-                             )
+//                         return (  
+//                             <div id="recipe-ingredients" className='row' key={index}>
+//                                 <div className='col' md={8}>
+//                                     <p className="recipe-ingredient-text">
+//                                         <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
+//                                             trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip"></div>)}><span>{getIngredientFromId(76)}</span></Tooltip>
+//                                     </p>
+//                                 </div>
+//                             </div>
+//                              )
                 
                          
-                    })
-                   }
+//                     })
+//                    }
                    
-              </div>
-              <div className='col' id="recipe-pg-img-container" md={5}>
-                  <img id="recipe-pg-img" src={props.recipe.image}></img>      
-              </div>
-              <DailyValue ingredients={props.ingredients}/>
-          </div>
-        );
-}
+//               </div>
+//               <div className='col' id="recipe-pg-img-container" md={5}>
+//                   <img id="recipe-pg-img" src={props.recipe.image}></img>      
+//               </div>
+//               <DailyValue ingredients={props.ingredients}/>
+//           </div>
+//         );
+// }
 
 
 
