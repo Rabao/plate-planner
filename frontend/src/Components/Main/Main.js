@@ -17,7 +17,7 @@ import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetc
         deleteRecipe, postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps, 
         fetchRecipeIngredients, deleteGroceries, deleteCompletedGroceries,
         postComment, fetchComments, deleteComment, editComment, postGroceries,
-        addGroceries, addIngredients, postIngredient,
+        addGroceries, addIngredients, postIngredient, searchRecipe,
         addNutrition, fetchNutrition, postNutrition, addMealPlan, 
         addMealPlanCollection, addRecipe, } from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
@@ -37,6 +37,7 @@ const mapStateToProps = state => {
         ingredients: state.ingredients,
         nutrition: state.nutrition,
         recipe: state.recipe,
+        recipeSearch: state.recipeSearch,
         recipeSteps: state.recipeSteps,
         recipeIngredients: state.recipeIngredients,
         mealPlan: state.mealPlan,
@@ -61,6 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchGrocery: (id) => {dispatch(fetchGrocery(id))},
     fetchMealPlanCollection: () => {dispatch(fetchMealPlanCollection())},
     fetchComments: () => {dispatch(fetchComments())},
+    searchRecipe: (search) => {dispatch(searchRecipe(search))},
 
     // Fetch with parameters
     fetchMealPlan: () => {dispatch(fetchMealPlan())},
@@ -136,6 +138,14 @@ class Main extends Component {
             );
         }
 
+        const RecipesListSearch = () => {
+            const {searchbar} = useParams();
+
+            return(
+                <RecipesList recipes={this.props.recipeSearch.recipeSearch} />
+            )
+        }
+
         const RecipeWithId = () => {
             const {id} = useParams();
            
@@ -163,13 +173,16 @@ class Main extends Component {
         return(
             <div>
                 {/* Passes the token and the handleLogout method to the Header component. */}
-                <Header token={this.props.token.token} user={this.props.user} handleLogout={this.handleLogout}/>
+                <Header token={this.props.token.token} user={this.props.user}
+                handleLogout={this.handleLogout} searchRecipe={this.props.searchRecipe}
+                recipeSearch={this.props.recipeSearch}/>
                 <div className="main">
                     <Routes>
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/register'element={<Register/>}/>
                         <Route path='/user' element={<Dashboard user={this.props.user} recipes={this.props.recipe.recipe} deleteRecipe={this.props.deleteRecipe}/>}/>
                         <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
+                        <Route path='/recipes/search/:searchbar' element={<RecipesListSearch/>}/>
                         <Route exact path='/add/recipe' element={<AddRecipe 
                             postRecipe={this.props.postRecipe}  
                             postSteps={this.props.postRecipeSteps}

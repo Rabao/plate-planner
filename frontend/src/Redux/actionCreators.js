@@ -652,6 +652,39 @@ export const fetchRecipe = () => (dispatch) => {
     .catch(error => dispatch(recipeFailed(error.message)));
 }
 
+export const searchRecipe = (searchbar) => (dispatch) => {
+    // dispatch(recipeLoading(true));
+
+    return fetch(baseUrl + "/recipes/search/" + searchbar, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin'
+        })
+        .then(response => {
+         if (response.ok) {
+             return response;
+         } else {
+             let error = new Error('Error ' + response.status + ': ' + response.statusText);
+             error.response = response;
+             throw error;
+         }
+    },  
+    error => {
+        let errmess = new Error(error.message);
+        throw errmess;
+    })
+    .then(response => response.json())
+    .then(recipeSearch => dispatch(foundRecipe(recipeSearch)))
+    .catch(error => dispatch(recipeFailed(error.message)));
+}
+
+export const foundRecipe = (recipeSearch) => ({
+    type: ActionTypes.SEARCH_RECIPE,
+    payload: recipeSearch
+});
+
 export const recipeLoading = (status) => ({
     type: ActionTypes.RECIPE_LOADING,
     payload: status

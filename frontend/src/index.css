@@ -49,7 +49,7 @@ code {
 
 /*---------------------------- Header CSS ----------------------------*/
 /*---------------------------- Search CSS ----------------------------*/
-#search-bar {
+#searchbar {
   float:left;
   background-color: #001132;
   padding: 5px;
@@ -63,7 +63,7 @@ code {
   z-index:0;
 }
 
-#search-bar:focus {
+#searchbar:focus {
   outline: none;
 }
 

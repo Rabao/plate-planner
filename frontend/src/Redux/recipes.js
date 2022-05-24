@@ -4,7 +4,8 @@ export const Recipe = (state = {
         // id: null,
         isLoading: true,
         errMess: null,
-        recipe: []
+        recipe: [],
+        recipeSearch: []
     }, action) => {
     
 
@@ -15,6 +16,12 @@ export const Recipe = (state = {
                 isLoading: false,
                 errMess: null,
                 recipe: action.payload}
+        
+        case ActionTypes.SEARCH_RECIPE:
+            return {...state,
+                isLoading: false,
+                errMess: null,
+                recipeSearch: action.payload}
 
         case ActionTypes.DELETE_COMMENT:
             return{

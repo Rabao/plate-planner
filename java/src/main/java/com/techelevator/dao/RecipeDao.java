@@ -7,6 +7,8 @@ import java.util.List;
 public interface RecipeDao {
     Recipe getRecipe(long id);
 
+    List<Recipe> getRecipesBySearch(String searchbar);
+
     List<Recipe> listRecipe();
 
     List<Recipe> listRecipesByIngredient(long ingredient_id);

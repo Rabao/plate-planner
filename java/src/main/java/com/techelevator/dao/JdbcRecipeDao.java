@@ -36,6 +36,19 @@ public class JdbcRecipeDao implements RecipeDao{
     }
 
     @Override
+    public List<Recipe> getRecipesBySearch(String searchbar) {
+        List<Recipe> recipes = new ArrayList<>();
+        String sql = "SELECT id, name, num_of_steps, image, notes, user_id, type " +
+                "FROM recipes WHERE name LIKE ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, '%'+searchbar+'%');
+        while (results.next()) {
+            Recipe recipe = mapRowToRecipe(results);
+            recipes.add(recipe);
+        }
+        return recipes;
+    }
+
+    @Override
     public List<Recipe> listRecipe() {
         List<Recipe> recipes = new ArrayList<>();
         String sql = "SELECT id, name, num_of_steps, image, notes, user_id, type FROM recipes ";

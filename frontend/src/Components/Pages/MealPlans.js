@@ -31,8 +31,8 @@ function MealPlans(props) {
                     </div>
                     <div className="row">
                         <h5>Add Recipes to Plan</h5>
-                        <MealList 
-                            recipes={props.recipes}/>
+                            <MealList 
+                                recipes={props.recipes}/>
                     </div>
                 </div>
                 <div className="col" md={3} id="grocery-list">

@@ -1,4 +1,5 @@
 import React from 'react';
+import DailyValueCalculator from './DailyValueCalculator';
 
 const DailyValue = () => {
     return ( <>
@@ -26,7 +27,9 @@ const DailyValue = () => {
 
 //Calculator will take nutritional values and add them up, return them to the table above.
 function CalculateValues(props) {
-    console.log(props.ingredients);
+    return(
+        <div><DailyValueCalculator/></div>
+    )
 }
 
 export default DailyValue;
