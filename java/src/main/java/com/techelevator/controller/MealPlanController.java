@@ -172,6 +172,12 @@ public class MealPlanController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="recipes/search/{searchbar}")
+    public List<Recipe> getRecipesBySearch(@PathVariable String searchbar){
+        return recipeDao.getRecipesBySearch(searchbar);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value="recipes/ingredient")
     public List<Recipe> listRecipesByIngredient(@RequestParam long id){
         return recipeDao.listRecipesByIngredient(id);

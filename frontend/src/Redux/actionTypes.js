@@ -39,6 +39,7 @@ export const RECIPENUTRITION_FAILED = 'RECIPENUTRITION_FAILED';
 
 //----------------------------------RECIPE
 export const ADD_RECIPE = 'ADD_RECIPE';
+export const SEARCH_RECIPE = 'SEARCH_RECIPE';
 export const DELETE_RECIPE = 'DELETE_RECIPE';
 export const RECIPE_LOADING = 'RECIPE_LOADING';
 export const RECIPE_FAILED = 'RECIPE_FAILED';

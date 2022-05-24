@@ -40,7 +40,7 @@ function RecipesList(props) {
     function renderRecipes(){
         const map = props.recipes.map((recipe) => {
                 let img = recipe.image;
-                console.log(recipe)
+                // console.log(recipe)
                 return(
                 <div className="row recipe-result" key={recipe.id}  onClick={() => {handleClick(recipe)}}>
                     <table>

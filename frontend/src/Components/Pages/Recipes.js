@@ -341,7 +341,7 @@ function RenderComments(props){
                 </tr>
                 <tr>
                     <td>Serving Size</td>
-                    <td>{tNutrition.serving_size}</td> 
+                    <td>{tNutrition.servingSize}</td> 
                 </tr>
                 <tr>
                     <td>Calories</td>
@@ -349,19 +349,19 @@ function RenderComments(props){
                 </tr>
                 <tr>
                     <td>Calories from Fat</td>
-                    <td>{tNutrition.calories_fat}</td>
+                    <td>{tNutrition.caloriesFat}</td>
                 </tr>
                 <tr>
                     <td>Total Fat</td>
-                    <td>{tNutrition.total_fat}g</td>
+                    <td>{tNutrition.totalFat}g</td>
                 </tr>
                 <tr>
                     <td>Saturated Fat</td>
-                    <td>{tNutrition.saturated_fat}g</td>
+                    <td>{tNutrition.saturatedFat}g</td>
                 </tr>
                 <tr>
                     <td>Trans Fat</td>
-                    <td>{tNutrition.trans_fat}g</td>
+                    <td>{tNutrition.transFat}g</td>
                 </tr>
                 <tr>
                     <td>Cholesterol</td>
@@ -377,11 +377,11 @@ function RenderComments(props){
                 </tr>
                 <tr>
                     <td>Total Carbohydrates</td>
-                    <td>{tNutrition.total_carbs}g</td>
+                    <td>{tNutrition.totalCarbs}g</td>
                 </tr>
                 <tr>
                     <td>Dietary Fiber</td>
-                    <td>{tNutrition.dietary_fiber}g</td>
+                    <td>{tNutrition.dietaryFiber}g</td>
                 </tr>
                 <tr>
                     <td>Sugar</td>
@@ -389,7 +389,7 @@ function RenderComments(props){
                 </tr>
                 <tr>
                     <td>Sugar Alcohol</td>
-                    <td>{tNutrition.sugar_alcohol}g</td>
+                    <td>{tNutrition.sugarAlcohol}g</td>
                 </tr>
                 <tr>
                     <td>Protein</td>
@@ -414,10 +414,6 @@ function RenderComments(props){
                 <tr>
                     <td>Vitamin B6</td>
                     <td>{tNutrition.vitB6}%</td>
-                </tr>
-                <tr>
-                    <td>Cobalamin</td>
-                    <td>{tNutrition.cobalamin}%</td>
                 </tr>
                 <tr>
                     <td>Magnesium</td>
