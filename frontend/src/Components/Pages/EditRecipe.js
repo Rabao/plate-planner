@@ -111,8 +111,8 @@ export default class EditRecipe extends Component {
                             
                                     return (  
                                         <div key={i}>
-                                        <Control.text type="number" model={".qty"+i} name={"qty"+i} className="qty ingredients-controls" defaultValue={ingredient.qty}/>
-                                        <Control.select model={".unit"+i} name={"unit"+i} className="unit-measure ingredients-controls" defaultValue={ingredient.type}>                                 
+                                        <input type="number" model={".qty"+i} name={"qty"+i} className="qty ingredients-controls" defaultValue={ingredient.measurement}/>
+                                        <select model={".unit"+i} name={"unit"+i} className="unit-measure ingredients-controls" defaultValue={ingredient.unit}>                                 
                                             <option disabled>Volume</option>
                                             <option disabled></option>
                                             <option active>Teaspoon</option>                       
@@ -145,8 +145,8 @@ export default class EditRecipe extends Component {
                                             <option>Centimeter</option>
                                             <option>Meter</option>
                                             <option>Inch</option>
-                                        </Control.select>
-                                        <input type="text" model={".ingredient"+i} defaultValue={ingredient.name} name={"ingredient"+i} className="recipe-ingredients ingredients-controls" />
+                                        </select>{console.log(ingredient)}
+                                        <input type="text" model={".ingredient"+i} defaultValue={ingredient.ingredient_name} name={"ingredient"+i} className="recipe-ingredients ingredients-controls" />
                                     </div>      
                                  )
                     
