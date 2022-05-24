@@ -38,7 +38,11 @@ function RecipesList(props) {
     }
 
     function renderRecipes(){
-        const map = props.recipes.map((recipe) => {
+
+        const ids = props.recipes.map(o => o.id)
+        const filtered = props.recipes.filter(({id}, index) => !ids.includes(id, index + 1))
+
+        const map = filtered.map((recipe) => {
                 let img = recipe.image;
                 // console.log(recipe)
                 return(
