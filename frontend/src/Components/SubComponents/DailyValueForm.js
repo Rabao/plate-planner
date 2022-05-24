@@ -3,28 +3,13 @@ import { Breadcrumb, Button, Row, Col } from 'react-bootstrap'
 import {Modal, ModalBody, ModalHeader} from 'reactstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
-const DailyValueCalculator = (props) => {
+const DailyValueForm = (props) => {
     //Elevate to AddRecipe
     //Create state machines for aggregating nutrition
 
     const [toggle, setToggle] = useState(false);
     const dvCalc = document.getElementsByClassName('toggle-dvcalc')[0];
     const toggleDvCalc = document.getElementsByClassName('toggle-dvcalcComponent')[0];
-
-    
-    // function handleOuterToggle() {
-
-    //     if(dvCalc.classList.contains('close')){
-    //         dvCalc.classList.remove('close');
-    //         dvCalc.classList.add('open');
-    //     } else {
-    //         dvCalc.classList.remove('open');
-    //         dvCalc.classList.add('close');
-    //     }
-
-    //     setToggle({ toggle: !toggle })
-
-    // }
 
     function handleInnerToggle() {
 
@@ -45,14 +30,30 @@ const DailyValueCalculator = (props) => {
             <div className="dvcalc" data-id="dvcalc"><span>Add Nutritional Value Details</span></div>
                 <div className="toggle-dvcalc">
                 <LocalForm>   
-                   <Row className="form-group">
-                        <Col md={3}>
-                            <label htmlFor="servingContainer">Serving Size per Container</label> 
-                            <Control.text model='.servingContainer' 
-                                id="servingContainer" 
-                                name="servingContainer" 
+                    <Row className="form-group">
+                        <Col md={4}>
+                            <label htmlFor="servingSize">Serving Size</label> 
+                            <Control.text model='.servingSize' 
+                                id="servingSize" 
+                                name="servingSize" 
                                 className="form-control"/>
                         </Col>
+                        <Col md={4}>
+                            <label htmlFor="calories">Calories</label> 
+                                <Control.text model='.calories' 
+                                id="calories" 
+                                name="calories" 
+                                className="form-control"/>
+                        </Col>
+                        <Col md={4}>
+                            <label htmlFor="caloriesFat">Calories from Fat</label> 
+                                <Control.text model='.caloriesFat' 
+                                id="caloriesFat" 
+                                name="caloriesFat" 
+                                className="form-control"/>
+                        </Col>
+                    </Row>
+                    <Row className="form-group">
                         <Col md={6}>
                             <label htmlFor="calories">Calories</label> 
                                 <Control.text model='.calories' 
@@ -77,7 +78,7 @@ const DailyValueCalculator = (props) => {
                                 className="form-control"/>
                         </Col>
                         <Col md={2}>
-                            <label htmlFor="saturatedFat">Sat. Fat</label> 
+                            <label htmlFor="saturatedFat">Saturated Fat</label> 
                                 <Control.text model='.saturatedFat' 
                                 id="saturatedFat" 
                                 name="saturatedFat" 
@@ -88,6 +89,20 @@ const DailyValueCalculator = (props) => {
                                 <Control.text model='.transFat' 
                                 id="transFat" 
                                 name="transFat" 
+                                className="form-control"/>
+                        </Col>
+                        <Col md={2}>
+                            <label htmlFor="polyFat">Polyunsaturated Fat</label> 
+                                <Control.text model='.polyFat' 
+                                id="polyFat" 
+                                name="polyFat" 
+                                className="form-control"/>
+                        </Col>
+                        <Col md={2}>
+                            <label htmlFor="monoFat">Monounsaturated Fat</label> 
+                                <Control.text model='.monoFat' 
+                                id="monoFat" 
+                                name="monoFat" 
                                 className="form-control"/>
                         </Col>
                     </Row>
@@ -332,4 +347,4 @@ const DailyValueCalculator = (props) => {
     );
 }
 
-export default DailyValueCalculator; 
+export default DailyValueForm; 

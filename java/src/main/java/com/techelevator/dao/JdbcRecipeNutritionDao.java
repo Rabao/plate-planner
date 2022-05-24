@@ -21,8 +21,7 @@ public class JdbcRecipeNutritionDao implements RecipeNutritionDao{
     @Override
     public RecipeNutrition getRecipeNutrition(long id) {
         RecipeNutrition nutrition = null;
-        String sql = "SELECT id, recipe_id, serving_size, serving_size_qty, serving_size_qty_unit, serving_size_weight, " +
-                "serving_size_unit, calories, calories_fat, total_fat, saturated_fat, " +
+        String sql = "SELECT id, recipe_id, serving_size, calories, calories_fat, total_fat, saturated_fat, " +
                 "trans_fat, poly_fat, mono_fat, cholesterol, sodium, potassium, total_carbs, " +
                 "dietary_fiber, sugar, sugar_alcohol, added_sugar, protein, vitA, " +
                 "vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, " +
@@ -42,8 +41,7 @@ public class JdbcRecipeNutritionDao implements RecipeNutritionDao{
     @Override
     public List<RecipeNutrition> listRecipeNutrition() {
         List<RecipeNutrition> nutritionList = new ArrayList<>();
-        String sql = "SELECT id, recipe_id, serving_size, serving_size_qty, serving_size_qty_unit, serving_size_weight, " +
-                "serving_size_unit, calories, calories_fat, total_fat, saturated_fat, " +
+        String sql = "SELECT id, recipe_id, serving_size, calories, calories_fat, total_fat, saturated_fat, " +
                 "trans_fat, poly_fat, mono_fat, cholesterol, sodium, potassium, total_carbs, " +
                 "dietary_fiber, sugar, sugar_alcohol, added_sugar, protein, vitA, " +
                 "vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, " +
@@ -60,17 +58,15 @@ public class JdbcRecipeNutritionDao implements RecipeNutritionDao{
 
     @Override
     public boolean addRecipeNutrition(RecipeNutrition nutrition) {
-        String sql = "INSERT INTO recipe_nutrition (id, serving_size, serving_size_qty, serving_size_qty_unit, serving_size_weight, " +
-                "serving_size_unit, calories, calories_fat, total_fat, saturated_fat, " +
+        String sql = "INSERT INTO recipe_nutrition (id, serving_size, calories, calories_fat, total_fat, saturated_fat, " +
                 "trans_fat, poly_fat, mono_fat, cholesterol, sodium, potassium, total_carbs, " +
                 "dietary_fiber, sugar, sugar_alcohol, added_sugar, protein, vitA, " +
                 "vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, " +
                 "biotin, panto_acid, phosphorous, iodine, zinc, selenium, copper, " +
                 "manganese, chromium, molybdenum, chloride, recipe_id) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
+                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
                 "?, ?)";
-        return jdbcTemplate.update(sql, nutrition.getServingSize(), nutrition.getServingSizeQty(), nutrition.getServingSizeQtyUnit(),
-                nutrition.getServingSizeWeight(), nutrition.getServingSizeUnit(), nutrition.getCalories(), nutrition.getCaloriesFat(),
+        return jdbcTemplate.update(sql, nutrition.getServingSize(), nutrition.getCalories(), nutrition.getCaloriesFat(),
                 nutrition.getTotalFat(), nutrition.getSaturatedFat(), nutrition.getTransFat(), nutrition.getPolyFat(), nutrition.getMonoFat(),
                 nutrition.getCholesterol(), nutrition.getSodium(), nutrition.getPotassium(), nutrition.getTotalCarbs(), nutrition.getDietaryFiber(),
                 nutrition.getSugar(), nutrition.getSugarAlcohol(), nutrition.getAddedSugar(), nutrition.getProtein(), nutrition.getVitA(),
@@ -91,10 +87,6 @@ public class JdbcRecipeNutritionDao implements RecipeNutritionDao{
         nutrition.setId(rs.getLong("id"));
         nutrition.setRecipeId(rs.getLong("recipe_id"));
         nutrition.setServingSize(rs.getString("serving_size"));
-        nutrition.setServingSizeQty(rs.getDouble("serving_size_qty"));
-        nutrition.setServingSizeQtyUnit(rs.getString("serving_size_qty_unit"));
-        nutrition.setServingSizeWeight(rs.getInt("serving_size_weight"));
-        nutrition.setServingSizeUnit(rs.getString("serving_size_unit"));
         nutrition.setCalories(rs.getDouble("calories"));
         nutrition.setCaloriesFat(rs.getDouble("calories_fat"));
         nutrition.setTotalFat(rs.getDouble("total_fat"));

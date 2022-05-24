@@ -37,7 +37,7 @@ function Header(props) {
                                 className="form-control"
                                 id="searchbar"/>
                             {/* <input type="text" name="searchbar" id="searchbar"></input> */}
-                            <Button id="search-button" type='submit'><CgSearch /></Button>
+                            <button id="search-button" type='submit'><CgSearch /></button>
                         </LocalForm>
                     </div>
                     <div className="col link-wrapper" id="link-wrapper" md={3}>

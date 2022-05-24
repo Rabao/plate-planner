@@ -168,14 +168,14 @@ class AddItem extends Component{
     }
 
     handleVitaminToggle() {
-        const dvCalc = document.getElementsByClassName('toggle-dvcalc')[0];
+        const toggleDvCalc = document.getElementsByClassName('toggle-dvcalcComponent')[0];
 
-        if(dvCalc.classList.contains('close')){
-            dvCalc.classList.remove('close');
-            dvCalc.classList.add('open');
+        if(toggleDvCalc.classList.contains('_close')){
+            toggleDvCalc.classList.remove('_close');
+            toggleDvCalc.classList.add('_open');
         } else {
-            dvCalc.classList.remove('open');
-            dvCalc.classList.add('close');
+            toggleDvCalc.classList.remove('_open');
+            toggleDvCalc.classList.add('_close');
         }
 
         this.setState({ vitToggle: !this.state.vitToggle })
@@ -198,8 +198,7 @@ class AddItem extends Component{
         // const product = document.getElementById('product');
         if(!found){
             this.props.postIngredient(values.product, values.type);
-            this.props.postNutrition(values.servingContainer, values.servingQuantity, values.servingQuantityUnits, 
-                values.servingSizeWeight, values.servingSizeUnit, values.calories, values.caloriesFat, values.totalFat, 
+            this.props.postNutrition(values.servingSize, values.calories, values.caloriesFat, values.totalFat, 
                 values.saturatedFat, values.transFat, values.polyFat, values.monoFat, values.cholesterol, values.sodium,
                 values.potassium, values.totalCarbs, values.dietaryFiber, values.sugar, values.sugarAlcohol, values.addedSugar,
                 values.protein, values.vitA, values.vitB6, values.vitB12, values.vitC, values.vitD, values.vitE, values.vitK,
@@ -253,11 +252,7 @@ class AddItem extends Component{
         }while(!found && i<this.props.ingredients.length-1);
         if(found){
             const type = document.getElementById('type');
-            const servingContainer = document.getElementById('servingContainer');
-            const servingQuantity = document.getElementById('servingQuantity');
-            const servingQuantityUnits = document.getElementById('servingQuantityUnits');
-            const servingSizeWeight = document.getElementById('servingSizeWeight');
-            const servingSizeUnit = document.getElementById('servingSizeUnit');
+            const servingSize = document.getElementById('servingSize');
             const calories = document.getElementById('calories');
             const caloriesFat = document.getElementById('caloriesFat');
             const totalFat = document.getElementById('totalFat');
@@ -300,11 +295,7 @@ class AddItem extends Component{
             this.findNutrition(this.props.ingredients[i].id);
 
             type.value = this.props.ingredients[i].type;
-            servingContainer.value = currentNutrition.servingSize; //SS by Container
-            servingQuantity.value = currentNutrition.servingSizeQty;
-            servingQuantityUnits.value = currentNutrition.servingSizeQtyUnit;
-            servingSizeWeight.value = currentNutrition.servingSizeWeight;
-            servingSizeUnit.value = currentNutrition.servingSizeUnit;
+            servingSize.value = currentNutrition.servingSize; //SS by Container
             calories.value = currentNutrition.calories;
             caloriesFat.value = currentNutrition.caloriesFat;
             totalFat.value = currentNutrition.totalFat;
@@ -459,39 +450,25 @@ class AddItem extends Component{
                     </Col>
                 </Row>
                 <Row className="form-group">
-                    <Col md={3}>
-                        <label htmlFor="servingContainer">Serving Size per Container</label> 
-                        <Control.text model='.servingContainer' 
-                            id="servingContainer" 
-                            name="servingContainer" 
+                    <Col md={4}>
+                        <label htmlFor="servingSize">Serving Size</label> 
+                        <Control.text model='.servingSize' 
+                            id="servingSize" 
+                            name="servingSize" 
                             className="form-control"/>
                     </Col>
-                    <Col md={2}>
-                        <label htmlFor="servingQuantity">Serving Size Quantity</label> 
-                        <Control.text model='.servingQuantity' 
-                            id="servingQuantity" 
-                            name="servingQuantity" 
+                    <Col md={4}>
+                        <label htmlFor="calories">Calories</label> 
+                            <Control.text model='.calories' 
+                            id="calories" 
+                            name="calories" 
                             className="form-control"/>
                     </Col>
-                    <Col md={3}>
-                        <label htmlFor="servingQuantityUnits">Serving Size Quantity Units</label> 
-                        <Control.text model='.servingQuantityUnits' 
-                            id="servingQuantityUnits" 
-                            name="servingQuantityUnits" 
-                            className="form-control"/>
-                    </Col>
-                    <Col md={2}>
-                        <label htmlFor="servingSizeWeight">Serving Size Weight</label> 
-                        <Control.text model='.servingSizeWeight' 
-                            id="servingSizeWeight" 
-                            name="servingSizeWeight" 
-                            className="form-control"/>
-                    </Col>
-                    <Col md={2}>
-                        <label htmlFor="servingSizeUnit">Serving Size Unit</label> 
-                        <Control.text model='.servingSizeUnit' 
-                            id="servingSizeUnit" 
-                            name="servingSizeUnit" 
+                    <Col md={4}>
+                        <label htmlFor="caloriesFat">Calories from Fat</label> 
+                            <Control.text model='.caloriesFat' 
+                            id="caloriesFat" 
+                            name="caloriesFat" 
                             className="form-control"/>
                     </Col>
                 </Row>
@@ -609,7 +586,7 @@ class AddItem extends Component{
                     </Col>
                 </Row>
                 <div className="dvcalc" onClick={(e) => {this.handleVitaminToggle(e)}}><span>Add Optional Vitamins and Minerals</span></div>
-                <div className="toggle-dvcalc close">
+                <div className="toggle-dvcalcComponent _close">
                     <Row className="form-group">
                         <Col md={3}>
                             <label htmlFor="vitA">Vitamin A</label> 

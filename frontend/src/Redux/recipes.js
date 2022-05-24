@@ -1,7 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 
 export const Recipe = (state = {
-        // id: null,
         isLoading: true,
         errMess: null,
         recipe: [],
@@ -23,9 +22,22 @@ export const Recipe = (state = {
                 errMess: null,
                 recipeSearch: action.payload}
 
-        case ActionTypes.DELETE_COMMENT:
+        case ActionTypes.DELETE_RECIPE:
             return{
                 ...state, recipe: state.recipe.filter((recipe, index) => index !== action.payload)}
+
+        case ActionTypes.EDIT_RECIPE:
+            return{...state, recipe: state.recipe.filter((recipe) => {
+                if(recipe.id === action.payload.id){
+                    recipe.name = action.payload.name;
+                    recipe.numSteps = action.payload.numSteps;
+                    recipe.image = action.payload.image;
+                    recipe.notes = action.payload.notes;
+                    recipe.userId = action.payload.userId;
+                    recipe.type = action.payload.type;
+                }
+                return recipe;
+            })}
 
         case ActionTypes.RECIPE_LOADING:
             return{...state,

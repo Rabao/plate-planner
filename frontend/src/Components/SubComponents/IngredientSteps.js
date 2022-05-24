@@ -2,10 +2,6 @@
 import React, {Component} from 'react'  
 import { Control } from 'react-redux-form';
 
-let numSteps = 0;
-let stepsHtmlIdent = "steps" + numSteps;
-let stepsMode = ".steps" + numSteps;
-
 class IngredientSteps  extends Component {
     constructor(props) {
         super(props);
@@ -13,9 +9,7 @@ class IngredientSteps  extends Component {
             ingredientValues: [],
             stepValues: []
         };
-
       }
-      
     
     //-------------------------------------------------------REACTIONARY RECIPE STEPS INPUTS
     //-------------------------------------------------------REACTIONARY RECIPE STEPS INPUTS
@@ -23,7 +17,7 @@ class IngredientSteps  extends Component {
     renderStepsInput = () => {
         return this.state.stepValues.map((el, i) =>
             <div key={i}>
-                        <Control.text model={".step"+i} name={"step"+i} defaultValue={el||''}  className="recipe-steps"/>
+                        <Control.textarea model={".step"+i} name={"step"+i} defaultValue={el||''}  className="recipe-steps"/>
                         <button class="submit-button-small" onClick={this.removeStep.bind(this,i)}>Remove</button>
             </div>
             )

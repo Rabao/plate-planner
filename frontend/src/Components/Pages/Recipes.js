@@ -76,12 +76,21 @@ const Recipe = (props) => {
     
     } else { 
     return(
-        <div>
-            {console.log("AVATAR: "+JSON.stringify(props.users.allUsers.filter((user) => user.id === 1)))}
+        <div> 
             <div className="row">
+                
+                {props.recipe ? 
                 <div className="recipe-info-name" md={9}>
-                {props.recipe ? <h3>{props.recipe.name}</h3> : <h3>Null</h3>}
+                    <h3>{props.recipe.name}</h3>  
+                    <div id="manage-recipe-buttons" md={6}>
+                        <button type="button" className="dashboard-interface-button" >&#9997; EDIT</button>
+                    </div>
+                 </div>
+                :
+                <div className="recipe-info-name" md={9}>     
+                    <h3>Null</h3>
                 </div>
+                }
                 <div className="author-info-postedby" md={2}>
                     <span>Written by:<h6>{getAuthorFromId(props.recipe.userId)}</h6></span> 
                 </div>

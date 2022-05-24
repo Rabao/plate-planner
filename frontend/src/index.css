@@ -78,7 +78,7 @@ code {
   color:#001132;
   vertical-align: middle;
   z-index: 1;
-  top: 1.12em;
+  top: 1em;
   position: absolute;
 }
 
@@ -212,10 +212,6 @@ h5 {
 
 .checklist-quantity:hover {
   filter:brightness(0.85);
-}
-
-Control.textarea {
-  background-color: #001132;
 }
 
 /*----------------------------- Body CSS -----------------------------*/
@@ -712,18 +708,6 @@ hr {
   filter: brightness(0.75);
 }
 
-.open {
-  display: block;
-
-}
-
-.close {
-  overflow: hidden; 
-  height: 0; 
-  opacity: 0;
-  transition: height 0ms 400ms, opacity 400ms 0ms;
-
-}
 
 ._open {
   display: block;
@@ -744,11 +728,7 @@ hr {
   padding-bottom: 15px;
   text-align: center;
   background-image: linear-gradient(to bottom, rgba(	253, 251, 249, 0), #f5f1ed);
-  border-radius: 0px 0px 15px 15px;
-  border-left: 1px dashed #9e9891;
-  border-right: 1px dashed #9e9891;
-  border-bottom: 1px dashed #9e9891;
-  cursor:pointer;
+  border-bottom: 1px dashed #9e9891; 
 }
 
 .dvcalc span {
@@ -756,12 +736,16 @@ hr {
   font-weight: 600;
 }
 
+.recipe-steps {
+  resize: vertical;
+}
+
 .toggle-dvcalc{
   width: 100%;
   margin-top: 5px;
   padding: 5px;
   background-image: linear-gradient(to bottom, #f5f1ed, rgba(253, 251, 249, 0));
-
+  cursor:pointer;
 }
 .toggle-dvcalcComponent {
   width: 100%;

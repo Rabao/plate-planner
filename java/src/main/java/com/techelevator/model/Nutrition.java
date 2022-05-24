@@ -4,10 +4,6 @@ public class Nutrition {
 
     private long id;
     private String serving_size;
-    private double serving_size_qty;
-    private String serving_size_qty_unit;
-    private int serving_size_weight;
-    private String serving_size_unit;
     private double calories;
     private double calories_fat;
     private double total_fat;
@@ -51,18 +47,13 @@ public class Nutrition {
     public Nutrition() {
     }
 
-    public Nutrition(long id, String serving_size, double serving_size_qty, String serving_size_qty_unit, int serving_size_weight, String serving_size_unit,
-                     double calories, double calories_fat, double total_fat, double saturated_fat, double trans_fat, double poly_fat, double mono_fat,
+    public Nutrition(long id, String serving_size, double calories, double calories_fat, double total_fat, double saturated_fat, double trans_fat, double poly_fat, double mono_fat,
                      double cholesterol, double sodium, double potassium, double total_carbs, double dietary_fiber, double sugar, double sugar_alcohol,
                      double added_sugar, double protein, int vitA, int vitB6, int vitB12, int vitC, int vitD, int vitE, int vitK, int calcium, int iron,
                      int magnesium, int thiamine, int biotin, int panto_acid, int phosphorous, int iodine, int zinc, int selenium, int copper,
                      int manganese, int chromium, int molybdenum, int chloride) {
         this.id = id;
         this.serving_size = serving_size;
-        this.serving_size_qty = serving_size_qty;
-        this.serving_size_qty_unit = serving_size_qty_unit;
-        this.serving_size_weight = serving_size_weight;
-        this.serving_size_unit = serving_size_unit;
         this.calories = calories;
         this.calories_fat = calories_fat;
         this.total_fat = total_fat;
@@ -117,38 +108,6 @@ public class Nutrition {
 
     public void setServingSize(String serving_size) {
         this.serving_size = serving_size;
-    }
-
-    public double getServingSizeQty() {
-        return serving_size_qty;
-    }
-
-    public void setServingSizeQty(double serving_size_qty) {
-        this.serving_size_qty = serving_size_qty;
-    }
-
-    public String getServingSizeQtyUnit() {
-        return serving_size_qty_unit;
-    }
-
-    public void setServingSizeQtyUnit(String serving_size_qty_unit) {
-        this.serving_size_qty_unit = serving_size_qty_unit;
-    }
-
-    public int getServingSizeWeight() {
-        return serving_size_weight;
-    }
-
-    public void setServingSizeWeight(int serving_size_weight) {
-        this.serving_size_weight = serving_size_weight;
-    }
-
-    public String getServingSizeUnit() {
-        return serving_size_unit;
-    }
-
-    public void setServingSizeUnit(String serving_size_unit) {
-        this.serving_size_unit = serving_size_unit;
     }
 
     public double getCalories() {
@@ -455,208 +414,4 @@ public class Nutrition {
         this.chloride = chloride;
     }
 
-    //    public Nutrition(long id, String serving_size, double calories, double calories_fat,
-//                     double total_fat, double saturated_fat, double trans_fat,
-//                     double cholesterol, double sodium, double potassium, double total_carbs,
-//                     double dietary_fiber, double sugar, double sugar_alcohol, double protein,
-//                     int vitC, int calcium, int iron, int vitD, int vitB6, int cobalamin, int magnesium) {
-//        this.id = id;
-//        this.serving_size = serving_size;
-//        this.calories = calories;
-//        this.calories_fat = calories_fat;
-//        this.total_fat = total_fat;
-//        this.saturated_fat = saturated_fat;
-//        this.trans_fat = trans_fat;
-//        this.cholesterol = cholesterol;
-//        this.sodium = sodium;
-//        this.potassium = potassium;
-//        this.total_carbs = total_carbs;
-//        this.dietary_fiber = dietary_fiber;
-//        this.sugar = sugar;
-//        this.sugar_alcohol = sugar_alcohol;
-//        this.protein = protein;
-//        this.vitC = vitC;
-//        this.calcium = calcium;
-//        this.iron = iron;
-//        this.vitD = vitD;
-//        this.vitB6 = vitB6;
-//        this.cobalamin = cobalamin;
-//        this.magnesium = magnesium;
-//    }
-
-//    public long getId() {
-//        return id;
-//    }
-//
-//    public void setId(long id) {
-//        this.id = id;
-//    }
-//
-//    public String getserving_size() {
-//        return serving_size;
-//    }
-//
-//    public void setserving_size(String serving_size) {
-//        this.serving_size = serving_size;
-//    }
-//
-//    public double getCalories() {
-//        return calories;
-//    }
-//
-//    public void setCalories(double calories) {
-//        this.calories = calories;
-//    }
-//
-//    public double getcalories_fat() {
-//        return calories_fat;
-//    }
-//
-//    public void setcalories_fat(double calories_fat) {
-//        this.calories_fat = calories_fat;
-//    }
-//
-//    public double gettotal_fat() {
-//        return total_fat;
-//    }
-//
-//    public void settotal_fat(double total_fat) {
-//        this.total_fat = total_fat;
-//    }
-//
-//    public double getsaturated_fat() {
-//        return saturated_fat;
-//    }
-//
-//    public void setsaturated_fat(double saturated_fat) {
-//        this.saturated_fat = saturated_fat;
-//    }
-//
-//    public double gettrans_fat() {
-//        return trans_fat;
-//    }
-//
-//    public void settrans_fat(double trans_fat) {
-//        this.trans_fat = trans_fat;
-//    }
-//
-//    public double getCholesterol() {
-//        return cholesterol;
-//    }
-//
-//    public void setCholesterol(double cholesterol) {
-//        this.cholesterol = cholesterol;
-//    }
-//
-//    public double getSodium() {
-//        return sodium;
-//    }
-//
-//    public void setSodium(double sodium) {
-//        this.sodium = sodium;
-//    }
-//
-//    public double getPotassium() {
-//        return potassium;
-//    }
-//
-//    public void setPotassium(double potassium) {
-//        this.potassium = potassium;
-//    }
-//
-//    public double gettotal_carbs() {
-//        return total_carbs;
-//    }
-//
-//    public void settotal_carbs(double total_carbs) {
-//        this.total_carbs = total_carbs;
-//    }
-//
-//    public double getdietary_fiber() {
-//        return dietary_fiber;
-//    }
-//
-//    public void setdietary_fiber(double dietary_fiber) {
-//        this.dietary_fiber = dietary_fiber;
-//    }
-//
-//    public double getSugar() {
-//        return sugar;
-//    }
-//
-//    public void setSugar(double sugar) {
-//        this.sugar = sugar;
-//    }
-//
-//    public double getsugar_alcohol() {
-//        return sugar_alcohol;
-//    }
-//
-//    public void setsugar_alcohol(double sugar_alcohol) {
-//        this.sugar_alcohol = sugar_alcohol;
-//    }
-//
-//    public double getProtein() {
-//        return protein;
-//    }
-//
-//    public void setProtein(double protein) {
-//        this.protein = protein;
-//    }
-//
-//    public int getVitC() {
-//        return vitC;
-//    }
-//
-//    public void setVitC(int vitC) {
-//        this.vitC = vitC;
-//    }
-//
-//    public int getCalcium() {
-//        return calcium;
-//    }
-//
-//    public void setCalcium(int calcium) {
-//        this.calcium = calcium;
-//    }
-//
-//    public int getIron() {
-//        return iron;
-//    }
-//
-//    public void setIron(int iron) {
-//        this.iron = iron;
-//    }
-//
-//    public int getVitD() {
-//        return vitD;
-//    }
-//
-//    public void setVitD(int vitD) {
-//        this.vitD = vitD;
-//    }
-//
-//    public int getVitB6() {
-//        return vitB6;
-//    }
-//
-//    public void setVitB6(int vitB6) {
-//        this.vitB6 = vitB6;
-//    }
-//
-//    public int getCobalamin() {
-//        return cobalamin;
-//    }
-//
-//    public void setCobalamin(int cobalamin) {
-//        this.cobalamin = cobalamin;
-//    }
-//
-//    public int getMagnesium() {
-//        return magnesium;
-//    }
-//
-//    public void setMagnesium(int magnesium) {
-//        this.magnesium = magnesium;
-//    }
 }

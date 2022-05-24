@@ -7,25 +7,25 @@ export const fetchUsers = () => (dispatch) => {
     // dispatch(usersLoading(true));
 
     return fetch(baseUrl + "/reviews/user", {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
-            if (response.ok) {
-                return response;
-            } else {
-                let error = new Error('Error ' + response.status + ': ' + response.statusText);
-                error.response = response;
-                throw error;
-            }
-        },  
-        error => {
-            let errmess = new Error(error.message);
-            throw errmess;
-        })
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
         .then(response => response.json())
         .then(users => dispatch(addUsers(users)))
         .catch(error => dispatch(usersFailed(error.message)));
@@ -55,33 +55,33 @@ export const usersLoading = () => ({
 })
 
 export const usersFailed = () => ({
-    type: ActionTypes.USERS_FAILED
-})
-//----------------------------------USER AUTH
-//----------------------------------INGREDIENT
+        type: ActionTypes.USERS_FAILED
+    })
+    //----------------------------------USER AUTH
+    //----------------------------------INGREDIENT
 export const fetchIngredients = () => (dispatch) => {
     // dispatch(ingredientsLoading(true));
 
     return fetch(baseUrl + "/ingredients", {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
-            if (response.ok) {
-                return response;
-            } else {
-                let error = new Error('Error ' + response.status + ': ' + response.statusText);
-                error.response = response;
-                throw error;
-            }
-        },  
-        error => {
-            let errmess = new Error(error.message);
-            throw errmess;
-        })
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
         .then(response => response.json())
         .then(ingredients => dispatch(addIngredients(ingredients)))
         .catch(error => dispatch(ingredientsFailed(error.message)));
@@ -110,37 +110,39 @@ export const addIngredient = (ingredients) => ({
     payload: ingredients
 });
 
-export const postIngredient = (name,type) => (dispatch) => {
+export const postIngredient = (name, type) => (dispatch) => {
     const newIngredient = {
         name: name,
         type: type
     }
 
     return fetch(baseUrl + '/ingredients', {
-        method: 'POST',
-        body: JSON.stringify(newIngredient),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
-    })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            let error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-            }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(response => dispatch(addIngredient(response)))
-    .catch(error => {console.log('Post ingredient ', error.message)
-        alert('Your ingredient could not be added.\nError: ' + error.message)});
+            method: 'POST',
+            body: JSON.stringify(newIngredient),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => dispatch(addIngredient(response)))
+        .catch(error => {
+            console.log('Post ingredient ', error.message)
+            alert('Your ingredient could not be added.\nError: ' + error.message)
+        });
 };
 //----------------------------------INGREDIENT
 //----------------------------------NUTRITION
@@ -148,25 +150,25 @@ export const fetchNutrition = () => (dispatch) => {
     // dispatch(nutritionLoading(true));
 
     return fetch(baseUrl + "/nutrition", {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
-            if (response.ok) {
-                return response;
-            } else {
-                let error = new Error('Error ' + response.status + ': ' + response.statusText);
-                error.response = response;
-                throw error;
-            }
-        },  
-        error => {
-            let errmess = new Error(error.message);
-            throw errmess;
-        })
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
         .then(response => response.json())
         .then(nutrition => dispatch(addNutritions(nutrition)))
         .catch(error => dispatch(nutritionFailed(error.message)));
@@ -195,17 +197,12 @@ export const addNutrition = (nutrition) => ({
     payload: nutrition
 });
 
-export const postNutrition = (servingSize, servingSizeQty, servingSizeQtyUnit, servingSizeWeight, servingSizeUnit, calories, caloriesFat,
-    totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, 
-    protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium,
-    copper, manganese, chromium, molybdenum, chloride) => (dispatch) => {
+export const postNutrition = (servingSize, calories, caloriesFat, totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium,
+    totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine,
+    biotin, pantoAcid, phosphorous, iodine, zinc, selenium, copper, manganese, chromium, molybdenum, chloride) => (dispatch) => {
     const newNutrition = {
 
         servingSize: servingSize,
-        servingSizeQty: servingSizeQty,
-        servingSizeQtyUnit: servingSizeQtyUnit,
-        servingSizeWeight: servingSizeWeight,
-        servingSizeUnit: servingSizeUnit,
         calories: calories,
         caloriesFat: caloriesFat,
         totalFat: totalFat,
@@ -247,43 +244,41 @@ export const postNutrition = (servingSize, servingSizeQty, servingSizeQtyUnit, s
     }
 
     return fetch(baseUrl + '/nutrition', {
-        method: 'POST',
-        body: JSON.stringify(newNutrition),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
-    })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            let error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-            }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(response => dispatch(addNutrition(response)))
-    .catch(error => {console.log('Post nutrition ', error.message)
-        alert('Your nutrition could not be added.\nError: ' + error.message)});
+            method: 'POST',
+            body: JSON.stringify(newNutrition),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => dispatch(addNutrition(response)))
+        .catch(error => {
+            console.log('Post nutrition ', error.message)
+            alert('Your nutrition could not be added.\nError: ' + error.message)
+        });
 };
 
-export const postRecipeNutrition = (servingSize, servingSizeQty, servingSizeQtyUnit, servingSizeWeight, servingSizeUnit, calories, caloriesFat,
-    totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, 
-    protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium,
-    copper, manganese, chromium, molybdenum, chloride, recipeId) => (dispatch) => {
+export const postRecipeNutrition = (servingSize, calories, caloriesFat, totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium,
+    totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron,
+    magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium, copper, manganese, chromium, molybdenum, chloride,
+    recipeId) => (dispatch) => {
     const newRecipeNutrition = {
 
         servingSize: servingSize,
-        servingSizeQty: servingSizeQty,
-        servingSizeQtyUnit: servingSizeQtyUnit,
-        servingSizeWeight: servingSizeWeight,
-        servingSizeUnit: servingSizeUnit,
         calories: calories,
         caloriesFat: caloriesFat,
         totalFat: totalFat,
@@ -326,30 +321,32 @@ export const postRecipeNutrition = (servingSize, servingSizeQty, servingSizeQtyU
     }
 
     return fetch(baseUrl + '/recipes/nutrition', {
-        method: 'POST',
-        body: JSON.stringify(newRecipeNutrition),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
-    })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            let error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-            }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.text())
-    .then(response => dispatch(addRecipeNutrition(response)))
-    .catch(error => {console.log('Post recipe nutrition ', error.message)
-        alert('Your recipe nutrition could not be added.\nError: ' + error.message)});
+            method: 'POST',
+            body: JSON.stringify(newRecipeNutrition),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => dispatch(addRecipeNutrition(response)))
+        .catch(error => {
+            console.log('Post recipe nutrition ', error.message)
+            alert('Your recipe nutrition could not be added.\nError: ' + error.message)
+        });
 };
 
 export const recipeNutritionLoading = () => ({
@@ -375,56 +372,56 @@ export const fetchGrocery = (id) => (dispatch) => {
     // dispatch(groceriesLoading(true));
 
     return fetch(baseUrl + "/groceries/" + id, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(groceries => dispatch(addGroceries(groceries)))
-    .catch(error => dispatch(groceriesFailed(error.message)));
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(groceries => dispatch(addGroceries(groceries)))
+        .catch(error => dispatch(groceriesFailed(error.message)));
 }
 
 export const fetchGroceries = () => (dispatch) => {
     // dispatch(groceriesLoading(true));
 
     return fetch(baseUrl + "/groceries", {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(groceries => dispatch(addGroceries(groceries)))
-    .catch(error => dispatch(groceriesFailed(error.message)));
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(groceries => dispatch(addGroceries(groceries)))
+        .catch(error => dispatch(groceriesFailed(error.message)));
 }
 
 export const groceriesLoading = () => ({
@@ -439,45 +436,47 @@ export const groceriesFailed = (errmess) => ({
 export const deleteGroceries = (id) => (dispatch) => {
 
     return fetch(baseUrl + '/groceries/' + id, {
-        method: 'DELETE'})
+            method: 'DELETE'
+        })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.text())
-    .then(id => dispatch(deleteGroceriesSuccess(id)))
-    .catch(error => {throw(error)});
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.text())
+        .then(id => dispatch(deleteGroceriesSuccess(id)))
+        .catch(error => { throw (error) });
 }
 
 export const deleteCompletedGroceries = (id) => (dispatch) => {
 
     return fetch(baseUrl + '/groceries/completed/' + id, {
-        method: 'DELETE'})
+            method: 'DELETE'
+        })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.text())
-    .then(id => dispatch(deleteGroceriesSuccess(id)))
-    .catch(error => {throw(error)});
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.text())
+        .then(id => dispatch(deleteGroceriesSuccess(id)))
+        .catch(error => { throw (error) });
 }
 
 export const deleteGroceriesSuccess = (id) => ({
@@ -492,30 +491,32 @@ export const postGroceries = (ingredientName,
         userId: user_id
     }
     return fetch(baseUrl + '/groceries/' + user_id, {
-        method: 'POST',
-        body: JSON.stringify(newGrocery),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
-    })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            let error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-            }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(response => dispatch(addGrocery(response)))
-    .catch(error => {console.log('Adding grocery: ', error.message)
-        alert('Your grocery could not be added.\nError: ' + error.message)});
+            method: 'POST',
+            body: JSON.stringify(newGrocery),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => dispatch(addGrocery(response)))
+        .catch(error => {
+            console.log('Adding grocery: ', error.message)
+            alert('Your grocery could not be added.\nError: ' + error.message)
+        });
 };
 
 export const addGroceries = (groceries) => ({
@@ -530,45 +531,47 @@ export const addGrocery = (groceries) => ({
 
 export const toggleGrocery = (list_id) => (dispatch) => {
     return fetch(baseUrl + '/groceries/' + list_id, {
-        method: 'PUT'})
+            method: 'PUT'
+        })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then((id) => dispatch(toggleGrocerySuccess(id)))
-    .catch(error => {throw(error)});
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then((id) => dispatch(toggleGrocerySuccess(id)))
+        .catch(error => { throw (error) });
 }
 
 export const toggleFetchGrocery = (name, qty) => (dispatch) => {
 
     return fetch(baseUrl + '/groceries/' + name + '/' + qty, {
-        method: 'PUT'})
+            method: 'PUT'
+        })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then((name, qty) => dispatch(toggleFetchGrocerySuccess(name, qty)))
-    .catch(error => {throw(error)});
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then((name, qty) => dispatch(toggleFetchGrocerySuccess(name, qty)))
+        .catch(error => { throw (error) });
 }
 
 export const toggleGrocerySuccess = (id) => ({
@@ -577,17 +580,17 @@ export const toggleGrocerySuccess = (id) => ({
 })
 
 export const toggleFetchGrocerySuccess = (name, qty) => ({
-    type: ActionTypes.TOGGLE_FETCH_GROCERY,
-    payload: {
-        name: name,
-        qty: qty
-    }
-})
-//----------------------------------GROCERIES
-//-------------------------------------RECIPE
+        type: ActionTypes.TOGGLE_FETCH_GROCERY,
+        payload: {
+            name: name,
+            qty: qty
+        }
+    })
+    //----------------------------------GROCERIES
+    //-------------------------------------RECIPE
 export const postRecipe = (id, name, numSteps, image, notes, userId, type) => (dispatch) => {
     const newRecipe = {
-        id:id,
+        id: id,
         name: name,
         numSteps: numSteps,
         image: image,
@@ -598,86 +601,88 @@ export const postRecipe = (id, name, numSteps, image, notes, userId, type) => (d
     newRecipe.date = new Date().toISOString();
 
     return fetch(baseUrl + '/recipes', {
-        method: 'POST',
-        body: JSON.stringify(newRecipe),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
-    })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            let error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-            }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(response => dispatch(addRecipe(response)))
-    .catch(error => {console.log('Author recipe ', error.message)
-        alert('Your recipe could not be published.\nError: ' + error.message)});
+            method: 'POST',
+            body: JSON.stringify(newRecipe),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => dispatch(addRecipe(response)))
+        .catch(error => {
+            console.log('Author recipe ', error.message)
+            alert('Your recipe could not be published.\nError: ' + error.message)
+        });
 };
 
 export const fetchRecipe = () => (dispatch) => {
     // dispatch(recipeLoading(true));
 
     return fetch(baseUrl + "/recipes", {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(recipe => dispatch(addRecipe(recipe)))
-    .catch(error => dispatch(recipeFailed(error.message)));
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(recipe => dispatch(addRecipe(recipe)))
+        .catch(error => dispatch(recipeFailed(error.message)));
 }
 
 export const searchRecipe = (searchbar) => (dispatch) => {
     // dispatch(recipeLoading(true));
 
     return fetch(baseUrl + "/recipes/search/" + searchbar, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(recipeSearch => dispatch(foundRecipe(recipeSearch)))
-    .catch(error => dispatch(recipeFailed(error.message)));
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(recipeSearch => dispatch(foundRecipe(recipeSearch)))
+        .catch(error => dispatch(recipeFailed(error.message)));
 }
 
 export const foundRecipe = (recipeSearch) => ({
@@ -695,26 +700,64 @@ export const recipeFailed = (errmess) => ({
     payload: errmess
 });
 
+export const editRecipe = (id) => (dispatch) => {
+
+    return fetch(baseUrl + '/recipes/' + id, {
+            method: 'PUT'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then((id, name, numSteps, image, notes, userId, type) =>
+            dispatch(editRecipeSuccess(id, name, numSteps, image, notes, userId, type)))
+        .catch(error => { throw (error) });
+}
+
+export const editRecipeSuccess = (id, name, numSteps, image, notes, userId, type) => ({
+    type: ActionTypes.EDIT_RECIPE,
+    payload: {
+        id: id,
+        name: name,
+        numSteps: numSteps,
+        image: image,
+        notes: notes,
+        userId: userId,
+        type: type
+    }
+})
+
 export const deleteRecipe = (id) => (dispatch) => {
 
     return fetch(baseUrl + '/recipes/' + id, {
-        method: 'DELETE'})
+            method: 'DELETE'
+        })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(id => dispatch(deleteRecipeSuccess(id)))
-    .catch(error => {throw(error)});
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(id => dispatch(deleteRecipeSuccess(id)))
+        .catch(error => { throw (error) });
 }
 
 export const deleteRecipeSuccess = (id) => ({
@@ -737,58 +780,60 @@ export const postRecipeIngredients = (recipeId, ingredientId, ingredient_name, m
     }
 
     return fetch(baseUrl + '/recipes/ingredients', {
-        method: 'POST',
-        body: JSON.stringify(newRecipe),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
-    })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            let error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-            }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(ingredients => dispatch(addRecipeIngredients(ingredients)))
-    .catch(error => {console.log('Recipe ingredients ', error.message)
-        alert('Your recipe ingredients could not be published.\nError: ' + error.message)});
+            method: 'POST',
+            body: JSON.stringify(newRecipe),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(ingredients => dispatch(addRecipeIngredients(ingredients)))
+        .catch(error => {
+            console.log('Recipe ingredients ', error.message)
+            alert('Your recipe ingredients could not be published.\nError: ' + error.message)
+        });
 };
 
 export const fetchRecipeIngredients = () => (dispatch) => {
     // dispatch(recipeIngredientsLoading(true));
 
     return fetch(baseUrl + "/recipes/ingredients", {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(ingredients => dispatch(addRecipeIngredients(ingredients)))
-    .catch(error => dispatch(recipeIngredientsFailed(error.message)));
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(ingredients => dispatch(addRecipeIngredients(ingredients)))
+        .catch(error => dispatch(recipeIngredientsFailed(error.message)));
 }
 
 export const recipeIngredientsLoading = (status) => ({
@@ -820,58 +865,60 @@ export const postRecipeSteps = (recipeId, stepNum, steps) => (dispatch) => {
     }
 
     return fetch(baseUrl + '/steps', {
-        method: 'POST',
-        body: JSON.stringify(newRecipe),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
-    })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            let error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-            }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(steps => dispatch(addRecipeSteps(steps)))
-    .catch(error => {console.log('Recipe steps ', error.message)
-        alert('Your recipe steps could not be published.\nError: ' + error.message)});
+            method: 'POST',
+            body: JSON.stringify(newRecipe),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(steps => dispatch(addRecipeSteps(steps)))
+        .catch(error => {
+            console.log('Recipe steps ', error.message)
+            alert('Your recipe steps could not be published.\nError: ' + error.message)
+        });
 };
 
 export const fetchRecipeSteps = () => (dispatch) => {
     // dispatch(recipeStepsLoading(true));
 
     return fetch(baseUrl + "/steps", {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(steps => dispatch(addRecipeSteps(steps)))
-    .catch(error => dispatch(recipeStepsFailed(error.message)));
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(steps => dispatch(addRecipeSteps(steps)))
+        .catch(error => dispatch(recipeStepsFailed(error.message)));
 }
 
 export const recipeStepsLoading = (status) => ({
@@ -893,67 +940,34 @@ export const addRecipeSteps = (steps) => ({
     payload: steps
 });
 
-// export const postImage = (data) => (dispatch) => {
-//     const newImage = {
-//         data: data,
-//     }
-
-//     return fetch(baseUrl + '/upload', {
-//         method: 'POST',
-
-//     })
-//     .then(response => {
-//         if (response.ok) {
-//             return response;
-//         } else {
-//             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-//             error.response = response;
-//             throw error;
-//             }
-//     },  
-//     error => {
-//         let errmess = new Error(error.message);
-//         throw errmess;
-//     })
-//     .then(response => response.text())
-//     .then(response => dispatch(addImage(response)))
-//     .catch(error => {console.log('Author recipe ', error.message)
-//         alert('Your image could not be uploaded.\nError: ' + error.message)});
-// };
-
-// export const addImage = (image) => ({
-//     type: ActionTypes.ADD_IMAGE,
-//     payload: image
-// });
-
 //----------------------------------RECIPE
 //----------------------------------MEALPLAN
 export const fetchMealPlan = () => (dispatch) => {
     // dispatch(mealPlanLoading(true));
 
     return fetch(baseUrl + "/mealplans", {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(mealPlan => dispatch(addMealPlan(mealPlan)))
-    .catch(error => dispatch(mealPlanFailed(error.message)));
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(mealPlan => dispatch(addMealPlan(mealPlan)))
+        .catch(error => dispatch(mealPlanFailed(error.message)));
 }
 
 export const mealPlanLoading = () => ({
@@ -979,28 +993,28 @@ export const fetchMealPlanCollection = () => (dispatch) => {
     // dispatch(mealPlanCollectionLoading(true));
 
     return fetch(baseUrl + "/mealplans", {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin'
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(mealPlanCollection => dispatch(addMealPlanCollection(mealPlanCollection)))
-    .catch(error => dispatch(mealPlanCollectionFailed(error.message)));
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(mealPlanCollection => dispatch(addMealPlanCollection(mealPlanCollection)))
+        .catch(error => dispatch(mealPlanCollectionFailed(error.message)));
 }
 
 export const mealPlanCollectionLoading = () => ({
@@ -1033,50 +1047,52 @@ export const postComment = (recipeId, userId, rating, comment) => (dispatch) => 
     newComment.date = new Date().toISOString();
 
     return fetch(baseUrl + '/reviews', {
-        method: 'POST',
-        body: JSON.stringify(newComment),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'same-origin'
-    })
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            let error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-            }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(response => dispatch(addComment(response)))
-    .catch(error => {console.log('Post comments ', error.message)
-        alert('Your comment could not be posted.\nError: ' + error.message)});
+            method: 'POST',
+            body: JSON.stringify(newComment),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(response => dispatch(addComment(response)))
+        .catch(error => {
+            console.log('Post comments ', error.message)
+            alert('Your comment could not be posted.\nError: ' + error.message)
+        });
 };
 
 export const fetchComments = () => (dispatch) => {
     return fetch(baseUrl + "/reviews/recipe")
         .then(response => {
-            if (response.ok) {
-                return response;
-            }else {
-                let error = new Error('Error ' + response.status + ': ' + response.statusText)
-                error.response = response;
-                throw error;
-            }
-        },  
-        error => {
-            let errmess = new Error(error.message);
-            throw errmess;
-        })
-    .then(response => response.json())
-    .then(comments => dispatch(addComments(comments)))
-    .catch(error => dispatch(commentsFailed(error.message)));
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText)
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(comments => dispatch(addComments(comments)))
+        .catch(error => dispatch(commentsFailed(error.message)));
 }
 
 export const addComments = (comments) => ({
@@ -1092,23 +1108,24 @@ export const commentsFailed = (errmess) => ({
 export const deleteComment = (id) => (dispatch) => {
 
     return fetch(baseUrl + '/reviews/' + id, {
-        method: 'DELETE'})
+            method: 'DELETE'
+        })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then(id => dispatch(deleteCommentSuccess(id)))
-    .catch(error => {throw(error)});
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(id => dispatch(deleteCommentSuccess(id)))
+        .catch(error => { throw (error) });
 }
 
 export const deleteCommentSuccess = (id) => ({
@@ -1119,31 +1136,32 @@ export const deleteCommentSuccess = (id) => ({
 export const editComment = (id, rating, comment) => (dispatch) => {
 
     return fetch(baseUrl + '/reviews/' + id + '?rating=' + rating + '&comment=' + comment, {
-        method: 'PUT'})
+            method: 'PUT'
+        })
         .then(response => {
-         if (response.ok) {
-             return response;
-         } else {
-             let error = new Error('Error ' + response.status + ': ' + response.statusText);
-             error.response = response;
-             throw error;
-         }
-    },  
-    error => {
-        let errmess = new Error(error.message);
-        throw errmess;
-    })
-    .then(response => response.json())
-    .then((id, rating, comment) => dispatch(editCommentSuccess(id, rating, comment)))
-    .catch(error => {throw(error)});
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then((id, rating, comment) => dispatch(editCommentSuccess(id, rating, comment)))
+        .catch(error => { throw (error) });
 }
 
 export const editCommentSuccess = (id, rating, comment) => ({
-    type: ActionTypes.EDIT_COMMENT,
-    payload: {
-        id: id,
-        rating: rating,
-        comment: comment
-    }
-})
-//----------------------------------COMMENTS
+        type: ActionTypes.EDIT_COMMENT,
+        payload: {
+            id: id,
+            rating: rating,
+            comment: comment
+        }
+    })
+    //----------------------------------COMMENTS

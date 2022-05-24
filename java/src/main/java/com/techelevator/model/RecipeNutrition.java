@@ -5,10 +5,6 @@ public class RecipeNutrition {
     private long id;
     private long recipe_id;
     private String serving_size;
-    private double serving_size_qty;
-    private String serving_size_qty_unit;
-    private int serving_size_weight;
-    private String serving_size_unit;
     private double calories;
     private double calories_fat;
     private double total_fat;
@@ -51,8 +47,7 @@ public class RecipeNutrition {
     public RecipeNutrition() {
     }
 
-    public RecipeNutrition(long id, long recipe_id, String serving_size, double serving_size_qty, String serving_size_qty_unit, int serving_size_weight, String serving_size_unit,
-                           double calories, double calories_fat, double total_fat, double saturated_fat, double trans_fat, double poly_fat, double mono_fat,
+    public RecipeNutrition(long id, long recipe_id, String serving_size, double calories, double calories_fat, double total_fat, double saturated_fat, double trans_fat, double poly_fat, double mono_fat,
                            double cholesterol, double sodium, double potassium, double total_carbs, double dietary_fiber, double sugar, double sugar_alcohol,
                            double added_sugar, double protein, int vitA, int vitB6, int vitB12, int vitC, int vitD, int vitE, int vitK, int calcium, int iron,
                            int magnesium, int thiamine, int biotin, int panto_acid, int phosphorous, int iodine, int zinc, int selenium, int copper,
@@ -60,10 +55,6 @@ public class RecipeNutrition {
         this.id = id;
         this.recipe_id = recipe_id;
         this.serving_size = serving_size;
-        this.serving_size_qty = serving_size_qty;
-        this.serving_size_qty_unit = serving_size_qty_unit;
-        this.serving_size_weight = serving_size_weight;
-        this.serving_size_unit = serving_size_unit;
         this.calories = calories;
         this.calories_fat = calories_fat;
         this.total_fat = total_fat;
@@ -127,38 +118,6 @@ public class RecipeNutrition {
 
     public void setServingSize(String serving_size) {
         this.serving_size = serving_size;
-    }
-
-    public double getServingSizeQty() {
-        return serving_size_qty;
-    }
-
-    public void setServingSizeQty(double serving_size_qty) {
-        this.serving_size_qty = serving_size_qty;
-    }
-
-    public String getServingSizeQtyUnit() {
-        return serving_size_qty_unit;
-    }
-
-    public void setServingSizeQtyUnit(String serving_size_qty_unit) {
-        this.serving_size_qty_unit = serving_size_qty_unit;
-    }
-
-    public int getServingSizeWeight() {
-        return serving_size_weight;
-    }
-
-    public void setServingSizeWeight(int serving_size_weight) {
-        this.serving_size_weight = serving_size_weight;
-    }
-
-    public String getServingSizeUnit() {
-        return serving_size_unit;
-    }
-
-    public void setServingSizeUnit(String serving_size_unit) {
-        this.serving_size_unit = serving_size_unit;
     }
 
     public double getCalories() {
