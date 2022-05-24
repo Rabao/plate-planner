@@ -50,15 +50,15 @@ const Recipe = (props) => {
 
     const recipeId = props.recipe.id;
     const userId = props.user.id;
-    const authorAvatar = props.users.allUsers.filter((user) => user.id === props.recipe.userId)[0].avatar;
+    // const authorAvatar = props.users.allUsers.filter((user) => user.id === props.recipe.userId)[0].avatar;
     function handleSubmit(values) {
         props.postComment( recipeId, userId, values.rating, values.userComment);
         window.location.reload(false);
     }
 
-    function getAuthorFromId(id) {
-        return props.users.allUsers.filter((user) => user.id === parseInt(id,10))[0].username;
-    }
+    // function getAuthorFromId(id) {
+    //     return props.users.allUsers.filter((user) => user.id === parseInt(id,10))[0].username;
+    // }
 
     // if(props.isLoading){
     // return(<div className="container">
@@ -76,7 +76,8 @@ const Recipe = (props) => {
     
     } else { 
     return(
-        <div> 
+        <div>
+            {/* {console.log("AVATAR: "+JSON.stringify(props.users.allUsers.filter((user) => user.id === 1)))}
             <div className="row">
                 
                 {props.recipe ? 
@@ -107,7 +108,7 @@ const Recipe = (props) => {
                 
                 <h6>Null</h6>}
                 
-            </div>
+            </div> */}
             <div className='component-body'>
             {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} allIngredients={props.allIngredients} recipe={props.recipe} nutrition={props.nutrition} postGroceries={props.postGroceries} authUser={props.user}/> : <div>Null</div>}
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
