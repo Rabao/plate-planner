@@ -12,19 +12,19 @@ const DailyValueCalculator = (props) => {
     const toggleDvCalc = document.getElementsByClassName('toggle-dvcalcComponent')[0];
 
     
-    function handleOuterToggle() {
+    // function handleOuterToggle() {
 
-        if(dvCalc.classList.contains('close')){
-            dvCalc.classList.remove('close');
-            dvCalc.classList.add('open');
-        } else {
-            dvCalc.classList.remove('open');
-            dvCalc.classList.add('close');
-        }
+    //     if(dvCalc.classList.contains('close')){
+    //         dvCalc.classList.remove('close');
+    //         dvCalc.classList.add('open');
+    //     } else {
+    //         dvCalc.classList.remove('open');
+    //         dvCalc.classList.add('close');
+    //     }
 
-        setToggle({ toggle: !toggle })
+    //     setToggle({ toggle: !toggle })
 
-    }
+    // }
 
     function handleInnerToggle() {
 
@@ -42,8 +42,8 @@ const DailyValueCalculator = (props) => {
 
     return ( 
             <>
-            <div className="dvcalc" onClick={() => handleOuterToggle()} data-id="dvcalc"><span>Add Nutritional Value Details</span></div>
-                <div className="toggle-dvcalc close">
+            <div className="dvcalc" data-id="dvcalc"><span>Add Nutritional Value Details</span></div>
+                <div className="toggle-dvcalc">
                 <LocalForm>   
                    <Row className="form-group">
                         <Col md={3}>
@@ -53,36 +53,6 @@ const DailyValueCalculator = (props) => {
                                 name="servingContainer" 
                                 className="form-control"/>
                         </Col>
-                        <Col md={2}>
-                            <label htmlFor="servingQuantity">Serving Size Quantity</label> 
-                            <Control.text model='.servingQuantity' 
-                                id="servingQuantity" 
-                                name="servingQuantity" 
-                                className="form-control"/>
-                        </Col>
-                        <Col md={3}>
-                            <label htmlFor="servingQuantityUnits">Serving Size Quantity Units</label> 
-                            <Control.text model='.servingQuantityUnits' 
-                                id="servingQuantityUnits" 
-                                name="servingQuantityUnits" 
-                                className="form-control"/>
-                        </Col>
-                        <Col md={2}>
-                            <label htmlFor="servingSizeWeight">Serving Size Weight</label> 
-                            <Control.text model='.servingSizeWeight' 
-                                id="servingSizeWeight" 
-                                name="servingSizeWeight" 
-                                className="form-control"/>
-                        </Col>
-                        <Col md={2}>
-                            <label htmlFor="servingSizeUnit">Serving Size Unit</label> 
-                            <Control.text model='.servingSizeUnit' 
-                                id="servingSizeUnit" 
-                                name="servingSizeUnit" 
-                                className="form-control"/>
-                        </Col>
-                    </Row>
-                    <Row className="form-group">
                         <Col md={6}>
                             <label htmlFor="calories">Calories</label> 
                                 <Control.text model='.calories' 
@@ -118,20 +88,6 @@ const DailyValueCalculator = (props) => {
                                 <Control.text model='.transFat' 
                                 id="transFat" 
                                 name="transFat" 
-                                className="form-control"/>
-                        </Col>
-                        <Col md={2}>
-                            <label htmlFor="polyFat">Poly. Fat</label> 
-                                <Control.text model='.polyFat' 
-                                id="polyFat" 
-                                name="polyFat" 
-                                className="form-control"/>
-                        </Col>
-                        <Col md={2}>
-                            <label htmlFor="monoFat">Mono. Fat</label> 
-                                <Control.text model='.monoFat' 
-                                id="monoFat" 
-                                name="monoFat" 
                                 className="form-control"/>
                         </Col>
                     </Row>
