@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { Breadcrumb, Button, Col } from 'react-bootstrap';
 import {Modal, ModalBody, ModalHeader} from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
@@ -515,10 +515,11 @@ function Ingredients(props) {
 }
 
 function RecipeTags(props) {
+    const navigate = useNavigate();
 
     const recipeTags = props.target.map((tag) => {
         return(
-                <em className='recipe-tag'>{tag.tag} </em>
+                <em className='recipe-tag' onClick={() => {navigate('/recipes/search/'+tag.tag)}}>{tag.tag} </em>
             )
         });
 

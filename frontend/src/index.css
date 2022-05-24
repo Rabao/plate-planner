@@ -466,7 +466,14 @@ hr {
   margin-right: 1%;
   border-radius: 50px;
   border: solid rgb(114, 114, 114);
+  filter:brightness(0.75);
   background: none;
+}
+
+.recipe-tag:hover {
+  filter:brightness(1);
+  transition: 50ms;
+  cursor: pointer;
 }
 
 .recipe-title{

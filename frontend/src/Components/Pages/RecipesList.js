@@ -32,7 +32,11 @@ function RecipesList(props) {
      }
 
     function resultCount() {
-        for(let i = 0; i < props.recipes.length; i++){
+
+        const ids = props.recipes.map(o => o.id)
+        const filtered = props.recipes.filter(({id}, index) => !ids.includes(id, index + 1))
+        
+        for(let i = 0; i < filtered.length; i++){
             results++
         }
     }
