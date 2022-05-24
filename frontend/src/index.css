@@ -631,7 +631,8 @@ hr {
 #dashboard-recipe-collection-text p{
   z-index: 100;
   position: absolute;
-  line-height: 250px;
+  top: 460px;
+  line-height: 20px;
   text-align: center;
   font-weight: bold;
   max-width: 150px;
