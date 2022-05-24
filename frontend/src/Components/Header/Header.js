@@ -20,8 +20,9 @@ function Header(props) {
     // }
     
     function submitSearch(values){
-        console.log(values.searchsbar);
-        const path = '/recipes/search/'+values.searchsbar;
+        console.log(values.searchbar);
+        props.searchRecipe(values.searchbar);
+        const path = '/recipes/search/'+values.searchbar;
         navigate(path);       
     }
 
