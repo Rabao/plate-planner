@@ -1,22 +1,22 @@
 import React from 'react';
 import DailyValueForm from './DailyValueForm';
 
-const DailyValue = () => {
+const DailyValue = (props) => {
     return ( <>
     <div id="dv-table">
         <table>
-        <tr >
-            <td > Serving Size: </td> 
-            <td > Calories: </td> 
-            <td > Carbohydrates: </td> 
-            <td > Protein: </td>
-            <td > Fat: </td> 
+        <tr > {console.log("RECIPE NUTRITION :" + props.nutrition)}
+            <td > Serving Size: {props.nutrition.servingSize}</td> 
+            <td > Calories: {props.nutrition.calories} </td> 
+            <td > Carbohydrates: {props.nutrition.totalCarbs} </td> 
+            <td > Protein: {props.nutrition.protein} </td>
+            <td > Fat: {props.nutrition.totalFat} </td> 
         </tr> 
         <tr>
-            <td > Saturated Fat: </td> 
-            <td > Sodium: </td> 
-            <td > Fiber: </td> 
-            <td> Sugar: </td> 
+            <td > Saturated Fat: {props.nutrition.saturatedFat} </td> 
+            <td > Sodium: {props.nutrition.sodium} </td> 
+            <td > Fiber: {props.nutrition.dietaryFiber} </td> 
+            <td> Sugar: {props.nutrition.sugar} </td> 
         </tr> 
             { CalculateValues } 
         </table> 

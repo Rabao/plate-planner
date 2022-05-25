@@ -183,11 +183,11 @@ function AddRecipe(props) {
                             <LocalForm id="recipe-form">
                                 <div className="row">                
                                     <Col md={10}>
-                                    <label htmlFor="name">Recipe Title</label><br/> 
                                         <Control.text model='.name' 
                                         name="name" 
                                         className="recipe-title"
-                                        id="name"/> 
+                                        id="name"
+                                        placeholder="Name your recipe..."/> 
                                     </Col>
                                     <Col md={2}>
                                     <label htmlFor="recipe-type">Meal Type</label><br/> 
@@ -256,7 +256,7 @@ function AddRecipe(props) {
                                         found={found}/>
                                        </div>
                                 <Col md={12}>
-                                <label htmlFor="notes">Notes</label>
+                                <h5>Notes</h5>
                                     <Control.textarea model='.notes' 
                                         name="notes"
                                         rows="12" 

@@ -272,6 +272,33 @@ export const postNutrition = (servingSize, calories, caloriesFat, totalFat, satu
         });
 };
 
+export const fetchRecipeNutrition = () => (dispatch) => {
+        return fetch(baseUrl + "/recipes/nutrition", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(nutrition => dispatch(addRecipeNutrition(nutrition)))
+        .catch(error => dispatch(recipeNutritionFailed(error.message)));
+}
+
+
 export const postRecipeNutrition = (servingSize, calories, caloriesFat, totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, potassium,
     totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron,
     magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium, copper, manganese, chromium, molybdenum, chloride,

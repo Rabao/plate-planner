@@ -26,7 +26,7 @@ export default class Recipes extends Component {
                         <Breadcrumb.Item active>
                             {this.props.targetRecipe.name}
                         </Breadcrumb.Item>
-                    </Breadcrumb>
+                    </Breadcrumb> 
                     <Recipe recipe={this.props.targetRecipe}
                     recipeSteps={this.props.targetRecipeSteps}
                     recipeTags={this.props.recipeTags}
@@ -38,7 +38,8 @@ export default class Recipes extends Component {
                     postComment={this.props.postComment}
                     deleteComment={this.props.deleteComment}
                     editComment={this.props.editComment}
-                    postGroceries={this.props.postGroceries}/>
+                    postGroceries={this.props.postGroceries}
+                    recipeNutrition={this.props.recipeNutrition}/>
                  </div>  
             )
         }
@@ -111,7 +112,8 @@ const Recipe = (props) => {
                 
             </div>
             <div className='component-body'>
-            {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} allIngredients={props.allIngredients} recipe={props.recipe} nutrition={props.nutrition} postGroceries={props.postGroceries} authUser={props.user}/> : <div>Null</div>}
+            {props.ingredients && props.nutrition ?<Ingredients ingredients={props.ingredients} allIngredients={props.allIngredients} recipe={props.recipe} 
+                nutrition={props.nutrition} postGroceries={props.postGroceries} authUser={props.user} recipeNutrition={props.recipeNutrition}/> : <div>Null</div>}
             {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>}
             {props.recipe ?<Notes target={props.recipe.notes} /> : <div>Null</div>}
             {props.comments ? <RenderComments target={props.comments} authUser={props.user} users={props.users}
@@ -503,12 +505,12 @@ function Ingredients(props) {
                          
                     })
                    }
-                   
+                  
               </div>
               <div className='col' id="recipe-pg-img-container" md={5}>
                   <img id="recipe-pg-img" src={props.recipe.image}></img>      
               </div>
-              <DailyValue ingredients={props.ingredients}/>
+              <DailyValue ingredients={props.ingredients} nutrition={props.recipeNutrition}/>
           </div>
         );
 }

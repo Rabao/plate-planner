@@ -11,14 +11,15 @@ import { Recipe } from "./recipes";
 import { Ingredients } from "./ingredients";
 import { Nutrition } from './nutrition';
 import { MealPlan } from "./mealPlans";
-import {Token} from './token'
-import {User} from './user'
+import {Token} from './token';
+import {User} from './user';
 import { RecipeSteps } from './recipeSteps';
 import { RecipeTags } from './recipeTags';
 import { createForms } from 'react-redux-form';
 import { InitialFeedback } from "./forms";
 import { Users } from './users';
-import { RecipeIngredients } from './recipeIngredients'
+import { RecipeIngredients } from './recipeIngredients';
+import { RecipeNutrition } from './recipeNutrition';
 import { combineReducers } from 'redux';
 
 
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
             recipe: Recipe,
             recipeSteps: RecipeSteps,
             recipeTags: RecipeTags,
+            recipeNutrition: RecipeNutrition,
             recipeIngredients: RecipeIngredients,
             mealPlan: MealPlan,
             ...createForms({

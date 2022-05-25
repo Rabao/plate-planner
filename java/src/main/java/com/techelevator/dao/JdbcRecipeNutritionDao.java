@@ -18,6 +18,26 @@ public class JdbcRecipeNutritionDao implements RecipeNutritionDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
+//    @Override
+//    public RecipeNutrition getRecipeNutrition(long id) {
+//        RecipeNutrition nutrition = null;
+//        String sql = "SELECT id, recipe_id, serving_size, calories, calories_fat, total_fat, saturated_fat, " +
+//                "trans_fat, poly_fat, mono_fat, cholesterol, sodium, potassium, total_carbs, " +
+//                "dietary_fiber, sugar, sugar_alcohol, added_sugar, protein, vitA, " +
+//                "vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, " +
+//                "biotin, panto_acid, phosphorous, iodine, zinc, selenium, copper, " +
+//                "manganese, chromium, molybdenum, chloride FROM recipe_nutrition WHERE recipe_id = ?";
+//
+//        SqlRowSet results = jdbcTemplate.queryForRowSet(sql,id);
+//        if(results.next()) {
+//            nutrition = mapRowToRecipeNutrition(results);
+//        } else {
+//            throw new RecipeNutritionNotFoundException();
+//        }
+//
+//        return nutrition;
+//    }
+
     @Override
     public RecipeNutrition getRecipeNutrition(long id) {
         RecipeNutrition nutrition = null;
@@ -41,12 +61,7 @@ public class JdbcRecipeNutritionDao implements RecipeNutritionDao{
     @Override
     public List<RecipeNutrition> listRecipeNutrition() {
         List<RecipeNutrition> nutritionList = new ArrayList<>();
-        String sql = "SELECT id, recipe_id, serving_size, calories, calories_fat, total_fat, saturated_fat, " +
-                "trans_fat, poly_fat, mono_fat, cholesterol, sodium, potassium, total_carbs, " +
-                "dietary_fiber, sugar, sugar_alcohol, added_sugar, protein, vitA, " +
-                "vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, " +
-                "biotin, panto_acid, phosphorous, iodine, zinc, selenium, copper, " +
-                "manganese, chromium, molybdenum, chloride FROM recipe_nutrition";
+        String sql = "SELECT * FROM recipe_nutrition";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {

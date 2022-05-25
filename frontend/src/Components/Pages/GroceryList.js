@@ -473,22 +473,6 @@ class AddItem extends Component{
                     </Col>
                 </Row>
                 <Row className="form-group">
-                    <Col md={6}>
-                        <label htmlFor="calories">Calories</label> 
-                            <Control.text model='.calories' 
-                            id="calories" 
-                            name="calories" 
-                            className="form-control"/>
-                    </Col>
-                    <Col md={6}>
-                        <label htmlFor="caloriesFat">Calories from Fat</label> 
-                            <Control.text model='.caloriesFat' 
-                            id="caloriesFat" 
-                            name="caloriesFat" 
-                            className="form-control"/>
-                    </Col>
-                </Row>
-                <Row className="form-group">
                     <Col md={4}>
                         <label htmlFor="totalFat">Total Fat</label> 
                             <Control.text model='.totalFat' 

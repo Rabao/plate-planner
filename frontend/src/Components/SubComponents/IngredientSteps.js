@@ -106,12 +106,12 @@ class IngredientSteps  extends Component {
         return (
             <div>    
                  <div>
-                    <label>Ingredients</label> 
+                    <h5>Ingredients</h5> 
                     {this.renderIngredientsInput()}      
                     <div className="submit-button-interface col"><button class="submit-buttons" onClick={this.addIngredient.bind(this)}>Add Ingredient</button><button class="submit-buttons" onClick={this.removeAllIngredients.bind(this)}>Remove All</button></div>     
                 </div>        
                 <div>
-                    <label>Steps</label> 
+                    <h5>Steps</h5> 
                     {this.renderStepsInput()}
                     <div className="submit-button-interface col"><button class="submit-buttons" onClick={this.addStep.bind(this)}>Add New Step</button><button class="submit-buttons" onClick={this.removeAllSteps.bind(this)}>Remove All</button></div>     
                 </div>

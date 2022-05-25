@@ -15,7 +15,7 @@ import Dashboard from '../Pages/Dashboard';
 import DailyValueForm from '../SubComponents/DailyValueForm';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
         toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, 
-        deleteRecipe, editRecipe, postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps,  
+        deleteRecipe, editRecipe, fetchRecipeNutrition, postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps,  
         editRecipeSteps, fetchRecipeIngredients, editRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
         postComment, fetchComments, deleteComment, editComment, postGroceries,
         postIngredient, searchRecipe,fetchNutrition, postNutrition } from '../../Redux/actionCreators'
@@ -39,6 +39,7 @@ const mapStateToProps = state => {
         recipeSteps: state.recipeSteps,
         recipeTags: state.recipeTags,
         recipeIngredients: state.recipeIngredients,
+        recipeNutrition: state.recipeNutrition,
         mealPlan: state.mealPlan,
     }
 }
@@ -72,6 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchRecipeSteps: () => {dispatch(fetchRecipeSteps())},
     fetchRecipeTags: () => {dispatch(fetchRecipeTags())},
     fetchRecipeIngredients: () => {dispatch(fetchRecipeIngredients())},
+    fetchRecipeNutrition: () => {dispatch(fetchRecipeNutrition())},
     fetchNutrition: () => {dispatch(fetchNutrition())},
     searchRecipe: (search) => {dispatch(searchRecipe(search))},
 
@@ -118,7 +120,7 @@ class Main extends Component {
         this.props.fetchRecipeSteps();
         this.props.fetchRecipeTags();
         this.props.fetchRecipeIngredients();
-       
+        this.props.fetchRecipeNutrition();      
     }
 
     handleLogout = () => {
@@ -151,6 +153,7 @@ class Main extends Component {
                 user={this.props.user}
                 users={this.props.allUsers}
                 recipeTags={this.props.recipeTags.recipeTags.filter(tag => tag.recipeId === parseInt(id,10))}
+                recipeNutrition={this.props.recipeNutrition.recipeNutrition.filter(nutrition => nutrition.recipeId === parseInt(id,10))[0]}
                 targetIngredients={this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10))}
                 ingredients={this.props.ingredients.ingredients}
                 targetComments={this.props.comments.comments.filter(comments => comments.recipeId === parseInt(id,10))}
@@ -161,13 +164,13 @@ class Main extends Component {
                 editComment={this.props.editComment}
                 editRecipe={this.props.editRecipe}
                 nutrition={this.props.nutrition.nutrition}
-                postGroceries={this.props.postGroceries}/>
+                postGroceries={this.props.postGroceries}
+                />
             ) 
         }
 
         const EditRecipeWithId = () => {
             const {id} = useParams();
-           
             return(
                 <EditRecipe targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
                 targetRecipeSteps={this.props.recipeSteps.recipeSteps.filter(steps => steps.recipeId === parseInt(id,10))}
@@ -180,7 +183,8 @@ class Main extends Component {
                 editRecipe={this.props.editRecipe}
                 editRecipeSteps={this.props.editRecipeSteps}
                 editRecipeIngredients={this.props.editRecipeIngredients}
-                nutrition={this.props.nutrition.nutrition}/>
+                nutrition={this.props.nutrition.nutrition}
+                recipeNutrition={this.props.recipeNutrition.recipeNutrition.filter(nutrition => nutrition.recipeId === parseInt(id,10))[0]}/>
             ) 
         }
 
@@ -189,7 +193,8 @@ class Main extends Component {
         return(
             <div>
                 {/* Passes the token and the handleLogout method to the Header component. */}
-                <Header token={this.props.token.token} user={this.props.user}
+                
+                <Header token={this.props.token.token} user={this.props.user} 
                 handleLogout={this.handleLogout} searchRecipe={this.props.searchRecipe}
                 recipeSearch={this.props.recipeSearch}/>
                 <div className="main">
