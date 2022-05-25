@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom'
 import { Breadcrumb, Button, Col } from 'react-bootstrap';
 import {Modal, ModalBody, ModalHeader} from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
@@ -23,7 +23,7 @@ export default class EditRecipe extends Component {
         this.fileInputRef = React.createRef();
       }
 
-      componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps, prevState) {
           if(prevState.file !== this.state.file){
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -38,7 +38,7 @@ export default class EditRecipe extends Component {
           } 
       }
 
-      componentDidMount () {
+    componentDidMount () {
         if (this.multilineTextarea) {
           this.multilineTextarea.style.height = 'auto';
         }
@@ -48,13 +48,19 @@ export default class EditRecipe extends Component {
         })
       }
     
-      changeTextarea = () => {
+    changeTextarea = () => {
         this.multilineTextarea.style.height = 'auto';
         this.multilineTextarea.style.height = this.multilineTextarea.scrollHeight + 'px';
       }
 
+    getIdByIngredientName = (name) => {
+        return this.props.ingredients.filter(ingredients => ingredients.name === name)[0].id;
+    }
+
       postEditedRecipe(e) {
         let stepNum = 1;
+        const path = '/recipes/';
+        let pageRedirect= false;
         const name = document.getElementById('name');
         const type = document.getElementsByClassName('recipe-type');
         const notes = document.getElementsByClassName('edit-notes')[0];
@@ -97,6 +103,21 @@ export default class EditRecipe extends Component {
             this.props.editRecipeSteps(this.props.targetRecipe.id,stepNum,steps[i].value) 
             stepNum++;      
         }
+        for(let i=0; i< steps.length; i++){     
+            this.props.editRecipeSteps(this.props.targetRecipe.id,stepNum,steps[i].value) 
+            stepNum++;      
+        }
+        for(let i=0; i< ingredients.length; i++){
+            this.props.editRecipeIngredients(this.props.targetRecipe.id,this.getIdByIngredientName(ingredients[i].value),ingredients[i].value,qty[i].value,unit[i].value)
+        }
+
+        // console.log("INGREDIENT ID: " + this.getIdByIngredientName("Chicken Breast"));
+
+        setTimeout(() => {
+            pageRedirect= true;
+            if(pageRedirect === true){
+                React.navigate(path); 
+        }}, 500)
       }
 
 

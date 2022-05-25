@@ -14,6 +14,17 @@ export const RecipeIngredients = (state = {
                 errMess: null,
                 recipeIngredients: action.payload}
 
+        case ActionTypes.EDIT_RECIPESTEPS:
+            return{...state, recipeIngredients: state.recipeIngredients.filter((recipeIngredients) => {
+                if(recipeIngredients.recipeId === action.payload.recipeId){
+                    recipeIngredients.ingredientId = action.payload.ingredientId;
+                    recipeIngredients.ingredient_name = action.payload.ingredient_name;
+                    recipeIngredients.measurement = action.payload.measurement;
+                    recipeIngredients.unit = action.payload.unit;
+                }
+                return recipeIngredients;
+        })}
+
         case ActionTypes.RECIPEINGREDIENTS_LOADING:
             return{...state,
                     isLoading: true,

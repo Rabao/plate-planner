@@ -2,6 +2,7 @@ package com.techelevator.dao;
 
 import com.techelevator.model.RecipeIngredients;
 import com.techelevator.model.RecipeIngredientsNotFoundException;
+import com.techelevator.model.RecipeSteps;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,14 @@ public class JdbcRecipeIngredientsDao implements RecipeIngredientsDao {
                 "VALUES (?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql,recipeIngredients.getRecipeId(),recipeIngredients.getIngredientId(),
                 recipeIngredients.getingredient_name(),recipeIngredients.getMeasurement(),recipeIngredients.getUnit()) == 1;
+    }
+
+    @Override
+    public boolean editRecipeIngredients(long id, RecipeIngredients recipeIngredients) {
+        String sql = "UPDATE recipe_ingredients SET ingredient_id = ?, ingredient_name = ? , measurement = ? , unit = ? " +
+                "WHERE recipe_id = ? ";
+        return jdbcTemplate.update(sql, recipeIngredients.getIngredientId(), recipeIngredients.getingredient_name(),
+                recipeIngredients.getMeasurement(),recipeIngredients.getUnit(), id) == 1;
     }
 
     @Override

@@ -264,6 +264,12 @@ public class MealPlanController {
         return recipeIngredientsDao.addRecipeIngredients(recipeIngredients);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value="/recipes/ingredients/{id}", method = RequestMethod.PUT)
+    public boolean editRecipeIngredients(@PathVariable long id, @Valid @RequestBody RecipeIngredients recipeIngredients) throws RecipeIngredientsNotFoundException{
+        return recipeIngredientsDao.editRecipeIngredients(id, recipeIngredients);
+    }
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value="/recipes/ingredients/{id}", method = RequestMethod.DELETE )
     public boolean deleteRecipeIngredients(@PathVariable long id) throws RecipeIngredientsNotFoundException {

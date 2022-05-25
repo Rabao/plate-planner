@@ -16,7 +16,7 @@ import DailyValueForm from '../SubComponents/DailyValueForm';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
         toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, 
         deleteRecipe, editRecipe, postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps,  
-        editRecipeSteps, fetchRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
+        editRecipeSteps, fetchRecipeIngredients, editRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
         postComment, fetchComments, deleteComment, editComment, postGroceries,
         postIngredient, searchRecipe,fetchNutrition, postNutrition } from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
@@ -50,6 +50,8 @@ const mapDispatchToProps = (dispatch) => ({
     deleteRecipe: (id) => { dispatch(deleteRecipe(id))},
     editRecipe: (id, name, numSteps, image, notes, userId, type) => {dispatch(editRecipe(id, name, numSteps, image, notes, userId, type))},
     editRecipeSteps: (recipeId, stepNum, steps) => {dispatch(editRecipeSteps(recipeId, stepNum, steps))},
+    editRecipeIngredients: (recipeId, ingredientId, ingredient_name, measurement, unit) => 
+        {dispatch(editRecipeIngredients(recipeId, ingredientId, ingredient_name, measurement, unit))},
     deleteCompletedGroceries: (id) => {dispatch(deleteCompletedGroceries(id))},
     deleteGroceries: (id) => {dispatch(deleteGroceries(id))},
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
@@ -177,6 +179,7 @@ class Main extends Component {
                 ingredients={this.props.ingredients.ingredients}
                 editRecipe={this.props.editRecipe}
                 editRecipeSteps={this.props.editRecipeSteps}
+                editRecipeIngredients={this.props.editRecipeIngredients}
                 nutrition={this.props.nutrition.nutrition}/>
             ) 
         }

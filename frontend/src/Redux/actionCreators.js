@@ -813,6 +813,45 @@ export const postRecipeIngredients = (recipeId, ingredientId, ingredient_name, m
         });
 };
 
+export const editRecipeIngredients = (recipeId, ingredientId, ingredient_name, measurement, unit) => (dispatch) => {
+    const updatedRecipeIngredients = {
+        ingredientId: ingredientId,
+        ingredient_name: ingredient_name,
+        measurement: measurement,
+        unit: unit
+    }
+    return fetch(baseUrl + '/recipes/ingredients/' + recipeId, {
+            method: 'PUT',
+            body: JSON.stringify(updatedRecipeIngredients),
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(id => dispatch(editRecipeIngredientsSuccess(id)))
+        .catch(error => { throw (error) });
+}
+
+export const editRecipeIngredientsSuccess = (recipeId) => ({
+    type: ActionTypes.EDIT_RECIPEINGREDIENTS,
+    payload: recipeId
+})
+
 export const fetchRecipeIngredients = () => (dispatch) => {
     // dispatch(recipeIngredientsLoading(true));
 

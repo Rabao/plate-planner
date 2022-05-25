@@ -485,7 +485,6 @@ function Ingredients(props) {
                             item = " " + ingredient.unit + "s ";
                         }
                 
-                        // console.log(props.nutrition);
                 
                         return (  
                             <div id="recipe-ingredients" className='row' key={index}>
@@ -534,7 +533,6 @@ function RecipeTags(props) {
 }
 
 function RecipeSteps(props) {
-    // const recipeSteps = props.target.map((step) => {
     const recipeSteps = props.target.sort((a,b) => a.stepNum - b.stepNum).map((step =>{
         return(
             <li key={step.stepNum}>{step.steps}</li>

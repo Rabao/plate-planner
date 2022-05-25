@@ -14,12 +14,6 @@ function AddRecipe(props) {
     let found = false;  
     let filePath= "";
 
-    let numSteps = 0;
-    let stepsHtmlIdent = "steps" + numSteps;
-    let stepsMode = ".steps" + numSteps;
-
-    let ingredientType = '';
-
     const servingSize = document.getElementById('servingSize');
     const calories = document.getElementById('calories');
     const caloriesFat = document.getElementById('caloriesFat');
