@@ -272,17 +272,17 @@ export default class EditRecipe extends Component {
         //         resizeTextarea(a[i].id);
         //     }
         //   }
-        const recipeSteps = this.props.targetRecipeSteps.map((step, i) => {
+        const recipeSteps = this.props.targetRecipeSteps.sort((a,b) => a.stepNum - b.stepNum).map((step => {
             return(
                 <div>
-                    <div key={i}>
-                        <textarea model={".step"+i} name={"step"+i} defaultValue={step.steps} 
+                    <div key={step.stepNum}>
+                        <textarea model={".step"+step.stepNum} name={"step"+step.stepNum} defaultValue={step.steps} 
                         className="edit-recipe-steps" onChange={this.changeTextarea} 
                         ref={ref => this.multilineTextarea = ref}/>
                     </div>
                 </div>
                 )
-            });
+            }));
     
         return ( <div className='row' >         
                     <div>
