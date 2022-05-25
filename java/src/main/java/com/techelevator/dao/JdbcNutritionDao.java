@@ -64,8 +64,7 @@ public class JdbcNutritionDao implements NutritionDao{
                 "vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, iron, magnesium, thiamine, " +
                 "biotin, panto_acid, phosphorous, iodine, zinc, selenium, copper, " +
                 "manganese, chromium, molybdenum, chloride) VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, " +
-                "?)";
+                "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(sql, nutrition.getServingSize(), nutrition.getCalories(), nutrition.getCaloriesFat(),
                 nutrition.getTotalFat(), nutrition.getSaturatedFat(), nutrition.getTransFat(), nutrition.getPolyFat(), nutrition.getMonoFat(),
                 nutrition.getCholesterol(), nutrition.getSodium(), nutrition.getPotassium(), nutrition.getTotalCarbs(), nutrition.getDietaryFiber(),

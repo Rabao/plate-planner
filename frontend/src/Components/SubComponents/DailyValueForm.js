@@ -54,22 +54,6 @@ const DailyValueForm = (props) => {
                         </Col>
                     </Row>
                     <Row className="form-group">
-                        <Col md={6}>
-                            <label htmlFor="calories">Calories</label> 
-                                <Control.text model='.calories' 
-                                id="calories" 
-                                name="calories" 
-                                className="form-control"/>
-                        </Col>
-                        <Col md={6}>
-                            <label htmlFor="caloriesFat">Calories from Fat</label> 
-                                <Control.text model='.caloriesFat' 
-                                id="caloriesFat" 
-                                name="caloriesFat" 
-                                className="form-control"/>
-                        </Col>
-                    </Row>
-                    <Row className="form-group">
                         <Col md={4}>
                             <label htmlFor="totalFat">Total Fat</label> 
                                 <Control.text model='.totalFat' 
@@ -266,13 +250,6 @@ const DailyValueForm = (props) => {
                             </Col>
                         </Row>
                         <Row className="form-group">
-                            <Col md={2}>
-                                <label htmlFor="potassium">Potassium</label> 
-                                    <Control.text model='.potassium' 
-                                    id="potassium" 
-                                    name="potassium" 
-                                    className="form-control"/>
-                            </Col>
                             <Col md={2}>
                                 <label htmlFor="phosphorous">Phosphorous</label> 
                                     <Control.text model='.phosphorous' 
