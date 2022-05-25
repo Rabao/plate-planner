@@ -104,10 +104,11 @@ public class JdbcRecipeDao implements RecipeDao{
     }
 
     @Override
-    public boolean editRecipe(long id, String name, int numOfSteps, String image, String notes, int userId, String type) {
+    public boolean editRecipe(long id, Recipe recipe) {
         String sql = "UPDATE recipes SET name = ?, num_of_steps = ?, image = ?, notes = ?, user_id = ?, type = ? " +
                 "WHERE id = ?";
-        return jdbcTemplate.update(sql, name, numOfSteps, image, notes, userId, type, id) == 1;
+        return jdbcTemplate.update(sql, recipe.getName(), recipe.getNumOfSteps(), recipe.getImage(),
+                recipe.getNotes(), recipe.getUserId(), recipe.getType(), id) == 1;
     }
 
     @Override

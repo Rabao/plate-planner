@@ -701,9 +701,22 @@ export const recipeFailed = (errmess) => ({
 });
 
 export const editRecipe = (id, name, numSteps, image, notes, userId, type) => (dispatch) => {
-
-    return fetch(baseUrl + 'edit/recipes/' + id, {
-            method: 'PUT'
+    const updatedRecipe = {
+        name: name,
+        numSteps: numSteps,
+        image: image,
+        notes: notes,
+        userId: userId,
+        type: type
+    }
+    return fetch(baseUrl + '/edit/recipes/' + id, {
+            method: 'PUT',
+            body: JSON.stringify(updatedRecipe),
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
         })
         .then(response => {
                 if (response.ok) {
@@ -719,22 +732,13 @@ export const editRecipe = (id, name, numSteps, image, notes, userId, type) => (d
                 throw errmess;
             })
         .then(response => response.json())
-        .then((id, name, numSteps, image, notes, userId, type) =>
-            dispatch(editRecipeSuccess(id, name, numSteps, image, notes, userId, type)))
+        .then(id => dispatch(editRecipeSuccess(id)))
         .catch(error => { throw (error) });
 }
 
-export const editRecipeSuccess = (id, name, numSteps, image, notes, userId, type) => ({
+export const editRecipeSuccess = (id) => ({
     type: ActionTypes.EDIT_RECIPE,
-    payload: {
-        id: id,
-        name: name,
-        numSteps: numSteps,
-        image: image,
-        notes: notes,
-        userId: userId,
-        type: type
-    }
+    payload: id
 })
 
 export const deleteRecipe = (id) => (dispatch) => {

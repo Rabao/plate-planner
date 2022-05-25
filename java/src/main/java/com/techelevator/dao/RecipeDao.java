@@ -17,7 +17,7 @@ public interface RecipeDao {
 
     boolean addRecipe(Recipe recipe);
 
-    boolean editRecipe(long id, String name, int numOfSteps, String image, String notes, int userId, String type);
+    boolean editRecipe(long id, Recipe recipe);
 
     boolean deleteRecipe(long id);
 }

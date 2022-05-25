@@ -200,9 +200,8 @@ public class MealPlanController {
 
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value="edit/recipes/{id}", method = RequestMethod.PUT)
-    public boolean editRecipe(@PathVariable long id, @RequestParam String name, @RequestParam int numOfSteps, @RequestParam String image,
-                              @RequestParam String notes, @RequestParam int userId, @RequestParam String type) throws RecipeNotFoundException{
-        return recipeDao.editRecipe(id, name, numOfSteps, image, notes, userId, type);
+    public boolean editRecipe(@PathVariable long id, @Valid @RequestBody Recipe recipe) throws RecipeNotFoundException{
+        return recipeDao.editRecipe(id, recipe);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
