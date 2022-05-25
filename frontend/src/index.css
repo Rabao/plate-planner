@@ -449,7 +449,7 @@ hr {
   color: #dbd5cf;
 }
 
-/*------------------- Add Recipe/ Recipe Page CSS ---------------------*/
+/*-------------- Add Recipe/ Edit Recipe/ Recipe Page CSS ---------------*/
 
 .recipe-steps{
   width:86.8%;
@@ -562,6 +562,29 @@ hr {
   padding: 5px;
   border: 1px solid #dbd5cf;
   border-radius: 5px;
+}
+
+.edit-recipe-steps {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.edit-notes {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.recipe-title {
+  background: none;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  border-bottom: 2px solid #dbd5cf;
+  border-radius: 0px;
+  outline: none;
+  font-size: 1.80em;
+  font-weight: 500;
+  margin-bottom: 1.65em;
 }
 
 /*------------------------ Grocery List CSS --------------------------*/

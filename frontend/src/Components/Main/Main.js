@@ -48,7 +48,7 @@ const mapDispatchToProps = (dispatch) => ({
     deleteUser: () => { dispatch(deleteUser())},
     deleteComment: (id) => { dispatch(deleteComment(id))},
     deleteRecipe: (id) => { dispatch(deleteRecipe(id))},
-    editRecipe: (id) => {dispatch(editRecipe(id))},
+    editRecipe: (id, name, numSteps, image, notes, userId, type) => {dispatch(editRecipe(id, name, numSteps, image, notes, userId, type))},
     deleteCompletedGroceries: (id) => {dispatch(deleteCompletedGroceries(id))},
     deleteGroceries: (id) => {dispatch(deleteGroceries(id))},
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},

@@ -5,14 +5,10 @@ import {Modal, ModalBody, ModalHeader} from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import Loader from '../SubComponents/Loader/Loader';
 import IngredientsData from './Ingredients';
-import DailyValue from '../SubComponents/DailyValueDisplay';
 import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 import {RiPlayListAddFill} from 'react-icons/ri';
-
-
-// Import FilePond styles
-import 'filepond/dist/filepond.min.css'
+import DailyValueForm from '../SubComponents/DailyValueForm';
 
 // // Import the Image EXIF Orientation and Image Preview plugins
 // // Note: These need to be installed separately
@@ -30,14 +26,6 @@ export default class EditRecipe extends Component {
         this.state = {
             ingredientValues: [],
             stepValues: [],
-            // files: [
-            //     {
-            //       source: "index.html",
-            //       options: {
-            //         type: "local"
-            //       }
-            //     }
-            //   ]
             file: [],
             preview: ''
         };
@@ -58,6 +46,57 @@ export default class EditRecipe extends Component {
                 reader.readAsDataURL(this.state.file);
             }
           } 
+      }
+
+      componentDidMount () {
+        if (this.multilineTextarea) {
+          this.multilineTextarea.style.height = 'auto';
+        }
+        this.setState({
+            file: this.props.targetRecipe.image,
+            preview: this.props.targetRecipe.image
+        })
+      }
+    
+      changeTextarea = () => {
+        this.multilineTextarea.style.height = 'auto';
+        this.multilineTextarea.style.height = this.multilineTextarea.scrollHeight + 'px';
+      }
+
+      postEditedRecipe() {
+        const name = document.getElementById('name');
+        const type = document.getElementsByClassName('recipe-type');
+        const notes = document.getElementById('notes');
+        const qty = document.getElementsByClassName('qty'); //Measurement quantity (fills measurement parameter in postIngredients)
+        const unit = document.getElementsByClassName('unit-measure');
+        const steps = document.getElementsByClassName('recipe-steps');
+        const ingredients = document.getElementsByClassName('recipe-ingredients');
+
+        //------------------------------------------------------------------IMAGE READER
+
+        const formData = new FormData();
+
+        let data = new FormData()
+        data.append('file', this.state.file)
+        let filePath = '/uploads/' + this.state.file.name;
+        
+        console.log(filePath)
+        
+        fetch(' http://localhost:8080/upload', {
+            method: 'POST',
+            body: data
+        })
+
+        // ------------------------------------------------------------------SUBMISSION LOGIC
+
+        console.log(this.props.targetRecipe.id)
+        console.log(name.value)
+        console.log(0)
+        console.log(filePath)
+        console.log(notes.value)
+        console.log(this.props.user.id)
+        console.log('')
+        this.props.editRecipe(this.props.targetRecipe.id,name.value,0,filePath,notes.value,this.props.user.id,'')
       }
 
 
@@ -94,7 +133,6 @@ export default class EditRecipe extends Component {
             <div>
                 <div className="row">
                     <div className="recipe-info-name" md={9}>
-                    <label htmlFor="name">Recipe Title</label><br/> 
                                             <input type="text" model='.name' 
                                             name="name" 
                                             className="recipe-title"
@@ -124,7 +162,7 @@ export default class EditRecipe extends Component {
                 {this.Ingredients (this.props.ingredients, this.props.targetRecipe, this.props.nutrition, this.props.user)}
                 {this.RecipeSteps(this.props.targetRecipeSteps)}
                 {/* {props.recipeSteps ?<RecipeSteps target={props.recipeSteps} />: <div>Null</div>} */}
-                {this.props.targetRecipe ?<Notes target={this.props.targetRecipe.notes}/> : <div>Null</div>}            
+                {this.Notes(this.props.targetRecipe.notes)}            
                 </div>
             </div>
         )
@@ -233,7 +271,7 @@ export default class EditRecipe extends Component {
                                 </div>}
                             </form>
                         </div>
-                  <DailyValue ingredients={this.props.ingredients}/>
+                  <DailyValueForm/>
               </div>
             );
     }
@@ -260,22 +298,39 @@ export default class EditRecipe extends Component {
             return(
                 <div>
                     <div key={i}>
-                        <input type="textarea" model={".step"+i} name={"step"+i} defaultValue={step.steps} className="recipe-steps"/>
+                        <textarea model={".step"+i} name={"step"+i} defaultValue={step.steps} 
+                        className="edit-recipe-steps" onChange={this.changeTextarea} 
+                        ref={ref => this.multilineTextarea = ref}/>
                     </div>
                 </div>
-                // <li key={step.step_num}>{step.steps}</li>
                 )
             });
     
         return ( <div className='row' >         
                     <div>
-                        <label>Steps</label> 
+                        <h5>Steps</h5> 
                         {recipeSteps} 
                     </div>
                 </div>
     
         )
     }
+
+
+    
+    Notes() { 
+
+    return (
+        <div className='row'>
+            <div>
+            <h5>Notes</h5>
+                <textarea model='.edit-notes'  name="edit-notes" defaultValue={this.props.targetRecipe.notes} className="edit-notes" onChange={this.changeTextarea} ref={ref => this.multilineTextarea = ref}/>
+            </div>
+        </div>
+        );
+    }
+
+
     
 
   render() {
@@ -300,123 +355,10 @@ export default class EditRecipe extends Component {
                         this.props.users, 
                         this.props.nutrition,
                         this.props.recipeLoading, 
-                        this.props.recipeErrMess)}
-                {/* <Recipe recipe={this.props.targetRecipe}
-                    recipeSteps={this.props.targetRecipeSteps}
-                    ingredients={this.props.targetIngredients}
-                    allIngredients={this.props.ingredients}
-                    user={this.props.user}
-                    users={this.props.users} 
-                    nutrition={this.props.nutrition}
-                    isLoading={this.props.recipeLoading} 
-                    errMess={this.props.recipeErrMess}/> */}
+                        this.props.recipeErrMess,
+                        this.props.editRecipe)}
+                    <div className="container"><button className="submit-buttons" onClick={() => {this.postEditedRecipe()}}>Save Changes</button></div>
                 </div>  
             )
         }  
     }
-
-
-
-// function Ingredients(props) { 
-//     const getIngredientFromId = (id) => {
-//         return props.ingredients.filter(ingredients => ingredients.id === parseInt(id,10))[0].name;
-//     }
-
-//     // const recipeIngredients = 
-    
-    
-//     return (    
-      
-//           <div className='row'>
-//               <div className='col' md={7}>
-//                    <h5>Ingredients</h5>
-//                    {
-//                        props.ingredients.map((ingredient, index) => {
-
-//                         let item = '';
-                
-//                         if(ingredient.measurement<2){
-//                             item = " " + ingredient.unit + " ";
-//                         } else {
-//                             item = " " + ingredient.unit + "s ";
-//                         }
-                
-//                         // console.log(props.nutrition);
-                
-//                         return (  
-//                             <div id="recipe-ingredients" className='row' key={index}>
-//                                 <div className='col' md={8}>
-//                                     <p className="recipe-ingredient-text">
-//                                         <div id="ingredient-measurement"><span>{ingredient.measurement}</span></div>{item} of <Tooltip 
-//                                             trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip"></div>)}><span>{getIngredientFromId(76)}</span></Tooltip>
-//                                     </p>
-//                                 </div>
-//                             </div>
-//                              )
-                
-                         
-//                     })
-//                    }
-                   
-//               </div>
-//               <div className='col' id="recipe-pg-img-container" md={5}>
-//                   <img id="recipe-pg-img" src={props.recipe.image}></img>      
-//               </div>
-//               <DailyValue ingredients={props.ingredients}/>
-//           </div>
-//         );
-// }
-
-
-
-
-// function RecipeSteps(props) {
-
-//     const recipeSteps = props.target.map((step) => {
-//         return(
-//             <li key={step.step_num}>{step.steps}</li>
-//             )
-//         });
-
-//     return ( <div className='row' >         
-//                 <div className='col' md={12}>
-//                     <h5>Recipe Steps</h5>
-//                     <ol id="recipe-steps-list">   
-//                         {recipeSteps} 
-//                     </ol>
-//                 </div>
-//             </div>
-
-//     )
-// }
-
-function Notes(props) { 
-
-    return (
-        <div className='row'>
-            <label htmlFor="editNotes">Notes</label>
-                <Control.textarea model='.editNotes' 
-                    name="editNotes"
-                    rows="12" 
-                    id="editNotes"
-                    placeholder={props.target}/>
-        </div>
-
-        );
-  }
-
-  
-// function Notes(props) { 
-
-//     return (
-//         <div className='row'>
-//             <div className='col' md={12}>
-//                 <h5>Notes</h5>
-//                 <p>{props.target}</p>
-//             </div>
-//         </div>
-
-//         );
-//   }
-  
-  

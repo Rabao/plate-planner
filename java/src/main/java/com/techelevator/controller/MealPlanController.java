@@ -198,6 +198,13 @@ public class MealPlanController {
         recipeDao.addRecipe(recipe);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value="edit/recipes/{id}", method = RequestMethod.PUT)
+    public boolean editRecipe(@PathVariable long id, @RequestParam String name, @RequestParam int numOfSteps, @RequestParam String image,
+                              @RequestParam String notes, @RequestParam int userId, @RequestParam String type) throws RecipeNotFoundException{
+        return recipeDao.editRecipe(id, name, numOfSteps, image, notes, userId, type);
+    }
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(value="recipes/{id}", method = RequestMethod.DELETE )
     public void deleteRecipe(@PathVariable long id) throws NutritionNotFoundException {
@@ -285,12 +292,6 @@ public class MealPlanController {
     public GroceryList getGroceryList(@PathVariable long id){
         return groceryListDao.getGroceryList(id);
     }
-
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping(value="groceries")
-//    public void addNewGroceryList(@Valid @RequestBody GroceryList groceryList){
-//        groceryListDao.addNewGroceryList(groceryList);
-//    }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value="groceries/{userId}")

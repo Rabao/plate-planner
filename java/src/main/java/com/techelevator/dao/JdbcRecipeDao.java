@@ -104,6 +104,13 @@ public class JdbcRecipeDao implements RecipeDao{
     }
 
     @Override
+    public boolean editRecipe(long id, String name, int numOfSteps, String image, String notes, int userId, String type) {
+        String sql = "UPDATE recipes SET name = ?, num_of_steps = ?, image = ?, notes = ?, user_id = ?, type = ? " +
+                "WHERE id = ?";
+        return jdbcTemplate.update(sql, name, numOfSteps, image, notes, userId, type, id) == 1;
+    }
+
+    @Override
     public boolean deleteRecipe(long id) {
         String sql = "DELETE FROM recipes WHERE id = ? ";
         return jdbcTemplate.update(sql, id) == 1;

@@ -700,9 +700,9 @@ export const recipeFailed = (errmess) => ({
     payload: errmess
 });
 
-export const editRecipe = (id) => (dispatch) => {
+export const editRecipe = (id, name, numSteps, image, notes, userId, type) => (dispatch) => {
 
-    return fetch(baseUrl + '/recipes/' + id, {
+    return fetch(baseUrl + 'edit/recipes/' + id, {
             method: 'PUT'
         })
         .then(response => {
