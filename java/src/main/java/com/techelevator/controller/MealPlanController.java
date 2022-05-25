@@ -236,6 +236,12 @@ public class MealPlanController {
     public void addRecipeSteps(@Valid @RequestBody RecipeSteps recipeSteps){
         recipeStepsDao.addRecipeSteps(recipeSteps);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value="edit/steps/{id}", method = RequestMethod.PUT)
+    public boolean editRecipeSteps(@PathVariable long id, @Valid @RequestBody RecipeSteps recipeSteps) throws RecipeStepsNotFoundException{
+        return recipeStepsDao.editRecipeSteps(id, recipeSteps);
+    }
     /*****************************************************
      *                                                    *
      *                RECIPE STEPS APIs                   *

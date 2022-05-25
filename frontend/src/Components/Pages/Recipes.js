@@ -534,12 +534,12 @@ function RecipeTags(props) {
 }
 
 function RecipeSteps(props) {
-
-    const recipeSteps = props.target.map((step) => {
+    // const recipeSteps = props.target.map((step) => {
+    const recipeSteps = props.target.sort((a,b) => a.stepNum - b.stepNum).map((step =>{
         return(
-            <li key={step.step_num}>{step.steps}</li>
-            )
-        });
+            <li key={step.stepNum}>{step.steps}</li>
+           )
+        }));
 
     return ( <div className='row' >         
                 <div className='col' md={12}>

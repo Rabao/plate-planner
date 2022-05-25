@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 
+import com.techelevator.model.Recipe;
 import com.techelevator.model.RecipeSteps;
 import com.techelevator.model.RecipeStepsNotFoundException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -50,6 +51,13 @@ public class JdbcRecipeStepsDao implements RecipeStepsDao {
         String sql = "INSERT INTO recipe_steps (recipe_id, step_num, steps) " +
                 "VALUES (?, ?, ?)";
         return jdbcTemplate.update(sql,recipeSteps.getRecipeId(),recipeSteps.getStepNum(),recipeSteps.getSteps()) == 1;
+    }
+
+    @Override
+    public boolean editRecipeSteps(long id, RecipeSteps recipeSteps) {
+        String sql = "UPDATE recipe_steps SET steps = ? " +
+                "WHERE recipe_id = ? AND step_num = ?";
+        return jdbcTemplate.update(sql, recipeSteps.getSteps(), id, recipeSteps.getStepNum()) == 1;
     }
 
     private RecipeSteps mapRowToRecipeSteps(SqlRowSet rs) {

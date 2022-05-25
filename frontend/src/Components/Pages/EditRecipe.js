@@ -54,12 +54,13 @@ export default class EditRecipe extends Component {
       }
 
       postEditedRecipe(e) {
+        let stepNum = 1;
         const name = document.getElementById('name');
         const type = document.getElementsByClassName('recipe-type');
         const notes = document.getElementsByClassName('edit-notes')[0];
         const qty = document.getElementsByClassName('qty'); //Measurement quantity (fills measurement parameter in postIngredients)
         const unit = document.getElementsByClassName('unit-measure');
-        const steps = document.getElementsByClassName('recipe-steps');
+        const steps = document.getElementsByClassName('edit-recipe-steps');
         const ingredients = document.getElementsByClassName('recipe-ingredients');
 
         //------------------------------------------------------------------IMAGE READER
@@ -91,7 +92,11 @@ export default class EditRecipe extends Component {
         // console.log(this.props.user.id)
         // console.log('')
 
-        this.props.editRecipe(this.props.targetRecipe.id,name.value,1,filePath,notes.value,this.props.user.id,'')
+        this.props.editRecipe(this.props.targetRecipe.id,name.value,1,filePath,notes.value,this.props.user.id,'') 
+        for(let i=0; i< steps.length; i++){     
+            this.props.editRecipeSteps(this.props.targetRecipe.id,stepNum,steps[i].value) 
+            stepNum++;      
+        }
       }
 
 

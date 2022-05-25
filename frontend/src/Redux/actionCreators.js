@@ -741,6 +741,7 @@ export const editRecipeSuccess = (id) => ({
     payload: id
 })
 
+
 export const deleteRecipe = (id) => (dispatch) => {
 
     return fetch(baseUrl + '/recipes/' + id, {
@@ -896,6 +897,44 @@ export const postRecipeSteps = (recipeId, stepNum, steps) => (dispatch) => {
             alert('Your recipe steps could not be published.\nError: ' + error.message)
         });
 };
+
+export const editRecipeSteps = (recipeId, stepNum, steps) => (dispatch) => {
+    const updatedRecipe = {
+        stepNum: stepNum,
+        steps: steps,
+    }
+    return fetch(baseUrl + '/edit/steps/' + recipeId, {
+            method: 'PUT',
+            body: JSON.stringify(updatedRecipe),
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(id => dispatch(editRecipeStepsSuccess(id)))
+        .catch(error => { throw (error) });
+}
+
+export const editRecipeStepsSuccess = (recipeId) => ({
+    type: ActionTypes.EDIT_RECIPESTEPS,
+    payload: recipeId
+})
+
 
 export const fetchRecipeSteps = () => (dispatch) => {
     // dispatch(recipeStepsLoading(true));

@@ -15,8 +15,8 @@ import Dashboard from '../Pages/Dashboard';
 import DailyValueForm from '../SubComponents/DailyValueForm';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
         toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, 
-        deleteRecipe, editRecipe, postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps, 
-        fetchRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
+        deleteRecipe, editRecipe, postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps,  
+        editRecipeSteps, fetchRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
         postComment, fetchComments, deleteComment, editComment, postGroceries,
         postIngredient, searchRecipe,fetchNutrition, postNutrition } from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
@@ -49,6 +49,7 @@ const mapDispatchToProps = (dispatch) => ({
     deleteComment: (id) => { dispatch(deleteComment(id))},
     deleteRecipe: (id) => { dispatch(deleteRecipe(id))},
     editRecipe: (id, name, numSteps, image, notes, userId, type) => {dispatch(editRecipe(id, name, numSteps, image, notes, userId, type))},
+    editRecipeSteps: (recipeId, stepNum, steps) => {dispatch(editRecipeSteps(recipeId, stepNum, steps))},
     deleteCompletedGroceries: (id) => {dispatch(deleteCompletedGroceries(id))},
     deleteGroceries: (id) => {dispatch(deleteGroceries(id))},
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
@@ -175,6 +176,7 @@ class Main extends Component {
                 targetIngredients={this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10))}
                 ingredients={this.props.ingredients.ingredients}
                 editRecipe={this.props.editRecipe}
+                editRecipeSteps={this.props.editRecipeSteps}
                 nutrition={this.props.nutrition.nutrition}/>
             ) 
         }
