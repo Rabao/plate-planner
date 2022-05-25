@@ -11,14 +11,57 @@ import 'react-tippy/dist/tippy.css';
 import {RiPlayListAddFill} from 'react-icons/ri';
 
 
+// Import FilePond styles
+import 'filepond/dist/filepond.min.css'
+
+// // Import the Image EXIF Orientation and Image Preview plugins
+// // Note: These need to be installed separately
+// // `npm i filepond-plugin-image-preview filepond-plugin-image-exif-orientation --save`
+// import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
+// import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+// import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
+
+// // Register the plugins
+// registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
+
 export default class EditRecipe extends Component {
     constructor(props) {
         super(props);
         this.state = {
             ingredientValues: [],
-            stepValues: []
+            stepValues: [],
+            // files: [
+            //     {
+            //       source: "index.html",
+            //       options: {
+            //         type: "local"
+            //       }
+            //     }
+            //   ]
+            file: [],
+            preview: ''
         };
+
+        this.fileInputRef = React.createRef();
       }
+
+      componentDidUpdate() {
+          if(this.state.file){
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                this.setState({
+                    preview: [reader.result]
+                })
+            }
+            reader.readAsDataURL(this.state.file);
+          } else {
+            this.setState({
+                preview: null
+            })
+          }
+      }
+
+    //   componentWillUnmount(){}
 
 
       Recipe() {
@@ -96,10 +139,13 @@ export default class EditRecipe extends Component {
         const getIngredientFromId = (id) => {
             return this.props.targetIngredients.filter(ingredients => ingredients.id === parseInt(id,10))[0].name;
         }
+        
+        function handleChange() {  
+            this.setState({
+               file:  [...this.state.file,document.getElementById('img-input').files[0]]
+            })
+        }
     
-        // const recipeIngredients = 
-        
-        
         return (    
           
               <div className='row'>
@@ -156,7 +202,58 @@ export default class EditRecipe extends Component {
                        
                   </div>
                   <div className='col' id="recipe-pg-img-container" md={5}>
-                      <img id="recipe-pg-img" src={this.props.targetRecipe.image}></img>      
+                      
+                    <div className="image-submitter">
+                            <form>
+                                <input type="file" id="img-input" 
+                                accept="image/*" 
+                                style={{display:"none"}} 
+                                ref={this.fileInputRef}
+                                onChange={() => {
+                                    const file = document.getElementById('img-input').files[0];
+                                    if(file && file.type.substr(0,5)==="image"){ //validates file type
+                                        this.setState({
+                                            file:  file
+                                         })
+                                    } else {
+                                        this.setState({
+                                            file:  null
+                                         })   
+                                    }
+                                    handleChange()}} 
+                                />
+                                { this.state.preview ? <img id="preview-img" src={this.state.preview}/> 
+                                :
+                                <div>
+                                    <button onClick={(e) => {
+                                        e.preventDefault();
+                                        this.fileInputRef.current.click();
+                                    }}>Add Image</button> 
+                                    <p>Filename: {this.state.file.name}</p>
+                                    <p>File type: {this.state.file.type}</p>
+                                    <p>File size: {this.state.file.size} bytes</p>
+                                </div>}
+                                
+                            </form>
+                        </div>
+
+
+                  {/* <FilePond
+                        ref={(ref) => (this.pond = ref)}
+                        files={this.state.files}
+                        allowMultiple={false}
+                        maxFiles={1}
+                        server="/upload"
+                        name="files" 
+                        oninit={() => this.handleInit()}
+                        onupdatefiles={fileItems => {
+                            // Set currently active file objects to this.state
+                            this.setState({
+                            files: fileItems.map(fileItem => fileItem.file)
+                            });
+                        }}
+                        /> */}
+                      {/* <img id="recipe-pg-img" src={this.props.targetRecipe.image}></img>       */}
                   </div>
                   <DailyValue ingredients={this.props.ingredients}/>
               </div>
