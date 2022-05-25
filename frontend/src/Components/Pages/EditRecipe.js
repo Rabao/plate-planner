@@ -45,23 +45,20 @@ export default class EditRecipe extends Component {
         this.fileInputRef = React.createRef();
       }
 
-      componentDidUpdate() {
-          if(this.state.file){
+      componentDidUpdate(prevProps, prevState) {
+          if(prevState.file !== this.state.file){
             const reader = new FileReader();
             reader.onloadend = () => {
                 this.setState({
-                    preview: [reader.result]
+                    preview: reader.result
                 })
             }
-            reader.readAsDataURL(this.state.file);
-          } else {
-            this.setState({
-                preview: null
-            })
-          }
-      }
 
-    //   componentWillUnmount(){}
+            if(this.state.file && this.state.file.type){
+                reader.readAsDataURL(this.state.file);
+            }
+          } 
+      }
 
 
       Recipe() {
@@ -201,8 +198,6 @@ export default class EditRecipe extends Component {
                        }
                        
                   </div>
-                  <div className='col' id="recipe-pg-img-container" md={5}>
-                      
                     <div className="image-submitter">
                             <form>
                                 <input type="file" id="img-input" 
@@ -219,42 +214,25 @@ export default class EditRecipe extends Component {
                                         this.setState({
                                             file:  null
                                          })   
-                                    }
-                                    handleChange()}} 
+                                    }}} 
                                 />
-                                { this.state.preview ? <img id="preview-img" src={this.state.preview}/> 
+                                { this.state.preview ? 
+                                    <img id="preview-img" 
+                                    src={this.state.preview} 
+                                    onClick={() => {
+                                        this.setState({
+                                            file:  [],
+                                            preview: ''})}}/> 
                                 :
                                 <div>
-                                    <button onClick={(e) => {
-                                        e.preventDefault();
-                                        this.fileInputRef.current.click();
-                                    }}>Add Image</button> 
-                                    <p>Filename: {this.state.file.name}</p>
-                                    <p>File type: {this.state.file.type}</p>
-                                    <p>File size: {this.state.file.size} bytes</p>
-                                </div>}
+                                <button onClick={(e) => {
+                                    e.preventDefault();
+                                    this.fileInputRef.current.click();
+                                }}>Click here to add an image.</button>
                                 
+                                </div>}
                             </form>
                         </div>
-
-
-                  {/* <FilePond
-                        ref={(ref) => (this.pond = ref)}
-                        files={this.state.files}
-                        allowMultiple={false}
-                        maxFiles={1}
-                        server="/upload"
-                        name="files" 
-                        oninit={() => this.handleInit()}
-                        onupdatefiles={fileItems => {
-                            // Set currently active file objects to this.state
-                            this.setState({
-                            files: fileItems.map(fileItem => fileItem.file)
-                            });
-                        }}
-                        /> */}
-                      {/* <img id="recipe-pg-img" src={this.props.targetRecipe.image}></img>       */}
-                  </div>
                   <DailyValue ingredients={this.props.ingredients}/>
               </div>
             );

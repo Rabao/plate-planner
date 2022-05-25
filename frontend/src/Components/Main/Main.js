@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Routes, Route, Navigate, Link, useParams} from 'react-router-dom'
+import {Routes, Route, Navigate, useParams} from 'react-router-dom'
 import Login from '../Login/Login'
 import Register from '../Register/Register'
 import Header from '../Header/Header'
@@ -18,15 +18,12 @@ import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetc
         deleteRecipe, editRecipe, postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps, 
         fetchRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
         postComment, fetchComments, deleteComment, editComment, postGroceries,
-        addGroceries, addIngredients, postIngredient, searchRecipe,
-        addNutrition, fetchNutrition, postNutrition, addMealPlan, 
-        addMealPlanCollection, addRecipe, } from '../../Redux/actionCreators'
+        postIngredient, searchRecipe,fetchNutrition, postNutrition } from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import { withRouter } from '../WithRouer/WithRouter';
 import IngredientsList from '../Pages/IngredientsList';
 import Ingredients from '../Pages/Ingredients';
-import Loader from '../SubComponents/Loader/Loader';
-import AutoComplete from '../SubComponents/AutoComplete';
+
 
 const mapStateToProps = state => {
     return {

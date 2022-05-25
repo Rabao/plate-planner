@@ -89,9 +89,3 @@ function Header(props) {
 
 export default Header;
 
-// const handleDropdown = () => {
-//     return(
-
-//     )
-// }
-

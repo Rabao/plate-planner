@@ -1,4 +1,4 @@
-import React, {Component, useState, useEffect} from 'react'
+import React, {Component, useState, useEffect, useRef} from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import { Breadcrumb, Col, Button } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
@@ -61,11 +61,26 @@ function AddRecipe(props) {
     const chloride = document.getElementById('chloride');
 
     const [selectedFile, setSelectedFile] = useState([]);
-    const [preview, setPreview] = useState([]);
+    const [preview, setPreview] = useState('');
+    const fileInputRef = useRef();
 
-    function handleChange() {  
-        setSelectedFile(document.getElementById('img-input').files[0]);
-    }
+    useEffect(() => {
+        if(selectedFile){
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setPreview(reader.result)
+            }
+            if(selectedFile && selectedFile.type){
+                reader.readAsDataURL(selectedFile);
+            }
+        } else {
+            setPreview(null)
+        }
+    }, [selectedFile])
+
+    // function handleChange() {  
+    //     setSelectedFile(document.getElementById('img-input').files[0]);
+    // }
 
     //-------------------------------------------------------------------RECIPE ID GENERATOR
     //-------------------------------------------------------------------RECIPE ID GENERATOR
@@ -153,142 +168,6 @@ function AddRecipe(props) {
         }}, 500)
     }
 
-    
-    // //-------------------------------------------------------REACTIONARY RECIPE STEPS INPUTS
-    // //-------------------------------------------------------REACTIONARY RECIPE STEPS INPUTS
-    // //-------------------------------------------------------REACTIONARY RECIPE STEPS INPUTS
-    // const renderStepsInput = () => {
-    //     const addStep = () => {         
-    //         numSteps++;
-    //         stepsHtmlIdent = "steps" + numSteps;
-    //         stepsMode = ".steps" + numSteps;
-    //         stepText = <div className="form-inline" id="steps" key={stepArr.length}>
-    //                     <Control.text model={stepsMode} name={stepsHtmlIdent}  className="recipe-steps"/><button class="submit-button-small" onClick={() => {removeStep()}}>Remove</button>
-    //                     </div>
-
-    //         stepArr.push(stepText);
-    //     }
-
-    //     const removeStep = () => {
-    //         numSteps--;
-    //         stepsHtmlIdent = "steps" + numSteps;
-    //         stepsMode = ".steps" + numSteps;
-    //         stepArr.pop(stepText);
-    //     }
-        
-    //     const removeAll = () => {
-    //         while(stepArr.length > 0){
-    //             stepArr.pop(stepText)
-    //         }
-    //         numSteps=0;
-    //         stepsHtmlIdent = "";
-    //         stepsMode = "";
-    //     }
-
-    //     let stepArr =[]
-    //     let stepText = <div></div>
-        
-    //     return(
-    //         <div>
-    //             <label htmlFor="steps">Steps</label> 
-    //             {stepArr}
-    //             <div className="submit-button-interface col"><button class="submit-buttons" onClick={() => {addStep()}}>Add New Step</button><button class="submit-buttons" onClick={() => {removeAll()}}>Remove All</button></div>     
-    //         </div>
-    //     )
-
-    // }
-    // //-------------------------------------------------------REACTIONARY RECIPE INGREDIENT INPUTS
-    // //-------------------------------------------------------REACTIONARY RECIPE INGREDIENT INPUTS
-    // //-------------------------------------------------------REACTIONARY RECIPE INGREDIENT INPUTS
-    // class RenderIngredientsInput extends Component {
-    //     constructor(props) {
-    //         super(props);
-    //         this.state = {
-    //             values: [],
-    //         };
-
-    //       }
-          
-    //       createUI(){
-    //          return this.state.values.map((el, i) => 
-    //              <div key={i}>
-    //                         <Control.text type="number" model={".qty"+i} name={"qty"+i} className="qty ingredients-controls" defaultValue={1}/>
-    //                         <Control.select model={".unit"+i} name={"unit"+i} className="unit-measure ingredients-controls" >                                 
-    //                             <option disabled>Volume</option>
-    //                             <option disabled></option>
-    //                             <option active>Teaspoon</option>                       
-    //                             <option>Tablespoon</option>
-    //                             <option>Fluid Ounce</option>
-    //                             <option>Gill</option>
-    //                             <option>Cup</option>
-    //                             <option>Pint</option>
-    //                             <option>Quart</option>
-    //                             <option>Gallon</option>
-    //                             <option>Milliliter</option>
-    //                             <option>Liter</option>
-    //                             <option disabled></option>
-    //                             <option disabled>──────────</option>
-    //                             <option disabled>Mass/Weight</option>
-    //                             <option disabled></option>
-    //                             <option>Pound</option>
-    //                             <option>Ounce</option>
-    //                             <option>Milligram</option>
-    //                             <option>Gram</option>
-    //                             <option>Kilogram</option>
-    //                             <option>Whole</option>
-    //                             <option disabled></option>
-    //                             <option disabled>──────────</option>
-    //                             <option disabled>Length</option>
-    //                             <option disabled></option>
-    //                             <option>Slice</option>
-    //                             <option>Half</option>
-    //                             <option>Millimeter</option>
-    //                             <option>Centimeter</option>
-    //                             <option>Meter</option>
-    //                             <option>Inch</option>
-    //                         </Control.select>
-    //                         <Control.text model={".ingredient"+i} value={el||''} name={"ingredient"+i} className="recipe-ingredients ingredients-controls" />
-    //                     <button class="submit-button-small" onClick={this.removeClick.bind(this,i)}>Remove</button></div>      
-    //          )
-    //       }
-          
-          
-    //       addClick(){
-    //         this.setState(prevState => ({ values: [...prevState.values, '']}))
-    //       }
-          
-    //       removeClick(i){
-    //          let values = [...this.state.values];
-    //          values.splice(i,1);
-    //          this.setState({ values });
-    //       }
-
-    //       removeAll(){
-    //         let values = [];
-    //         this.setState({ values });
-    //      }
-        
-    //       render() {
-    //         return (
-    //           <div>
-    //                 <label htmlFor="steps">Ingredients</label> 
-    //                 {this.createUI()}      
-    //                 <div className="submit-button-interface col"><button class="submit-buttons" onClick={this.addClick.bind(this)}>Add Ingredient</button><button class="submit-buttons" onClick={this.removeAll.bind(this)}>Remove All</button></div>     
-    //             </div>
-   
-    //         );
-    //     }
-    // }
-
-    // const ImageThumb = (image) => {
-           
-    //     if(image !== undefined && image !== null && image){
-    //         return <img src={URL.createObjectURL(image)} alt={image.name} />;
-    //       }
-    //     // return <img src={URL.createObjectURL(image)} alt={image.name} />;
-    //   };
-      
-
     //-------------------------------------------------------------RENDER FORM COMPONENT
     //-------------------------------------------------------------RENDER FORM COMPONENT
     //-------------------------------------------------------------RENDER FORM COMPONENT
@@ -336,13 +215,46 @@ function AddRecipe(props) {
                                     </div>
                                     </Col>
                                     <Col md={6}>
-                                        <div className="image-submitter">
-                                            <input type="file" id="img-input" accept=".jpg, .jpeg, .png, .bmp" onChange={() => handleChange()} />
-                                            <p>Filename: {selectedFile.name}</p>
-                                            <p>File type: {selectedFile.type}</p>
-                                            <p>File size: {selectedFile.size} bytes</p>
-
-                                        </div>                                
+                                    <div className="image-submitter">
+                                        <form>         
+                                            <input type="file" id="img-input" 
+                                            accept="image/*" 
+                                            style={{display:"none"}} 
+                                            ref={fileInputRef}
+                                            onChange={() => {
+                                                const file = document.getElementById('img-input').files[0];
+                                                if(file && file.type.substr(0,5)==="image"){ //validates file type
+                                                    {console.log("CONSOLE: " + file)}
+                                                    setSelectedFile(file)
+                                                } else {
+                                                    setSelectedFile(null)
+                                                }}} 
+                                            
+                                            onDrop={() => {
+                                                const file = document.getElementById('img-input').files[0];
+                                                if(file && file.type.substr(0,5)==="image"){ //validates file type
+                                                    {console.log("CONSOLE: " + file)}
+                                                    setSelectedFile(file)
+                                                } else {
+                                                    setSelectedFile(null)
+                                                }}} />
+                                            { preview ? <img id="preview-img" 
+                                                                        src={preview} 
+                                                                        onClick={() => {
+                                                                            setSelectedFile([])
+                                                                            setPreview('')
+                                                                        }}
+                                                                        alt={"Filename: " + selectedFile.name + ", File type: " + selectedFile.type + ", File size: " + selectedFile.size + " bytes"}/> 
+                                            : 
+                                            <div>
+                                                <button onClick={(e) => {
+                                                    e.preventDefault();
+                                                    fileInputRef.current.click();
+                                                }}>Click here to add an image.</button>
+                                                
+                                            </div>}
+                                        </form>
+                                    </div>
                                     </Col>
                                 </div>
                                 <div><DailyValueForm 
