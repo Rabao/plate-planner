@@ -345,7 +345,7 @@ function SaveChangesButton(props) {
             props.editRecipeIngredients(props.targetRecipe.id,getIdByIngredientName(ingredients[i].value),ingredients[i].value,qty[i].value,unit[i].value)
         }
 
-        // console.log("INGREDIENT ID: " + this.getIdByIngredientName("Chicken Breast"));
+
 
         setTimeout(() => {
             pageRedirect= true;

@@ -251,6 +251,13 @@ const DailyValueForm = (props) => {
                         </Row>
                         <Row className="form-group">
                             <Col md={2}>
+                                <label htmlFor="potassium">Potassium</label> 
+                                    <Control.text model='.potassium' 
+                                    id="potassium" 
+                                    name="potassium" 
+                                    className="form-control"/>
+                            </Col>
+                            <Col md={2}>
                                 <label htmlFor="phosphorous">Phosphorous</label> 
                                     <Control.text model='.phosphorous' 
                                     id="phosphorous" 

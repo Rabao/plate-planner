@@ -72,9 +72,7 @@ function AddRecipe(props) {
         }
     }, [selectedFile])
 
-    // function handleChange() {  
-    //     setSelectedFile(document.getElementById('img-input').files[0]);
-    // }
+
 
     //-------------------------------------------------------------------RECIPE ID GENERATOR
     //-------------------------------------------------------------------RECIPE ID GENERATOR
@@ -99,7 +97,10 @@ function AddRecipe(props) {
     //-------------------------------------------------------------------------HANDLE SUBMIT
     //-------------------------------------------------------------------------HANDLE SUBMIT
     //-------------------------------------------------------------------------HANDLE SUBMIT
-    
+    function getIdByIngredientName (name){
+            return props.ingredients.filter(ingredients => ingredients.name === name)[0].id;
+        }
+
      function handleSubmit() {
         //-------------------------------------------------------------------------VARIABLES
         
@@ -152,14 +153,14 @@ function AddRecipe(props) {
         }
 
         for(let i=0; i< ingredients.length; i++){
-            props.postIngredients(id,1,ingredients[i].value,qty[i].value,unit[i].value)
+            props.postIngredients(id,getIdByIngredientName(ingredients[i].value),ingredients[i].value,qty[i].value,unit[i].value)
         }
 
         setTimeout(() => {
         pageRedirect= true;
         if(pageRedirect === true){
             navigate(path); 
-        }}, 500)
+        }}, 600)
     }
 
     //-------------------------------------------------------------RENDER FORM COMPONENT

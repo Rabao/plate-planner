@@ -196,6 +196,10 @@ class AddItem extends Component{
 
     handleSubmit(found, values){
         // const product = document.getElementById('product');
+        this.props.postGroceries(values.product,
+            values.quantity, this.props.authUser.id)
+        this.addToGroceryList(values);
+
         if(!found){
             this.props.postIngredient(values.product, values.type);
             this.props.postNutrition(values.servingSize, values.calories, values.caloriesFat, values.totalFat, 
@@ -206,14 +210,11 @@ class AddItem extends Component{
                 values.iodine, values.zinc, values.selenium, values.copper, values.manganese, values.chromium, values.molybdenum, 
                 values.chloride);
         }
-        this.props.postGroceries(values.product,
-            values.quantity, this.props.authUser.id)
+        // this.props.postGroceries(values.product,
+        //     values.quantity, this.props.authUser.id)
         // setTimeout(() => {{
         //     console.log(this.state.listState);
         //     }}, 300)
-        
-        this.addToGroceryList(values);
-
     }
     
     deleteAll(){
@@ -393,17 +394,29 @@ class AddItem extends Component{
                                 <option>Fruit (Canned)</option>
                                 <option>Meat (Canned)</option>
                                 <option>Sauce</option>
+                                <option>Dressing</option>
                                 <option>Condiment</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
                                 <option disabled>Dairy</option>
                                 <option disabled></option>
                                 <option>Milk</option>
+                                <option>Cream</option>
                                 <option>Cheese</option>
                                 <option>Eggs</option>
                                 <option>Yogurt</option>
+                                <option disabled></option>
+                                <option disabled>──────────</option>
+                                <option disabled>Animal Products</option>
+                                <option disabled></option>
+                                <option>Eggs</option>
+                                <option disabled></option>
+                                <option disabled>──────────</option>
+                                <option disabled>Fats</option>
+                                <option disabled></option>
                                 <option>Butter</option>
                                 <option>Frozen Dairy</option>
+                                <option>Oil</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
                                 <option disabled>Dry Goods</option>
@@ -415,6 +428,12 @@ class AddItem extends Component{
                                 <option>Seasoning</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
+                                <option disabled>Sweetners</option>
+                                <option disabled></option>
+                                <option>Sugar</option>
+                                <option>Sugar-Free Sweetner</option>
+                                <option disabled></option>
+                                <option disabled>──────────</option>
                                 <option disabled>Frozen Foods</option>
                                 <option disabled></option>
                                 <option>Slice</option>
@@ -423,20 +442,22 @@ class AddItem extends Component{
                                 <option>Centimeter</option>
                                 <option>Meter</option>
                                 <option>Inch</option>
+                                <option>Frozen Dairy</option>
+                                <option>Frozen Bread and Dough</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
                                 <option disabled>Meat</option>
-                                <option disabled></option>
-                                <option>Lunch Meat</option>
                                 <option>Poultry</option>
                                 <option>Red Meat</option>
                                 <option>Seafood</option>
+                                <option>Game Meat</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
                                 <option disabled>Produce</option>
                                 <option disabled></option>
                                 <option>Fruit</option>
                                 <option>Vegetable</option>
+                                <option>Herb</option>
                         </Control.select>
                     </Col>
                     <Col md={2}>

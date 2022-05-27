@@ -106,7 +106,9 @@ export default class PlanGenerator extends Component {
                 <div className="plan-block">
                      {mealFilter(breakfast)}
                 </div>
-                <div className="plan-block">2</div>
+                <div className="plan-block">
+                    {mealFilter(lunch)}
+                </div>
                 <div className="plan-block">
                     {mealFilter(dinner)}
                 </div>
@@ -118,7 +120,9 @@ export default class PlanGenerator extends Component {
                 <div className="plan-block">
                     {mealFilter(breakfast)}
                 </div>
-                <div className="plan-block">2</div>
+                <div className="plan-block">
+                    {mealFilter(lunch)}
+                </div>
                 <div className="plan-block">
                     {mealFilter(dinner)}<button onClick={()=>{{mealFilter(dinner)}}}>Button</button>
                 </div>

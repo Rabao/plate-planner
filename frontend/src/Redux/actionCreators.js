@@ -368,7 +368,7 @@ export const postRecipeNutrition = (servingSize, calories, caloriesFat, totalFat
                 let errmess = new Error(error.message);
                 throw errmess;
             })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(response => dispatch(addRecipeNutrition(response)))
         .catch(error => {
             console.log('Post recipe nutrition ', error.message)
@@ -648,7 +648,7 @@ export const postRecipe = (id, name, numSteps, image, notes, userId, type) => (d
                 let errmess = new Error(error.message);
                 throw errmess;
             })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(response => dispatch(addRecipe(response)))
         .catch(error => {
             console.log('Author recipe ', error.message)
@@ -832,7 +832,7 @@ export const postRecipeIngredients = (recipeId, ingredientId, ingredient_name, m
                 let errmess = new Error(error.message);
                 throw errmess;
             })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(ingredients => dispatch(addRecipeIngredients(ingredients)))
         .catch(error => {
             console.log('Recipe ingredients ', error.message)
@@ -956,7 +956,7 @@ export const postRecipeSteps = (recipeId, stepNum, steps) => (dispatch) => {
                 let errmess = new Error(error.message);
                 throw errmess;
             })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(steps => dispatch(addRecipeSteps(steps)))
         .catch(error => {
             console.log('Recipe steps ', error.message)
