@@ -276,7 +276,9 @@ export default class EditRecipe extends Component {
                         user = {this.props.user}
                         editRecipeSteps = {this.props.editRecipeSteps}
                         editRecipeIngredients = {this.props.editRecipeIngredients}
-                        ingredients = {this.props.ingredients}/>
+                        ingredients = {this.props.ingredients}
+                        targetIngredients = {this.props.targetIngredients}
+                        ingredientKeyArray = {this.props.ingredientKeyArray}/>
                 </div>  
             )
         }  
@@ -292,7 +294,7 @@ function SaveChangesButton(props) {
     
     function postEditedRecipe(e) {
         let stepNum = 1;
-        const path = '/recipes/';
+        const path = '/recipes/' + props.targetRecipe.id;
         let pageRedirect= false;
         const name = document.getElementById('name');
         const type = document.getElementsByClassName('recipe-type');
@@ -341,8 +343,7 @@ function SaveChangesButton(props) {
             stepNum++;      
         }
         for(let i=0; i< ingredients.length; i++){
-            console.log(i + " " + ingredients[i].value);
-            props.editRecipeIngredients(props.targetRecipe.id,getIdByIngredientName(ingredients[i].value),ingredients[i].value,qty[i].value,unit[i].value)
+            props.editRecipeIngredients(props.targetRecipe.id,getIdByIngredientName(ingredients[i].value),ingredients[i].value,qty[i].value,unit[i].value,props.ingredientKeyArray[i])
         }
 
 
@@ -351,6 +352,7 @@ function SaveChangesButton(props) {
             pageRedirect= true;
             if(pageRedirect === true){
                 navigate(path);       
+                // window.location.reload(false);
         }}, 500)
       }
     return (

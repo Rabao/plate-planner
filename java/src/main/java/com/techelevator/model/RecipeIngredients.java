@@ -6,15 +6,17 @@ public class RecipeIngredients {
     private String ingredient_name;
     private double measurement;
     private String unit;
+    private long ingredient_key;
 
     public RecipeIngredients(){}
 
-    public RecipeIngredients(long recipeId, long ingredient_id, String ingredient_name, double measurement, String unit) {
+    public RecipeIngredients(long recipeId, long ingredient_id, String ingredient_name, double measurement, String unit, long ingredient_key) {
         this.recipeId = recipeId;
         this.ingredient_id = ingredient_id;
         this.ingredient_name = ingredient_name;
         this.measurement = measurement;
         this.unit = unit;
+        this.ingredient_key = ingredient_key;
     }
 
     public long getRecipeId() {
@@ -55,5 +57,13 @@ public class RecipeIngredients {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public long getIngredient_key() {
+        return ingredient_key;
+    }
+
+    public void setIngredient_key(long ingredient_key) {
+        this.ingredient_key = ingredient_key;
     }
 }

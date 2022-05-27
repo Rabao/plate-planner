@@ -55,8 +55,8 @@ const mapDispatchToProps = (dispatch) => ({
     deleteRecipeNutrition: (id) => { dispatch(deleteRecipeNutrition(id))},
     editRecipe: (id, name, numSteps, image, notes, userId, type) => {dispatch(editRecipe(id, name, numSteps, image, notes, userId, type))},
     editRecipeSteps: (recipeId, stepNum, steps) => {dispatch(editRecipeSteps(recipeId, stepNum, steps))},
-    editRecipeIngredients: (recipeId, ingredientId, ingredient_name, measurement, unit) => 
-        {dispatch(editRecipeIngredients(recipeId, ingredientId, ingredient_name, measurement, unit))},
+    editRecipeIngredients: (recipeId, ingredientId, ingredient_name, measurement, unit, ingredientKey) => 
+        {dispatch(editRecipeIngredients(recipeId, ingredientId, ingredient_name, measurement, unit, ingredientKey))},
     deleteCompletedGroceries: (id) => {dispatch(deleteCompletedGroceries(id))},
     deleteGroceries: (id) => {dispatch(deleteGroceries(id))},
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
@@ -175,7 +175,10 @@ class Main extends Component {
         }
 
         const EditRecipeWithId = () => {
+
             const {id} = useParams();
+            const targetIngredients = this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10));
+            const ingredientKeyArray = targetIngredients.map(ingredient => ingredient.ingredient_key)
             return(
                 <EditRecipe targetRecipe={this.props.recipe.recipe.filter((recipe) => recipe.id === parseInt(id,10))[0]}
                 targetRecipeSteps={this.props.recipeSteps.recipeSteps.filter(steps => steps.recipeId === parseInt(id,10))}
@@ -189,7 +192,8 @@ class Main extends Component {
                 editRecipeSteps={this.props.editRecipeSteps}
                 editRecipeIngredients={this.props.editRecipeIngredients}
                 nutrition={this.props.nutrition.nutrition}
-                recipeNutrition={this.props.recipeNutrition.recipeNutrition.filter(nutrition => nutrition.recipeId === parseInt(id,10))[0]}/>
+                recipeNutrition={this.props.recipeNutrition.recipeNutrition.filter(nutrition => nutrition.recipeId === parseInt(id,10))[0]}
+                ingredientKeyArray={ingredientKeyArray}/>
             ) 
         }
 

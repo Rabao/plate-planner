@@ -840,14 +840,15 @@ export const postRecipeIngredients = (recipeId, ingredientId, ingredient_name, m
         });
 };
 
-export const editRecipeIngredients = (recipeId, ingredientId, ingredient_name, measurement, unit) => (dispatch) => {
+export const editRecipeIngredients = (recipeId, ingredientId, ingredient_name, measurement, unit,
+    ingredientKey) => (dispatch) => {
     const updatedRecipeIngredients = {
         ingredientId: ingredientId,
         ingredient_name: ingredient_name,
         measurement: measurement,
         unit: unit
     }
-    return fetch(baseUrl + '/recipes/ingredients/' + recipeId, {
+    return fetch(baseUrl + '/recipes/ingredients/' + ingredientKey, {
             method: 'PUT',
             body: JSON.stringify(updatedRecipeIngredients),
             headers: {
@@ -870,7 +871,7 @@ export const editRecipeIngredients = (recipeId, ingredientId, ingredient_name, m
                 throw errmess;
             })
         .then(response => response.json())
-        .then(id => dispatch(editRecipeIngredientsSuccess(id)))
+        .then(recipeId => dispatch(editRecipeIngredientsSuccess(recipeId)))
         .catch(error => { throw (error) });
 }
 
