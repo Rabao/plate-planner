@@ -1,12 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component, useRef } from 'react'
 import Recipes from '../Pages/Recipes'
 import {Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom'
+import InfiniteCarousel from 'react-leaf-carousel';
 
 
 function RecipeCollection(props)  {
 
   const navigate = useNavigate();
- 
+
   function handleClick (e) {
      const targetId = e.id;
      const path = '/recipes/'+e.id;
@@ -49,7 +50,27 @@ function RecipeCollection(props)  {
                         <li>Dessert</li>
                     </ul>
           <div className="row">
-            {enumRecipeCollection(props)}
+            <InfiniteCarousel  breakpoints={[
+                                {
+                                  breakpoint: 500,
+                                  settings: {
+                                    slidesToShow: 2,
+                                    slidesToScroll: 2,
+                                  },
+                                },
+                                {
+                                  breakpoint: 768,
+                                  settings: {
+                                    slidesToShow: 3,
+                                    slidesToScroll: 3,
+                                  },
+                                },
+                              ]}
+                              dots={false}
+                              slidesToScroll={4}
+                              slidesToShow={4}>
+              {enumRecipeCollection(props)}
+            </InfiniteCarousel>
         </div>
       </div>
     )

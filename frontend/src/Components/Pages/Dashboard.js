@@ -4,6 +4,7 @@ import {useNavigate, Link, Route, Routes} from 'react-router-dom';
 import {Modal, ModalBody, ModalHeader} from 'reactstrap';
 import { LocalForm } from 'react-redux-form';
 
+
 export default class Dashboard extends Component{
     constructor(props){
         super(props)
@@ -43,20 +44,30 @@ export default class Dashboard extends Component{
                     <div className="row">
                         <div className="col" md={12} id="generate-plan">
                             <h5>Published Recipes</h5>
-                           {this.props.recipes ? <div><EditDeleteRecipe recipes={this.props.recipes} user={this.props.user} deleteRecipe={this.props.deleteRecipe}/></div> : <div></div>}
+
+
+                           {this.props.recipes ?        <div><EditDeleteRecipe 
+                                                        recipes={this.props.recipes} 
+                                                        user={this.props.user} 
+                                                        deleteRecipe={this.props.deleteRecipe}
+                                                        deleteSteps={this.props.deleteRecipeSteps}
+                                                        deleteIngredients={this.props.deleteRecipeIngredients}
+                                                        deleteNutrition={this.props.deleteRecipeNutrition}/></div> 
+                                                        : 
+                                                        <div></div>}
                         </div>
                     </div>             
                     <div className="row">
                         <div className="col" md={6} id="generate-plan">
                         <aside>
-                            <h5>Your Plans</h5>
+                            <h5>Your Meal Plans</h5>
 
                         </aside>
                         </div>
                         <div className="col" md={6} id="generate-plan">
                         <aside>
-                            <h5>Your Groceries</h5>
-
+                            <h5>Your Grocery List at a Glance</h5>
+                            {renderGroceryList(this.props.groceries,this.props.user)}
                         </aside>
                         </div>
                     </div>
@@ -75,6 +86,38 @@ function DashEditRecipe(e){
         <button type="button" className="dashboard-interface-button" onClick={() => {navigate('/edit/recipes/'+e.id)}}>&#9997; EDIT</button>
     )
 }
+
+
+
+function renderGroceryList(groceries, user) {   
+    let groceryId=0;
+    const userGroceryList = groceries.groceries.filter((list) => list.userId === user.id);
+
+    const list = userGroceryList.map((item) =>{
+        return(
+            <li className="component-list-item" key={item.listId}>
+                <div className="col" md={6}>
+                    <strong>{item.ingredient_name}</strong>
+                </div>
+                <div className="col" md={3}>
+                    Quantity {item.qty}
+                </div>
+            </li>
+        )
+    })
+
+    return(
+        <div className="container">
+            <ul className="component-list">
+                {list}
+            </ul>
+            <Link to= '/groceries'><button class="submit-buttons">Your Groceries</button></Link>
+        </div>
+    )
+}
+
+
+
 
 class EditDeleteRecipe extends Component{
 
@@ -99,6 +142,9 @@ class EditDeleteRecipe extends Component{
     handleDelete(id){
         this.toggleModal();
         this.props.deleteRecipe(id);
+        this.props.deleteSteps(id);
+        this.props.deleteIngredients(id);
+        this.props.deleteNutrition(id);
         window.location.reload(false);
     }
 
@@ -148,4 +194,5 @@ class EditDeleteRecipe extends Component{
 
         }
     }
+
 

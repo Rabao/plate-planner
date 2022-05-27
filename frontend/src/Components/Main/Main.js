@@ -15,8 +15,9 @@ import Dashboard from '../Pages/Dashboard';
 import DailyValueForm from '../SubComponents/DailyValueForm';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
         toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, 
-        deleteRecipe, editRecipe, fetchRecipeNutrition, postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps,  
-        editRecipeSteps, fetchRecipeIngredients, editRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
+        deleteRecipe, deleteRecipeIngredients, deleteRecipeNutrition, deleteRecipeSteps, editRecipe, fetchRecipeNutrition, 
+        postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps, editRecipeSteps, 
+        fetchRecipeIngredients, editRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
         postComment, fetchComments, deleteComment, editComment, postGroceries,
         postIngredient, searchRecipe,fetchNutrition, postNutrition } from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
@@ -49,6 +50,9 @@ const mapDispatchToProps = (dispatch) => ({
     deleteUser: () => { dispatch(deleteUser())},
     deleteComment: (id) => { dispatch(deleteComment(id))},
     deleteRecipe: (id) => { dispatch(deleteRecipe(id))},
+    deleteRecipeSteps: (id) => { dispatch(deleteRecipeSteps(id))},
+    deleteRecipeIngredients: (id) => { dispatch(deleteRecipeIngredients(id))},
+    deleteRecipeNutrition: (id) => { dispatch(deleteRecipeNutrition(id))},
     editRecipe: (id, name, numSteps, image, notes, userId, type) => {dispatch(editRecipe(id, name, numSteps, image, notes, userId, type))},
     editRecipeSteps: (recipeId, stepNum, steps) => {dispatch(editRecipeSteps(recipeId, stepNum, steps))},
     editRecipeIngredients: (recipeId, ingredientId, ingredient_name, measurement, unit) => 
@@ -202,7 +206,14 @@ class Main extends Component {
                     <Routes>
                         <Route path='/login' element={<Login/>}/>
                         <Route path='/register'element={<Register/>}/>
-                        <Route path='/user' element={<Dashboard user={this.props.user} recipes={this.props.recipe.recipe} deleteRecipe={this.props.deleteRecipe}/>}/>
+                        <Route path='/user' element={<Dashboard 
+                            user={this.props.user} 
+                            recipes={this.props.recipe.recipe} 
+                            deleteRecipe={this.props.deleteRecipe} 
+                            deleteSteps={this.props.deleteRecipeSteps}
+                            deleteIngredients={this.props.deleteRecipeIngredients}
+                            deleteNutrition={this.props.deleteRecipeNutrition}
+                            groceries={this.props.groceries}/>}/>
                         <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
                         <Route path='/recipes/search/:searchbar' element={<RecipesList recipes={this.props.recipe.recipeSearch} />}/>
                         <Route exact path='/add/recipe' element={<AddRecipe 

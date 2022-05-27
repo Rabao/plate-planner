@@ -58,6 +58,8 @@ function Header(props) {
                                                 <Dropdown.Item as={Link} to='/user'>Dashboard</Dropdown.Item>
                                                 <Dropdown.Item as={Link} to='/add/recipe'>Author Recipe</Dropdown.Item>
                                                 <Dropdown.Item as={Link} to='/groceries'>Your Groceries</Dropdown.Item>
+                                                <Dropdown.Item as={Link} to='/mealplans' active>Manage Meal Plans</Dropdown.Item>
+                                                <Dropdown.Divider />
                                                 <Dropdown.Item to='/login' onClick={props.handleLogout}>Logout</Dropdown.Item>  
                                             </Dropdown.Menu>                              
                                     </Dropdown>
