@@ -1,0 +1,21 @@
+delete from recipe_ingredients
+where recipe_id = 10653;
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (10653, 3, 2, 'Tablespoon', 'Honey');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (10653, 8, 10, 'Whole', 'Salmon Fillet');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (10653, 9, 0.66, 'Cup', 'Brown Sugar');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (10653, 10, 2, 'Tablespoon', 'Dijon Mustard');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (10653, 100, 0.5, 'Teaspoon', 'Salt');
+select * from recipe_ingredients
+where recipe_id = 10653;
+
+select * from recipes
