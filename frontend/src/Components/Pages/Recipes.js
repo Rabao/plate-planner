@@ -438,7 +438,7 @@ function RenderComments(props){
         
         : 
         
-        <div> Nutrition data not found. </div>}
+        <div> Nutrition data not available. </div>}
     </div>
     )
     

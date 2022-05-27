@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {Link, useNavigate} from 'react-router-dom'
 import { Breadcrumb, Col, Button } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
-import {Tooltip} from 'react-tippy';
-import 'react-tippy/dist/tippy.css';
 import {TiArrowShuffle} from 'react-icons/ti'
 
 export default class PlanGenerator extends Component {
@@ -15,7 +13,6 @@ export default class PlanGenerator extends Component {
             meals: 0
         }
     }
-
 
     displayGenerator = () => {
         this.setState({
@@ -46,37 +43,43 @@ export default class PlanGenerator extends Component {
         const lunch = this.props.recipes.filter((recipe) => recipe.type === "Lunch");
 
         const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
-
+   
         function mealFilter(recipes){
-            let fmeal = recipes.filter((recipe)=> recipe.id !== ceiling.recipeId);
-            let shuffledMeal = shuffle(fmeal);
-     
+            let shuffledNutrition = shuffle(ceiling);
+            const fMeal = recipes.filter((recipe) => recipe.id == shuffledNutrition[0].recipeId);
+
+            if(fMeal[0]){
                 return(
-                        <div key={shuffledMeal[0].id}>
+                        <div key={fMeal[0].id}>
                             <div>
                                 <div className="plan-img-wrapper">
-                                <img className="plan-img" src={shuffledMeal[0].image}/>
+                                <img className="plan-img" src={fMeal[0].image}/>
                             </div>
                             <div className="plan-details-wrapper">
                                 <table>
-                                    <tr className="plan-meal-name-type">
-                                        <td>{shuffledMeal[0].name}</td>
-                                        <td>{shuffledMeal[0].type}</td>
+                                    <tr>
+                                        <td className="plan-meal-name"><strong>{fMeal[0].name}</strong></td>
+                                        <td className="plan-meal-type">{fMeal[0].type}</td>
                                     </tr>
                                     <tr className="plan-meal-cals">
-                                        <td>Cal: {ceiling.filter((recipe) => recipe.recipeId !== shuffledMeal[0].id)[0].calories}</td>
+                                        <td>Cal: {shuffledNutrition[0].calories}</td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 )
             }
+             else {
+                mealFilter(recipes);
+            }
+        }
 
         if(meals==1){
             return(
             <div>
                 <div className="plan-block">
+                    {console.log("TEST.")}
                     {mealFilter(dinner)}
                 </div>
             </div>
@@ -112,7 +115,7 @@ export default class PlanGenerator extends Component {
                 </div>
                 <div className="plan-block">2</div>
                 <div className="plan-block">
-                    {mealFilter(dinner)}
+                    {mealFilter(dinner)}<button onClick={()=>{{mealFilter(dinner)}}}>Button</button>
                 </div>
             </div>
             )
