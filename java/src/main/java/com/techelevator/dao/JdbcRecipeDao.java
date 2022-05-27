@@ -23,7 +23,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public Recipe getRecipe(long id) {
         Recipe recipe = null;
-        String sql = "SELECT id, name, num_of_steps, image, notes, user_id, type " +
+        String sql = "SELECT id, name, image, notes, user_id, type " +
                 "FROM recipes WHERE id = ? ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql,id);
@@ -38,7 +38,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public List<Recipe> getRecipesBySearch(String searchbar) {
         List<Recipe> recipes = new ArrayList<>();
-        String sql = "SELECT id, name, num_of_steps, image, notes, user_id, type " +
+        String sql = "SELECT id, name, image, notes, user_id, type " +
                 "FROM recipes INNER JOIN recipe_tags ON recipes.id = recipe_tags.recipeId " +
                 "WHERE LOWER(recipe_tags.tag) LIKE LOWER(?) OR LOWER(name) LIKE LOWER(?)";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, '%'+searchbar+'%', '%'+searchbar+'%');
@@ -52,7 +52,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public List<Recipe> listRecipe() {
         List<Recipe> recipes = new ArrayList<>();
-        String sql = "SELECT id, name, num_of_steps, image, notes, user_id, type FROM recipes ";
+        String sql = "SELECT id, name, image, notes, user_id, type FROM recipes ";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while (results.next()) {
@@ -84,7 +84,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public List<Recipe> listRecipesByType(String type) {
         List<Recipe> recipes = new ArrayList<>();
-        String sql = "SELECT id, name, num_of_steps, image, notes, user_id, type FROM recipes " +
+        String sql = "SELECT id, name, image, notes, user_id, type FROM recipes " +
                 "WHERE type = ?";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, type);
@@ -97,17 +97,17 @@ public class JdbcRecipeDao implements RecipeDao{
 
     @Override
     public boolean addRecipe(Recipe recipe) {
-        String sql = "INSERT INTO recipes (id, name, num_of_steps, image, notes, user_id, type ) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ? )";
-        return jdbcTemplate.update(sql,recipe.getId(), recipe.getName(), recipe.getNumOfSteps(), recipe.getImage(),
+        String sql = "INSERT INTO recipes (id, name, image, notes, user_id, type ) " +
+                "VALUES (?, ?, ?, ?, ?, ? )";
+        return jdbcTemplate.update(sql,recipe.getId(), recipe.getName(), recipe.getImage(),
                 recipe.getNotes(), recipe.getUserId(), recipe.getType()) == 1;
     }
 
     @Override
     public boolean editRecipe(long id, Recipe recipe) {
-        String sql = "UPDATE recipes SET name = ?, num_of_steps = ?, image = ?, notes = ?, user_id = ?, type = ? " +
+        String sql = "UPDATE recipes SET name = ?, image = ?, notes = ?, user_id = ?, type = ? " +
                 "WHERE id = ?";
-        return jdbcTemplate.update(sql, recipe.getName(), recipe.getNumOfSteps(), recipe.getImage(),
+        return jdbcTemplate.update(sql, recipe.getName(), recipe.getImage(),
                 recipe.getNotes(), recipe.getUserId(), recipe.getType(), id) == 1;
     }
 
@@ -121,7 +121,6 @@ public class JdbcRecipeDao implements RecipeDao{
         Recipe recipe = new Recipe();
         recipe.setId(rs.getLong("id"));
         recipe.setName(rs.getString("name"));
-        recipe.setNumOfSteps(rs.getInt("num_of_steps"));
         recipe.setImage(rs.getString("image"));
         recipe.setNotes(rs.getString("notes"));
         recipe.setUserId(rs.getInt("user_id"));
