@@ -20,11 +20,3 @@ public class Application implements CommandLineRunner {
         storageService.init();
     }
 }
-//@SpringBootApplication
-//public class Application {
-//
-//    public static void main(String[] args) {
-//        SpringApplication.run(Application.class, args);
-//    }
-//
-//}

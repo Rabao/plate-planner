@@ -4,7 +4,6 @@ public class Recipe {
 
     private long id;
     private String name;
-    private int numOfSteps;
     private String image;
     private String notes;
     private int userId;
@@ -17,7 +16,6 @@ public class Recipe {
                   int userId, String type ) {
         this.id = id;
         this.name = name;
-        this.numOfSteps = numOfSteps;
         this.image = image;
         this.notes = notes;
         this.userId = userId;
@@ -38,14 +36,6 @@ public class Recipe {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getNumOfSteps() {
-        return numOfSteps;
-    }
-
-    public void setNumOfSteps(int numOfSteps) {
-        this.numOfSteps = numOfSteps;
     }
 
     public String getImage() {
