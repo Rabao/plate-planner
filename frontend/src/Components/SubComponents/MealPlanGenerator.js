@@ -63,6 +63,7 @@ export default class PlanGenerator extends Component {
                                 <table>
                                     <tr>
                                         <td className="plan-meal-name"><strong>{fMeal[0].name}</strong></td>
+                                        <td className="plan-meal-flex"></td>
                                         <td className="plan-meal-type">{fMeal[0].type}</td>
                                     </tr>
                                     <tr className="plan-meal-cals">

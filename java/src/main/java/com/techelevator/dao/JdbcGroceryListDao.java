@@ -86,11 +86,9 @@ public class JdbcGroceryListDao implements GroceryListDao{
 
     @Override
     public boolean addNewItemToGroceryList(long id, GroceryList groceryList) {
-        String sql = "INSERT INTO grocery_list (list_id, ingredient_id, ingredient_name, " +
-                "qty, user_id, complete) VALUES (DEFAULT, (select id from ingredients where name = ? LIMIT 1)" +
-                ", ?, ?, ?, false)";
-        return jdbcTemplate.update(sql,groceryList.getingredient_name(),
-                groceryList.getingredient_name(),groceryList.getQty(), groceryList.getUserId()) == 1;
+        String sql = "INSERT INTO grocery_list ( ingredient_id, ingredient_name, qty, user_id, complete) " +
+                 " SELECT i.id, ?, ?, ?, false FROM ingredients AS i WHERE i.name = ? LIMIT 1";
+        return jdbcTemplate.update(sql,groceryList.getingredient_name(), groceryList.getQty(), groceryList.getUserId(), groceryList.getingredient_name()) == 1;
     }
 
     @Override

@@ -393,47 +393,36 @@ class AddItem extends Component{
                                 <option>Fruit (Canned)</option>
                                 <option>Meat (Canned)</option>
                                 <option>Sauce</option>
-                                <option>Dressing</option>
                                 <option>Condiment</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
                                 <option disabled>Dairy</option>
                                 <option disabled></option>
                                 <option>Milk</option>
-                                <option>Cream</option>
                                 <option>Cheese</option>
-                                <option>Yogurt</option>
-                                <option disabled></option>
-                                <option disabled>──────────</option>
-                                <option disabled>Animal Products</option>
-                                <option disabled></option>
                                 <option>Eggs</option>
-                                <option disabled></option>
-                                <option disabled>──────────</option>
-                                <option disabled>Fats</option>
-                                <option disabled></option>
+                                <option>Yogurt</option>
                                 <option>Butter</option>
-                                <option>Oil</option>
+                                <option>Frozen Dairy</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
                                 <option disabled>Dry Goods</option>
                                 <option disabled></option>
                                 <option>Cereal</option>
                                 <option>Flour</option>
+                                <option>Sugar</option>
                                 <option>Pasta</option>
                                 <option>Seasoning</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
-                                <option disabled>Sweetners</option>
-                                <option disabled></option>
-                                <option>Sugar</option>
-                                <option>Sugar-Free Sweetner</option>
-                                <option disabled></option>
-                                <option disabled>──────────</option>
                                 <option disabled>Frozen Foods</option>
                                 <option disabled></option>
-                                <option>Frozen Dairy</option>
-                                <option>Frozen Bread and Dough</option>
+                                <option>Slice</option>
+                                <option>Half</option>
+                                <option>Millimeter</option>
+                                <option>Centimeter</option>
+                                <option>Meter</option>
+                                <option>Inch</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
                                 <option disabled>Meat</option>
@@ -442,14 +431,12 @@ class AddItem extends Component{
                                 <option>Poultry</option>
                                 <option>Red Meat</option>
                                 <option>Seafood</option>
-                                <option>Game Meat</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
                                 <option disabled>Produce</option>
                                 <option disabled></option>
                                 <option>Fruit</option>
                                 <option>Vegetable</option>
-                                <option>Herb</option>
                         </Control.select>
                     </Col>
                     <Col md={2}>

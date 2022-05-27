@@ -137,7 +137,7 @@ export const postIngredient = (name, type) => (dispatch) => {
                 let errmess = new Error(error.message);
                 throw errmess;
             })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(response => dispatch(addIngredient(response)))
         .catch(error => {
             console.log('Post ingredient ', error.message)
@@ -264,7 +264,7 @@ export const postNutrition = (servingSize, calories, caloriesFat, totalFat, satu
                 let errmess = new Error(error.message);
                 throw errmess;
             })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(response => dispatch(addNutrition(response)))
         .catch(error => {
             console.log('Post nutrition ', error.message)
@@ -538,7 +538,7 @@ export const postGroceries = (ingredientName,
                 let errmess = new Error(error.message);
                 throw errmess;
             })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(response => dispatch(addGrocery(response)))
         .catch(error => {
             console.log('Adding grocery: ', error.message)
