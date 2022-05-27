@@ -75,9 +75,7 @@ export default class PlanGenerator extends Component {
                     </div> </Tooltip>
                 )
             }
-             else {
-                mealFilter(recipes);
-            }
+            
         }
 
         if(meals==1){
