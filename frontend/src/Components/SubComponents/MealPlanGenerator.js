@@ -3,6 +3,8 @@ import {Link, useNavigate} from 'react-router-dom'
 import { Breadcrumb, Col, Button } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import {TiArrowShuffle} from 'react-icons/ti'
+import {Tooltip} from 'react-tippy';
+import 'react-tippy/dist/tippy.css';
 
 export default class PlanGenerator extends Component {
     constructor(props){
@@ -48,8 +50,10 @@ export default class PlanGenerator extends Component {
             let shuffledNutrition = shuffle(ceiling);
             const fMeal = recipes.filter((recipe) => recipe.id == shuffledNutrition[0].recipeId);
 
-            if(fMeal[0]){
+            if(fMeal[0] && shuffledNutrition[0]){
                 return(
+                <Tooltip 
+                    trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip">{RecipeNutrition(fMeal[0], shuffledNutrition[0])}</div>)}>
                         <div key={fMeal[0].id}>
                             <div>
                                 <div className="plan-img-wrapper">
@@ -67,7 +71,7 @@ export default class PlanGenerator extends Component {
                                 </table>
                             </div>
                         </div>
-                    </div> 
+                    </div> </Tooltip>
                 )
             }
              else {
@@ -172,4 +176,73 @@ export default class PlanGenerator extends Component {
         </>
     );
     }
+}
+
+
+function RecipeNutrition(recipe, nutrition)  {
+    return(
+
+        <div>
+        { nutrition && recipe ?
+            <table>
+                <tr>
+                    <th>Recipe</th>
+                    <th>{recipe.name}</th>
+                </tr>
+                <tr>
+                    <td>Serving Size</td>
+                    <td>{nutrition.servingSize}</td> 
+                </tr>
+                <tr>
+                    <td>Calories</td>
+                    <td>{nutrition.calories}</td>
+                </tr>
+                <tr>
+                    <td>Calories from Fat</td>
+                    <td>{nutrition.caloriesFat}</td>
+                </tr>
+                <tr>
+                    <td>Total Fat</td>
+                    <td>{nutrition.totalFat}g</td>
+                </tr>
+                <tr>
+                    <td>Saturated Fat</td>
+                    <td>{nutrition.saturatedFat}g</td>
+                </tr>          
+                <tr>
+                    <td>Cholesterol</td>
+                    <td>{nutrition.cholesterol}mg</td>
+                </tr>
+                <tr>
+                    <td>Sodium</td>
+                    <td>{nutrition.sodium}mg</td>
+                </tr>
+                <tr>
+                    <td>Total Carbohydrates</td>
+                    <td>{nutrition.totalCarbs}g</td>
+                </tr>
+                <tr>
+                    <td>Sugar</td>
+                    <td>{nutrition.sugar}g</td>
+                </tr>
+                <tr>
+                    <td>Dietary Fiber</td>
+                    <td>{nutrition.dietaryFiber}g</td>
+                </tr>
+                <tr>
+                    <td>Potassium</td>
+                    <td>{nutrition.potassium}mg</td>
+                </tr>
+                <tr>
+                    <td>Protein</td>
+                    <td>{nutrition.protein}g</td>
+                </tr> 
+            </table>
+        
+        : 
+        
+        <div> Nutrition data not available. </div>}
+    </div>
+    )
+
 }

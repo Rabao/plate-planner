@@ -440,6 +440,10 @@ h5 {
   display: inline-block;
 }
 
+#tooltip-recipe-name {
+  text-align: center;
+}
+
 /*------------------------- Recipe List CSS --------------------------*/
 .lds-circle {
   display: inline-block;
