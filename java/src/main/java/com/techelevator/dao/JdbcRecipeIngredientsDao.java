@@ -22,7 +22,8 @@ public class JdbcRecipeIngredientsDao implements RecipeIngredientsDao {
     @Override
     public List<RecipeIngredients> listRecipeIngredients() {
         List<RecipeIngredients> ingredients = new ArrayList<>();
-        String sql = "SELECT recipe_id, ingredient_id, ingredient_name, measurement, unit, ingredient_key FROM recipe_ingredients ";
+        String sql = "SELECT recipe_id, ingredient_id, ingredient_name, measurement, unit, ingredient_key FROM recipe_ingredients " +
+                "ORDER BY ingredient_key";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
