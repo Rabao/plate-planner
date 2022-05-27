@@ -53,72 +53,6 @@ export default class EditRecipe extends Component {
         this.multilineTextarea.style.height = this.multilineTextarea.scrollHeight + 'px';
       }
 
-    getIdByIngredientName = (name) => {
-        return this.props.ingredients.filter(ingredients => ingredients.name === name)[0].id;
-    }
-
-      postEditedRecipe(e) {
-        let stepNum = 1;
-        const path = '/recipes/';
-        let pageRedirect= false;
-        const name = document.getElementById('name');
-        const type = document.getElementsByClassName('recipe-type');
-        const notes = document.getElementsByClassName('edit-notes')[0];
-        const qty = document.getElementsByClassName('qty'); //Measurement quantity (fills measurement parameter in postIngredients)
-        const unit = document.getElementsByClassName('unit-measure');
-        const steps = document.getElementsByClassName('edit-recipe-steps');
-        const ingredients = document.getElementsByClassName('recipe-ingredients');
-
-        //------------------------------------------------------------------IMAGE READER
-        
-        const formData = new FormData();
-        let file = this.state.file;
-
-        let data = new FormData()
-        data.append('file', file)
-        let filePath = '/uploads/' + file.name;
-        
-        
-        if(this.props.targetRecipe.image == this.state.file){
-            filePath = this.state.file;
-        }
-        else{
-            fetch(' http://localhost:8080/upload', {
-                method: 'POST',
-                body: data
-            })
-        }
-        // ------------------------------------------------------------------SUBMISSION LOGIC
-
-        // console.log(this.props.targetRecipe.id)
-        // console.log(name.value)
-        // console.log(0)
-        // console.log(filePath)
-        // console.log(notes.value)
-        // console.log(this.props.user.id)
-        // console.log('')
-
-        this.props.editRecipe(this.props.targetRecipe.id,name.value,1,filePath,notes.value,this.props.user.id,'') 
-        for(let i=0; i< steps.length; i++){     
-            this.props.editRecipeSteps(this.props.targetRecipe.id,stepNum,steps[i].value) 
-            stepNum++;      
-        }
-        for(let i=0; i< steps.length; i++){     
-            this.props.editRecipeSteps(this.props.targetRecipe.id,stepNum,steps[i].value) 
-            stepNum++;      
-        }
-        for(let i=0; i< ingredients.length; i++){
-            this.props.editRecipeIngredients(this.props.targetRecipe.id,this.getIdByIngredientName(ingredients[i].value),ingredients[i].value,qty[i].value,unit[i].value)
-        }
-
-        // console.log("INGREDIENT ID: " + this.getIdByIngredientName("Chicken Breast"));
-
-        setTimeout(() => {
-            pageRedirect= true;
-            if(pageRedirect === true){
-                React.navigate(path); 
-        }}, 500)
-      }
 
 
       Recipe() {
@@ -206,7 +140,8 @@ export default class EditRecipe extends Component {
                                         <option>Centimeter</option>
                                         <option>Meter</option>
                                         <option>Inch</option>
-                                    </select>{console.log(ingredient)}
+                                    </select>
+                                    {/* {console.log(ingredient)} */}
                                     <input type="text" model={".ingredient"+i} defaultValue={ingredient.ingredient_name} name={"ingredient"+i} className="recipe-ingredients ingredients-controls" />
                                 </div>      
                                 )                       
@@ -335,8 +270,91 @@ export default class EditRecipe extends Component {
                         this.props.recipeLoading, 
                         this.props.recipeErrMess,
                         this.props.editRecipe)}
-                    <div className="container"><button className="submit-buttons" onClick={() => {this.postEditedRecipe()}}>Save Changes</button></div>
+                        <SaveChangesButton file = {this.state.file} 
+                        targetRecipe = {this.props.targetRecipe}
+                        editRecipe = {this.props.editRecipe}
+                        user = {this.props.user}
+                        editRecipeSteps = {this.props.editRecipeSteps}
+                        editRecipeIngredients = {this.props.editRecipeIngredients}
+                        ingredients = {this.props.ingredients}/>
                 </div>  
             )
         }  
+}
+
+
+function SaveChangesButton(props) {
+    const navigate = useNavigate();
+
+    function getIdByIngredientName (name){
+        return props.ingredients.filter(ingredients => ingredients.name === name)[0].id;
     }
+    
+    function postEditedRecipe(e) {
+        let stepNum = 1;
+        const path = '/recipes/';
+        let pageRedirect= false;
+        const name = document.getElementById('name');
+        const type = document.getElementsByClassName('recipe-type');
+        const notes = document.getElementsByClassName('edit-notes')[0];
+        const qty = document.getElementsByClassName('qty'); //Measurement quantity (fills measurement parameter in postIngredients)
+        const unit = document.getElementsByClassName('unit-measure');
+        const steps = document.getElementsByClassName('edit-recipe-steps');
+        const ingredients = document.getElementsByClassName('recipe-ingredients');
+
+        //------------------------------------------------------------------IMAGE READER
+        
+        const formData = new FormData();
+        let file = props.file;
+
+        let data = new FormData()
+        data.append('file', file)
+        let filePath = '/uploads/' + file.name;
+        
+        
+        if(props.targetRecipe.image == props.file){
+            filePath = props.file;
+        }
+        else{
+            fetch(' http://localhost:8080/upload', {
+                method: 'POST',
+                body: data
+            })
+        }
+        // ------------------------------------------------------------------SUBMISSION LOGIC
+
+        // console.log(this.props.targetRecipe.id)
+        // console.log(name.value)
+        // console.log(0)
+        // console.log(filePath)
+        // console.log(notes.value)
+        // console.log(this.props.user.id)
+        // console.log('')
+
+        props.editRecipe(props.targetRecipe.id,name.value,1,filePath,notes.value,props.user.id,'') 
+        for(let i=0; i< steps.length; i++){     
+            props.editRecipeSteps(props.targetRecipe.id,stepNum,steps[i].value) 
+            stepNum++;      
+        }
+        for(let i=0; i< steps.length; i++){     
+            props.editRecipeSteps(props.targetRecipe.id,stepNum,steps[i].value) 
+            stepNum++;      
+        }
+        for(let i=0; i< ingredients.length; i++){
+            console.log(i + " " + ingredients[i].value);
+            props.editRecipeIngredients(props.targetRecipe.id,getIdByIngredientName(ingredients[i].value),ingredients[i].value,qty[i].value,unit[i].value)
+        }
+
+        // console.log("INGREDIENT ID: " + this.getIdByIngredientName("Chicken Breast"));
+
+        setTimeout(() => {
+            pageRedirect= true;
+            if(pageRedirect === true){
+                navigate(path);       
+        }}, 500)
+      }
+    return (
+        <div className="container"><button className="submit-buttons" onClick={() => {postEditedRecipe()}}>Save Changes</button></div>
+
+    )
+}

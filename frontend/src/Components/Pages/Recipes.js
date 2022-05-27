@@ -39,6 +39,7 @@ export default class Recipes extends Component {
                     deleteComment={this.props.deleteComment}
                     editComment={this.props.editComment}
                     postGroceries={this.props.postGroceries}
+                    searchRecipe={this.props.searchRecipe}
                     recipeNutrition={this.props.recipeNutrition}/>
                  </div>  
             )
@@ -84,7 +85,8 @@ const Recipe = (props) => {
                 {props.recipe ? 
                 <div className="recipe-info-name" md={9}>
                     <h3>{props.recipe.name}</h3>
-                    {props.recipeTags ? <RecipeTags target={props.recipeTags}/> : <div></div>}  
+                    {props.recipeTags ? <RecipeTags searchRecipe={props.searchRecipe}
+                        target={props.recipeTags}/> : <div></div>}  
                     {userId === props.recipe.userId ? <div id="manage-recipe-buttons" md={6}>
                         <Link to={"/edit/recipes/"+props.recipe.id}><button type="button" className="dashboard-interface-button" >&#9997; EDIT</button></Link>
                     </div> : <div></div>}
@@ -517,10 +519,16 @@ function Ingredients(props) {
 
 function RecipeTags(props) {
     const navigate = useNavigate();
+    
+    function submitSearch(tag){
+        props.searchRecipe(tag.tag);
+        const path = '/recipes/search/'+tag.tag;
+        navigate(path);       
+    }
 
     const recipeTags = props.target.map((tag) => {
         return(
-                <em className='recipe-tag' onClick={() => {navigate('/recipes/search/'+tag.tag)}}>{tag.tag} </em>
+                <em className='recipe-tag' onClick={() => {submitSearch(tag)}}>{tag.tag} </em>
             )
         });
 

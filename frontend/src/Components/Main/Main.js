@@ -152,6 +152,7 @@ class Main extends Component {
                 recipeErrMess={this.props.recipe.errMess}
                 user={this.props.user}
                 users={this.props.allUsers}
+                searchRecipe={this.props.searchRecipe}
                 recipeTags={this.props.recipeTags.recipeTags.filter(tag => tag.recipeId === parseInt(id,10))}
                 recipeNutrition={this.props.recipeNutrition.recipeNutrition.filter(nutrition => nutrition.recipeId === parseInt(id,10))[0]}
                 targetIngredients={this.props.recipeIngredients.recipeIngredients.filter(ingredients => ingredients.recipeId === parseInt(id,10))}
