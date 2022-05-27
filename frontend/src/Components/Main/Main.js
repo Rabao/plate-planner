@@ -232,10 +232,9 @@ class Main extends Component {
                             deleteCompletedGroceries={this.props.deleteCompletedGroceries}
                             fetchGrocery={this.props.fetchGrocery}
                             toggleFetchGrocery={this.props.toggleFetchGrocery}/>}/>
-                        <Route path='/mealplans' element={<MealPlans
-                            groceries={this.props.groceries.groceries
-                                .filter((grocery) => grocery.userId === parseInt(this.props.user.id,10))}
-                            recipes={this.props.recipe.recipe}/>}/>
+                        <Route path='/mealplans' element={<MealPlans 
+                        recipes={this.props.recipe.recipe} 
+                        recipeNutrition={this.props.recipeNutrition.recipeNutrition}/>}/>
                         <Route path='/dvcalc' element={<DailyValueForm ingredients={this.props.ingredients.ingredients}/>}/>
                         <Route path='/home' element={<Home collection={this.props.recipe.recipe} token={this.props.token.token}/>}/>
                         {/* <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>                       */}

@@ -352,6 +352,7 @@ h5 {
 #recipe-pg-img {
   width: 100%;
   height: auto;
+  border-radius: 0px 15px 0px 0px;
   top:50;
 }
 
@@ -362,6 +363,7 @@ h5 {
   margin-bottom: 1.5em;
   margin-left:16px;
   width:97.7%;
+  border-radius: 15px;
   border-bottom: 1px solid #9e9891;
   border-top: 1px solid #9e9891;
 }
@@ -370,7 +372,63 @@ h5 {
   width:100%;
 }
 
+#dv-table td{
+  font-size: large;
+  margin: 15px;
+  padding: 0px;
+  width: 20%;
+}
 
+#dv-table span {
+  float:right;
+  margin-right: 40px;
+}
+
+.plan-block {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  border-top: 1px solid #9e9891;
+  border-bottom: 1px solid #9e9891;
+}
+
+.plan-img-wrapper {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.plan-img {
+  width:100%;
+  height: auto;
+  top: 50%;
+  left: 50%
+}
+
+.plan-details-wrapper {
+  margin-left: 10px;
+  width: fit-content;
+  display: inline-block;
+}
+
+.plan-meal-cals td {
+  font-size: xx-large;
+}
+
+#target-nutrition {
+  display: inline-block;
+}
+
+.caloric-intake {
+  width:100%;
+  display: inline-block;
+}
+
+.meal-count {
+  width:60%;
+  display: inline-block;
+}
 
 /*------------------------- Recipe List CSS --------------------------*/
 .lds-circle {
@@ -586,6 +644,8 @@ hr {
   font-weight: 500;
   margin-bottom: 1.65em;
 }
+
+
 
 /*------------------------ Grocery List CSS --------------------------*/
 .complete {

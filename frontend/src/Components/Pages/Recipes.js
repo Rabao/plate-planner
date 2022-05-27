@@ -344,9 +344,9 @@ function RenderComments(props){
     
 //    console.log("TARGETED: " + JSON.stringify(tNutrition))
     return(
-        <div>
 
-        { tNutrition.id === ingredient.ingredientId ?
+        <div>
+        { tNutrition && ingredient ?
             <table>
                 <tr>
                     <th>Ingredient</th>
