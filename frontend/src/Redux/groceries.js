@@ -13,11 +13,11 @@ export const Groceries = (state = {
                 id: action.payload.id, 
                 isLoading: false,
                 errMess: null,
-                groceries: action.payload}
+            groceries: action.payload}
 
-            case ActionTypes.ADD_GROCERY:
-                return{...state, groceries: state.groceries.concat(action.payload)};
-        
+        case ActionTypes.ADD_GROCERY:
+            return{...state, groceries: state.groceries.concat(action.payload)};
+    
         case ActionTypes.DELETE_GROCERIES:
             return{
                 ...state, groceries: state.groceries.filter((grocery, index) => index !== action.payload)}

@@ -22,7 +22,8 @@ public class JdbcRecipeIngredientsDao implements RecipeIngredientsDao {
     @Override
     public List<RecipeIngredients> listRecipeIngredients() {
         List<RecipeIngredients> ingredients = new ArrayList<>();
-        String sql = "SELECT recipe_id, ingredient_id, ingredient_name, measurement, unit FROM recipe_ingredients ";
+        String sql = "SELECT recipe_id, ingredient_id, ingredient_name, measurement, unit, ingredient_key FROM recipe_ingredients " +
+                "ORDER BY ingredient_key";
 
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
@@ -34,8 +35,8 @@ public class JdbcRecipeIngredientsDao implements RecipeIngredientsDao {
 
     @Override
     public boolean addRecipeIngredients(RecipeIngredients recipeIngredients) {
-        String sql = "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, ingredient_name, measurement, unit) " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, ingredient_name, measurement, unit, ingredient_key) " +
+                "VALUES (?, ?, ?, ?, ?, DEFAULT)";
         return jdbcTemplate.update(sql,recipeIngredients.getRecipeId(),recipeIngredients.getIngredientId(),
                 recipeIngredients.getingredient_name(),recipeIngredients.getMeasurement(),recipeIngredients.getUnit()) == 1;
     }
@@ -43,14 +44,14 @@ public class JdbcRecipeIngredientsDao implements RecipeIngredientsDao {
     @Override
     public boolean editRecipeIngredients(long id, RecipeIngredients recipeIngredients) {
         String sql = "UPDATE recipe_ingredients SET ingredient_id = ?, ingredient_name = ? , measurement = ? , unit = ? " +
-                "WHERE recipe_id = ? ";
+                "WHERE ingredient_key = ? ";
         return jdbcTemplate.update(sql, recipeIngredients.getIngredientId(), recipeIngredients.getingredient_name(),
                 recipeIngredients.getMeasurement(),recipeIngredients.getUnit(), id) == 1;
     }
 
     @Override
     public boolean deleteRecipeIngredients(long id) {
-        String sql = "DELETE FROM recipe_ingredients WHERE recipe_id = ? ";
+        String sql = "DELETE FROM recipe_ingredients WHERE ingredient_key = ? ";
         return jdbcTemplate.update(sql, id) == 1;
     }
 
@@ -61,6 +62,7 @@ public class JdbcRecipeIngredientsDao implements RecipeIngredientsDao {
         ingredients.setingredient_name(rs.getString("ingredient_name"));
         ingredients.setMeasurement(rs.getDouble("measurement"));
         ingredients.setUnit(rs.getString("unit"));
+        ingredients.setIngredient_key(rs.getLong("ingredient_key"));
         return ingredients;
     };
 }

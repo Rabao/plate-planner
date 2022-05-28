@@ -14,7 +14,11 @@ export const RecipeIngredients = (state = {
                 errMess: null,
                 recipeIngredients: action.payload}
 
-        case ActionTypes.EDIT_RECIPESTEPS:
+        case ActionTypes.ADD_RECIPEINGREDIENT:
+            return{...state, recipeIngredients: state.recipeIngredients.concat(action.payload)};
+            
+
+        case ActionTypes.EDIT_RECIPEINGREDIENTS:
             return{...state, recipeIngredients: state.recipeIngredients.filter((recipeIngredients) => {
                 if(recipeIngredients.recipeId === action.payload.recipeId){
                     recipeIngredients.ingredientId = action.payload.ingredientId;
@@ -38,7 +42,8 @@ export const RecipeIngredients = (state = {
                     recipeIngredients: []}
 
         case ActionTypes.DELETE_RECIPEINGREDIENTS:
-            return { ...state, id: null, recipeIngredients: '', authorities: [] }
+            return{
+                ...state, recipeIngredients: state.recipeIngredients.filter((recipeIngredient) => recipeIngredient.ingredient_key !== action.payload)}
 
         default:
             return state;

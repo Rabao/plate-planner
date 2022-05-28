@@ -1,0 +1,70 @@
+delete from recipe_ingredients;
+
+	
+	
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (34126, 1, 1, 'Pound', 'Chicken Breast');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (34126, 2, 0.25, 'Cup', 'Honey');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (10653, 2, 2, 'Tablespoon', 'Honey');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (34126, 3, 2, 'Tablespoon', 'Hot Sauce');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (34126, 4, 12, 'Whole', 'Hawaiian Sweet Roll');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (34126, 5, 0.25, 'Teaspoon', 'Black Pepper');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (34126, 6, 0.25, 'Cup', 'Butter');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (5649, 7, 1, 'Teaspoon', 'Fresh Parsley');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (10653, 8, 10, 'Whole', 'Salmon Fillet');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (10653, 9, 0.66, 'Cup', 'Brown Sugar');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (10653, 10, 2, 'Tablespoon', 'Dijon Mustard');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (10653, 11, 0.5, 'Teaspoon', 'Salt');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (15123, 11, 3, 'Pound', 'Salt');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (15123, 12, 2, 'Pound', 'Beef Tenderloin');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (15123, 13, 2, 'Tablespoon', 'Rosemary');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (15123, 14, 1, 'Cup', 'Water');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (21643, 15, 11, 'Whole', 'Large Egg');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (3125, 15, 3, 'Whole', 'Large Egg');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (21643, 16, 1, 'Whole', 'Puff Pastry');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (21643, 17, 0.75, 'Cup', 'Half-and-Half');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (21643, 18, 1.5, 'Cup', 'Cheddar Cheese');
+INSERT INTO public.recipe_ingredients(
+	recipe_id, ingredient_id, measurement, unit, ingredient_name)
+	VALUES (3125, 19, 1, 'Tablespoon', 'Extra-Virgin Olive Oil');
