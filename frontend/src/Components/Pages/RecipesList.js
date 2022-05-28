@@ -4,12 +4,13 @@ import {Link, useNavigate} from 'react-router-dom'
 
 export function MealList(props){
     const map = props.recipes.map((recipe) => {
-            console.log(recipe)
             return(
                 <div className="row recipe-result" key={recipe.id}>
                     <table>
                         <td id="recipe-text">
                             <tr id="recipe-title"><h6>{recipe.name}</h6></tr>
+                            <tr id="recipe-title"><h3>Cal: {
+                props.nutrition.filter(rn => rn.recipeId == recipe.id)[0].calories}</h3></tr>
                         </td>
                         <td id="recipe-img-td"><img src={recipe.image}/></td>
                     </table>
@@ -18,6 +19,11 @@ export function MealList(props){
             })
             return(map)
         }
+
+// function GetCaloriesByRecipeId(props, id){
+//     return 
+//         props.nutrition.filter(rn => rn.recipeId == id)[0].calories;
+// }
 
 function RecipesList(props) {
 
