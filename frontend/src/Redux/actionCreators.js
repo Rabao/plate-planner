@@ -422,6 +422,33 @@ export const fetchGrocery = (id) => (dispatch) => {
         .then(groceries => dispatch(addGroceries(groceries)))
         .catch(error => dispatch(groceriesFailed(error.message)));
 }
+export const fetchGroceryByIngredient = (id) => (dispatch) => {
+    // dispatch(groceriesLoading(true));
+
+    return fetch(baseUrl + "/groceries/ingredient" + id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        // .then(groceries => dispatch(addGroceries(groceries)))
+        .catch(error => dispatch(groceriesFailed(error.message)));
+}
 
 export const fetchGroceries = () => (dispatch) => {
     // dispatch(groceriesLoading(true));
@@ -539,7 +566,7 @@ export const postGroceries = (ingredientName,
                 throw errmess;
             })
         .then(response => response.text())
-        .then(response => dispatch(addGrocery(response)))
+        // .then(() => dispatch(addGrocery(newGrocery)))
         .catch(error => {
             console.log('Adding grocery: ', error.message)
             alert('Your grocery could not be added.\nError: ' + error.message)

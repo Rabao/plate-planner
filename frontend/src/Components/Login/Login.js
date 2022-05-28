@@ -113,10 +113,6 @@ class Login extends Component {
                 <ClickToLogIn username = {this.state.username}
                 password = {this.state.password}
                 dispatch = {this.props.dispatch}/>
-                {/* <div className="row">
-                    <Link to="/register">Need an account?</Link>
-                    <button type="submit" onClick={this.handleLogin}>Sign in</button>
-                </div> */}
             </div>
         )
     }
