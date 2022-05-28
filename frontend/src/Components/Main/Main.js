@@ -14,7 +14,7 @@ import MealPlans from '../Pages/MealPlans'
 import Dashboard from '../Pages/Dashboard';
 import DailyValueForm from '../SubComponents/DailyValueForm';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
-        toggleFetchGrocery, toggleGrocery, fetchMealPlan, fetchMealPlanCollection, fetchRecipe, postRecipe, 
+        toggleFetchGrocery, toggleGrocery, fetchMealPlan, postMealPlan, fetchRecipe, postRecipe, 
         deleteRecipe, deleteRecipeIngredients, deleteRecipeNutrition, deleteRecipeSteps, editRecipe, fetchRecipeNutrition, 
         postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps, editRecipeSteps, 
         fetchRecipeIngredients, editRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
@@ -68,7 +68,6 @@ const mapDispatchToProps = (dispatch) => ({
     fetchIngredients: () => {dispatch(fetchIngredients())},
     fetchGroceries: () => {dispatch(fetchGroceries())},
     fetchGrocery: (id) => {dispatch(fetchGrocery(id))},
-    fetchMealPlanCollection: () => {dispatch(fetchMealPlanCollection())},
     fetchComments: () => {dispatch(fetchComments())},
 
     // Fetch with parameters
@@ -105,6 +104,7 @@ const mapDispatchToProps = (dispatch) => ({
         {dispatch(postRecipeNutrition(servingSize, calories, caloriesFat, totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, 
             potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, 
             iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium, copper, manganese, chromium, molybdenum, chloride, recipeId))},
+    postMealPlan: (userId, planId, recipeId, date, time) => {dispatch(postMealPlan((userId, planId, recipeId, date, time)))}
 });
 
 class Main extends Component {
@@ -118,7 +118,6 @@ class Main extends Component {
         this.props.fetchNutrition();
         this.props.fetchGroceries();
         this.props.fetchMealPlan();
-        this.props.fetchMealPlanCollection();
         this.props.fetchComments();
         this.props.fetchRecipe();
         this.props.fetchRecipeSteps();
@@ -252,7 +251,10 @@ class Main extends Component {
                             toggleFetchGrocery={this.props.toggleFetchGrocery}/>}/>
                         <Route path='/mealplans' element={<MealPlans 
                         recipes={this.props.recipe.recipe} 
-                        recipeNutrition={this.props.recipeNutrition.recipeNutrition}/>}/>
+                        recipeNutrition={this.props.recipeNutrition.recipeNutrition}
+                        plans={this.props.mealPlan.mealPlan}
+                        postMealPlan={this.props.postMealPlan.postMealPlan}
+                        user={this.props.user}/>}/>
                         <Route path='/dvcalc' element={<DailyValueForm ingredients={this.props.ingredients.ingredients}/>}/>
                         <Route path='/home' element={<Home collection={this.props.recipe.recipe} token={this.props.token.token}/>}/>
                         {/* <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>                       */}

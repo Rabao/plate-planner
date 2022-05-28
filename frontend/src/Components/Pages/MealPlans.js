@@ -28,7 +28,7 @@ function MealPlans(props) {
                 <div className="col" md={6} id="generate-plan">
                 <aside>
                     <h5>Generate Plans</h5>
-                        <PlanGenerator recipes={props.recipes} nutrition={props.recipeNutrition}/>
+                        <PlanGenerator recipes={props.recipes} nutrition={props.recipeNutrition} postPlan={props.postMealPlan} plans={props.plans} user={props.user}/>
                 </aside>
                 </div>
                 <div className="col" md={6} id="plan-dash">

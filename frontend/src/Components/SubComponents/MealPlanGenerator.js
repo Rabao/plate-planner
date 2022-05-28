@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom'
 import { Breadcrumb, Col, Button } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
@@ -6,46 +6,107 @@ import {TiArrowShuffle} from 'react-icons/ti'
 import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 
-export default class PlanGenerator extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            shuffled: false,
-            intake: 0,
-            meals: 0
+ const PlanGenerator = (props) => {
+    const [isClicked, setIsClicked] = useState(false);
+    const [shuffled,setShuffled] = useState(false);
+    const [intake, setIntake] = useState(0);
+    const [meals, setMeals] = useState(0);
+    const [plan, setPlan] = useState([{}]);
+
+    // constructor(props){
+    //     super(props)
+    //     state = {
+    //         shuffled: false,
+    //         intake: 0,
+    //         meals: 0,
+    //         details: [{
+    //             id: 0,
+    //             name: '',
+    //             img: '',
+    //             type:''
+    //         }],
+    //         plan: [{}]
+    //     }
+    // }
+
+    function showShuffle() {
+        document.getElementsByClassName('shuffle')[0].classList.remove('_close');
+        document.getElementsByClassName('shuffle')[0].classList.add('_open');
+    }
+
+    function displayGenerator() {
+        setShuffled({shuffled: !shuffled});
+        // setState({
+        //     shuffled: !state.shuffled
+        // })
+        showShuffle();
+        // setPlan(mealObject);
+    }
+
+    function setValues(calories, numMeals) {
+        setIntake(calories);
+        setMeals(numMeals);
+        // setState({
+        //     intake: calories,
+        //     meals: meals
+        // })
+        generator(intake, meals);
+    }
+
+    function storePlan(mealPlan) {
+        setPlan(mealPlan);
+        console.log("STORED PLAN: " + mealPlan.fMeal)
+    }
+
+    //-------------------------------------------------------------------PLAN ID GENERATOR
+    //-------------------------------------------------------------------PLAN ID GENERATOR
+    //-------------------------------------------------------------------PLAN ID GENERATOR
+
+    function getRandomInt(max)  {
+        return Math.floor(Math.random() * max);
+    }
+
+    function assignId() {
+        let postId = getRandomInt(50000);
+
+        props.plans.map((plan) => {
+            if(plan.id === postId || postId === 0){
+               postId = Math.random();
+              }}
+        )
+
+        return postId;
+     }
+
+     function handleSubmit() {
+        setIsClicked({isClicked: !isClicked});
+        let id = assignId();
+        assignId();
+
+        for(let i =0; i < plan.length; i++){
+            // props.postPlan(props.user, id, state.plan[i], Date.now,);
+            console.log("USER: " + props.user + " PLAN ID: " + id + " PLAN: " +  JSON.stringify(plan.one) + " DATE: " + Date.now)
         }
     }
 
-    displayGenerator = () => {
-        this.setState({
-            shuffled: !this.state.shuffled
-        })
-    }
-
-    handleSubmit(calories, meals) {
-        this.setState({
-            intake: calories,
-            meals: meals
-        })
-        this.generator(this.state.intake, this.state.meals)
-    }
-
-    generator(calories, meals){
+    function generator(calories, meals) {
         console.log("GENERATOR: " + calories + " " + meals)
-        let mealArr = [];
+       
+        
+        
         const caloricIntake = calories;
         let numMeals = meals;
         let calCeilPerMeal = caloricIntake/numMeals;
 
-        const recNutrition = this.props.nutrition;
+        const recNutrition = props.nutrition;
         const ceiling = recNutrition.filter((recipe) => recipe.calories <= calCeilPerMeal);
 
-        const breakfast = this.props.recipes.filter((recipe) => recipe.type === "Breakfast");
-        const dinner = this.props.recipes.filter((recipe) => recipe.type === "Dinner");   
-        const lunch = this.props.recipes.filter((recipe) => recipe.type === "Lunch");
+        const breakfast = props.recipes.filter((recipe) => recipe.type === "Breakfast");
+        const dinner = props.recipes.filter((recipe) => recipe.type === "Dinner");   
+        const lunch = props.recipes.filter((recipe) => recipe.type === "Lunch");
 
         const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
-   
+        
         function mealFilter(recipes){
             let shuffledNutrition = shuffle(ceiling);
             const fMeal = recipes.filter((recipe) => recipe.id == shuffledNutrition[0].recipeId);
@@ -79,50 +140,65 @@ export default class PlanGenerator extends Component {
         }
 
         if(meals==1){
+           let mealObject = {one:mealFilter(dinner)};
+            console.log(mealObject.one.fMeal)
             return(
             <div>
                 <div className="plan-block">
-                    {console.log("TEST.")}
-                    {mealFilter(dinner)}
+                    {mealObject.one}<button type="button" onClick={() => {storePlan(mealObject.one)}}>Lock</button>
                 </div>
             </div>
             )
         } else if(meals==2){
+            let mealObject = {
+                one:mealFilter(breakfast),
+                two:mealFilter(dinner)
+            }
             return(
             <div>
                 <div className="plan-block">
-                    {mealFilter(breakfast)}
+                    {mealObject.one}
                 </div>
                 <div className="plan-block">
-                    {mealFilter(dinner)}
+                    {mealObject.two}
                 </div>
             </div>
             )
         } else if(meals==3){
+            let mealObject = {
+                one:mealFilter(breakfast),
+                two:mealFilter(lunch),
+                three:mealFilter(dinner)
+            }
             return(
             <div>
                 <div className="plan-block">
-                     {mealFilter(breakfast)}
+                     {mealObject.one}
                 </div>
                 <div className="plan-block">
-                    {mealFilter(lunch)}
+                    {mealObject.two}
                 </div>
                 <div className="plan-block">
-                    {mealFilter(dinner)}
+                    {mealObject.three}
                 </div>
             </div>
             )
         } if(meals>3){
+            let mealObject = {
+                one:mealFilter(breakfast),
+                two:mealFilter(lunch),
+                three:mealFilter(dinner)
+            }
             return(
             <div>
                 <div className="plan-block">
-                    {mealFilter(breakfast)}
+                    {mealObject.one}
                 </div>
                 <div className="plan-block">
-                    {mealFilter(lunch)}
+                    {mealObject.two}
                 </div>
                 <div className="plan-block">
-                    {mealFilter(dinner)}<button onClick={()=>{{mealFilter(dinner)}}}>Button</button>
+                    {mealObject.three}<button onClick={()=>{{mealFilter(dinner)}}}>Button</button>
                 </div>
             </div>
             )
@@ -130,15 +206,16 @@ export default class PlanGenerator extends Component {
     }
 
 
-        render(){
-            let calories = document.getElementById('caloric-intake');
-            let numMeals = document.getElementById('meal-count');
+   
+    let calories = document.getElementById('caloric-intake');
+    let numMeals = document.getElementById('meal-count');
+
     return (
         <>
         <LocalForm id="target-nutrition">
             <div className="row">
             <div className="col">
-                <label htmlFor="calories">Target Caloric Intake</label>
+                <label htmlFor="calories" style={{marginBottom:'10px'}}>Target Caloric Intake</label>
                     <input type="number" model='.calories' 
                     name="calories" 
                     className="caloric-intake"
@@ -162,23 +239,20 @@ export default class PlanGenerator extends Component {
                         <option>8</option>
                         <option>9</option>
                     </select>
-                    <button onClick={() =>{this.handleSubmit(calories.value, numMeals.value)}}><TiArrowShuffle/></button>
+                    <button className="shuffle _close" onClick={() =>{setValues(calories.value, numMeals.value)}}><TiArrowShuffle/></button>
                 </div>                       
-            {/* <Col md={2}>
-                        <button onClick={() => this.displayGenerator()}>Shuffle</button>             
-            </Col> */}
             </div>
             </LocalForm>
             <div>
-                   {this.state.shuffled ? 
-                        <div>{this.generator(calories.value,numMeals.value)}</div> 
+                   {shuffled ? 
+                        <div>{generator(calories.value,numMeals.value)}<button className="submit-buttons" onClick={() => {handleSubmit()}}>Save Meal Plan</button></div> 
                     : 
-                        <div><button onClick={()=>{this.displayGenerator()}}>Generate Plan</button></div>
+                        <div><button className="submit-buttons" onClick={()=>{displayGenerator()}} style={{width:'78%'}}>Generate Plan</button></div>
                     }
                 </div>
         </>
     );
-    }
+    
 }
 
 
@@ -249,3 +323,5 @@ function RecipeNutrition(recipe, nutrition)  {
     )
 
 }
+
+export default PlanGenerator;

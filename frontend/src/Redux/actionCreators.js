@@ -1159,6 +1159,44 @@ export const fetchMealPlan = () => (dispatch) => {
         .catch(error => dispatch(mealPlanFailed(error.message)));
 }
 
+export const postMealPlan = (userId, planId, recipeId, date, time) => (dispatch) => {
+    const newMealPlan = {
+        userId: userId,
+        planId: planId,
+        recipeId: recipeId,
+        date: date,
+        time: time
+    }
+
+    return fetch(baseUrl + '/mealplans', {
+            method: 'POST',
+            body: JSON.stringify(newMealPlan),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.text())
+        .then(response => dispatch(addIngredient(response)))
+        .catch(error => {
+            console.log('Post meal plan ', error.message)
+            alert('Your meal plan could not be added.\nError: ' + error.message)
+        });
+};
+
 export const mealPlanLoading = () => ({
     type: ActionTypes.MEALPLAN_LOADING
 });

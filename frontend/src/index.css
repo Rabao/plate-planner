@@ -825,7 +825,6 @@ hr {
 
 ._open {
   display: block;
-
 }
 
 ._close {
@@ -891,4 +890,15 @@ hr {
   border: none;
   color:white;
   background-color: #dbd5cf;
+}
+
+.shuffle {
+  background: none;
+  border: none;
+  color:#003399;
+  font-size: x-large;
+}
+
+.shuffle:hover{
+  filter: brightness(0.75);
 }
