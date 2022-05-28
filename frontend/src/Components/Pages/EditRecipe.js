@@ -95,6 +95,10 @@ export default class EditRecipe extends Component {
       }
     }
 
+    RemoveIngredient(id){
+        this.props.deleteIngredients(id);
+    }
+
 
     Ingredients() { 
          return (    
@@ -143,6 +147,7 @@ export default class EditRecipe extends Component {
                                     </select>
                                     {/* {console.log(ingredient)} */}
                                     <input type="text" model={".ingredient"+i} defaultValue={ingredient.ingredient_name} name={"ingredient"+i} className="recipe-ingredients ingredients-controls" />
+                                    <button onClick={() => this.RemoveIngredient(ingredient.ingredient_key)}>Remove</button>
                                 </div>      
                                 )                       
                             })
@@ -278,7 +283,8 @@ export default class EditRecipe extends Component {
                         editRecipeIngredients = {this.props.editRecipeIngredients}
                         ingredients = {this.props.ingredients}
                         targetIngredients = {this.props.targetIngredients}
-                        ingredientKeyArray = {this.props.ingredientKeyArray}/>
+                        ingredientKeyArray = {this.props.ingredientKeyArray}
+                        deleteIngredients = {this.props.deleteIngredients}/>
                 </div>  
             )
         }  

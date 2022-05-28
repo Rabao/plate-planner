@@ -38,7 +38,8 @@ export const RecipeIngredients = (state = {
                     recipeIngredients: []}
 
         case ActionTypes.DELETE_RECIPEINGREDIENTS:
-            return { ...state, id: null, recipeIngredients: '', authorities: [] }
+            return{
+                ...state, recipeIngredients: state.recipeIngredients.filter((recipeIngredient) => recipeIngredient.ingredient_key !== action.payload)}
 
         default:
             return state;

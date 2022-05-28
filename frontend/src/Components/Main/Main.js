@@ -193,7 +193,8 @@ class Main extends Component {
                 editRecipeIngredients={this.props.editRecipeIngredients}
                 nutrition={this.props.nutrition.nutrition}
                 recipeNutrition={this.props.recipeNutrition.recipeNutrition.filter(nutrition => nutrition.recipeId === parseInt(id,10))[0]}
-                ingredientKeyArray={ingredientKeyArray}/>
+                ingredientKeyArray={ingredientKeyArray}
+                deleteIngredients={this.props.deleteRecipeIngredients}/>
             ) 
         }
 

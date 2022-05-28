@@ -918,8 +918,33 @@ export const recipeIngredientsFailed = (errmess) => ({
     payload: errmess
 });
 
-export const deleteRecipeIngredients = () => ({
-    type: ActionTypes.DELETE_RECIPEINGREDIENTS
+export const deleteRecipeIngredients = (id) => (dispatch) => {
+
+    return fetch(baseUrl + '/recipes/ingredients/' + id, {
+            method: 'DELETE'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.text())
+        .then(() => dispatch(deleteRecipeIngredientsSuccess(id)))
+        .catch(error => { throw (error) });
+}
+
+
+export const deleteRecipeIngredientsSuccess = (id) => ({
+    type: ActionTypes.DELETE_RECIPEINGREDIENTS,
+    payload: id
 });
 
 export const addRecipeIngredients = (ingredients) => ({
