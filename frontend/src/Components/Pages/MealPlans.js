@@ -38,7 +38,8 @@ function MealPlans(props) {
                     <div className="row">
                         <h5>Add Recipes to Plan</h5>
                             <MealList 
-                                recipes={props.recipes}/>
+                                recipes={props.recipes}
+                                nutrition={props.recipeNutrition.filter(rn => rn.recipeId != 0)} />
                     </div>
                 </div>
                 </div>
