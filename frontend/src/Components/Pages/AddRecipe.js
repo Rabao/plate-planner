@@ -13,6 +13,8 @@ function AddRecipe(props) {
     let pageRedirect= false;
     let found = false;  
     let filePath= "";
+    let tags = [];
+    let SPACE_BAR = 32;
 
     const servingSize = document.getElementById('servingSize');
     const calories = document.getElementById('calories');
@@ -72,6 +74,16 @@ function AddRecipe(props) {
         }
     }, [selectedFile])
 
+    function onSpaceDownSubmit(e) {
+        console.log("CURRENT TAGS: " + tags);
+        //Key code for Spacebar is 32
+        switch(e.onKeyDown){
+            case SPACE_BAR:
+                tags.push(e.target.value);
+            default:
+                break;
+        }
+    }   
 
 
     //-------------------------------------------------------------------RECIPE ID GENERATOR
@@ -255,6 +267,14 @@ function AddRecipe(props) {
                                         ingredients={props.ingredients} nutrition={props.nutrition}
                                         found={found}/>
                                        </div>
+                                       <Col md={12}>
+                                <h5>Tags</h5>
+                                    <Control.text model='.tags' 
+                                        name="tags"
+                                        id="tags"
+                                        className="recipe-forms"
+                                        onKeyDown={(e) => {onSpaceDownSubmit(e)}}/>             
+                                </Col>  
                                 <Col md={12}>
                                 <h5>Notes</h5>
                                     <Control.textarea model='.notes' 

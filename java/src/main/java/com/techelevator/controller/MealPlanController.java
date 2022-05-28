@@ -41,12 +41,13 @@ public class MealPlanController {
     private UserDao userDao;
     private RecipeNutritionDao recipeNutritionDao;
     private RecipeTagDao recipeTagDao;
+    private MealPlanDao mealPlanDao;
 
 
     public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao,
                               RecipeDao recipeDao, RecipeStepsDao recipeStepsDao, RecipeIngredientsDao recipeIngredientsDao,
                               GroceryListDao groceryListDao, UserDao userDao, UserReviewDao userReviewDao,
-                              RecipeNutritionDao recipeNutritionDao, RecipeTagDao recipeTagDao) {
+                              RecipeNutritionDao recipeNutritionDao, RecipeTagDao recipeTagDao, MealPlanDao mealPlanDao) {
         this.ingredientsDao = ingredientsDao;
         this.nutritionDao = nutritionDao;
         this.recipeDao = recipeDao;
@@ -57,7 +58,7 @@ public class MealPlanController {
         this.recipeIngredientsDao = recipeIngredientsDao;
         this.recipeNutritionDao = recipeNutritionDao;
         this.recipeTagDao = recipeTagDao;
-
+        this.mealPlanDao = mealPlanDao;
     }
 
 
@@ -401,6 +402,46 @@ public class MealPlanController {
     /*****************************************************
      *                                                    *
      *                  RECIPE TAGS APIs                  *
+     *                                                    *
+     *****************************************************/
+    /*****************************************************
+     *                                                    *
+     *                  MEAL PLAN APIs                    *
+     *                                                    *
+     *****************************************************/
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="mealplans/{id}")
+    public MealPlans getMealPlan(@PathVariable long id){
+        return mealPlanDao.getMealPlan(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="mealplans/")
+    public List<MealPlans> listMealPlans(){
+        return mealPlanDao.listMealPlans();
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="mealplans/")
+    public void addMealPlan(@Valid @RequestBody MealPlans mealPlan){
+        mealPlanDao.addMealPlan(mealPlan);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value="mealplans/{id}", method = RequestMethod.DELETE )
+    public boolean deleteMealPlan(@PathVariable long id)
+            throws MealPlanNotFoundException {
+        return mealPlanDao.deleteMealPlan(id);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value="mealplans/{id}", method = RequestMethod.PUT)
+    public boolean editMealPlan(@PathVariable long id, @RequestBody MealPlans mealPlan) throws MealPlanNotFoundException{
+        return mealPlanDao.editMealPlan(id, mealPlan);
+    }
+    /*****************************************************
+     *                                                    *
+     *                  MEAL PLAN APIs                    *
      *                                                    *
      *****************************************************/
 
