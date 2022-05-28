@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom';
 import {connect} from 'react-redux'
 import { withRouter } from '../WithRouer/WithRouter';
 import {addToken, addUser} from '../../Redux/actionCreators'
@@ -12,6 +12,31 @@ const mapDispatchToProps = (dispatch) => ({
     addToken: () =>  dispatch(addToken()),
     addUser: () => dispatch(addUser()) 
 });
+
+function ClickToLogIn(props) {
+    const navigate = useNavigate();
+
+    async function handleLogin () {
+        const data = { username: props.username, password: props.password };
+        const userWithToken = await axios.post(baseUrl + '/login', data)
+        await props.dispatch(addToken(userWithToken.data.token))
+        await props.dispatch(addUser(userWithToken.data.user));
+        navigate('/home');       
+    }
+
+    // const recipeTags = props.target.map((tag) => {
+    //     return(
+    //             <em className='recipe-tag' onClick={() => {submitSearch(tag)}}>{tag.tag} </em>
+    //         )
+    //     });
+
+    return (
+        <div className="row">
+            <Link to="/register">Need an account?</Link>
+            <button type="submit" onClick={() => handleLogin()}>Sign in</button>
+        </div>
+    )
+}
 
 class Login extends Component {
     
@@ -85,10 +110,13 @@ class Login extends Component {
                         />
                     </div>
                 </div>
-                <div className="row">
+                <ClickToLogIn username = {this.state.username}
+                password = {this.state.password}
+                dispatch = {this.props.dispatch}/>
+                {/* <div className="row">
                     <Link to="/register">Need an account?</Link>
                     <button type="submit" onClick={this.handleLogin}>Sign in</button>
-                </div>
+                </div> */}
             </div>
         )
     }

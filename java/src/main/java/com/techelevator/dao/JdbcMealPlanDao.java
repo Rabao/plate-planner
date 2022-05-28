@@ -5,10 +5,12 @@ import com.techelevator.model.MealPlanNotFoundException;
 import com.techelevator.model.MealPlans;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcMealPlanDao implements MealPlanDao {
 
     private JdbcTemplate jdbcTemplate;

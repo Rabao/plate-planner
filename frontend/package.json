@@ -25,7 +25,6 @@
     "react-elastic-carousel": "^0.11.5",
     "react-filepond": "^7.1.2",
     "react-icons": "^4.3.1",
-    "react-leaf-carousel": "^3.0.0",
     "react-popper": "2.2.5",
     "react-redux": "7.2.6",
     "react-redux-form": "1.16.14",
@@ -41,6 +40,7 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
     "redux-thunk": "2.4.1",
+    "styled-components": "^5.3.5",
     "styled-react-modal": "^3.0.0",
     "tippy.js": "^6.3.7",
     "web-vitals": "1.0.1"
