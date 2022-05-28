@@ -149,6 +149,8 @@ export default class EditRecipe extends Component {
                                 )                       
                             })
                        }
+                       <br></br>
+                       <button onClick={() => this.props.postIngredients(this.props.targetRecipe.id, 0,'',0,'Teaspoon')}>Add Ingredient</button>
                        
                   </div>
                     <div className="image-submitter">

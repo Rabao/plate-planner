@@ -801,9 +801,10 @@ export const addRecipe = (recipe) => ({
     type: ActionTypes.ADD_RECIPE,
     payload: recipe
 });
-//-------------------
+//-------------------------------------RECIPE
+//-------------------------------------RECIPEINGREDIENTS
 export const postRecipeIngredients = (recipeId, ingredientId, ingredient_name, measurement, unit) => (dispatch) => {
-    const newRecipe = {
+    const newRecipeIngredient = {
         recipeId: recipeId,
         ingredientId: ingredientId,
         ingredient_name: ingredient_name,
@@ -813,7 +814,7 @@ export const postRecipeIngredients = (recipeId, ingredientId, ingredient_name, m
 
     return fetch(baseUrl + '/recipes/ingredients', {
             method: 'POST',
-            body: JSON.stringify(newRecipe),
+            body: JSON.stringify(newRecipeIngredient),
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -833,7 +834,7 @@ export const postRecipeIngredients = (recipeId, ingredientId, ingredient_name, m
                 throw errmess;
             })
         .then(response => response.text())
-        .then(ingredients => dispatch(addRecipeIngredients(ingredients)))
+        .then(() => dispatch(addRecipeIngredient(newRecipeIngredient)))
         .catch(error => {
             console.log('Recipe ingredients ', error.message)
             alert('Your recipe ingredients could not be published.\nError: ' + error.message)
@@ -952,8 +953,13 @@ export const addRecipeIngredients = (ingredients) => ({
     payload: ingredients
 });
 
-//----------------------------------RECIPE
-//----------------------------------RECIPESTEPS
+export const addRecipeIngredient = (ingredients) => ({
+    type: ActionTypes.ADD_RECIPEINGREDIENT,
+    payload: ingredients
+});
+
+//-------------------------------------RECIPEINGREDIENTS
+//-------------------------------------RECIPESTEPS
 export const postRecipeSteps = (recipeId, stepNum, steps) => (dispatch) => {
     const newRecipe = {
         recipeId: recipeId,

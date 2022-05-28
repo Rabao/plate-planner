@@ -14,6 +14,10 @@ export const RecipeIngredients = (state = {
                 errMess: null,
                 recipeIngredients: action.payload}
 
+        case ActionTypes.ADD_RECIPEINGREDIENT:
+            return{...state, recipeIngredients: state.recipeIngredients.concat(action.payload)};
+            
+
         case ActionTypes.EDIT_RECIPEINGREDIENTS:
             return{...state, recipeIngredients: state.recipeIngredients.filter((recipeIngredients) => {
                 if(recipeIngredients.recipeId === action.payload.recipeId){
