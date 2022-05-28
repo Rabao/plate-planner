@@ -253,7 +253,7 @@ class Main extends Component {
                         recipes={this.props.recipe.recipe} 
                         recipeNutrition={this.props.recipeNutrition.recipeNutrition}
                         plans={this.props.mealPlan.mealPlan}
-                        postMealPlan={this.props.postMealPlan.postMealPlan}
+                        postMealPlan={this.props.postMealPlan}
                         user={this.props.user}/>}/>
                         <Route path='/dvcalc' element={<DailyValueForm ingredients={this.props.ingredients.ingredients}/>}/>
                         <Route path='/home' element={<Home collection={this.props.recipe.recipe} token={this.props.token.token}/>}/>

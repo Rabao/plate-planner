@@ -5,6 +5,7 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import {TiArrowShuffle} from 'react-icons/ti'
 import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
+// import moment from 'moment';
 
  const PlanGenerator = (props) => {
     const [isClicked, setIsClicked] = useState(false);
@@ -12,22 +13,7 @@ import 'react-tippy/dist/tippy.css';
     const [intake, setIntake] = useState(0);
     const [meals, setMeals] = useState(0);
     const [plan, setPlan] = useState([{}]);
-
-    // constructor(props){
-    //     super(props)
-    //     state = {
-    //         shuffled: false,
-    //         intake: 0,
-    //         meals: 0,
-    //         details: [{
-    //             id: 0,
-    //             name: '',
-    //             img: '',
-    //             type:''
-    //         }],
-    //         plan: [{}]
-    //     }
-    // }
+    let mealObject = [];
 
     function showShuffle() {
         document.getElementsByClassName('shuffle')[0].classList.remove('_close');
@@ -41,21 +27,13 @@ import 'react-tippy/dist/tippy.css';
         // })
         showShuffle();
         // setPlan(mealObject);
+
     }
 
     function setValues(calories, numMeals) {
-        setIntake(calories);
-        setMeals(numMeals);
-        // setState({
-        //     intake: calories,
-        //     meals: meals
-        // })
+        setIntake({intake: calories});
+        setMeals({meals: numMeals});
         generator(intake, meals);
-    }
-
-    function storePlan(mealPlan) {
-        setPlan(mealPlan);
-        console.log("STORED PLAN: " + mealPlan.fMeal)
     }
 
     //-------------------------------------------------------------------PLAN ID GENERATOR
@@ -79,21 +57,22 @@ import 'react-tippy/dist/tippy.css';
      }
 
      function handleSubmit() {
-        setIsClicked({isClicked: !isClicked});
-        let id = assignId();
+        let newDate = new Date()
+        let planId = assignId();
         assignId();
-
-        for(let i =0; i < plan.length; i++){
-            // props.postPlan(props.user, id, state.plan[i], Date.now,);
-            console.log("USER: " + props.user + " PLAN ID: " + id + " PLAN: " +  JSON.stringify(plan.one) + " DATE: " + Date.now)
+        // var now = moment();
+        for(let i =0; i < mealObject.length -1; i++){
+            if(mealObject[i]){
+            props.postPlan(props.user.id, planId, mealObject[i].id, "2022-05-28", mealObject[i].type);
+            // console.log(mealObject.length + " " + props.user.id + " " + planId + " " + mealObject[i].id + " " + newDate.getFullYear()+"-"+newDate.getMonth()+"-"+newDate.getDate() + " " + mealObject[i].type)
+            }     
         }
+        setTimeout(() => {
+        setIsClicked({isClicked: !isClicked});
+        }, 300)
     }
 
     function generator(calories, meals) {
-        console.log("GENERATOR: " + calories + " " + meals)
-       
-        
-        
         const caloricIntake = calories;
         let numMeals = meals;
         let calCeilPerMeal = caloricIntake/numMeals;
@@ -110,6 +89,7 @@ import 'react-tippy/dist/tippy.css';
         function mealFilter(recipes){
             let shuffledNutrition = shuffle(ceiling);
             const fMeal = recipes.filter((recipe) => recipe.id == shuffledNutrition[0].recipeId);
+            mealObject.push(fMeal[0]);
 
             if(fMeal[0] && shuffledNutrition[0]){
                 return(
@@ -139,66 +119,54 @@ import 'react-tippy/dist/tippy.css';
             
         }
 
+        let bShuffle = mealFilter(breakfast);
+        let lShuffle = mealFilter(lunch)
+        let dShuffle = mealFilter(dinner);
+
         if(meals==1){
-           let mealObject = {one:mealFilter(dinner)};
-            console.log(mealObject.one.fMeal)
             return(
             <div>
                 <div className="plan-block">
-                    {mealObject.one}<button type="button" onClick={() => {storePlan(mealObject.one)}}>Lock</button>
+                    {bShuffle}
                 </div>
             </div>
             )
         } else if(meals==2){
-            let mealObject = {
-                one:mealFilter(breakfast),
-                two:mealFilter(dinner)
-            }
             return(
             <div>
                 <div className="plan-block">
-                    {mealObject.one}
+                    {bShuffle}
                 </div>
                 <div className="plan-block">
-                    {mealObject.two}
+                    {dShuffle}
                 </div>
             </div>
             )
         } else if(meals==3){
-            let mealObject = {
-                one:mealFilter(breakfast),
-                two:mealFilter(lunch),
-                three:mealFilter(dinner)
-            }
             return(
             <div>
                 <div className="plan-block">
-                     {mealObject.one}
+                     {bShuffle}
                 </div>
                 <div className="plan-block">
-                    {mealObject.two}
+                    {lShuffle}
                 </div>
                 <div className="plan-block">
-                    {mealObject.three}
+                    {dShuffle}
                 </div>
             </div>
             )
         } if(meals>3){
-            let mealObject = {
-                one:mealFilter(breakfast),
-                two:mealFilter(lunch),
-                three:mealFilter(dinner)
-            }
             return(
             <div>
                 <div className="plan-block">
-                    {mealObject.one}
+                    {bShuffle}
                 </div>
                 <div className="plan-block">
-                    {mealObject.two}
+                    {lShuffle}
                 </div>
                 <div className="plan-block">
-                    {mealObject.three}<button onClick={()=>{{mealFilter(dinner)}}}>Button</button>
+                    {dShuffle}
                 </div>
             </div>
             )

@@ -73,7 +73,7 @@ public class JdbcMealPlanDao implements MealPlanDao {
         plans.setUserId(rs.getLong("user_id"));
         plans.setPlanId(rs.getLong("plan_id"));
         plans.setRecipeId(rs.getLong("recipe_id"));
-        plans.setDate(rs.getDate("date"));
+        plans.setDate(rs.getString("date"));
         plans.setTime(rs.getString("time"));
         return plans;
     };

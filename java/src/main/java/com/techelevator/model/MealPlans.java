@@ -6,12 +6,12 @@ public class MealPlans {
     private long userId;
     private long planId;
     private long recipeId;
-    private Date date;
+    private String date;
     private String time;
 
     public MealPlans(){}
 
-    public MealPlans(long userId, long planId, long recipeId, Date date, String time) {
+    public MealPlans(long userId, long planId, long recipeId, String date, String time) {
         this.userId = userId;
         this.planId = planId;
         this.recipeId = recipeId;
@@ -43,11 +43,11 @@ public class MealPlans {
         this.recipeId = recipeId;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -422,7 +422,7 @@ public class MealPlanController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value="mealplans/")
+    @RequestMapping(value="mealplans/", method = RequestMethod.POST )
     public void addMealPlan(@Valid @RequestBody MealPlans mealPlan){
         mealPlanDao.addMealPlan(mealPlan);
     }

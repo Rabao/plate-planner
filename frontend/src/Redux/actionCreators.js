@@ -1161,7 +1161,7 @@ export const addRecipeTags = (tags) => ({
 export const fetchMealPlan = () => (dispatch) => {
     // dispatch(mealPlanLoading(true));
 
-    return fetch(baseUrl + "/mealplans", {
+    return fetch(baseUrl + "/mealplans/", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -1201,7 +1201,7 @@ export const postMealPlan = (userId, planId, recipeId, date, time) => (dispatch)
             headers: {
                 'Content-Type': 'application/json'
             },
-            credentials: 'same-origin'
+            credentials: 'include',
         })
         .then(response => {
                 if (response.ok) {
@@ -1217,7 +1217,7 @@ export const postMealPlan = (userId, planId, recipeId, date, time) => (dispatch)
                 throw errmess;
             })
         .then(response => response.text())
-        .then(response => dispatch(addIngredient(response)))
+        .then(response => dispatch(addMealPlan(response)))
         .catch(error => {
             console.log('Post meal plan ', error.message)
             alert('Your meal plan could not be added.\nError: ' + error.message)
