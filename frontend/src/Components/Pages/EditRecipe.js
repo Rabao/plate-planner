@@ -14,12 +14,12 @@ export default class EditRecipe extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isModalOpen: false,
             ingredientValues: [],
             stepValues: [],
             file: [],
             preview: ''
         };
-
         this.fileInputRef = React.createRef();
       }
 
@@ -95,11 +95,6 @@ export default class EditRecipe extends Component {
       }
     }
 
-    RemoveIngredient(id){
-        this.props.deleteIngredients(id);
-    }
-
-
     Ingredients() { 
          return (    
           
@@ -147,7 +142,9 @@ export default class EditRecipe extends Component {
                                     </select>
                                     {/* {console.log(ingredient)} */}
                                     <input type="text" model={".ingredient"+i} defaultValue={ingredient.ingredient_name} name={"ingredient"+i} className="recipe-ingredients ingredients-controls" />
-                                    <button onClick={() => this.RemoveIngredient(ingredient.ingredient_key)}>Remove</button>
+                                    <DeleteIngredientFromRecipe id = {ingredient.ingredient_key}
+                                    name = {ingredient.ingredient_name}
+                                    deleteIngredients = {this.props.deleteIngredients}/>
                                 </div>      
                                 )                       
                             })
@@ -247,10 +244,6 @@ export default class EditRecipe extends Component {
         </div>
         );
     }
-
-
-    
-
   render() {
             return (
                 <div className='container'>
@@ -276,18 +269,63 @@ export default class EditRecipe extends Component {
                         this.props.recipeErrMess,
                         this.props.editRecipe)}
                         <SaveChangesButton file = {this.state.file} 
-                        targetRecipe = {this.props.targetRecipe}
-                        editRecipe = {this.props.editRecipe}
-                        user = {this.props.user}
-                        editRecipeSteps = {this.props.editRecipeSteps}
-                        editRecipeIngredients = {this.props.editRecipeIngredients}
-                        ingredients = {this.props.ingredients}
-                        targetIngredients = {this.props.targetIngredients}
-                        ingredientKeyArray = {this.props.ingredientKeyArray}
-                        deleteIngredients = {this.props.deleteIngredients}/>
+                            targetRecipe = {this.props.targetRecipe}
+                            editRecipe = {this.props.editRecipe}
+                            user = {this.props.user}
+                            editRecipeSteps = {this.props.editRecipeSteps}
+                            editRecipeIngredients = {this.props.editRecipeIngredients}
+                            ingredients = {this.props.ingredients}
+                            targetIngredients = {this.props.targetIngredients}
+                            ingredientKeyArray = {this.props.ingredientKeyArray}
+                            deleteIngredients = {this.props.deleteIngredients}/>
                 </div>  
             )
         }  
+}
+
+class DeleteIngredientFromRecipe extends Component{
+
+    constructor(props){
+        super(props);
+        this.state = {
+            isModalOpen: false,
+            activeModal: ''
+        };
+        this.toggleModal = this.toggleModal.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+    }
+
+    toggleModal(activeModal){
+        this.setState({
+            activeModal: activeModal,
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+
+    handleDelete(id){
+        this.toggleModal();
+        this.props.deleteIngredients(id);
+        // window.location.reload(false);
+    }
+
+
+    render(){
+        return(
+            <>
+                <button onClick={() => this.toggleModal('delete')}>Remove</button>
+                <Modal isOpen={this.state.activeModal === 'delete'} toggle={this.toggleModal}> 
+                    <ModalHeader toggle={this.toggleModal}>Delete Ingredient?</ModalHeader>
+                    <ModalBody>
+                        <LocalForm onSubmit={() => this.handleDelete(this.props.id)}>
+                            {this.props.name}<br></br>
+                            <Button type='submit' variant='danger'>&#10060;Delete</Button>
+                        </LocalForm>
+                    </ModalBody>
+                </Modal>
+            </>
+        )
+    }
+
 }
 
 
