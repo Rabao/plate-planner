@@ -452,13 +452,13 @@ function checkList(e) {
     }  
 }
 
-function toggleButtonColor(e){
-    e.target.innerHTML = '&#x2714 Item Added';
-    e.target.classList.remove('submit-button-small')
-    e.target.classList.add('submitted-button-small')
-}
-
 function Ingredients(props) { 
+
+    function toggleButtonColor(e){
+        e.target.innerHTML = '&#x2714 Item Added';
+        e.target.classList.remove('submit-button-small')
+        e.target.classList.add('submitted-button-small')
+    }
 
     const handleAddToList = (e, name) => {
         toggleButtonColor(e)
@@ -498,8 +498,8 @@ function Ingredients(props) {
                                             trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip">{IngredientNutrition(ingredient, props.nutrition)}</div>)}><span>{getIngredientFromId(ingredient.ingredientId)}</span></Tooltip>
                                     </p>
                                 </div>
-                                <div className='col' md={4}>
-                                    <button type='submit' class="submit-button-small" onClick={(e) => handleAddToList(e, getIngredientFromId(ingredient.ingredientId))}><RiPlayListAddFill/> Add to Grocery List</button>
+                                <div className='col' md={4}>{
+                                    <button type='submit' class="submit-button-small" onClick={(e) => handleAddToList(e, getIngredientFromId(ingredient.ingredientId))}><RiPlayListAddFill/> Add to Grocery List</button>}
                                 </div>
                             </div>
                              )
