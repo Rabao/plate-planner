@@ -234,7 +234,7 @@ h5 {
 .recipe-collection {
   width: 250px;
   height: 250px;
-  margin: 30px;
+  display:grid;
   border-radius:100%;
   overflow:hidden;
   z-index: 50;
@@ -871,3 +871,24 @@ hr {
   margin-left: 16%
 }
 
+.filters li {
+  font-size: large;
+  cursor: pointer;
+  color:#0a58ca;
+}
+
+.filters li:hover {
+  filter:brightness(0.75);
+}
+
+.carousel-arrows {
+  justify-content: center;
+  margin-top:10%;
+  padding-bottom: 3px;
+  height: 2.5em;
+  width: 2.5em;
+  border-radius: 100%;
+  border: none;
+  color:white;
+  background-color: #dbd5cf;
+}

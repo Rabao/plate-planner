@@ -194,7 +194,6 @@ function AddRecipe(props) {
                                     <label htmlFor="recipe-type">Meal Type</label><br/> 
                                     <select model=".recipe-type" name="recipe-type" className="recipe-type" defaultValue={"Breakfast"}>
                                             <option>Breakfast</option>
-                                            <option>Brunch</option>
                                             <option>Lunch</option>
                                             <option>Dinner</option>
                                             <option>Snack</option>

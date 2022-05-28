@@ -4,7 +4,6 @@ import {useNavigate, Link, Route, Routes} from 'react-router-dom';
 import {Modal, ModalBody, ModalHeader} from 'reactstrap';
 import { LocalForm } from 'react-redux-form';
 
-
 export default class Dashboard extends Component{
     constructor(props){
         super(props)
@@ -46,7 +45,9 @@ export default class Dashboard extends Component{
                             <h5>Published Recipes</h5>
 
 
-                           {this.props.recipes ?        <div><EditDeleteRecipe 
+                           {this.props.recipes ?       <div className="dashboard-recipe-collection-wrapper"> 
+                                            
+                                                <EditDeleteRecipe 
                                                         recipes={this.props.recipes} 
                                                         user={this.props.user} 
                                                         deleteRecipe={this.props.deleteRecipe}
