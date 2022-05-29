@@ -412,18 +412,24 @@ h5 {
 }
 
 .plan-details-wrapper {
-  margin-left: 10px;
-  width: fit-content;
+  width: 100%;
   display: inline-block;
 }
 
-.plan-meal-cals td {
-  font-size: xx-large;
+.plan-meal-name{
+  width: 90%;
+  padding-left:10px;
+}
+
+.plan-meal-cals{
+  font-size: x-large;
 }
 
 .plan-meal-type{
-  float:right;
-  margin-left:60px;
+  width:10%;
+  text-align: right;
+  box-sizing: border-box;
+  padding-bottom:2.38em;
 }
 
 #target-nutrition {
@@ -433,11 +439,19 @@ h5 {
 .caloric-intake {
   width:100%;
   display: inline-block;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #dbd5cf;
+  border-radius: 5px;
 }
 
 .meal-count {
-  width:60%;
+  width:55%;
   display: inline-block;
+  margin-top: 5px;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid #dbd5cf;
 }
 
 /*------------------------- Recipe List CSS --------------------------*/
@@ -897,6 +911,7 @@ hr {
   border: none;
   color:#003399;
   font-size: x-large;
+  display: inline-block;
 }
 
 .shuffle:hover{

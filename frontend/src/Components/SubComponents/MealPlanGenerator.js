@@ -107,34 +107,27 @@ import arrayShuffle from 'array-shuffle';
             // If Else state causes blanks
             if(nutrition[0] && shuffled[0]){
             return(
-                <Tooltip 
-                    trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip">{RecipeNutrition(shuffled[0], nutrition[0])}</div>)}>
+                
                         <div key={shuffled[0].id}>
-                            <div>
-                                <div className="plan-img-wrapper">
-                                <img className="plan-img" src={shuffled[0].image}/>
-                            </div>
-                            <div className="plan-details-wrapper">
-                                <table>
+                            <Tooltip 
+                                trigger="mouseenter" arrow="true" position="right" 
+                                distance="10px" html={(<div id="tooltip">{RecipeNutrition(shuffled[0], nutrition[0])}</div>)}>
+                                <table className="plan-details-wrapper">
                                     <tr>
-                                        <td className="plan-meal-name"><strong>{shuffled[0].name}</strong></td>
+                                        <td className="plan-img-wrapper"><img className="plan-img" src={shuffled[0].image}/></td>
+                                        <td className="plan-meal-name"><strong>{shuffled[0].name}</strong><br/><td className="plan-meal-cals"><strong>Cal:</strong> {nutrition[0].calories}</td></td>
                                         <td className="plan-meal-flex"></td>
-                                        <td className="plan-meal-type">{shuffled[0].type}</td>
+                                        <td className="plan-meal-type">{shuffled[0].type}<br/></td>
                                     </tr>
-                                    <tr className="plan-meal-cals">
-                                        <td>Cal: {nutrition[0].calories}</td>
-                                    </tr>
-                                </table>
+                                </table></Tooltip>
                             </div>
-                        </div>
-                    </div> 
-                </Tooltip>
+                    
                 )
             }
                 
         }
 
-        let bShuffle = mealFilter(matchedBreakfast)
+        let bShuffle = mealFilter(matchedBreakfast) 
         // let lShuffle = mealFilter(matchedLunch)
         let dShuffle = mealFilter(matchedDinner);
 
@@ -176,12 +169,15 @@ import arrayShuffle from 'array-shuffle';
             <div>
                 <div className="plan-block">
                     {bShuffle}
+                    <hr/>
                 </div>
                 <div className="plan-block">
                     2
+                    <hr/>
                 </div>
                 <div className="plan-block">
                     {dShuffle}
+                    <hr/>
                 </div>
             </div>
             )
@@ -203,10 +199,11 @@ import arrayShuffle from 'array-shuffle';
                     name="calories" 
                     className="caloric-intake"
                     id="caloric-intake"
+                    step={1000}
                     defaultValue={1000}/>
             </div> 
             <div className="col">
-                <label htmlFor="meals">In How Many Meals?</label>
+                <label htmlFor="meals" style={{marginBottom:"9px"}}>In How Many Meals?</label>
                     <select type="number" model='.meals' 
                     name="meals" 
                     className="meal-count"
