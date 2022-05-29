@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Component, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom'
 import { Breadcrumb, Col, Button } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
@@ -10,7 +10,7 @@ import arrayShuffle from 'array-shuffle';
 
  const PlanGenerator = (props) => {
     const [isClicked, setIsClicked] = useState(false);
-    // const [isMealSelected, setMealSelected] = useState(false);
+    const [isMealSelected, setMealSelected] = useState(false);
     const [shuffled,setShuffled] = useState(false);
     const [formValues, setFormValues] = useState({
         intake: 0,
@@ -30,17 +30,13 @@ import arrayShuffle from 'array-shuffle';
         showShuffle();
     }
 
-    // function setMealClicked(mealClicked){
-    //     setMealSelected({isMealSelected: mealClicked})
-    // }
-
     function setValues(calories, numMeals) {
         setFormValues({
             intake: calories,
             meals: numMeals
         })
-        // mealClicked = false;
-        generator(formValues.intake, formValues.meals);
+        mealToAdd=null;
+        generator(formValues.intake, formValues.meals, mealToAdd);
     }
 
     //-------------------------------------------------------------------PLAN ID GENERATOR
@@ -83,7 +79,7 @@ import arrayShuffle from 'array-shuffle';
         }, 300)
     }
 
-    function generator(calories, meals) {
+    function generator(calories, meals, mealToAdd) {
 
         const caloricIntake = calories;
         let numMeals = meals;
@@ -135,14 +131,14 @@ import arrayShuffle from 'array-shuffle';
                 
         }
 
-        bShuffle = mealFilter(matchedBreakfast) 
-        lShuffle = mealFilter(matchedLunch)
-        dShuffle = mealFilter(matchedDinner);
+        let bShuffle = mealFilter(matchedBreakfast) 
+        let lShuffle = mealFilter(matchedLunch)
+        let dShuffle = mealFilter(matchedDinner);
 
         return <MealPlanDisplay bShuffle={bShuffle}
             lShuffle={lShuffle}
             dShuffle={dShuffle}
-            mealToAdd={null}
+            mealToAdd={mealToAdd}
             />
     }
 
@@ -234,7 +230,7 @@ import arrayShuffle from 'array-shuffle';
                     className="caloric-intake"
                     id="caloric-intake"
                     step={1000}
-                    defaultValue={1000}/>
+                    defaultValue={2000}/>
             </div> 
             <div className="col">
                 <label htmlFor="meals" style={{marginBottom:"9px"}}>In How Many Meals?</label>
@@ -254,35 +250,60 @@ import arrayShuffle from 'array-shuffle';
                         <option>9</option>
                     </select>
                     <button className="shuffle _close" onClick={() =>{setValues(calories.value, numMeals.value)}}><TiArrowShuffle/></button>
-                </div>                       
+                </div>                
             </div>
+                    <SendMealToPlan />       
             </LocalForm>
             <div>
                    {shuffled ? 
-                        <div>{mealClicked ? <MealPlanDisplay bShuffle={bShuffle}
-                        lShuffle={lShuffle}
-                        dShuffle={dShuffle} mealToAdd={mealToAdd}/> : generator(calories.value,numMeals.value)}<button className="submit-buttons" onClick={() => {handleSubmit()}}>Save Meal Plan</button></div> 
+                        <div>{
+                        //     isMealSelected ? <MealPlanDisplay bShuffle={bShuffle}
+                        // lShuffle={lShuffle}
+                        // dShuffle={dShuffle} mealToAdd={mealToAdd}/> : 
+                        generator(calories.value,numMeals.value, mealToAdd)}<button className="submit-buttons" onClick={() => {handleSubmit()}}>Save Meal Plan</button></div> 
                     : 
                         <div><button className="submit-buttons" onClick={()=>{displayGenerator()}} style={{width:'78%'}}>Generate Plan</button></div>
                     }
-                </div>
+            </div>
         </>
     );
     
 }
-
-let mealClicked;
 let mealToAdd;
 
-let bShuffle;
-let lShuffle;
-let dShuffle;
-
 export function SendMealToPlan(recipe,nutrition){
-    mealClicked = true;
     mealToAdd={
         recipe: recipe,
         nutrition: nutrition
+    }
+    return(
+        <div key={recipe.id}>
+        <div className="plan-block">
+            <Tooltip 
+                trigger="mouseenter" arrow="true" position="right" 
+                distance="10px" html={(<div id="tooltip">{RecipeNutrition(recipe, nutrition)}</div>)}>
+                <table className="plan-details-wrapper">
+                    <tr>
+                        <td className="plan-img-wrapper"><img className="plan-img" src={recipe.image}/></td>
+                        <td className="plan-meal-name"><strong>{recipe.name}</strong><br/><td className="plan-meal-cals"><strong>Cal:</strong> {nutrition.calories}</td></td>
+                        <td className="plan-meal-flex"></td>
+                        <td className="plan-meal-type">{recipe.type}<br/></td>
+                    </tr>
+                </table></Tooltip>
+            </div>
+            </div>)
+}
+
+class AdditionalMeals extends Component{
+    constructor(props){
+        super(props);
+        this.state= {
+            listState: []
+        }
+    }
+
+    render(){
+        return(<div>test</div>)
     }
 }
 
