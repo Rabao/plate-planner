@@ -68,13 +68,13 @@ const breakPoints = [
                     <h3>Try Something New</h3>
                     <label htmlFor='filters'>Filters:</label>
                     <ul className="filters">
-                        <li onClick={() => {filterResults('All')}}>All</li>
-                        <li onClick={() => {filterResults('Breakfast')}}>Breakfast</li>
-                        <li onClick={() => {filterResults('Lunch')}}>Lunch</li>
-                        <li onClick={() => {filterResults('Dinner')}}>Dinner</li>
-                        <li onClick={() => {filterResults('Snack')}}>Snack</li>
-                        <li onClick={() => {filterResults('Dessert')}}>Dessert</li>
-                        <li onClick={() => {filterResults('Drinks')}}>Drinks</li>
+                        <li onClick={() => {filterResults('All')}}><i class="fa fa-solid fa-question-circle"></i>All</li>
+                        <li onClick={() => {filterResults('Breakfast')}}><i class="fa fa-solid fa-bacon"></i>Breakfast</li>
+                        <li onClick={() => {filterResults('Lunch')}}><i className="fa fa-star fa-solid"></i>Lunch</li>
+                        <li onClick={() => {filterResults('Dinner')}}><i className="fa fa-star fa-solid"></i>Dinner</li>
+                        <li onClick={() => {filterResults('Snack')}}><i className="fa fa-star fa-solid"></i>Snack</li>
+                        <li onClick={() => {filterResults('Dessert')}}><i className="fa fa-star fa-solid"></i>Dessert</li>
+                        <li onClick={() => {filterResults('Drinks')}}><i className="fa fa-star fa-solid"></i>Drinks</li>
                     </ul>
           <div className="row">
           <Carousel renderArrow={carouselArrow} breakPoints={breakPoints} pagination={false}>
