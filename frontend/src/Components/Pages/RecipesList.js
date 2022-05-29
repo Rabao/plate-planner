@@ -1,11 +1,13 @@
 import React from 'react';
 import {Breadcrumb} from 'react-bootstrap'
 import {Link, useNavigate} from 'react-router-dom'
+import { SendMealToPlan } from '../SubComponents/MealPlanGenerator';
 
 export function MealList(props){
     const map = props.recipes.map((recipe) => {
             return(
-                <div className="row recipe-result" key={recipe.id}>
+                <div className="row recipe-result" key={recipe.id}
+                onClick={()=> SendMealToPlan(recipe, props.nutrition.filter(rn => rn.recipeId == recipe.id)[0])}>
                     <table>
                         <td id="recipe-text">
                             <tr id="recipe-title"><h6>{recipe.name}</h6></tr>

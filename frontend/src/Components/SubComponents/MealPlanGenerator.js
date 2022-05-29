@@ -10,6 +10,7 @@ import arrayShuffle from 'array-shuffle';
 
  const PlanGenerator = (props) => {
     const [isClicked, setIsClicked] = useState(false);
+    // const [isMealSelected, setMealSelected] = useState(false);
     const [shuffled,setShuffled] = useState(false);
     const [formValues, setFormValues] = useState({
         intake: 0,
@@ -29,11 +30,16 @@ import arrayShuffle from 'array-shuffle';
         showShuffle();
     }
 
+    // function setMealClicked(mealClicked){
+    //     setMealSelected({isMealSelected: mealClicked})
+    // }
+
     function setValues(calories, numMeals) {
         setFormValues({
             intake: calories,
             meals: numMeals
         })
+        // mealClicked = false;
         generator(formValues.intake, formValues.meals);
     }
 
@@ -129,15 +135,42 @@ import arrayShuffle from 'array-shuffle';
                 
         }
 
-        let bShuffle = mealFilter(matchedBreakfast) 
-        // let lShuffle = mealFilter(matchedLunch)
-        let dShuffle = mealFilter(matchedDinner);
+        bShuffle = mealFilter(matchedBreakfast) 
+        lShuffle = mealFilter(matchedLunch)
+        dShuffle = mealFilter(matchedDinner);
 
+        return <MealPlanDisplay bShuffle={bShuffle}
+            lShuffle={lShuffle}
+            dShuffle={dShuffle}
+            mealToAdd={null}
+            />
+    }
+
+    function MealPlanDisplay(props){
+        let mealType;
+        let mealDisplay;
+        console.log(props.mealToAdd);
+        if(props.mealToAdd!=null){
+            mealType = props.mealToAdd.recipe.type;
+            mealDisplay = 
+                <div key={props.mealToAdd.recipe.id}>
+                    <Tooltip 
+                        trigger="mouseenter" arrow="true" position="right" 
+                        distance="10px" html={(<div id="tooltip">{RecipeNutrition(props.mealToAdd.recipe, props.nutrition)}</div>)}>
+                        <table className="plan-details-wrapper">
+                            <tr>
+                                <td className="plan-img-wrapper"><img className="plan-img" src={props.mealToAdd.recipe.image}/></td>
+                                <td className="plan-meal-name"><strong>{props.mealToAdd.recipe.name}</strong><br/><td className="plan-meal-cals"><strong>Cal:</strong> {props.mealToAdd.nutrition.calories}</td></td>
+                                <td className="plan-meal-flex"></td>
+                                <td className="plan-meal-type">{props.mealToAdd.recipe.type}<br/></td>
+                            </tr>
+                        </table></Tooltip>
+                    </div>}
         if(meals==1){
             return(
             <div>
                 <div className="plan-block">
-                    {dShuffle}
+                    {mealType == 'Dinner' ? mealDisplay : props.dShuffle}
                 </div>
             </div>
             )
@@ -145,10 +178,10 @@ import arrayShuffle from 'array-shuffle';
             return(
             <div>
                 <div className="plan-block">
-                    {bShuffle}
+                    {mealType == 'Breakfast' ? mealDisplay : props.bShuffle}
                 </div>
                 <div className="plan-block">
-                    {dShuffle}
+                    {mealType == 'Dinner' ? mealDisplay : props.dShuffle}
                 </div>
             </div>
             )
@@ -156,36 +189,35 @@ import arrayShuffle from 'array-shuffle';
             return(
             <div>
                 <div className="plan-block">
-                     {bShuffle}
+                    {mealType == 'Breakfast' ? mealDisplay : props.bShuffle}
                 </div>
                 <div className="plan-block">
-                    2
+                    {mealType == 'Lunch' ? mealDisplay : props.lShuffle}
                 </div>
                 <div className="plan-block">
-                    {dShuffle}
+                    {mealType == 'Dinner' ? mealDisplay : props.dShuffle}
                 </div>
             </div>
             )
-        } if(meals>3){
+        } else{
             return(
             <div>
                 <div className="plan-block">
-                    {bShuffle}
+                    {mealType == 'Breakfast' ? mealDisplay : props.bShuffle}
                     <hr/>
                 </div>
                 <div className="plan-block">
-                    2
+                    {mealType == 'Lunch' ? mealDisplay : props.lShuffle}
                     <hr/>
                 </div>
                 <div className="plan-block">
-                    {dShuffle}
+                    {mealType == 'Dinner' ? mealDisplay : props.dShuffle}
                     <hr/>
                 </div>
             </div>
             )
         }
     }
-
 
    
     let calories = document.getElementById('caloric-intake');
@@ -227,7 +259,9 @@ import arrayShuffle from 'array-shuffle';
             </LocalForm>
             <div>
                    {shuffled ? 
-                        <div>{generator(calories.value,numMeals.value)}<button className="submit-buttons" onClick={() => {handleSubmit()}}>Save Meal Plan</button></div> 
+                        <div>{mealClicked ? <MealPlanDisplay bShuffle={bShuffle}
+                        lShuffle={lShuffle}
+                        dShuffle={dShuffle} mealToAdd={mealToAdd}/> : generator(calories.value,numMeals.value)}<button className="submit-buttons" onClick={() => {handleSubmit()}}>Save Meal Plan</button></div> 
                     : 
                         <div><button className="submit-buttons" onClick={()=>{displayGenerator()}} style={{width:'78%'}}>Generate Plan</button></div>
                     }
@@ -237,6 +271,20 @@ import arrayShuffle from 'array-shuffle';
     
 }
 
+let mealClicked;
+let mealToAdd;
+
+let bShuffle;
+let lShuffle;
+let dShuffle;
+
+export function SendMealToPlan(recipe,nutrition){
+    mealClicked = true;
+    mealToAdd={
+        recipe: recipe,
+        nutrition: nutrition
+    }
+}
 
 function RecipeNutrition(recipe, nutrition)  {
     return(

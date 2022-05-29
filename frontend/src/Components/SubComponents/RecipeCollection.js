@@ -4,6 +4,11 @@ import {Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom'
 // import InfiniteCarousel from 'react-leaf-carousel';
 import Carousel, {consts} from 'react-elastic-carousel';
 import {HiArrowSmLeft, HiArrowSmRight} from 'react-icons/hi'
+import { FaBacon, FaHamburger, FaStar } from 'react-icons/fa';
+import {MdBreakfastDining, MdDinnerDining, MdIcecream, MdLocalDrink, MdLunchDining} from 'react-icons/md';
+import {GiChocolateBar} from 'react-icons/gi'
+// import '../../fontawesome.min.css';
+// import '../../index.css';
 
 function RecipeCollection(props)  {
   const navigate = useNavigate();
@@ -68,13 +73,13 @@ const breakPoints = [
                     <h3>Try Something New</h3>
                     <label htmlFor='filters'>Filters:</label>
                     <ul className="filters">
-                        <li onClick={() => {filterResults('All')}}><i class="fa fa-solid fa-question-circle"></i>All</li>
-                        <li onClick={() => {filterResults('Breakfast')}}><i class="fa fa-solid fa-bacon"></i>Breakfast</li>
-                        <li onClick={() => {filterResults('Lunch')}}><i className="fa fa-star fa-solid"></i>Lunch</li>
-                        <li onClick={() => {filterResults('Dinner')}}><i className="fa fa-star fa-solid"></i>Dinner</li>
-                        <li onClick={() => {filterResults('Snack')}}><i className="fa fa-star fa-solid"></i>Snack</li>
-                        <li onClick={() => {filterResults('Dessert')}}><i className="fa fa-star fa-solid"></i>Dessert</li>
-                        <li onClick={() => {filterResults('Drinks')}}><i className="fa fa-star fa-solid"></i>Drinks</li>
+                        <li onClick={() => {filterResults('All')}}><FaStar/>All</li>
+                        <li onClick={() => {filterResults('Breakfast')}}><MdBreakfastDining/>Breakfast</li>
+                        <li onClick={() => {filterResults('Lunch')}}><MdLunchDining/>Lunch</li>
+                        <li onClick={() => {filterResults('Dinner')}}><MdDinnerDining/>Dinner</li>
+                        <li onClick={() => {filterResults('Snack')}}><GiChocolateBar/>Snack</li>
+                        <li onClick={() => {filterResults('Dessert')}}><MdIcecream/>Dessert</li>
+                        <li onClick={() => {filterResults('Drinks')}}><MdLocalDrink/>Drinks</li>
                     </ul>
           <div className="row">
           <Carousel renderArrow={carouselArrow} breakPoints={breakPoints} pagination={false}>
