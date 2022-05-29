@@ -30,15 +30,11 @@ import arrayShuffle from 'array-shuffle';
     }
 
     function setValues(calories, numMeals) {
-        //CAUSES TRIPLE RENDER, DO SOMETHING ABOUT IT LATER
-        // setIntake({intake: calories});
-        // setMeals({meals: numMeals});
         setFormValues({
             intake: calories,
             meals: numMeals
         })
         generator(formValues.intake, formValues.meals);
-        // generator(calories, numMeals);
     }
 
     //-------------------------------------------------------------------PLAN ID GENERATOR
@@ -52,27 +48,33 @@ import arrayShuffle from 'array-shuffle';
     function assignId() {
         let postId = getRandomInt(50000);
 
-        // props.plans.map((plan) => {
-        //     if(plan.id === postId || postId === 0){
-        //        postId = Math.random();
-        //       }}
-        // )
+        if(props.plans){
+            props.plans.map((plan) => {
+                if(plan.id === postId || postId === 0){
+                postId = Math.random();
+                }}
+            )
+        }
 
         return postId;
      }
 
      function handleSubmit() {
+        let today = new Date()
+        let date = today.getDate();
+        let month = today.getMonth() + 1;
+        let year = today.getFullYear();
         let planId = assignId();
         assignId();
-        for(let i =0; i < mealObject.length -1; i++){
+        for(let i =0; i < mealObject.length; i++){
             if(mealObject[0]){
-                // props.postPlan(props.user.id, planId, mealObject[i].id, "2022-05-28", mealObject[i].type);
+                props.postPlan(props.user.id, planId, mealObject[i].id, year +'-'+month+'-'+date, mealObject[i].type);
              }
             }     
         
-        // setTimeout(() => {
-        // setIsClicked({isClicked: !isClicked});
-        // }, 300)
+        setTimeout(() => {
+        setIsClicked({isClicked: !isClicked});
+        }, 300)
     }
 
     function generator(calories, meals) {
@@ -105,7 +107,7 @@ import arrayShuffle from 'array-shuffle';
             let nutrition = ceiling.filter((recipe) => recipe.recipeId === shuffled[0].id)
             
             // If Else state causes blanks
-            if(nutrition[0] && shuffled[0]){
+            if(nutrition[0] && shuffled[0]){ mealObject.push(shuffled[0])
             return(
                 
                         <div key={shuffled[0].id}>
