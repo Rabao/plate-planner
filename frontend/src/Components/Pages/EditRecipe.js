@@ -84,6 +84,17 @@ export default class EditRecipe extends Component {
                         key={`${Math.floor((Math.random() * 1000))}-min`}
                         defaultValue={this.props.targetRecipe.name}/> 
                     </div>
+                    <div className="col">
+                        <label htmlFor="recipe-type">Meal Type</label><br/> 
+                        <select model=".recipe-type" name="recipe-type" className="recipe-type" defaultValue={this.props.targetRecipe.type}>
+                                <option>Breakfast</option>
+                                <option>Lunch</option>
+                                <option>Dinner</option>
+                                <option>Snack</option>
+                                <option>Dessert</option>
+                                <option>Drink</option>
+                        </select>
+                    </div>
                 </div>
                 <div className='component-body'>
                 {this.Ingredients (this.props.ingredients, this.props.targetRecipe, this.props.nutrition, this.props.user)}
@@ -198,19 +209,6 @@ export default class EditRecipe extends Component {
 
 
     RecipeSteps() {
-        // function resizeTextarea (id) {
-        //     var a = document.getElementsByClassName("recipe-steps");
-        //     a.style.height = 'auto';
-        //     a.style.height = a.scrollHeight+'px';
-        //   }
-          
-        //   function init() {
-        //     var a = document.getElementsByClassName("recipe-steps");
-        //     for(var i=0,inb=a.length;i<inb;i++) {
-        //        if(a[i].getAttribute('data-resizable')=='true')
-        //         resizeTextarea(a[i].id);
-        //     }
-        //   }
         const recipeSteps = this.props.targetRecipeSteps.sort((a,b) => a.stepNum - b.stepNum).map((step => {
             return(
                 <div>
@@ -343,7 +341,7 @@ function SaveChangesButton(props) {
         const path = '/recipes/' + props.targetRecipe.id;
         let pageRedirect= false;
         const name = document.getElementById('name');
-        const type = document.getElementsByClassName('recipe-type');
+        const type = document.getElementsByClassName('recipe-type')[0];
         const notes = document.getElementsByClassName('edit-notes')[0];
         const qty = document.getElementsByClassName('qty'); //Measurement quantity (fills measurement parameter in postIngredients)
         const unit = document.getElementsByClassName('unit-measure');
@@ -371,15 +369,7 @@ function SaveChangesButton(props) {
         }
         // ------------------------------------------------------------------SUBMISSION LOGIC
 
-        // console.log(this.props.targetRecipe.id)
-        // console.log(name.value)
-        // console.log(0)
-        // console.log(filePath)
-        // console.log(notes.value)
-        // console.log(this.props.user.id)
-        // console.log('')
-
-        props.editRecipe(props.targetRecipe.id,name.value,1,filePath,notes.value,props.user.id,'') 
+        props.editRecipe(props.targetRecipe.id,name.value,1,filePath,notes.value,props.user.id,type.value) 
         for(let i=0; i< steps.length; i++){     
             props.editRecipeSteps(props.targetRecipe.id,stepNum,steps[i].value) 
             stepNum++;      
