@@ -5,11 +5,16 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import {TiArrowShuffle} from 'react-icons/ti'
 import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
-
+import { array } from 'prop-types';
+import arrayShuffle from 'array-shuffle';
 
  const PlanGenerator = (props) => {
     const [isClicked, setIsClicked] = useState(false);
     const [shuffled,setShuffled] = useState(false);
+    const [formValues, setFormValues] = useState({
+        intake: 0,
+        meals: 0
+    })
     const [intake, setIntake] = useState(0);
     const [meals, setMeals] = useState(0);
     let mealObject = [];
@@ -25,9 +30,15 @@ import 'react-tippy/dist/tippy.css';
     }
 
     function setValues(calories, numMeals) {
-        setIntake({intake: calories});
-        setMeals({meals: numMeals});
-        generator(intake, meals);
+        //CAUSES TRIPLE RENDER, DO SOMETHING ABOUT IT LATER
+        // setIntake({intake: calories});
+        // setMeals({meals: numMeals});
+        setFormValues({
+            intake: calories,
+            meals: numMeals
+        })
+        generator(formValues.intake, formValues.meals);
+        // generator(calories, numMeals);
     }
 
     //-------------------------------------------------------------------PLAN ID GENERATOR
@@ -55,72 +66,83 @@ import 'react-tippy/dist/tippy.css';
         assignId();
         for(let i =0; i < mealObject.length -1; i++){
             if(mealObject[0]){
-                props.postPlan(props.user.id, planId, mealObject[i].id, "2022-05-28", mealObject[i].type);
-                console.log(props.user.id, planId, mealObject[i].id, "2022-05-28", mealObject[i].type)
+                // props.postPlan(props.user.id, planId, mealObject[i].id, "2022-05-28", mealObject[i].type);
              }
             }     
         
-        setTimeout(() => {
-        setIsClicked({isClicked: !isClicked});
-        }, 300)
+        // setTimeout(() => {
+        // setIsClicked({isClicked: !isClicked});
+        // }, 300)
     }
 
     function generator(calories, meals) {
+
         const caloricIntake = calories;
         let numMeals = meals;
         let calCeilPerMeal = caloricIntake/numMeals;
 
-        const recNutrition = props.nutrition;
-        const ceiling = recNutrition.filter((recipe) => recipe.calories <= calCeilPerMeal);
+        function matchNutritionById(meals,ceil) {
+            return meals.filter((recipe) => recipe.recipeId == ceil.id);
+         }
 
+        const ceiling = props.nutrition.filter((recipe) => recipe.calories <= calCeilPerMeal);
+        
         const breakfast = props.recipes.filter((recipe) => recipe.type === "Breakfast");
         const dinner = props.recipes.filter((recipe) => recipe.type === "Dinner");   
         const lunch = props.recipes.filter((recipe) => recipe.type === "Lunch");
 
-        const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+        const matchedBreakfast = matchNutritionById(breakfast,ceiling);
+        const matchedLunch = matchNutritionById(lunch,ceiling);
+        const matchedDinner = matchNutritionById(dinner,ceiling);
+ 
+        function shuffleObject(array) {
+            const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+            return shuffle(array);
+        }
         
-        function mealFilter(recipes){
-            let shuffledNutrition = shuffle(ceiling);
-            const fMeal = recipes.filter((recipe) => recipe.id === shuffledNutrition[0].recipeId);
-            mealObject.push(fMeal[0]);
-
-            if(fMeal[0] && shuffledNutrition[0]){
-                return(
+        function mealFilter(array){
+            let shuffled = shuffleObject(array);
+            let nutrition = ceiling.filter((recipe) => recipe.recipeId === shuffled[0].id)
+            
+            // If Else state causes blanks
+            if(nutrition[0] && shuffled[0]){
+            return(
                 <Tooltip 
-                    trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip">{RecipeNutrition(fMeal[0], shuffledNutrition[0])}</div>)}>
-                        <div key={fMeal[0].id}>
+                    trigger="mouseenter" arrow="true" position="right-end" max-width={'1000px'} html={(<div id="tooltip">{RecipeNutrition(shuffled[0], nutrition[0])}</div>)}>
+                        <div key={shuffled[0].id}>
                             <div>
                                 <div className="plan-img-wrapper">
-                                <img className="plan-img" src={fMeal[0].image}/>
+                                <img className="plan-img" src={shuffled[0].image}/>
                             </div>
                             <div className="plan-details-wrapper">
                                 <table>
                                     <tr>
-                                        <td className="plan-meal-name"><strong>{fMeal[0].name}</strong></td>
+                                        <td className="plan-meal-name"><strong>{shuffled[0].name}</strong></td>
                                         <td className="plan-meal-flex"></td>
-                                        <td className="plan-meal-type">{fMeal[0].type}</td>
+                                        <td className="plan-meal-type">{shuffled[0].type}</td>
                                     </tr>
                                     <tr className="plan-meal-cals">
-                                        <td>Cal: {shuffledNutrition[0].calories}</td>
+                                        <td>Cal: {nutrition[0].calories}</td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
-                    </div> </Tooltip>
+                    </div> 
+                </Tooltip>
                 )
             }
-            
+                
         }
 
-        let bShuffle = mealFilter(breakfast);
-        let lShuffle = mealFilter(lunch)
-        let dShuffle = mealFilter(dinner);
+        let bShuffle = mealFilter(matchedBreakfast)
+        // let lShuffle = mealFilter(matchedLunch)
+        let dShuffle = mealFilter(matchedDinner);
 
         if(meals==1){
             return(
             <div>
                 <div className="plan-block">
-                    {bShuffle}
+                    {dShuffle}
                 </div>
             </div>
             )
@@ -142,7 +164,7 @@ import 'react-tippy/dist/tippy.css';
                      {bShuffle}
                 </div>
                 <div className="plan-block">
-                    {lShuffle}
+                    2
                 </div>
                 <div className="plan-block">
                     {dShuffle}
@@ -156,7 +178,7 @@ import 'react-tippy/dist/tippy.css';
                     {bShuffle}
                 </div>
                 <div className="plan-block">
-                    {lShuffle}
+                    2
                 </div>
                 <div className="plan-block">
                     {dShuffle}
