@@ -74,18 +74,6 @@ function AddRecipe(props) {
         }
     }, [selectedFile])
 
-    function onSpaceDownSubmit(e) {
-        console.log("CURRENT TAGS: " + tags);
-        //Key code for Spacebar is 32
-        switch(e.onKeyDown){
-            case SPACE_BAR:
-                tags.push(e.target.value);
-            default:
-                break;
-        }
-    }   
-
-
     //-------------------------------------------------------------------RECIPE ID GENERATOR
     //-------------------------------------------------------------------RECIPE ID GENERATOR
     //-------------------------------------------------------------------RECIPE ID GENERATOR
@@ -129,7 +117,8 @@ function AddRecipe(props) {
         const unit = document.getElementsByClassName('unit-measure');
         const steps = document.getElementsByClassName('recipe-steps');
         const ingredients = document.getElementsByClassName('recipe-ingredients');
-        
+        const tags = document.getElementsByClassName('recipe-tags');
+        let delimitedTags = tags[0].value.split(" ");
         //------------------------------------------------------------------IMAGE READER
 
         const formData = new FormData();
@@ -166,6 +155,10 @@ function AddRecipe(props) {
 
         for(let i=0; i< ingredients.length; i++){
             props.postIngredients(id,getIdByIngredientName(ingredients[i].value),ingredients[i].value,qty[i].value,unit[i].value)
+        }
+
+        for(let i=0; i< delimitedTags.length; i++){
+            props.postRecipeTags(id, delimitedTags[i])
         }
 
         setTimeout(() => {
@@ -272,8 +265,7 @@ function AddRecipe(props) {
                                     <Control.text model='.tags' 
                                         name="tags"
                                         id="tags"
-                                        className="recipe-forms"
-                                        onKeyDown={(e) => {onSpaceDownSubmit(e)}}/>             
+                                        className="recipe-forms recipe-tags"/>             
                                 </Col>  
                                 <Col md={12}>
                                 <h5>Notes</h5>

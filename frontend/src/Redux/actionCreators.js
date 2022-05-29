@@ -1089,6 +1089,8 @@ export const fetchRecipeSteps = () => (dispatch) => {
         .catch(error => dispatch(recipeStepsFailed(error.message)));
 }
 
+
+
 export const recipeStepsLoading = (status) => ({
     type: ActionTypes.RECIPESTEPS_LOADING,
     payload: status
@@ -1137,6 +1139,41 @@ export const fetchRecipeTags = () => (dispatch) => {
         .then(tags => dispatch(addRecipeTags(tags)))
         .catch(error => dispatch(recipeTagsFailed(error.message)));
 }
+
+export const postRecipeTags = (recipeid, tag) => (dispatch) => {
+    const newRecipe = {
+        recipeid: recipeid,
+        tag: tag,
+    }
+
+    return fetch(baseUrl + '/tags', {
+            method: 'POST',
+            body: JSON.stringify(newRecipe),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.text())
+        .then(steps => dispatch(addRecipeTags(steps)))
+        .catch(error => {
+            console.log('Recipe tags ', error.message)
+            alert('Your recipe tag could not be published.\nError: ' + error.message)
+        });
+};
 
 export const recipeTagsLoading = (status) => ({
     type: ActionTypes.RECIPETAGS_LOADING,

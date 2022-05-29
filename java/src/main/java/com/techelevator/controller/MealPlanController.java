@@ -399,6 +399,18 @@ public class MealPlanController {
         return recipeTagDao.listRecipeTags();
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="tags")
+    public void addRecipeTags(@Valid @RequestBody RecipeTag recipeTag){
+        recipeTagDao.addRecipeTags(recipeTag);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value="tags/{id}", method = RequestMethod.DELETE )
+    public boolean deleteRecipeTags(@PathVariable long id)
+            throws RecipeTagNotFoundException {
+        return recipeTagDao.deleteRecipeTags(id);
+    }
     /*****************************************************
      *                                                    *
      *                  RECIPE TAGS APIs                  *

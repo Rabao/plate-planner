@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Recipe;
+import com.techelevator.model.RecipeSteps;
 import com.techelevator.model.RecipeTag;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -43,6 +44,19 @@ public class JdbcRecipeTagDao implements RecipeTagDao{
         }
         return tags;
     }
+
+    @Override
+    public boolean addRecipeTags(RecipeTag recipeTag) {
+        String sql = "INSERT INTO recipe_tags (recipeId, tag) VALUES (?, ?)";
+        return jdbcTemplate.update(sql,recipeTag.getRecipeId(),recipeTag.getTag()) == 1;
+    }
+
+    @Override
+    public boolean deleteRecipeTags(long id) {
+        String sql = "DELETE FROM recipe_tags WHERE recipeId = ? ";
+        return jdbcTemplate.update(sql, id) == 1;
+    }
+
 
     private RecipeTag mapRowToTag(SqlRowSet rs) {
         RecipeTag tag = new RecipeTag();

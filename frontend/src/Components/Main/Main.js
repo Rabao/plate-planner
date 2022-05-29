@@ -18,7 +18,7 @@ import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetc
         deleteRecipe, deleteRecipeIngredients, deleteRecipeNutrition, deleteRecipeSteps, editRecipe, fetchRecipeNutrition, 
         postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps, editRecipeSteps, 
         fetchRecipeIngredients, editRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
-        postComment, fetchComments, deleteComment, editComment, postGroceries,
+        postRecipeTags, postComment, fetchComments, deleteComment, editComment, postGroceries,
         postIngredient, searchRecipe,fetchNutrition, postNutrition } from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import { withRouter } from '../WithRouer/WithRouter';
@@ -104,7 +104,8 @@ const mapDispatchToProps = (dispatch) => ({
         {dispatch(postRecipeNutrition(servingSize, calories, caloriesFat, totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, 
             potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, 
             iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium, copper, manganese, chromium, molybdenum, chloride, recipeId))},
-    postMealPlan: (userId, planId, recipeId, date, time) => {dispatch(postMealPlan(userId, planId, recipeId, date, time))}
+    postMealPlan: (userId, planId, recipeId, date, time) => {dispatch(postMealPlan(userId, planId, recipeId, date, time))},
+    postRecipeTags: (recipeid, tag) => {dispatch(postRecipeTags(recipeid, tag))}
 });
 
 class Main extends Component {
@@ -225,6 +226,7 @@ class Main extends Component {
                             postRecipe={this.props.postRecipe}  
                             postSteps={this.props.postRecipeSteps}
                             postGroceries={this.props.postGroceries}
+                            postRecipeTags={this.props.postRecipeTags}
                             postIngredients={this.props.postRecipeIngredients}
                             postRecipeNutrition={this.props.postRecipeNutrition} 
                             ingredients={this.props.ingredients.ingredients}

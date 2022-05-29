@@ -669,7 +669,9 @@ hr {
   margin-bottom: 1.65em;
 }
 
-
+.recipe-tags {
+  border: 1px solid #dbd5cf;
+}
 
 /*------------------------ Grocery List CSS --------------------------*/
 .complete {
