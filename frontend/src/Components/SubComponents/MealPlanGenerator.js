@@ -5,14 +5,13 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import {TiArrowShuffle} from 'react-icons/ti'
 import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
-// import moment from 'moment';
+
 
  const PlanGenerator = (props) => {
     const [isClicked, setIsClicked] = useState(false);
     const [shuffled,setShuffled] = useState(false);
     const [intake, setIntake] = useState(0);
     const [meals, setMeals] = useState(0);
-    const [plan, setPlan] = useState([{}]);
     let mealObject = [];
 
     function showShuffle() {
@@ -22,12 +21,7 @@ import 'react-tippy/dist/tippy.css';
 
     function displayGenerator() {
         setShuffled({shuffled: !shuffled});
-        // setState({
-        //     shuffled: !state.shuffled
-        // })
         showShuffle();
-        // setPlan(mealObject);
-
     }
 
     function setValues(calories, numMeals) {
@@ -47,26 +41,25 @@ import 'react-tippy/dist/tippy.css';
     function assignId() {
         let postId = getRandomInt(50000);
 
-        props.plans.map((plan) => {
-            if(plan.id === postId || postId === 0){
-               postId = Math.random();
-              }}
-        )
+        // props.plans.map((plan) => {
+        //     if(plan.id === postId || postId === 0){
+        //        postId = Math.random();
+        //       }}
+        // )
 
         return postId;
      }
 
      function handleSubmit() {
-        let newDate = new Date()
         let planId = assignId();
         assignId();
-        // var now = moment();
         for(let i =0; i < mealObject.length -1; i++){
-            if(mealObject[i]){
-            props.postPlan(props.user.id, planId, mealObject[i].id, "2022-05-28", mealObject[i].type);
-            // console.log(mealObject.length + " " + props.user.id + " " + planId + " " + mealObject[i].id + " " + newDate.getFullYear()+"-"+newDate.getMonth()+"-"+newDate.getDate() + " " + mealObject[i].type)
+            if(mealObject[0]){
+                props.postPlan(props.user.id, planId, mealObject[i].id, "2022-05-28", mealObject[i].type);
+                console.log(props.user.id, planId, mealObject[i].id, "2022-05-28", mealObject[i].type)
+             }
             }     
-        }
+        
         setTimeout(() => {
         setIsClicked({isClicked: !isClicked});
         }, 300)
@@ -88,7 +81,7 @@ import 'react-tippy/dist/tippy.css';
         
         function mealFilter(recipes){
             let shuffledNutrition = shuffle(ceiling);
-            const fMeal = recipes.filter((recipe) => recipe.id == shuffledNutrition[0].recipeId);
+            const fMeal = recipes.filter((recipe) => recipe.id === shuffledNutrition[0].recipeId);
             mealObject.push(fMeal[0]);
 
             if(fMeal[0] && shuffledNutrition[0]){

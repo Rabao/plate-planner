@@ -26,10 +26,6 @@ export const MealPlan = (state = {
                 errMess: action.payload,
                 mealPlan: []}
 
-        // case ActionTypes.ADD_MEALPLAN:
-        //     let plan = action.payload;
-        //     return {...state, mealPlan: state.mealPlan.concat(plan)};
-
         case ActionTypes.DELETE_MEALPLAN:
             return { ...state, id: action.payload.id, mealPlan: '', authorities: [] }
 

@@ -1161,7 +1161,7 @@ export const addRecipeTags = (tags) => ({
 export const fetchMealPlan = () => (dispatch) => {
     // dispatch(mealPlanLoading(true));
 
-    return fetch(baseUrl + "/mealplans/", {
+    return fetch(baseUrl + "/mealplans", {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -1201,7 +1201,7 @@ export const postMealPlan = (userId, planId, recipeId, date, time) => (dispatch)
             headers: {
                 'Content-Type': 'application/json'
             },
-            credentials: 'include',
+            credentials: 'same-origin'
         })
         .then(response => {
                 if (response.ok) {
@@ -1242,49 +1242,6 @@ export const addMealPlan = (mealplans) => ({
     payload: mealplans
 });
 //----------------------------------MEALPLAN
-//----------------------------------MEALPLANCOLLECTION
-export const fetchMealPlanCollection = () => (dispatch) => {
-    // dispatch(mealPlanCollectionLoading(true));
-
-    return fetch(baseUrl + "/mealplans", {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            credentials: 'same-origin'
-        })
-        .then(response => {
-                if (response.ok) {
-                    return response;
-                } else {
-                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
-                    error.response = response;
-                    throw error;
-                }
-            },
-            error => {
-                let errmess = new Error(error.message);
-                throw errmess;
-            })
-        .then(response => response.json())
-        .then(mealPlanCollection => dispatch(addMealPlanCollection(mealPlanCollection)))
-        .catch(error => dispatch(mealPlanCollectionFailed(error.message)));
-}
-
-export const mealPlanCollectionLoading = () => ({
-    type: ActionTypes.MEALPLANCOLLECTION_LOADING
-});
-
-export const mealPlanCollectionFailed = (errmess) => ({
-    type: ActionTypes.MEALPLANCOLLECTION_FAILED,
-    payload: errmess
-});
-
-export const addMealPlanCollection = (mealPlanCollection) => ({
-    type: ActionTypes.ADD_MEALPLANCOLLECTION,
-    payload: mealPlanCollection
-});
-//----------------------------------MEALPLANCOLLECTION
 //----------------------------------COMMENTS
 export const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,

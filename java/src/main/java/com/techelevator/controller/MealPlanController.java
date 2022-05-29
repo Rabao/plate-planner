@@ -416,13 +416,13 @@ public class MealPlanController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value="mealplans/")
+    @GetMapping(value="mealplans")
     public List<MealPlans> listMealPlans(){
         return mealPlanDao.listMealPlans();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value="mealplans/", method = RequestMethod.POST )
+    @RequestMapping(value="mealplans", method = RequestMethod.POST )
     public void addMealPlan(@Valid @RequestBody MealPlans mealPlan){
         mealPlanDao.addMealPlan(mealPlan);
     }

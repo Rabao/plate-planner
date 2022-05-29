@@ -7,8 +7,6 @@ import Groceries from './GroceryList';
 import { MealList } from './RecipesList';
 
 
-
-
 function MealPlans(props) {
 
 

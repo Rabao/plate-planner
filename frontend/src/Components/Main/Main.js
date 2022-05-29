@@ -104,7 +104,7 @@ const mapDispatchToProps = (dispatch) => ({
         {dispatch(postRecipeNutrition(servingSize, calories, caloriesFat, totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, 
             potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, 
             iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium, copper, manganese, chromium, molybdenum, chloride, recipeId))},
-    postMealPlan: (userId, planId, recipeId, date, time) => {dispatch(postMealPlan((userId, planId, recipeId, date, time)))}
+    postMealPlan: (userId, planId, recipeId, date, time) => {dispatch(postMealPlan(userId, planId, recipeId, date, time))}
 });
 
 class Main extends Component {
