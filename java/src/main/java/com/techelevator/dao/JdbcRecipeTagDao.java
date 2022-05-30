@@ -1,7 +1,5 @@
 package com.techelevator.dao;
 
-import com.techelevator.model.Recipe;
-import com.techelevator.model.RecipeSteps;
 import com.techelevator.model.RecipeTag;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
