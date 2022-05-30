@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Component, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom'
 import { Breadcrumb, Col, Button } from 'react-bootstrap'
 import { Control, LocalForm, Errors } from 'react-redux-form';
@@ -12,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
  const PlanGenerator = (props) => {
     const [isClicked, setIsClicked] = useState(false);
+    const [isMealSelected, setMealSelected] = useState(false);
     const [shuffled,setShuffled] = useState(false);
     const [formValues, setFormValues] = useState({
         intake: 0,
@@ -41,9 +42,14 @@ import "react-datepicker/dist/react-datepicker.css";
             intake: calories,
             meals: numMeals
         })
+<<<<<<< HEAD
         generator(formValues.intake, formValues.meals);
         let date = document.getElementById('meal-plan-datetime');
         console.log(date.value+"T07:00:00-05:00")
+=======
+        // mealToAdd=null;
+        generator(formValues.intake, formValues.meals, mealToAdd);
+>>>>>>> 596abed86865ea8a6d387505f98189daec74ea32
     }
 
     //-------------------------------------------------------------------PLAN ID GENERATOR
@@ -98,7 +104,7 @@ import "react-datepicker/dist/react-datepicker.css";
         }, 300)
     }
 
-    function generator(calories, meals) {
+    function generator(calories, meals, mealToAdd) {
 
         const caloricIntake = calories;
         let numMeals = meals;
@@ -151,14 +157,41 @@ import "react-datepicker/dist/react-datepicker.css";
         }
 
         let bShuffle = mealFilter(matchedBreakfast) 
-        // let lShuffle = mealFilter(matchedLunch)
+        let lShuffle = mealFilter(matchedLunch)
         let dShuffle = mealFilter(matchedDinner);
 
+        return <MealPlanDisplay bShuffle={bShuffle}
+            lShuffle={lShuffle}
+            dShuffle={dShuffle}
+            mealToAdd={mealToAdd}
+            />
+    }
+
+    function MealPlanDisplay(props){
+        let mealType;
+        let mealDisplay;
+        // console.log(props.mealToAdd);
+        if(props.mealToAdd!=null){
+            mealType = props.mealToAdd.recipe.type;
+            mealDisplay = 
+                <div key={props.mealToAdd.recipe.id}>
+                    <Tooltip 
+                        trigger="mouseenter" arrow="true" position="right" 
+                        distance="10px" html={(<div id="tooltip">{RecipeNutrition(props.mealToAdd.recipe, props.nutrition)}</div>)}>
+                        <table className="plan-details-wrapper">
+                            <tr>
+                                <td className="plan-img-wrapper"><img className="plan-img" src={props.mealToAdd.recipe.image}/></td>
+                                <td className="plan-meal-name"><strong>{props.mealToAdd.recipe.name}</strong><br/><td className="plan-meal-cals"><strong>Cal:</strong> {props.mealToAdd.nutrition.calories}</td></td>
+                                <td className="plan-meal-flex"></td>
+                                <td className="plan-meal-type">{props.mealToAdd.recipe.type}<br/></td>
+                            </tr>
+                        </table></Tooltip>
+                    </div>}
         if(meals==1){
             return(
             <div>
                 <div className="plan-block">
-                    {dShuffle}
+                    {mealType == 'Dinner' ? mealDisplay : props.dShuffle}
                 </div>
             </div>
             )
@@ -166,10 +199,10 @@ import "react-datepicker/dist/react-datepicker.css";
             return(
             <div>
                 <div className="plan-block">
-                    {bShuffle}
+                    {mealType == 'Breakfast' ? mealDisplay : props.bShuffle}
                 </div>
                 <div className="plan-block">
-                    {dShuffle}
+                    {mealType == 'Dinner' ? mealDisplay : props.dShuffle}
                 </div>
             </div>
             )
@@ -177,36 +210,35 @@ import "react-datepicker/dist/react-datepicker.css";
             return(
             <div>
                 <div className="plan-block">
-                     {bShuffle}
+                    {mealType == 'Breakfast' ? mealDisplay : props.bShuffle}
                 </div>
                 <div className="plan-block">
-                    2
+                    {mealType == 'Lunch' ? mealDisplay : props.lShuffle}
                 </div>
                 <div className="plan-block">
-                    {dShuffle}
+                    {mealType == 'Dinner' ? mealDisplay : props.dShuffle}
                 </div>
             </div>
             )
-        } if(meals>3){
+        } else{
             return(
             <div>
                 <div className="plan-block">
-                    {bShuffle}
+                    {mealType == 'Breakfast' ? mealDisplay : props.bShuffle}
                     <hr/>
                 </div>
                 <div className="plan-block">
-                    2
+                    {mealType == 'Lunch' ? mealDisplay : props.lShuffle}
                     <hr/>
                 </div>
                 <div className="plan-block">
-                    {dShuffle}
+                    {mealType == 'Dinner' ? mealDisplay : props.dShuffle}
                     <hr/>
                 </div>
             </div>
             )
         }
     }
-
 
    
     let calories = document.getElementById('caloric-intake');
@@ -223,7 +255,7 @@ import "react-datepicker/dist/react-datepicker.css";
                     className="caloric-intake"
                     id="caloric-intake"
                     step={1000}
-                    defaultValue={1000}/>
+                    defaultValue={2000}/>
             </div> 
             <div className="col">
                 <label htmlFor="meals" style={{marginBottom:"9px"}}>In How Many Meals?</label>
@@ -243,25 +275,72 @@ import "react-datepicker/dist/react-datepicker.css";
                         <option>9</option>
                     </select>
                     <button className="shuffle _close" onClick={() =>{setValues(calories.value, numMeals.value)}}><TiArrowShuffle/></button>
-                </div>                       
-            </div>
+                </div>                
+            </div>      
             </LocalForm>
             <div>
                    {shuffled ? 
+<<<<<<< HEAD
                         <div>
                             {generator(calories.value,numMeals.value)}
                             <input type="date" id="meal-plan-datetime" name="meal-plan-datetime" defaultValue={startDate}/>
                             <button className="submit-buttons" style={{width:"162px"}} onClick={() => {handleSubmit()}}>Save Meal Plan</button>
                         </div> 
+=======
+                        <div>{
+                        //     isMealSelected ? <MealPlanDisplay bShuffle={bShuffle}
+                        // lShuffle={lShuffle}
+                        // dShuffle={dShuffle} mealToAdd={mealToAdd}/> : 
+                        generator(calories.value,numMeals.value, mealToAdd)}
+                        {/* {SendMealToPlan(props.recipes, props.nutrition) } */}
+                         <button className="submit-buttons" onClick={() => {handleSubmit()}}>Save Meal Plan</button></div> 
+>>>>>>> 596abed86865ea8a6d387505f98189daec74ea32
                     : 
                         <div><button className="submit-buttons" onClick={()=>{displayGenerator()}} style={{width:'78%'}}>Generate Plan</button></div>
                     }
-                </div>
+            </div>
         </>
     );
     
 }
+let mealToAdd;
 
+export function SendMealToPlan(recipe,nutrition){
+    mealToAdd={
+        recipe: recipe,
+        nutrition: nutrition
+    }
+    // console.log(mealToAdd);
+    // return(
+    //     <div key={recipe.id}>
+    //     <div className="plan-block">
+    //         <Tooltip 
+    //             trigger="mouseenter" arrow="true" position="right" 
+    //             distance="10px" html={(<div id="tooltip">{RecipeNutrition(recipe, nutrition)}</div>)}>
+    //             <table className="plan-details-wrapper">
+    //                 <tr>
+    //                     <td className="plan-img-wrapper"><img className="plan-img" src={recipe.image}/></td>
+    //                     <td className="plan-meal-name"><strong>{recipe.name}</strong><br/><td className="plan-meal-cals"><strong>Cal:</strong> {nutrition.calories}</td></td>
+    //                     <td className="plan-meal-flex"></td>
+    //                     <td className="plan-meal-type">{recipe.type}<br/></td>
+    //                 </tr>
+    //             </table></Tooltip>
+    //         </div>
+    //         </div>)
+}
+
+// class AdditionalMeals extends Component{
+//     constructor(props){
+//         super(props);
+//         this.state= {
+//             listState: []
+//         }
+//     }
+
+//     render(){
+//         return(<div>test</div>)
+//     }
+// }
 
 function RecipeNutrition(recipe, nutrition)  {
     return(
