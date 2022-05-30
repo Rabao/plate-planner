@@ -58,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
     editRecipeSteps: (recipeId, stepNum, steps) => {dispatch(editRecipeSteps(recipeId, stepNum, steps))},
     editRecipeIngredients: (recipeId, ingredientId, ingredient_name, measurement, unit, ingredientKey) => 
         {dispatch(editRecipeIngredients(recipeId, ingredientId, ingredient_name, measurement, unit, ingredientKey))},
-    editMealPlan: (userId, planId, recipeId, start, stop) => {dispatch(editMealPlan(userId, planId, recipeId, start, stop))},
+    editMealPlan: (planId, recipeId, start, stop) => {dispatch(editMealPlan(planId, recipeId, start, stop))},
     deleteCompletedGroceries: (id) => {dispatch(deleteCompletedGroceries(id))},
     deleteGroceries: (id) => {dispatch(deleteGroceries(id))},
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
@@ -222,6 +222,7 @@ class Main extends Component {
                             deleteIngredients={this.props.deleteRecipeIngredients}
                             deleteNutrition={this.props.deleteRecipeNutrition}
                             groceries={this.props.groceries}
+                            edit={this.props.editMealPlan}
                             plans={this.props.mealPlan.mealPlan}/>}/>
                         <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
                         <Route path='/recipes/search/:searchbar' element={<RecipesList recipes={this.props.recipe.recipeSearch} />}/>
@@ -259,6 +260,7 @@ class Main extends Component {
                         recipeNutrition={this.props.recipeNutrition.recipeNutrition}
                         plans={this.props.mealPlan.mealPlan}
                         postMealPlan={this.props.postMealPlan}
+                        edit={this.props.editMealPlan}
                         user={this.props.user}/>}/>
                         <Route path='/dvcalc' element={<DailyValueForm ingredients={this.props.ingredients.ingredients}/>}/>
                         <Route path='/home' element={<Home collection={this.props.recipe.recipe} token={this.props.token.token}/>}/>

@@ -42,14 +42,9 @@ import "react-datepicker/dist/react-datepicker.css";
             intake: calories,
             meals: numMeals
         })
-<<<<<<< HEAD
         generator(formValues.intake, formValues.meals);
         let date = document.getElementById('meal-plan-datetime');
         console.log(date.value+"T07:00:00-05:00")
-=======
-        // mealToAdd=null;
-        generator(formValues.intake, formValues.meals, mealToAdd);
->>>>>>> 596abed86865ea8a6d387505f98189daec74ea32
     }
 
     //-------------------------------------------------------------------PLAN ID GENERATOR
@@ -157,11 +152,11 @@ import "react-datepicker/dist/react-datepicker.css";
         }
 
         let bShuffle = mealFilter(matchedBreakfast) 
-        let lShuffle = mealFilter(matchedLunch)
+        // let lShuffle = mealFilter(matchedLunch)
         let dShuffle = mealFilter(matchedDinner);
 
         return <MealPlanDisplay bShuffle={bShuffle}
-            lShuffle={lShuffle}
+            // lShuffle={lShuffle}
             dShuffle={dShuffle}
             mealToAdd={mealToAdd}
             />
@@ -187,7 +182,7 @@ import "react-datepicker/dist/react-datepicker.css";
                             </tr>
                         </table></Tooltip>
                     </div>}
-        if(meals==1){
+        if(formValues.meals==1){
             return(
             <div>
                 <div className="plan-block">
@@ -195,7 +190,7 @@ import "react-datepicker/dist/react-datepicker.css";
                 </div>
             </div>
             )
-        } else if(meals==2){
+        } else if(formValues.meals==2){
             return(
             <div>
                 <div className="plan-block">
@@ -206,14 +201,14 @@ import "react-datepicker/dist/react-datepicker.css";
                 </div>
             </div>
             )
-        } else if(meals==3){
+        } else if(formValues.meals==3){
             return(
             <div>
                 <div className="plan-block">
                     {mealType == 'Breakfast' ? mealDisplay : props.bShuffle}
                 </div>
                 <div className="plan-block">
-                    {mealType == 'Lunch' ? mealDisplay : props.lShuffle}
+                    {/* {mealType == 'Lunch' ? mealDisplay : props.lShuffle} */}
                 </div>
                 <div className="plan-block">
                     {mealType == 'Dinner' ? mealDisplay : props.dShuffle}
@@ -228,7 +223,7 @@ import "react-datepicker/dist/react-datepicker.css";
                     <hr/>
                 </div>
                 <div className="plan-block">
-                    {mealType == 'Lunch' ? mealDisplay : props.lShuffle}
+                    {/* {mealType == 'Lunch' ? mealDisplay : props.lShuffle} */}
                     <hr/>
                 </div>
                 <div className="plan-block">
@@ -280,21 +275,11 @@ import "react-datepicker/dist/react-datepicker.css";
             </LocalForm>
             <div>
                    {shuffled ? 
-<<<<<<< HEAD
                         <div>
                             {generator(calories.value,numMeals.value)}
                             <input type="date" id="meal-plan-datetime" name="meal-plan-datetime" defaultValue={startDate}/>
                             <button className="submit-buttons" style={{width:"162px"}} onClick={() => {handleSubmit()}}>Save Meal Plan</button>
                         </div> 
-=======
-                        <div>{
-                        //     isMealSelected ? <MealPlanDisplay bShuffle={bShuffle}
-                        // lShuffle={lShuffle}
-                        // dShuffle={dShuffle} mealToAdd={mealToAdd}/> : 
-                        generator(calories.value,numMeals.value, mealToAdd)}
-                        {/* {SendMealToPlan(props.recipes, props.nutrition) } */}
-                         <button className="submit-buttons" onClick={() => {handleSubmit()}}>Save Meal Plan</button></div> 
->>>>>>> 596abed86865ea8a6d387505f98189daec74ea32
                     : 
                         <div><button className="submit-buttons" onClick={()=>{displayGenerator()}} style={{width:'78%'}}>Generate Plan</button></div>
                     }

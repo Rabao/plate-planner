@@ -85,7 +85,7 @@ export default class Dashboard extends Component{
                         <div className="col" md={6} id="generate-plan">
                         <aside style={{width:"550px"}}>
                             <h5>Your Meal Plans</h5>
-                            <Scheduler plans={this.props.plans} user={this.props.user} recipes={this.props.recipes} events={this.state.events}/>
+                            <Scheduler plans={this.props.plans} user={this.props.user} recipes={this.props.recipes} events={this.state.events} edit={this.props.edit}/>
                         </aside>
                         </div>
                         <div className="col" md={6} id="generate-plan">

@@ -1261,9 +1261,8 @@ export const postMealPlan = (userId, planId, recipeId, start, stop) => (dispatch
         });
 };
 
-export const editMealPlan = (userId, planId, recipeId, start, stop) => (dispatch) => {
+export const editMealPlan = (planId, recipeId, start, stop) => (dispatch) => {
     const updatedPlan = {
-        userId: userId,
         planId: planId,
         recipeId: recipeId,
         start: start,

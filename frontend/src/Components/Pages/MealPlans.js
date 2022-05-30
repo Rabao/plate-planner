@@ -65,7 +65,7 @@ function MealPlans(props) {
             </div>
             <div className="row">
                     <h5>Meal Plan Visualizer</h5>
-                    <Scheduler plans={props.plans} user={props.user} recipes={props.recipes} events={events}/>
+                    <Scheduler plans={props.plans} user={props.user} recipes={props.recipes} events={events} edit={props.edit}/>
                     </div>
             </div>
                     {/* Visible if the user is registered. */}         

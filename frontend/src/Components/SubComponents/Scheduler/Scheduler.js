@@ -28,13 +28,14 @@ export const Scheduler = (props) => {
         ? { ...existingEvent, start, end }
         : existingEvent;
     });
-    // const targetPlan = props.plans.filter((plan) => plan.planId === event.planId)
-    // const recipe = props.recipes.filter((recipe) => recipe.name === targetPlan.title);
-    // const target = recipeId.filter((target) => target.recipeId === event.recipeId)
-    // console.log(props.recipes)
-    // console.log(recipe)
-    // console.log("SCHED " + props.user.id + event.planId + event.recipeId + event.start + event.end)
-    // props.edit()
+
+    const plans = props.plans.filter((plan) => plan.planId === event.planId);
+    
+        props.recipes.map((recipe, index) => {
+          for(let i = 0; i < plans.length-1; i++){
+            if(recipe.name === event.title){
+                props.edit(event.planId, recipe.id, start, end)
+            }}})
     setEvents(nextEvents);
   };
 
