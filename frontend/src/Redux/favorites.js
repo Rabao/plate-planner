@@ -19,7 +19,10 @@ export const Favorites = (state = {
             return{...state, favorites: state.favorites.concat(action.payload)};
         
         case ActionTypes.DELETE_FAVORITES:
-            return { ...state, id: null, favorites: '', authorities: [] }
+            return{
+            ...state, favorites: state.favorites.filter(
+                fave => fave.recipeId !== action.payload.recipeId 
+                && fave.userId !== action.payload.userId)}
 
         case ActionTypes.FAVORITES_LOADING:
            return{...state,

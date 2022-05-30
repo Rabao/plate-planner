@@ -35,6 +35,9 @@ export default class Recipes extends Component {
                     comments={this.props.targetComments} user={this.props.user}
                     users={this.props.users} nutrition={this.props.nutrition}
                     isLoading={this.props.recipeLoading} errMess={this.props.recipeErrMess}
+                    isFave={this.props.favorites.filter(fave => fave.userId == this.props.user.id)}
+                    postFavorite={this.props.postFavorite}
+                    deleteFavorite={this.props.deleteFavorite}
                     postComment={this.props.postComment}
                     deleteComment={this.props.deleteComment}
                     editComment={this.props.editComment}
@@ -50,7 +53,6 @@ export default class Recipes extends Component {
 
 
 const Recipe = (props) => {
-
     const recipeId = props.recipe.id;
     const userId = props.user.id;
     const authorAvatar = props.users.allUsers.filter((user) => user.id === props.recipe.userId)[0].avatar;
@@ -87,9 +89,14 @@ const Recipe = (props) => {
                     <h3>{props.recipe.name}</h3>
                     {props.recipeTags ? <RecipeTags searchRecipe={props.searchRecipe}
                         target={props.recipeTags}/> : <div></div>}  
-                    {userId === props.recipe.userId ? <div id="manage-recipe-buttons" md={6}>
+                    {userId === props.recipe.userId ? <div id="manage-recipe-buttons" md={4}>
                         <Link to={"/edit/recipes/"+props.recipe.id}><button type="button" className="dashboard-interface-button" >&#9997; EDIT</button></Link>
-                    </div> : <div></div>}
+                    </div> : <div></div>} 
+                    {props.isFave.length==1 ? <div id="manage-recipe-buttons" md={4}>
+                        <button type="button" className="dashboard-interface-button" >&#10024; FAVED!</button>
+                    </div> : <div id="manage-recipe-buttons" md={4}>
+                        <button type="button" className="dashboard-interface-button" >&#10032; Favorite?</button>
+                    </div>}
                  </div>
                 :
                 <div className="recipe-info-name" md={9}>     

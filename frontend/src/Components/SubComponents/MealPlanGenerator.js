@@ -112,8 +112,6 @@ import "react-datepicker/dist/react-datepicker.css";
 
         const ceiling = props.nutrition.filter((recipe) => recipe.calories <= calCeilPerMeal);
         
-        const breakfastMeals = props.recipes.filter((recipe) => recipe.type === "Breakfast");
-        
         function mealContainsTag(recipe){
             let found = false;
             let i = -1;
@@ -132,7 +130,7 @@ import "react-datepicker/dist/react-datepicker.css";
             }
             return found;
         }
-
+        const breakfastMeals = props.recipes.filter((recipe) => recipe.type === "Breakfast");
         const breakfast = breakfastMeals.filter(mealContainsTag);
         const dinnerMeals = props.recipes.filter((recipe) => recipe.type === "Dinner");
         const dinner = dinnerMeals.filter(mealContainsTag);
@@ -178,11 +176,11 @@ import "react-datepicker/dist/react-datepicker.css";
         }
 
         let bShuffle = mealFilter(matchedBreakfast) 
-        // let lShuffle = mealFilter(matchedLunch)
+        let lShuffle = mealFilter(matchedLunch)
         let dShuffle = mealFilter(matchedDinner);
 
         return <MealPlanDisplay bShuffle={bShuffle}
-            // lShuffle={lShuffle}
+            lShuffle={lShuffle}
             dShuffle={dShuffle}
             mealToAdd={mealToAdd}
             />
@@ -272,11 +270,18 @@ import "react-datepicker/dist/react-datepicker.css";
             <div className="row">
             <div className="col">
                 <label htmlFor="diet" style={{marginBottom:'10px'}}>How do you Diet?</label>
-                    <input type="text" model='.diet' 
+                    <select type="text" model='.diet' 
                     name="diet" 
                     className="diet-type"
                     id="diet-type"
-                    defaultValue='Anything'/>
+                    defaultValue='Anything'>
+                    <option>Anything</option>
+                    <option>Paleo</option>
+                    <option>Vegetarian</option>
+                    <option>Vegan</option>
+                    <option>Ketogenic</option>
+                    <option>Mediterranean</option>
+                    </select>
             </div> 
             </div>
             <div className="row">

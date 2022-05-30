@@ -42,12 +42,13 @@ public class MealPlanController {
     private RecipeNutritionDao recipeNutritionDao;
     private RecipeTagDao recipeTagDao;
     private MealPlanDao mealPlanDao;
-
+    private FavoritesDao favoritesDao;
 
     public MealPlanController(IngredientsDao ingredientsDao, NutritionDao nutritionDao,
                               RecipeDao recipeDao, RecipeStepsDao recipeStepsDao, RecipeIngredientsDao recipeIngredientsDao,
                               GroceryListDao groceryListDao, UserDao userDao, UserReviewDao userReviewDao,
-                              RecipeNutritionDao recipeNutritionDao, RecipeTagDao recipeTagDao, MealPlanDao mealPlanDao) {
+                              RecipeNutritionDao recipeNutritionDao, RecipeTagDao recipeTagDao, MealPlanDao mealPlanDao,
+                              FavoritesDao favoritesDao) {
         this.ingredientsDao = ingredientsDao;
         this.nutritionDao = nutritionDao;
         this.recipeDao = recipeDao;
@@ -59,6 +60,7 @@ public class MealPlanController {
         this.recipeNutritionDao = recipeNutritionDao;
         this.recipeTagDao = recipeTagDao;
         this.mealPlanDao = mealPlanDao;
+        this.favoritesDao = favoritesDao;
     }
 
 
@@ -386,6 +388,36 @@ public class MealPlanController {
     /*****************************************************
      *                                                    *
      *                  USER REVIEW APIs                  *
+     *                                                    *
+     *****************************************************/
+    /*****************************************************
+     *                                                    *
+     *                  FAVOIRTES APIs                    *
+     *                                                    *
+     *****************************************************/
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value="favorites")
+    public List<Favorites> listUserFavorites(){
+        return favoritesDao.listUserFavorites();
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value="favorites")
+    public void addFavorite(@Valid @RequestBody Favorites fave){
+        favoritesDao.addFavorite(fave);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @RequestMapping(value="favorites/{recipeId}/{userId}", method = RequestMethod.DELETE )
+    public boolean deleteFavorite(@PathVariable long recipeId, @PathVariable long userId)
+            throws FavoriteNotFoundException {
+        return favoritesDao.deleteFavorite(recipeId, userId);
+    }
+
+    /*****************************************************
+     *                                                    *
+     *                  FAVOIRTES APIs                    *
      *                                                    *
      *****************************************************/
     /*****************************************************

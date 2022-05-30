@@ -19,7 +19,7 @@ import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetc
         postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps, editRecipeSteps, 
         fetchRecipeIngredients, editRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
         postRecipeTags, postComment, fetchComments, deleteComment, editComment, postGroceries,
-        postIngredient, searchRecipe,fetchNutrition, postNutrition } from '../../Redux/actionCreators'
+        postIngredient, searchRecipe,fetchNutrition, postNutrition, fetchFavorites, postFavorite, deleteFavorites } from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import { withRouter } from '../WithRouer/WithRouter';
 import IngredientsList from '../Pages/IngredientsList';
@@ -40,6 +40,7 @@ const mapStateToProps = state => {
         recipeSearch: state.recipeSearch,
         recipeSteps: state.recipeSteps,
         recipeTags: state.recipeTags,
+        favorites: state.favorites,
         recipeIngredients: state.recipeIngredients,
         recipeNutrition: state.recipeNutrition,
         mealPlan: state.mealPlan,
@@ -61,6 +62,7 @@ const mapDispatchToProps = (dispatch) => ({
     editMealPlan: (planId, recipeId, start, stop) => {dispatch(editMealPlan(planId, recipeId, start, stop))},
     deleteCompletedGroceries: (id) => {dispatch(deleteCompletedGroceries(id))},
     deleteGroceries: (id) => {dispatch(deleteGroceries(id))},
+    deleteFavorites: (recipeId, userId) => {dispatch(deleteFavorites(recipeId, userId))},
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
     toggleGrocery: (id) => { dispatch(toggleGrocery(id)) },
     toggleFetchGrocery: (name, qty) => {dispatch(toggleFetchGrocery(name, qty))},
@@ -71,6 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchGroceries: () => {dispatch(fetchGroceries())},
     fetchGrocery: (id) => {dispatch(fetchGrocery(id))},
     fetchComments: () => {dispatch(fetchComments())},
+    fetchFavorites: () => {dispatch(fetchFavorites())},
 
     // Fetch with parameters
     fetchMealPlan: () => {dispatch(fetchMealPlan())},
@@ -107,7 +110,8 @@ const mapDispatchToProps = (dispatch) => ({
             potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, 
             iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium, copper, manganese, chromium, molybdenum, chloride, recipeId))},
     postMealPlan: (userId, planId, recipeId, start, stop) => {dispatch(postMealPlan(userId, planId, recipeId, start, stop))},
-    postRecipeTags: (recipeid, tag) => {dispatch(postRecipeTags(recipeid, tag))}
+    postRecipeTags: (recipeid, tag) => {dispatch(postRecipeTags(recipeid, tag))},
+    postFavorite: (recipeId, userId) => {dispatch(postFavorite(recipeId, userId))}
 });
 
 class Main extends Component {
@@ -125,6 +129,7 @@ class Main extends Component {
         this.props.fetchRecipe();
         this.props.fetchRecipeSteps();
         this.props.fetchRecipeTags();
+        this.props.fetchFavorites();
         this.props.fetchRecipeIngredients();
         this.props.fetchRecipeNutrition();      
     }
@@ -156,6 +161,9 @@ class Main extends Component {
                 targetRecipeSteps={this.props.recipeSteps.recipeSteps.filter(steps => steps.recipeId === parseInt(id,10))}
                 recipeLoading={this.props.recipe.isLoading}
                 recipeErrMess={this.props.recipe.errMess}
+                favorites={this.props.favorites.favorites.filter(fave => fave.recipeId === parseInt(id,10))}
+                postFavorite={this.props.postFavorite}
+                deleteFavorite={this.props.deleteFavorites}
                 user={this.props.user}
                 users={this.props.allUsers}
                 searchRecipe={this.props.searchRecipe}

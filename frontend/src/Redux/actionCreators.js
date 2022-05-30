@@ -1194,6 +1194,121 @@ export const addRecipeTags = (tags) => ({
     payload: tags
 });
 //----------------------------------RECIPETAGS
+//----------------------------------FAVORITES
+export const fetchFavorites = () => (dispatch) => {
+    // dispatch(recipeStepsLoading(true));
+
+    return fetch(baseUrl + "/favorites", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(faves => dispatch(addFavorites(faves)))
+        .catch(error => dispatch(recipeTagsFailed(error.message)));
+}
+
+export const postFavorite = (recipeid, userId) => (dispatch) => {
+    const newFave = {
+        recipeid: recipeid,
+        userId: userId,
+    }
+
+    return fetch(baseUrl + '/favorites', {
+            method: 'POST',
+            body: JSON.stringify(newFave),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.text())
+        .then(fave => dispatch(addFavorite(fave)))
+        .catch(error => {
+            console.log('Favorites ', error.message)
+            alert('Your fave could not be posted.\nError: ' + error.message)
+        });
+};
+
+export const favoritesLoading = (status) => ({
+    type: ActionTypes.FAVORITES_LOADING,
+    payload: status
+});
+
+export const favoritesFailed = (errmess) => ({
+    type: ActionTypes.FAVORITES_FAILED,
+    payload: errmess
+});
+
+export const deleteFavorites = (recipeId, userId) => (dispatch) => {
+
+    return fetch(baseUrl + '/favorites/' + recipeId + '/' + userId, {
+            method: 'DELETE'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.text())
+        .then(() => dispatch(deleteFavoritesSuccess(recipeId, userId)))
+        .catch(error => { throw (error) });
+}
+
+export const deleteFavoritesSuccess = (rId, uId) => ({
+    type: ActionTypes.DELETE_FAVORITES,
+    payload:{
+        recipeId: rId,
+        userId: uId
+    }
+});
+
+export const addFavorites = (faves) => ({
+    type: ActionTypes.ADD_FAVORITES,
+    payload: faves
+});
+
+export const addFavorite = (fave) => ({
+    type: ActionTypes.ADD_FAVORITE,
+    payload: fave
+});
+//----------------------------------FAVORITES
 //----------------------------------MEALPLAN
 export const fetchMealPlan = () => (dispatch) => {
     // dispatch(mealPlanLoading(true));
