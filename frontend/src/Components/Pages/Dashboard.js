@@ -3,12 +3,35 @@ import {Breadcrumb} from 'react-bootstrap'
 import {useNavigate, Link, Route, Routes} from 'react-router-dom';
 import {Modal, ModalBody, ModalHeader} from 'reactstrap';
 import { LocalForm } from 'react-redux-form';
+import {Scheduler} from '../SubComponents/Scheduler/Scheduler';
+import { isThisQuarter } from 'date-fns';
+
 
 export default class Dashboard extends Component{
     constructor(props){
         super(props)
 
+        this.state = {
+            events:[{ id: 0, planId: 0, title: '', start: '', end: ''}]
+        }
     }
+
+    componentDidMount(){
+        this.matchData();
+    }
+    matchData() {
+        const userId = this.props.plans.filter((plan) => plan.userId === this.props.user.id);
+    
+        this.props.recipes.map((recipe, index) => {
+          for(let i = 0; i < userId.length; i++){
+            if(recipe.id === userId[i].recipeId){
+
+              this.setState({ events: [...this.state.events, this.state.events.push({ id: i, planId: userId[i].planId, title: recipe.name, start: userId[i].start, end: userId[i].stop })] })
+                 }
+                }
+            }
+        )}
+    
     
     render(){
         return(
@@ -60,9 +83,9 @@ export default class Dashboard extends Component{
                     </div>             
                     <div className="row">
                         <div className="col" md={6} id="generate-plan">
-                        <aside>
+                        <aside style={{width:"550px"}}>
                             <h5>Your Meal Plans</h5>
-
+                            <Scheduler plans={this.props.plans} user={this.props.user} recipes={this.props.recipes} events={this.state.events}/>
                         </aside>
                         </div>
                         <div className="col" md={6} id="generate-plan">

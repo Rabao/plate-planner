@@ -5,8 +5,10 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import {TiArrowShuffle} from 'react-icons/ti'
 import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
+import DatePicker from "react-datepicker";
 import { array } from 'prop-types';
 import arrayShuffle from 'array-shuffle';
+import "react-datepicker/dist/react-datepicker.css";
 
  const PlanGenerator = (props) => {
     const [isClicked, setIsClicked] = useState(false);
@@ -15,8 +17,13 @@ import arrayShuffle from 'array-shuffle';
         intake: 0,
         meals: 0
     })
-    const [intake, setIntake] = useState(0);
-    const [meals, setMeals] = useState(0);
+    let today = new Date()
+    let date = today.getDate('YYYY');
+    let month = ('0'+(today.getMonth()+1)).slice(-2)
+    let year = today.getFullYear('DD');
+    let startDate = year+"-"+month+"-"+date;
+    // const [intake, setIntake] = useState(0);
+    // const [meals, setMeals] = useState(0);
     let mealObject = [];
 
     function showShuffle() {
@@ -35,6 +42,8 @@ import arrayShuffle from 'array-shuffle';
             meals: numMeals
         })
         generator(formValues.intake, formValues.meals);
+        let date = document.getElementById('meal-plan-datetime');
+        console.log(date.value+"T07:00:00-05:00")
     }
 
     //-------------------------------------------------------------------PLAN ID GENERATOR
@@ -60,15 +69,27 @@ import arrayShuffle from 'array-shuffle';
      }
 
      function handleSubmit() {
-        let today = new Date()
-        let date = today.getDate();
-        let month = today.getMonth() + 1;
-        let year = today.getFullYear();
         let planId = assignId();
         assignId();
+        let date = document.getElementById('meal-plan-datetime');
+        let start = '';
+        let end = '';
+
+       
         for(let i =0; i < mealObject.length; i++){
+
+            if(mealObject[i].type === "Breakfast"){
+               start = date.value+"T07:00:00-05:00";
+               end = date.value+"T08:00:00-05:00";
+            } else if(mealObject[i].type === "Lunch"){
+                start = date.value+"T12:00:00-05:00";
+                end = date.value+"T13:00:00-05:00";
+            } else if(mealObject[i].type === "Dinner"){
+                start = date.value+"T19:00:00-05:00";
+                end = date.value+"T20:00:00-05:00";
+            }
             if(mealObject[0]){
-                props.postPlan(props.user.id, planId, mealObject[i].id, year +'-'+month+'-'+date, mealObject[i].type);
+                props.postPlan(props.user.id, planId, mealObject[i].id, start, end);
              }
             }     
         
@@ -227,7 +248,11 @@ import arrayShuffle from 'array-shuffle';
             </LocalForm>
             <div>
                    {shuffled ? 
-                        <div>{generator(calories.value,numMeals.value)}<button className="submit-buttons" onClick={() => {handleSubmit()}}>Save Meal Plan</button></div> 
+                        <div>
+                            {generator(calories.value,numMeals.value)}
+                            <input type="date" id="meal-plan-datetime" name="meal-plan-datetime" defaultValue={startDate}/>
+                            <button className="submit-buttons" style={{width:"162px"}} onClick={() => {handleSubmit()}}>Save Meal Plan</button>
+                        </div> 
                     : 
                         <div><button className="submit-buttons" onClick={()=>{displayGenerator()}} style={{width:'78%'}}>Generate Plan</button></div>
                     }

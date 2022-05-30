@@ -9,7 +9,7 @@ import DailyValue from '../SubComponents/DailyValueDisplay';
 import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 import {RiPlayListAddFill} from 'react-icons/ri';
-
+import Scheduler from '../SubComponents/Scheduler/Scheduler';
 
 export default class Recipes extends Component {
     constructor(props){

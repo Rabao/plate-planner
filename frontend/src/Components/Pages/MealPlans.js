@@ -1,14 +1,39 @@
-import React, { Component, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Breadcrumb, Col, Button } from 'react-bootstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import {Link} from 'react-router-dom';
 import PlanGenerator from '../SubComponents/MealPlanGenerator';
+import {Scheduler} from '../SubComponents/Scheduler/Scheduler';
 import Groceries from './GroceryList';
 import { MealList } from './RecipesList';
-
+import { useOnMount } from '../SubComponents/Hooks/useOnMount';
 
 function MealPlans(props) {
+  const [events, setEvents] = useState([{
+    id: 0,
+    planId: 0,
+    title: '',
+    start: '',
+    end: ''
+     }]); 
 
+     useEffect(() => {
+       matchData()
+      }, [])
+  
+
+    function matchData() {
+        const userId = props.plans.filter((plan) => plan.userId === props.user.id);
+    
+        props.recipes.map((recipe, index) => {
+          for(let i = 0; i < userId.length; i++){
+            if(recipe.id === userId[i].recipeId){
+                console.log (recipe.name+" "+userId[i].start+" "+userId[i].stop)
+                setEvents([...events,events.push({ id: i, planId: userId[i].planId, title: recipe.name, start: userId[i].start, end: userId[i].stop })] )
+                 }console.log("EVENTS: " + JSON.stringify( events))
+                }
+            } 
+        )}
 
     return(
         <div className='container'>
@@ -30,9 +55,6 @@ function MealPlans(props) {
                 </aside>
                 </div>
                 <div className="col" md={6} id="plan-dash">
-                 <div className="row">
-                    <h5>Meal Plan Visualizer</h5>
-                    </div>
                     <div className="row">
                         <h5>Add Recipes to Plan</h5>
                             <MealList 
@@ -40,8 +62,12 @@ function MealPlans(props) {
                                 nutrition={props.recipeNutrition.filter(rn => rn.recipeId != 0)} />
                     </div>
                 </div>
-                </div>
-                </div>
+            </div>
+            <div className="row">
+                    <h5>Meal Plan Visualizer</h5>
+                    <Scheduler plans={props.plans} user={props.user} recipes={props.recipes} events={events}/>
+                    </div>
+            </div>
                     {/* Visible if the user is registered. */}         
         </div>
 </div>

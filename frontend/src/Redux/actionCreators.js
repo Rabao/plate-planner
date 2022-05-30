@@ -1223,13 +1223,13 @@ export const fetchMealPlan = () => (dispatch) => {
         .catch(error => dispatch(mealPlanFailed(error.message)));
 }
 
-export const postMealPlan = (userId, planId, recipeId, date, time) => (dispatch) => {
+export const postMealPlan = (userId, planId, recipeId, start, stop) => (dispatch) => {
     const newMealPlan = {
         userId: userId,
         planId: planId,
         recipeId: recipeId,
-        date: date,
-        time: time
+        start: start,
+        stop: stop
     }
 
     return fetch(baseUrl + '/mealplans', {
@@ -1260,6 +1260,46 @@ export const postMealPlan = (userId, planId, recipeId, date, time) => (dispatch)
             alert('Your meal plan could not be added.\nError: ' + error.message)
         });
 };
+
+export const editMealPlan = (userId, planId, recipeId, start, stop) => (dispatch) => {
+    const updatedPlan = {
+        userId: userId,
+        planId: planId,
+        recipeId: recipeId,
+        start: start,
+        stop: stop
+    }
+    return fetch(baseUrl + '/mealplans/' + planId, {
+            method: 'PUT',
+            body: JSON.stringify(updatedPlan),
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(id => dispatch(editMealPlanSuccess(id)))
+        .catch(error => { throw (error) });
+}
+
+export const editMealPlanSuccess = (id) => ({
+    type: ActionTypes.EDIT_MEALPLAN,
+    payload: id
+})
 
 export const mealPlanLoading = () => ({
     type: ActionTypes.MEALPLAN_LOADING

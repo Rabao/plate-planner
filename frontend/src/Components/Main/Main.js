@@ -14,7 +14,7 @@ import MealPlans from '../Pages/MealPlans'
 import Dashboard from '../Pages/Dashboard';
 import DailyValueForm from '../SubComponents/DailyValueForm';
 import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetchGrocery,
-        toggleFetchGrocery, toggleGrocery, fetchMealPlan, postMealPlan, fetchRecipe, postRecipe, 
+        toggleFetchGrocery, toggleGrocery, fetchMealPlan, postMealPlan, editMealPlan, fetchRecipe, postRecipe, 
         deleteRecipe, deleteRecipeIngredients, deleteRecipeNutrition, deleteRecipeSteps, editRecipe, fetchRecipeNutrition, 
         postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps, editRecipeSteps, 
         fetchRecipeIngredients, editRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
@@ -24,6 +24,7 @@ import {connect} from 'react-redux'
 import { withRouter } from '../WithRouer/WithRouter';
 import IngredientsList from '../Pages/IngredientsList';
 import Ingredients from '../Pages/Ingredients';
+import {Scheduler} from '../SubComponents/Scheduler/Scheduler';
 
 
 const mapStateToProps = state => {
@@ -57,6 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
     editRecipeSteps: (recipeId, stepNum, steps) => {dispatch(editRecipeSteps(recipeId, stepNum, steps))},
     editRecipeIngredients: (recipeId, ingredientId, ingredient_name, measurement, unit, ingredientKey) => 
         {dispatch(editRecipeIngredients(recipeId, ingredientId, ingredient_name, measurement, unit, ingredientKey))},
+    editMealPlan: (userId, planId, recipeId, start, stop) => {dispatch(editMealPlan(userId, planId, recipeId, start, stop))},
     deleteCompletedGroceries: (id) => {dispatch(deleteCompletedGroceries(id))},
     deleteGroceries: (id) => {dispatch(deleteGroceries(id))},
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
@@ -104,7 +106,7 @@ const mapDispatchToProps = (dispatch) => ({
         {dispatch(postRecipeNutrition(servingSize, calories, caloriesFat, totalFat, saturatedFat, transFat, polyFat, monoFat, cholesterol, sodium, 
             potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, 
             iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium, copper, manganese, chromium, molybdenum, chloride, recipeId))},
-    postMealPlan: (userId, planId, recipeId, date, time) => {dispatch(postMealPlan(userId, planId, recipeId, date, time))},
+    postMealPlan: (userId, planId, recipeId, start, stop) => {dispatch(postMealPlan(userId, planId, recipeId, start, stop))},
     postRecipeTags: (recipeid, tag) => {dispatch(postRecipeTags(recipeid, tag))}
 });
 
@@ -219,7 +221,8 @@ class Main extends Component {
                             deleteSteps={this.props.deleteRecipeSteps}
                             deleteIngredients={this.props.deleteRecipeIngredients}
                             deleteNutrition={this.props.deleteRecipeNutrition}
-                            groceries={this.props.groceries}/>}/>
+                            groceries={this.props.groceries}
+                            plans={this.props.mealPlan.mealPlan}/>}/>
                         <Route exact path='/recipes' element={<RecipesList recipes={this.props.recipe.recipe} />}/>
                         <Route path='/recipes/search/:searchbar' element={<RecipesList recipes={this.props.recipe.recipeSearch} />}/>
                         <Route exact path='/add/recipe' element={<AddRecipe 
@@ -259,6 +262,16 @@ class Main extends Component {
                         user={this.props.user}/>}/>
                         <Route path='/dvcalc' element={<DailyValueForm ingredients={this.props.ingredients.ingredients}/>}/>
                         <Route path='/home' element={<Home collection={this.props.recipe.recipe} token={this.props.token.token}/>}/>
+                        <Route path='/scheduler' element={<Scheduler 
+                              user={this.props.user} 
+                              recipes={this.props.recipe.recipe} 
+                              deleteRecipe={this.props.deleteRecipe} 
+                              deleteSteps={this.props.deleteRecipeSteps}
+                              deleteIngredients={this.props.deleteRecipeIngredients}
+                              deleteNutrition={this.props.deleteRecipeNutrition}
+                              groceries={this.props.groceries}
+                              plans={this.props.mealPlan.mealPlan}
+                              edit={this.props.editMealPlan}/>}/>
                         {/* <Route path='/home' element={this.props.token.token !== undefined ? <Home collection={this.props.recipe.recipe}/> : null}/>                       */}
                         <Route path='' element={<Navigate to='/home' />} />
                     </Routes>

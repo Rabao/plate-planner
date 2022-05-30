@@ -454,6 +454,16 @@ h5 {
   border: 1px solid #dbd5cf;
 }
 
+#meal-plan-datetime{
+  width:50%;
+  display: inline-block;
+  margin-top: 5px;
+  margin-right: 20px;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid #dbd5cf;
+}
+
 /*------------------------- Recipe List CSS --------------------------*/
 .lds-circle {
   display: inline-block;
@@ -918,4 +928,31 @@ hr {
 
 .shuffle:hover{
   filter: brightness(0.75);
+}
+/*-----------------------------------------------------------------------------*/
+#scroll,
+#list {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 240px;
+}
+
+.item {
+  box-sizing: border-box;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+
+#scheduler {
+  margin-left: 270px;
+}
+
+.dx-draggable-source {
+  opacity: 0.5;
+}
+
+.dx-draggable-dragging > * {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 6px 8px rgba(0, 0, 0, 0.2);
 }
