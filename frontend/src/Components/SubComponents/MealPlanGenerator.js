@@ -35,7 +35,7 @@ import arrayShuffle from 'array-shuffle';
             intake: calories,
             meals: numMeals
         })
-        mealToAdd=null;
+        // mealToAdd=null;
         generator(formValues.intake, formValues.meals, mealToAdd);
     }
 
@@ -145,7 +145,7 @@ import arrayShuffle from 'array-shuffle';
     function MealPlanDisplay(props){
         let mealType;
         let mealDisplay;
-        console.log(props.mealToAdd);
+        // console.log(props.mealToAdd);
         if(props.mealToAdd!=null){
             mealType = props.mealToAdd.recipe.type;
             mealDisplay = 
@@ -251,8 +251,7 @@ import arrayShuffle from 'array-shuffle';
                     </select>
                     <button className="shuffle _close" onClick={() =>{setValues(calories.value, numMeals.value)}}><TiArrowShuffle/></button>
                 </div>                
-            </div>
-                    <SendMealToPlan />       
+            </div>      
             </LocalForm>
             <div>
                    {shuffled ? 
@@ -260,7 +259,9 @@ import arrayShuffle from 'array-shuffle';
                         //     isMealSelected ? <MealPlanDisplay bShuffle={bShuffle}
                         // lShuffle={lShuffle}
                         // dShuffle={dShuffle} mealToAdd={mealToAdd}/> : 
-                        generator(calories.value,numMeals.value, mealToAdd)}<button className="submit-buttons" onClick={() => {handleSubmit()}}>Save Meal Plan</button></div> 
+                        generator(calories.value,numMeals.value, mealToAdd)}
+                        {/* {SendMealToPlan(props.recipes, props.nutrition) } */}
+                         <button className="submit-buttons" onClick={() => {handleSubmit()}}>Save Meal Plan</button></div> 
                     : 
                         <div><button className="submit-buttons" onClick={()=>{displayGenerator()}} style={{width:'78%'}}>Generate Plan</button></div>
                     }
@@ -276,36 +277,37 @@ export function SendMealToPlan(recipe,nutrition){
         recipe: recipe,
         nutrition: nutrition
     }
-    return(
-        <div key={recipe.id}>
-        <div className="plan-block">
-            <Tooltip 
-                trigger="mouseenter" arrow="true" position="right" 
-                distance="10px" html={(<div id="tooltip">{RecipeNutrition(recipe, nutrition)}</div>)}>
-                <table className="plan-details-wrapper">
-                    <tr>
-                        <td className="plan-img-wrapper"><img className="plan-img" src={recipe.image}/></td>
-                        <td className="plan-meal-name"><strong>{recipe.name}</strong><br/><td className="plan-meal-cals"><strong>Cal:</strong> {nutrition.calories}</td></td>
-                        <td className="plan-meal-flex"></td>
-                        <td className="plan-meal-type">{recipe.type}<br/></td>
-                    </tr>
-                </table></Tooltip>
-            </div>
-            </div>)
+    // console.log(mealToAdd);
+    // return(
+    //     <div key={recipe.id}>
+    //     <div className="plan-block">
+    //         <Tooltip 
+    //             trigger="mouseenter" arrow="true" position="right" 
+    //             distance="10px" html={(<div id="tooltip">{RecipeNutrition(recipe, nutrition)}</div>)}>
+    //             <table className="plan-details-wrapper">
+    //                 <tr>
+    //                     <td className="plan-img-wrapper"><img className="plan-img" src={recipe.image}/></td>
+    //                     <td className="plan-meal-name"><strong>{recipe.name}</strong><br/><td className="plan-meal-cals"><strong>Cal:</strong> {nutrition.calories}</td></td>
+    //                     <td className="plan-meal-flex"></td>
+    //                     <td className="plan-meal-type">{recipe.type}<br/></td>
+    //                 </tr>
+    //             </table></Tooltip>
+    //         </div>
+    //         </div>)
 }
 
-class AdditionalMeals extends Component{
-    constructor(props){
-        super(props);
-        this.state= {
-            listState: []
-        }
-    }
+// class AdditionalMeals extends Component{
+//     constructor(props){
+//         super(props);
+//         this.state= {
+//             listState: []
+//         }
+//     }
 
-    render(){
-        return(<div>test</div>)
-    }
-}
+//     render(){
+//         return(<div>test</div>)
+//     }
+// }
 
 function RecipeNutrition(recipe, nutrition)  {
     return(
