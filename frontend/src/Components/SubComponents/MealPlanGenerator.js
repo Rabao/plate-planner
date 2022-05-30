@@ -5,7 +5,6 @@ import { Control, LocalForm, Errors } from 'react-redux-form';
 import {TiArrowShuffle} from 'react-icons/ti'
 import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
-import DatePicker from "react-datepicker";
 import { array } from 'prop-types';
 import arrayShuffle from 'array-shuffle';
 import "react-datepicker/dist/react-datepicker.css";

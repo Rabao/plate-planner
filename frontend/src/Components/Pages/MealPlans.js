@@ -6,7 +6,7 @@ import PlanGenerator from '../SubComponents/MealPlanGenerator';
 import {Scheduler} from '../SubComponents/Scheduler/Scheduler';
 import Groceries from './GroceryList';
 import { MealList } from './RecipesList';
-import { useOnMount } from '../SubComponents/Hooks/useOnMount';
+
 
 function MealPlans(props) {
   const [events, setEvents] = useState([{
@@ -59,7 +59,8 @@ function MealPlans(props) {
                         <h5>Add Recipes to Plan</h5>
                             <MealList 
                                 recipes={props.recipes}
-                                nutrition={props.recipeNutrition.filter(rn => rn.recipeId != 0)} />
+                                nutrition={props.recipeNutrition.filter(rn => rn.recipeId != 0)} 
+                                user={props.user}/>
                     </div>
                 </div>
             </div>

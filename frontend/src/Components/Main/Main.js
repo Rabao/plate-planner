@@ -236,6 +236,7 @@ class Main extends Component {
                             ingredients={this.props.ingredients.ingredients}
                             nutrition={this.props.nutrition.nutrition} 
                             authUser={this.props.user} 
+                            plans={this.props.mealPlan.mealPlan}
                             recipes={this.props.recipe.recipe}/>}/>
                         <Route path='/recipes/:id' element={<RecipeWithId/>}/>
                         <Route exact path='edit/recipes/:id' element={<EditRecipeWithId/>}/>

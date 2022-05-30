@@ -1,10 +1,11 @@
-import React, {useMemo, useState} from 'react'
+import React, {useMemo, useState, useCallback} from 'react'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-// Setup the localizer by providing the moment (or globalize, or Luxon) Object
+import { useDrop } from 'react-dnd'
+;// Setup the localizer by providing the moment (or globalize, or Luxon) Object
 // to the correct localizer.
 const localizer = momentLocalizer(moment) // or globalizeLocalizer
 const DnDCalendar = withDragAndDrop(Calendar)
@@ -19,6 +20,7 @@ export const Scheduler = (props) => {
   const {defaultDate} = useMemo(() => ({
     defaultDate: new Date(year, month, date)
   }), [])
+//-----------------------------------------------------------------------
 
   const moveEvent = ({ event, start, end }) => {
     const moveEvent = event;
@@ -39,9 +41,11 @@ export const Scheduler = (props) => {
     setEvents(nextEvents);
   };
 
- 
+//-----------------------------------------------------------------------
+
   return(
     <div className="component-list">
+      
         <DnDCalendar
             localizer={localizer}
             events={events}
@@ -49,11 +53,10 @@ export const Scheduler = (props) => {
             startAccessor="start"
             endAccessor="end"
 
-            draggableAccessor={(event) => true}
+
             onEventDrop={moveEvent}
             style={{height:500}}
             resizable={false}
-            onDropFromOutside={true}
          />
       </div>
     )
