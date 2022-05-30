@@ -258,6 +258,7 @@ class Main extends Component {
                         <Route path='/mealplans' element={<MealPlans 
                         recipes={this.props.recipe.recipe} 
                         recipeNutrition={this.props.recipeNutrition.recipeNutrition}
+                        recipeTags={this.props.recipeTags.recipeTags}
                         plans={this.props.mealPlan.mealPlan}
                         postMealPlan={this.props.postMealPlan}
                         edit={this.props.editMealPlan}

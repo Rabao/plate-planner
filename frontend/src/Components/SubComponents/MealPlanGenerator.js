@@ -116,16 +116,19 @@ import "react-datepicker/dist/react-datepicker.css";
         
         function mealContainsTag(recipe){
             let found = false;
+            let i = -1;
             // console.log(recipe);
             if(diet == 'Anything')
                 found = true;
             else{
-                for(let i =0;i<props.recipeTags.length;i++){
+                do{
                     // console.log(props.recipeTags[i].recipeId + '==' + recipe.recipeId)
+                    i++;
+                    // console.log(props.recipeTags)
                     if(props.recipeTags[i].recipeId == recipe.id &&
                         props.recipeTags[i].tag == diet)
                         found = true;
-                }
+                }while(!found && i < props.recipeTags.length-1)
             }
             return found;
         }
@@ -135,8 +138,6 @@ import "react-datepicker/dist/react-datepicker.css";
         const dinner = dinnerMeals.filter(mealContainsTag);
         const lunchMeals = props.recipes.filter((recipe) => recipe.type === "Lunch");
         const lunch = lunchMeals.filter(mealContainsTag);
-        console.log('before '+ breakfastMeals + " + " + lunchMeals + " + " + dinnerMeals)
-        console.log('after '+ breakfast + " + " + lunch + " + " + dinner)
 
         const matchedBreakfast = matchNutritionById(breakfast,ceiling);
         const matchedLunch = matchNutritionById(lunch,ceiling);
@@ -233,7 +234,7 @@ import "react-datepicker/dist/react-datepicker.css";
                     {mealType == 'Breakfast' ? mealDisplay : props.bShuffle}
                 </div>
                 <div className="plan-block">
-                    {/* {mealType == 'Lunch' ? mealDisplay : props.lShuffle} */}
+                    {mealType == 'Lunch' ? mealDisplay : props.lShuffle}
                 </div>
                 <div className="plan-block">
                     {mealType == 'Dinner' ? mealDisplay : props.dShuffle}
@@ -248,7 +249,7 @@ import "react-datepicker/dist/react-datepicker.css";
                     <hr/>
                 </div>
                 <div className="plan-block">
-                    {/* {mealType == 'Lunch' ? mealDisplay : props.lShuffle} */}
+                    {mealType == 'Lunch' ? mealDisplay : props.lShuffle}
                     <hr/>
                 </div>
                 <div className="plan-block">
