@@ -37,12 +37,13 @@ import "react-datepicker/dist/react-datepicker.css";
         showShuffle();
     }
 
-    function setValues(calories, numMeals) {
+    function setValues(calories, numMeals, dietType) {
         setFormValues({
             intake: calories,
-            meals: numMeals
+            meals: numMeals,
+            diet: dietType
         })
-        generator(formValues.intake, formValues.meals);
+        generator(formValues.intake, formValues.meals, formValues.diet);
         let date = document.getElementById('meal-plan-datetime');
         console.log(date.value+"T07:00:00-05:00")
     }
@@ -99,7 +100,7 @@ import "react-datepicker/dist/react-datepicker.css";
         }, 300)
     }
 
-    function generator(calories, meals, mealToAdd) {
+    function generator(calories, meals, diet, mealToAdd) {
 
         const caloricIntake = calories;
         let numMeals = meals;
@@ -111,9 +112,31 @@ import "react-datepicker/dist/react-datepicker.css";
 
         const ceiling = props.nutrition.filter((recipe) => recipe.calories <= calCeilPerMeal);
         
-        const breakfast = props.recipes.filter((recipe) => recipe.type === "Breakfast");
-        const dinner = props.recipes.filter((recipe) => recipe.type === "Dinner");   
-        const lunch = props.recipes.filter((recipe) => recipe.type === "Lunch");
+        const breakfastMeals = props.recipes.filter((recipe) => recipe.type === "Breakfast");
+        
+        function mealContainsTag(recipe){
+            let found = false;
+            // console.log(recipe);
+            if(diet == 'Anything')
+                found = true;
+            else{
+                for(let i =0;i<props.recipeTags.length;i++){
+                    // console.log(props.recipeTags[i].recipeId + '==' + recipe.recipeId)
+                    if(props.recipeTags[i].recipeId == recipe.id &&
+                        props.recipeTags[i].tag == diet)
+                        found = true;
+                }
+            }
+            return found;
+        }
+
+        const breakfast = breakfastMeals.filter(mealContainsTag);
+        const dinnerMeals = props.recipes.filter((recipe) => recipe.type === "Dinner");
+        const dinner = dinnerMeals.filter(mealContainsTag);
+        const lunchMeals = props.recipes.filter((recipe) => recipe.type === "Lunch");
+        const lunch = lunchMeals.filter(mealContainsTag);
+        console.log('before '+ breakfastMeals + " + " + lunchMeals + " + " + dinnerMeals)
+        console.log('after '+ breakfast + " + " + lunch + " + " + dinner)
 
         const matchedBreakfast = matchNutritionById(breakfast,ceiling);
         const matchedLunch = matchNutritionById(lunch,ceiling);
@@ -126,7 +149,9 @@ import "react-datepicker/dist/react-datepicker.css";
         
         function mealFilter(array){
             let shuffled = shuffleObject(array);
-            let nutrition = ceiling.filter((recipe) => recipe.recipeId === shuffled[0].id)
+            let nutrition = [];
+            if(shuffled[0])
+            nutrition = ceiling.filter((recipe) => recipe.recipeId === shuffled[0].id)
             
             // If Else state causes blanks
             if(nutrition[0] && shuffled[0]){ mealObject.push(shuffled[0])
@@ -238,10 +263,21 @@ import "react-datepicker/dist/react-datepicker.css";
    
     let calories = document.getElementById('caloric-intake');
     let numMeals = document.getElementById('meal-count');
+    let dietType = document.getElementById('diet-type');
 
     return (
         <>
         <LocalForm id="target-nutrition">
+            <div className="row">
+            <div className="col">
+                <label htmlFor="diet" style={{marginBottom:'10px'}}>How do you Diet?</label>
+                    <input type="text" model='.diet' 
+                    name="diet" 
+                    className="diet-type"
+                    id="diet-type"
+                    defaultValue='Anything'/>
+            </div> 
+            </div>
             <div className="row">
             <div className="col">
                 <label htmlFor="calories" style={{marginBottom:'10px'}}>Target Caloric Intake</label>
@@ -269,14 +305,14 @@ import "react-datepicker/dist/react-datepicker.css";
                         <option>8</option>
                         <option>9</option>
                     </select>
-                    <button className="shuffle _close" onClick={() =>{setValues(calories.value, numMeals.value)}}><TiArrowShuffle/></button>
+                    <button className="shuffle _close" onClick={() =>{setValues(calories.value, numMeals.value, dietType.value)}}><TiArrowShuffle/></button>
                 </div>                
             </div>      
             </LocalForm>
             <div>
                    {shuffled ? 
                         <div>
-                            {generator(calories.value,numMeals.value)}
+                            {generator(calories.value,numMeals.value,dietType.value)}
                             <input type="date" id="meal-plan-datetime" name="meal-plan-datetime" defaultValue={startDate}/>
                             <button className="submit-buttons" style={{width:"162px"}} onClick={() => {handleSubmit()}}>Save Meal Plan</button>
                         </div> 
