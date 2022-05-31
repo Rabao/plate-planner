@@ -77,7 +77,9 @@ const Recipe = (props) => {
         // console.log(userId);
         if(switchTo){
             props.postFavorite(recipeId, userId)
-            window.location.reload(false);
+            setTimeout(() => {
+                window.location.reload(false);
+            }, 300)
         }
         else{
             props.deleteFavorite(recipeId, userId)
@@ -105,11 +107,12 @@ const Recipe = (props) => {
                         {userId === props.recipe.userId ? <div className="manage-recipe-buttons">
                             <Link to={"/edit/recipes/"+props.recipe.id}><button type="button" className="dashboard-interface-button" >&#9997; EDIT</button></Link>
                         </div> : <div></div>} 
-                        {props.isFave.length==1 ? <div className="manage-recipe-buttons">
+                        {userId!=null ?
+                        props.isFave.length==1 ? <div className="manage-recipe-buttons">
                             <button type="button" onClick={() => toggleFavorite(false)} className="dashboard-interface-button" >&#10024; FAVED!</button>
                         </div> : <div className="manage-recipe-buttons">
                             <button type="button" onClick={() => toggleFavorite(true)} className="dashboard-interface-button" >&#10032; Favorite?</button>
-                        </div>}
+                        </div> : <div></div>}
                     </div>
                  </div>
                 :
