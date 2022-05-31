@@ -28,9 +28,10 @@ function MealPlans(props) {
         props.recipes.map((recipe, index) => {
           for(let i = 0; i < userId.length; i++){
             if(recipe.id === userId[i].recipeId){
-                console.log (recipe.name+" "+userId[i].start+" "+userId[i].stop)
+                // console.log (recipe.name+" "+userId[i].start+" "+userId[i].stop)
                 setEvents([...events,events.push({ id: i, planId: userId[i].planId, title: recipe.name, start: userId[i].start, end: userId[i].stop })] )
-                 }console.log("EVENTS: " + JSON.stringify( events))
+                 }
+                //  console.log("EVENTS: " + JSON.stringify( events))
                 }
             } 
         )}

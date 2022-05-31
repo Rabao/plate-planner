@@ -111,7 +111,7 @@ const mapDispatchToProps = (dispatch) => ({
             potassium, totalCarbs, dietaryFiber, sugar, sugarAlcohol, addedSugar, protein, vitA, vitB6, vitB12, vitC, vitD, vitE, vitK, calcium, 
             iron, magnesium, thiamine, biotin, pantoAcid, phosphorous, iodine, zinc, selenium, copper, manganese, chromium, molybdenum, chloride, recipeId))},
     postMealPlan: (userId, planId, recipeId, start, stop) => {dispatch(postMealPlan(userId, planId, recipeId, start, stop))},
-    postRecipeTags: (recipeid, tag) => {dispatch(postRecipeTags(recipeid, tag))},
+    postRecipeTags: (recipeId, tag) => {dispatch(postRecipeTags(recipeId, tag))},
     postFavorite: (recipeId, userId) => {dispatch(postFavorite(recipeId, userId))}
 });
 

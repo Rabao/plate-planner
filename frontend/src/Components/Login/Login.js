@@ -33,7 +33,7 @@ function ClickToLogIn(props) {
     return (
         <div className="row">
             <Link to="/register">Need an account?</Link>
-            <button type="submit" onClick={() => handleLogin()}>Sign in</button>
+            <button type="submit" className='submit-buttons' onClick={() => handleLogin()}>Sign in</button>
         </div>
     )
 }

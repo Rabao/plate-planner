@@ -122,7 +122,7 @@ class AddItem extends Component{
                 if(item != null){
                     return(
                 <li className="component-list-item" key={groceryId}>
-                    {console.log("INDEX: " + index)}
+                    {/* {console.log("INDEX: " + index)} */}
                     <div className="col" md={11}>
                         <div className="row">
                                 <div className="col" md={10}>
@@ -240,7 +240,7 @@ class AddItem extends Component{
     }
 
     handleQtyChange(name,e){
-        console.log(e.target.value);
+        // console.log(e.target.value);
         this.props.changeGroceryQuantity(name,e.target.value);
     }
     
@@ -404,6 +404,7 @@ class AddItem extends Component{
                                 <option>Fruit (Canned)</option>
                                 <option>Meat (Canned)</option>
                                 <option>Sauce</option>
+                                <option>Extracts</option>
                                 <option>Dressing</option>
                                 <option>Condiment</option>
                                 <option disabled></option>
@@ -429,12 +430,14 @@ class AddItem extends Component{
                                 <option>Oil</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
-                                <option disabled>Dry Goods</option>
+                                <option disabled>Dry Goods/ Baking</option>
                                 <option disabled></option>
                                 <option>Cereal</option>
                                 <option>Flour</option>
+                                <option>Grains</option>
                                 <option>Sugar</option>
                                 <option>Pasta</option>
+                                <option>Yeast</option>
                                 <option>Seasoning</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
@@ -461,6 +464,9 @@ class AddItem extends Component{
                                 <option>Red Meat</option>
                                 <option>Seafood</option>
                                 <option>Game Meat</option>
+                                <option>Cold Cuts</option>
+                                <option>Breakfast Meats</option>
+                                <option>Processed</option>
                                 <option disabled></option>
                                 <option disabled>──────────</option>
                                 <option disabled>Produce</option>
@@ -468,6 +474,8 @@ class AddItem extends Component{
                                 <option>Fruit</option>
                                 <option>Vegetable</option>
                                 <option>Herb</option>
+                                <option>Meat Substitute</option>
+                                <option>Nuts and Seeds</option>
                         </Control.select>
                     </Col>
                     <Col md={2}>

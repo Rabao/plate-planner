@@ -161,7 +161,7 @@ export default class EditRecipe extends Component {
                             })
                        }
                        <br></br>
-                       <button onClick={() => this.props.postIngredients(this.props.targetRecipe.id, 0,'',0,'Teaspoon')}>Add Ingredient</button>
+                       <button className="submit-buttons" onClick={() => this.props.postIngredients(this.props.targetRecipe.id, 0,'',0,'Teaspoon')}>Add Ingredient</button>
                        
                   </div>
                     <div className="image-submitter">
@@ -199,7 +199,7 @@ export default class EditRecipe extends Component {
                                 </div>}
                             </form>
                         </div>
-                  <DailyValueForm/>
+                  {/* <DailyValueForm/> */}
               </div>
             );
     }
@@ -312,7 +312,7 @@ class DeleteIngredientFromRecipe extends Component{
     render(){
         return(
             <>
-                <button onClick={() => this.toggleModal('delete')}>Remove</button>
+                <button className="submit-button-small"  onClick={() => this.toggleModal('delete')}>Remove</button>
                 <Modal isOpen={this.state.activeModal === 'delete'} toggle={this.toggleModal}> 
                     <ModalHeader toggle={this.toggleModal}>Delete Ingredient?</ModalHeader>
                     <ModalBody>

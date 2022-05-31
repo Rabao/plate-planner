@@ -20,20 +20,21 @@ export const Footer = (props) => {
   }
 
   function submitSearch(tag){
-    props.searchRecipe(tag.tag);
-    const path = '/recipes/search/'+tag.tag;
+    props.searchRecipe(tag);
+    const path = '/recipes/search/'+tag;
     navigate(path);       
   }
 
   function renderTags() {
-    const recTags = shuffleObject(props.tags).map((tag) => {
-      return(
-     
-          <em className='recipe-tag-footer' onClick={() => {submitSearch(tag)}}>{tag.tag}</em>
 
-        )
-    })
-    return(recTags)
+    const maxTags = 12;
+    const recTags = shuffleObject(props.tags);
+    let tagArr = [];
+    for(let i = 0; i < maxTags; i ++){
+      let tag = recTags[i].tag;
+      // console.log(tag)
+      tagArr.push(<em className='recipe-tag-footer' onClick={() => {submitSearch(tag)}}>{tag}</em>)}
+    return(tagArr)
   }
 
   return (
@@ -54,6 +55,7 @@ export const Footer = (props) => {
                 {props.token ? <li><a href="/mealplans">Manage Your Meal Plans</a></li> : <li></li>}
           </div>
           <div id="footer3-3">
+            <p>Tags:</p>
               {renderTags()}
           </div>
         </div>

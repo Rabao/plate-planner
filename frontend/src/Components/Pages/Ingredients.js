@@ -97,7 +97,7 @@ const IngredientsData = (props) => {
     else
     return(
         <div>
-            {console.log(JSON.stringify(props.ingredient) + " " +JSON.stringify(props.nutrition))}
+            {/* {console.log(JSON.stringify(props.ingredient) + " " +JSON.stringify(props.nutrition))} */}
         </div>
     )
 }

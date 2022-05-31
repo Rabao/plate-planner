@@ -23,7 +23,7 @@ function RecipesList(props) {
     function handleClick (e) {
        const targetId = e.id;
        const path = '/recipes/'+e.id;
-       console.log(e.id)
+    //    console.log(e.id)
        navigate(path);       
      }
 

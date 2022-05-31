@@ -107,7 +107,7 @@ function AddRecipe(props) {
         let stepNum = 1;
         let id = assignId();
         assignId();
-        const path = '/recipes/';
+        const path = '/user/';
 
         //---------------------------------------------------------------------DOM ACCESSORS
         const name = document.getElementById('name');
@@ -127,7 +127,7 @@ function AddRecipe(props) {
         data.append('file', selectedFile)
         filePath = '/uploads/' + selectedFile.name;
         
-        console.log(filePath)
+        // console.log(filePath)
         
         fetch(' http://localhost:8080/upload', {
           method: 'POST',
@@ -189,7 +189,7 @@ function AddRecipe(props) {
                             <LocalForm id="recipe-form">
                                 <div className="row">                
                                     <Col md={10}>
-                                        <Control.text model='.name' 
+                                    <input type="text" model='.name' 
                                         name="name" 
                                         className="recipe-title"
                                         id="name"
@@ -223,7 +223,7 @@ function AddRecipe(props) {
                                             onChange={() => {
                                                 const file = document.getElementById('img-input').files[0];
                                                 if(file && file.type.substr(0,5)==="image"){ //validates file type
-                                                    {console.log("CONSOLE: " + file)}
+                                                    // {console.log("CONSOLE: " + file)}
                                                     setSelectedFile(file)
                                                 } else {
                                                     setSelectedFile(null)
@@ -232,7 +232,7 @@ function AddRecipe(props) {
                                             onDrop={() => {
                                                 const file = document.getElementById('img-input').files[0];
                                                 if(file && file.type.substr(0,5)==="image"){ //validates file type
-                                                    {console.log("CONSOLE: " + file)}
+                                                    // {console.log("CONSOLE: " + file)}
                                                     setSelectedFile(file)
                                                 } else {
                                                     setSelectedFile(null)

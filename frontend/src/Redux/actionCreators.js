@@ -1170,15 +1170,15 @@ export const fetchRecipeTags = () => (dispatch) => {
         .catch(error => dispatch(recipeTagsFailed(error.message)));
 }
 
-export const postRecipeTags = (recipeid, tag) => (dispatch) => {
-    const newRecipe = {
-        recipeid: recipeid,
+export const postRecipeTags = (recipeId, tag) => (dispatch) => {
+    const newTag = {
+        recipeId: recipeId,
         tag: tag,
     }
 
     return fetch(baseUrl + '/tags', {
             method: 'POST',
-            body: JSON.stringify(newRecipe),
+            body: JSON.stringify(newTag),
             headers: {
                 'Content-Type': 'application/json'
             },

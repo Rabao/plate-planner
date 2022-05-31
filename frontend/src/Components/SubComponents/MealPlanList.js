@@ -62,7 +62,7 @@ export function MealList (props) {
         } else {
             e.target.classList.remove('selected-meal')
         }
-        console.log(mealObject)
+        // console.log(mealObject)
         setIsSelected({isSelected: !isSelected});
     }
 
@@ -178,7 +178,7 @@ export function MealList (props) {
             }
             if(mealObject[0]){
                 props.postPlan(props.user.id, planId, mealObject[i].id, start, end);
-                console.log(props.user.id+" "+planId+" "+mealObject[i].id+" "+start+" "+end)
+                // console.log(props.user.id+" "+planId+" "+mealObject[i].id+" "+start+" "+end)
              }
             }     
         

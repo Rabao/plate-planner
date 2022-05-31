@@ -78,7 +78,7 @@ class Register extends Component{
                     required
                 />
                 <Link to="/login">Have an account?</Link>
-                <button type="submit" onClick={this.handleSubmit}>Sign in</button>
+                <button type="submit" className='submit-buttons' onClick={this.handleSubmit}>Sign Up</button>
             </div>
         </div>
         )

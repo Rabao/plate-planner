@@ -49,7 +49,7 @@ export default class Dashboard extends Component{
                 <div className="row">
                     <div>
                         {/* <div className="avatar-dash">
-                            <img src="/avatars/istockphoto-1089633230-612x612.jpg"/>
+                            <img src={this.props.user.avatar}/>
                         </div> */}
                     </div>
                         <div className="user-info" style={{width:"fit-content"}}>

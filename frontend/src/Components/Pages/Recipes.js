@@ -56,7 +56,7 @@ export default class Recipes extends Component {
 const Recipe = (props) => {
     const recipeId = props.recipe.id;
     const userId = props.user.id;
-    const authorAvatar = props.users.allUsers.filter((user) => user.id === props.recipe.userId)[0].avatar;
+    // const authorAvatar = props.users.allUsers.filter((user) => user.id === props.recipe.userId)[0].avatar;
     function handleSubmit(values) {
         props.postComment( recipeId, userId, values.rating, values.userComment);
         window.location.reload(false);
@@ -96,7 +96,6 @@ const Recipe = (props) => {
     } else { 
     return(
         <div>
-            {console.log("AVATAR: "+JSON.stringify(props.users.allUsers.filter((user) => user.id === 1)))}
             <div className="row">
                 {props.recipe ? 
                 <div className="recipe-info-name" >
@@ -104,15 +103,6 @@ const Recipe = (props) => {
                     <div className="row">
                         {props.recipeTags ? <div className="manage-recipe-tags"><RecipeTags searchRecipe={props.searchRecipe}
                             target={props.recipeTags}/></div> : <div></div>}  
-                        {userId === props.recipe.userId ? <div className="manage-recipe-buttons">
-                            <Link to={"/edit/recipes/"+props.recipe.id}><button type="button" className="dashboard-interface-button" >&#9997; EDIT</button></Link>
-                        </div> : <div></div>} 
-                        {userId!=null ?
-                        props.isFave.length==1 ? <div className="manage-recipe-buttons">
-                            <button type="button" onClick={() => toggleFavorite(false)} className="dashboard-interface-button" >&#10024; FAVED!</button>
-                        </div> : <div className="manage-recipe-buttons">
-                            <button type="button" onClick={() => toggleFavorite(true)} className="dashboard-interface-button" >&#10032; Favorite?</button>
-                        </div> : <div></div>}
                     </div>
                  </div>
                 :
@@ -121,10 +111,20 @@ const Recipe = (props) => {
                 </div>
                 }
                  <div className="author-info-postedby" >
-                    <span>Written by:<h6>{getAuthorFromId(props.recipe.userId)}</h6></span> 
+                    <span>Written by: <strong>{getAuthorFromId(props.recipe.userId)}</strong></span> 
+                    <div className="manage-recipe-buttons">
+                        {userId === props.recipe.userId ?
+                                <Link to={"/edit/recipes/"+props.recipe.id}><button type="button" className="dashboard-interface-button" >&#9997; EDIT</button></Link>
+                            : <div></div>} 
+                        {userId!=null ?
+                            props.isFave.length==1 ?
+                                <button type="button" onClick={() => toggleFavorite(false)} className="dashboard-interface-button" >&#10024; FAVED!</button> : 
+                                <button type="button" onClick={() => toggleFavorite(true)} className="dashboard-interface-button" >&#10032; FAVORITE?</button>
+                            : <div></div>}
+                        </div> 
                 </div> 
                 
-                 {getAuthorFromId(props.recipe.userId) ? 
+                 {/* {getAuthorFromId(props.recipe.userId) ? 
                 
                 <div className="author-info-avatar" >
                         <div className="avatar">
@@ -134,7 +134,7 @@ const Recipe = (props) => {
                 
                 : 
                 
-                <h6>Null</h6>} 
+                <h6>Null</h6>}  */}
                 
             </div>
             <div className='component-body'>

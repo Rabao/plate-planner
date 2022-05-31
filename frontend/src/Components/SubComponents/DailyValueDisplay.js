@@ -4,11 +4,11 @@ import DailyValueForm from './DailyValueForm';
 const DailyValue = (props) => {
     return ( <>
                 
-
+                {/* {console.log("RECIPE NUTRITION :" + props.nutrition)} */}
                     {props.nutrition ?
                         <div id="dv-table">
                             <table>
-                            <tr > {console.log("RECIPE NUTRITION :" + props.nutrition)}
+                            <tr > 
                                 <td > <strong>Serving Size:</strong> <span>{props.nutrition.servingSize}</span></td> 
                                 <td > <strong>Calories:</strong> <span>{props.nutrition.calories}</span> </td> 
                                 <td > <strong>Carbohydrates:</strong> <span>{props.nutrition.totalCarbs}</span> </td> 
