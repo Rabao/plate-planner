@@ -20,7 +20,8 @@ function Header(props) {
     // }
     
     function submitSearch(values){
-        console.log(values.searchbar);
+        const searchBar = document.getElementById('searchbar');
+        searchBar.value = '';
         props.searchRecipe(values.searchbar);
         const path = '/recipes/search/'+values.searchbar;
         navigate(path);       
