@@ -97,31 +97,33 @@ const Recipe = (props) => {
             {console.log("AVATAR: "+JSON.stringify(props.users.allUsers.filter((user) => user.id === 1)))}
             <div className="row">
                 {props.recipe ? 
-                <div className="recipe-info-name" md={9}>
+                <div className="recipe-info-name" >
                     <h3>{props.recipe.name}</h3>
-                    {props.recipeTags ? <RecipeTags searchRecipe={props.searchRecipe}
-                        target={props.recipeTags}/> : <div></div>}  
-                    {userId === props.recipe.userId ? <div id="manage-recipe-buttons" md={4}>
-                        <Link to={"/edit/recipes/"+props.recipe.id}><button type="button" className="dashboard-interface-button" >&#9997; EDIT</button></Link>
-                    </div> : <div></div>} 
-                    {props.isFave.length==1 ? <div id="manage-recipe-buttons" md={4}>
-                        <button type="button" onClick={() => toggleFavorite(false)} className="dashboard-interface-button" >&#10024; FAVED!</button>
-                    </div> : <div id="manage-recipe-buttons" md={4}>
-                        <button type="button" onClick={() => toggleFavorite(true)} className="dashboard-interface-button" >&#10032; Favorite?</button>
-                    </div>}
+                    <div className="row">
+                        {props.recipeTags ? <div className="manage-recipe-tags"><RecipeTags searchRecipe={props.searchRecipe}
+                            target={props.recipeTags}/></div> : <div></div>}  
+                        {userId === props.recipe.userId ? <div className="manage-recipe-buttons">
+                            <Link to={"/edit/recipes/"+props.recipe.id}><button type="button" className="dashboard-interface-button" >&#9997; EDIT</button></Link>
+                        </div> : <div></div>} 
+                        {props.isFave.length==1 ? <div className="manage-recipe-buttons">
+                            <button type="button" onClick={() => toggleFavorite(false)} className="dashboard-interface-button" >&#10024; FAVED!</button>
+                        </div> : <div className="manage-recipe-buttons">
+                            <button type="button" onClick={() => toggleFavorite(true)} className="dashboard-interface-button" >&#10032; Favorite?</button>
+                        </div>}
+                    </div>
                  </div>
                 :
                 <div className="recipe-info-name" md={9}>     
                     <h3>Null</h3>
                 </div>
                 }
-                 <div className="author-info-postedby" md={2}>
+                 <div className="author-info-postedby" >
                     <span>Written by:<h6>{getAuthorFromId(props.recipe.userId)}</h6></span> 
                 </div> 
                 
                  {getAuthorFromId(props.recipe.userId) ? 
                 
-                <div className="author-info-avatar" md={1}>
+                <div className="author-info-avatar" >
                         <div className="avatar">
                             { authorAvatar ? <img src={authorAvatar}/> : <img src="/avatars/noavatar.png"/>}
                         </div>

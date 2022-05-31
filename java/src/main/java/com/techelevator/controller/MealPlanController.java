@@ -320,6 +320,13 @@ public class MealPlanController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @PutMapping(value="groceries/{name}/qty/{qty}")
+    public boolean changeGroceryQuantity(@PathVariable String name, @PathVariable int qty)
+            throws GroceryListNotFoundException {
+        return groceryListDao.changeGroceryQuantity(name, qty);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping(value="groceries/{name}/{qty}")
     public boolean toggleGroceryCompleteByName(@PathVariable String name,
                                                @PathVariable int qty) throws GroceryListNotFoundException {

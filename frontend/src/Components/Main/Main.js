@@ -18,7 +18,7 @@ import {addToken, deleteUser, fetchUsers, fetchIngredients, fetchGroceries, fetc
         deleteRecipe, deleteRecipeIngredients, deleteRecipeNutrition, deleteRecipeSteps, editRecipe, fetchRecipeNutrition, 
         postRecipeNutrition, postRecipeIngredients, postRecipeSteps, fetchRecipeSteps, editRecipeSteps, 
         fetchRecipeIngredients, editRecipeIngredients, deleteGroceries, deleteCompletedGroceries, fetchRecipeTags,
-        postRecipeTags, postComment, fetchComments, deleteComment, editComment, postGroceries,
+        postRecipeTags, postComment, fetchComments, deleteComment, editComment, postGroceries, changeGroceryQuantity,
         postIngredient, searchRecipe,fetchNutrition, postNutrition, fetchFavorites, postFavorite, deleteFavorites } from '../../Redux/actionCreators'
 import {connect} from 'react-redux'
 import { withRouter } from '../WithRouer/WithRouter';
@@ -66,6 +66,7 @@ const mapDispatchToProps = (dispatch) => ({
     editComment: (id, rating, comment) => {dispatch(editComment(id, rating, comment))},
     toggleGrocery: (id) => { dispatch(toggleGrocery(id)) },
     toggleFetchGrocery: (name, qty) => {dispatch(toggleFetchGrocery(name, qty))},
+    changeGroceryQuantity: (name, qty) => {dispatch(changeGroceryQuantity(name,qty))},
 
     // Fetch methods
     fetchUsers: () => {dispatch(fetchUsers())},
@@ -265,7 +266,8 @@ class Main extends Component {
                             deleteGroceries={this.props.deleteGroceries}
                             deleteCompletedGroceries={this.props.deleteCompletedGroceries}
                             fetchGrocery={this.props.fetchGrocery}
-                            toggleFetchGrocery={this.props.toggleFetchGrocery}/>}/>
+                            toggleFetchGrocery={this.props.toggleFetchGrocery}
+                            changeGroceryQuantity={this.props.changeGroceryQuantity}/>}/>
                         <Route path='/mealplans' element={<MealPlans 
                         recipes={this.props.recipe.recipe} 
                         recipeNutrition={this.props.recipeNutrition.recipeNutrition}

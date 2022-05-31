@@ -640,6 +640,36 @@ export const toggleFetchGrocerySuccess = (name, qty) => ({
             qty: qty
         }
     })
+
+export const changeGroceryQuantity = (name, qty) => (dispatch) => {
+    return fetch(baseUrl + '/groceries/' + name + '/qty/' + qty, {
+            method: 'PUT'
+        })
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    let error = new Error('Error ' + response.status + ': ' + response.statusText);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                let errmess = new Error(error.message);
+                throw errmess;
+            })
+        .then(response => response.json())
+        .then(() => dispatch(changeQtySuccess(name, qty)))
+        .catch(error => { throw (error) });
+}
+
+export const changeQtySuccess = (ingredient_name, qty) => ({
+    type: ActionTypes.CHANGE_GROCERY_QTY,
+    payload: {
+        ingredient_name: ingredient_name,
+        qty: qty
+    }
+})
     //----------------------------------GROCERIES
     //-------------------------------------RECIPE
 export const postRecipe = (id, name, numSteps, image, notes, userId, type) => (dispatch) => {
