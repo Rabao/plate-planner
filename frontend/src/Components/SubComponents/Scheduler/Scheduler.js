@@ -41,6 +41,8 @@ export const Scheduler = (props) => {
     setEvents(nextEvents);
   };
 
+  
+
 //-----------------------------------------------------------------------
 
   return(
@@ -54,7 +56,14 @@ export const Scheduler = (props) => {
             endAccessor="end"
             views={['month','agenda']}
             onEventDrop={moveEvent}
-            style={{height:500}}
+            style={{height:725}}
+            prop
+            eventPropGetter={(event, start, end) => ({
+              event,
+              start,
+              end,
+              style: { backgroundColor: "#0a58ca", color:"#FFF" }
+            })}
             resizable={false}
          />
       </div>
