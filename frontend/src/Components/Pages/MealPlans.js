@@ -61,7 +61,8 @@ function MealPlans(props) {
                             <MealList 
                                 recipes={props.recipes}
                                 nutrition={props.recipeNutrition.filter(rn => rn.recipeId != 0)} 
-                                user={props.user}/>
+                                user={props.user}
+                                postPlan={props.postMealPlan}/>
                         </div>
                     </div>
                 </div>

@@ -80,15 +80,15 @@ import "react-datepicker/dist/react-datepicker.css";
         for(let i =0; i < mealObject.length; i++){
 
             if(mealObject[i].type === "Breakfast"){
-               start = date.value+"T07:00:00-05:00";
-               end = date.value+"T08:00:00-05:00";
-            } else if(mealObject[i].type === "Lunch"){
-                start = date.value+"T12:00:00-05:00";
-                end = date.value+"T13:00:00-05:00";
-            } else if(mealObject[i].type === "Dinner"){
-                start = date.value+"T19:00:00-05:00";
-                end = date.value+"T20:00:00-05:00";
-            }
+                start = date.value+"T06:00:00-05:00";
+                end = date.value+"T09:00:00-05:00";
+             } else if(mealObject[i].type === "Lunch"){
+                 start = date.value+"T12:00:00-05:00";
+                 end = date.value+"T13:00:00-05:00";
+             } else if(mealObject[i].type === "Dinner"){
+                 start = date.value+"T18:00:00-05:00";
+                 end = date.value+"T19:00:00-05:00";
+             }
             if(mealObject[0]){
                 props.postPlan(props.user.id, planId, mealObject[i].id, start, end);
              }
