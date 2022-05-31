@@ -47,19 +47,16 @@ export default class Dashboard extends Component{
             <div className="container">
                 <div className='component-body'>
                 <div className="row">
-                    <div className="col xl-3">
-                        <div className="avatar">
+                    <div>
+                        {/* <div className="avatar-dash">
                             <img src="/avatars/istockphoto-1089633230-612x612.jpg"/>
-                        </div>
+                        </div> */}
                     </div>
-                    <div className="col xl-3">
-                        <div className="user-info">
-                           <h3>Hello there, {this.props.user.username}!</h3>
+                        <div className="user-info" style={{width:"fit-content"}}>
+                            <h4>Hello there, {this.props.user.username}!</h4>
                         </div>
-                    </div>
-                    <div className="col xl-6">
-                        <div className="user-info">
-                           <h5></h5>
+                    <div>
+                        <div style={{width:"35%"}}>
                         </div>
                     </div>
                 </div>

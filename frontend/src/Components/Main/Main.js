@@ -289,7 +289,7 @@ class Main extends Component {
                         <Route path='' element={<Navigate to='/home' />} />
                     </Routes>
                 </div>
-            <Footer/>
+            <Footer tags={this.props.recipeTags.recipeTags} searchRecipe={this.props.searchRecipe}  token={this.props.token.token}/>
         </div>
         )
     }

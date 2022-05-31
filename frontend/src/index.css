@@ -99,8 +99,8 @@ code {
 
 .filters li {
   display: inline;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 4%;
+  margin-right: 4%;
 }
 
 .card-body {
@@ -350,6 +350,21 @@ h5 {
   position:relative;
 }
 
+#recipe-img-td-sm {
+  width: 125px;
+  height:125px;
+  overflow:hidden;
+  position:absolute;
+  pointer-events: none;
+}
+
+#recipe-img-td-sm img {
+  width: 100%;
+  height: auto;
+  position:relative;
+}
+
+
 #recipe-pg-img-container{
   width: 500px;
   height: 500px;
@@ -363,6 +378,49 @@ h5 {
   height: auto;
   border-radius: 0px 15px 0px 0px;
   top:50;
+}
+
+.recipe-result-sm{
+  width:75%;
+
+}
+
+#recipe-text-sm {
+  width: 33%;
+}
+
+#recipe-title-sm {
+  width: 33%;
+}
+
+#searchbar-meals {
+  background-color: #bcb2a9;
+  padding: 5px;
+  padding-left: 20px;
+  color: #FFF;
+  opacity: 0.85;
+  border-radius: 1em;
+  border: none;
+  width:100%;
+  padding-right: 45px;
+  z-index:0;
+}
+
+#search-button-meals {
+  margin-left: -30px;
+  margin-bottom: 5px;
+  background-color: #FFF;
+  padding-bottom: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-radius: 1em;
+  border: none;
+  color:#bcb2a9;
+  vertical-align: middle;
+  z-index: 1;
+  top: 14.55em;
+  right: 40.9em;
+  position: absolute;
 }
 
 #dv-table {
@@ -504,7 +562,9 @@ h5 {
 }
 /*---------------------------- Footer CSS -----------------------------*/
 .footer {
-  background-color: #001132;
+  border-top: 1px solid #d8d4d0;
+  background-color:linear-gradient(to bottom, #786d64, #fdfbf9);
+  box-shadow: rgb(#786d64) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
   padding: 2rem;
   position: relative;
   left:0;
@@ -573,6 +633,27 @@ hr {
 
 .recipe-tag:hover {
   filter:brightness(1);
+  transition: 50ms;
+  cursor: pointer;
+}
+
+.recipe-tag-footer{
+  margin-top: 10px;
+  text-align: center;
+  width: fit-content;
+  margin-right: 1%;
+  margin-bottom: 2em;
+  border-radius: 50px;
+  filter:brightness(1);
+  border: 2px solid  #9e9891;
+  background: #9e9891;
+  color:white;
+}
+
+
+
+.recipe-tag-footer:hover {
+  filter:brightness(0.75);
   transition: 50ms;
   cursor: pointer;
 }
@@ -725,6 +806,10 @@ hr {
   width: 80%;
 }
 
+.user-info {
+  width: fit-content;
+}
+
 .author-info-postedby {
   display:inline-block;
   margin-top: 2em;
@@ -734,6 +819,19 @@ hr {
 .author-info-avatar, .avatar {
   float:right;
   width: 10%;
+}
+
+.avatar-dash {
+  height: 150px;
+  width: 150px;
+  overflow: hidden;
+  border-radius: 100%;
+  margin: 1em;
+}
+
+.avatar-dash img {
+  max-width: 150%;
+  max-height: 150%;
 }
 
 .avatar {
@@ -970,3 +1068,68 @@ hr {
 .dx-draggable-dragging > * {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 6px 8px rgba(0, 0, 0, 0.2);
 }
+/*-----------------------------------------------------------------------------*/
+#footer1-3 {
+  display: table-cell; 
+  height: 100px;
+  width:30%;
+  padding-right: 10px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#footer2-3 {
+  display: table-cell; 
+  height: 100px;
+  width:30%;
+  padding-right: 10px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#footer3-3 {
+  display: table-cell; 
+  height: 25%;
+  width: 25%;
+  padding: 0 10px;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 1em;
+  white-space: nowrap;
+  white-space: pre;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+#footer1-3 a {
+  text-decoration: none;
+  color: #003399;
+}
+
+#footer1-3 a:hover {
+  filter: brightness(0.75);
+  transition: 300ms ease-out;
+}
+
+#footer1-3 li {
+  margin-bottom: 2rem;
+}
+
+
+#footer2-3 a {
+  text-decoration: none;
+  color: #003399;
+}
+
+#footer2-3 a:hover {
+  filter: brightness(0.75);
+  transition: 300ms ease-out;
+}
+
+#footer2-3 li {
+  margin-bottom: 2rem;
+}
+

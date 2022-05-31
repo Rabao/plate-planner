@@ -1,12 +1,16 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
+import {CgSearch} from 'react-icons/cg';
+import { Control, LocalForm } from 'react-redux-form';
 
 export function MealList (props) {
+    const navigate = useNavigate();
     const numRecipes = props.recipes.length;
     const [isSelected, setIsSelected] = useState(false)
     const [recipes, setRecipes] = useState(props.recipes.slice(0, numRecipes))
     const [pageNumber, setPageNumber] = useState(0);
-    const recipesPerPage = 3;
+    const recipesPerPage = 5;
     const pagesVisited = pageNumber * recipesPerPage;
     let pageCount = Math.ceil(numRecipes/recipesPerPage);
     const changePage = ({selected}) => {
@@ -21,6 +25,12 @@ export function MealList (props) {
     let startDate = year+"-"+month+"-"+date;
     let mealObject = [];
 
+    function submitSearch(values){
+        console.log(values.searchbar);
+        props.searchRecipe(values.searchbar);
+        const path = '/recipes/search/'+values.searchbar;
+        navigate(path);       
+    }
 
 
     function selectMeal(e, recipe){
@@ -97,28 +107,27 @@ export function MealList (props) {
     const displayRecipes = props.recipes.slice(pagesVisited, pagesVisited+recipesPerPage).map((recipe,index) => {
 
         return (
-             <div className={ isSelected ? 'row recipe-result'+index+'selected-meal' : 'row recipe-result'+index+'deselected-meal'} key={index+recipe.id} onClick={(e) => {selectMeal(e, recipe)}}>
-                    <table role="Handle">
-                        <td id="recipe-text">
-                            <tr id="recipe-title"><h6><strong>{recipe.name}</strong>, {recipe.type}</h6></tr>
-                            <tr id="recipe-title"><h3>Cal: {props.nutrition.filter(rn => rn.recipeId == recipe.id)[0].calories}</h3></tr>
-                        </td>
-                        <td id="recipe-img-td"><img src={recipe.image}/></td>
-                    </table>
+             <div className={ isSelected ? 'row recipe-result-sm '+index+' selected-meal' : 'row recipe-result-sm '+index+' deselected-meal'} key={index+recipe.id} onClick={(e) => {selectMeal(e, recipe)}}>
+                    <div><h6><strong>{recipe.name}</strong>, {recipe.type}</h6></div>
+                        <div><h3>Cal: {props.nutrition.filter(rn => rn.recipeId == recipe.id)[0].calories}</h3></div>
+                    <div id="recipe-img-td-sm"><img src={recipe.image}/></div>
                 </div>
         )
     })
 
-
-
-    // function renderMealList(){
-    //     const map = this.props.recipes.map((recipe, index) => {
-    //         return(
-               
-    //                 )
-    //     })
+        
         return(
             <div>
+                <div className="col search-wrapper" style={{width:"100%"}}>
+                    <LocalForm onSubmit={(values)=>submitSearch(values)}>
+                            <Control.text model='.searchbar' 
+                            name="searchbar" 
+                            className="form-control"
+                            id="searchbar-meals"/>
+                            {/* <input type="text" name="searchbar" id="searchbar"></input> */}
+                            <button id="search-button-meals" type='submit'><CgSearch /></button>
+                        </LocalForm>
+                    </div>
                 {displayRecipes}
                 <ReactPaginate previousLabel={"Previous"} nextLabel={"Next"} pageCount={pageCount} 
                 onPageChange={changePage} containerClassName={"meal-list-buttons"} previousLinkClassName={"previous-btn"} nextLinkClassName={"next-btn"} disabledClassName={"pagination-disabled"} activeClassName={"paginationActive"}/>
