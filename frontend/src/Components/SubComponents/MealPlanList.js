@@ -23,15 +23,22 @@ export function MealList (props) {
 
 
 
-    function selectMeal(e){
+    function selectMeal(e, recipe){
 
         if(e.target.classList.contains('selected-meal')){
             e.target.classList.remove('selected-meal')
         } else {
             e.target.classList.add('selected-meal')
-        }
 
-        setIsSelected({isSelected: !isSelected});
+            if(!e.target){
+                window.classList.remove('selected-meal')
+            }
+            
+            if(mealObject.length != 0){
+                mealObject.shift();
+            }
+            mealObject.push(recipe)
+        }
     }
 
     //-------------------------------------------------------------------PLAN ID GENERATOR
@@ -67,28 +74,30 @@ export function MealList (props) {
         for(let i =0; i < mealObject.length; i++){
 
             if(mealObject[i].type === "Breakfast"){
-               start = date.value+"T07:00:00-05:00";
-               end = date.value+"T08:00:00-05:00";
+               start = date.value+"T06:00:00-05:00";
+               end = date.value+"T09:00:00-05:00";
             } else if(mealObject[i].type === "Lunch"){
                 start = date.value+"T12:00:00-05:00";
                 end = date.value+"T13:00:00-05:00";
             } else if(mealObject[i].type === "Dinner"){
-                start = date.value+"T19:00:00-05:00";
-                end = date.value+"T20:00:00-05:00";
+                start = date.value+"T18:00:00-05:00";
+                end = date.value+"T19:00:00-05:00";
             }
             if(mealObject[0]){
                 props.postPlan(props.user.id, planId, mealObject[i].id, start, end);
+                console.log(props.user.id+" "+planId+" "+mealObject[i].id+" "+start+" "+end)
              }
             }     
         
-        // setTimeout(() => {
-        // setIsClicked({isClicked: !isClicked});
-        // }, 300)
+        setTimeout(() => {
+            setIsSelected({isSelected: !isSelected});
+        }, 300)
     }
 
     const displayRecipes = props.recipes.slice(pagesVisited, pagesVisited+recipesPerPage).map((recipe,index) => {
+
         return (
-             <div className="row recipe-result" key={index+recipe.id} onClick={(e) => {selectMeal(e)}}>
+             <div className={ isSelected ? 'row recipe-result'+index+'selected-meal' : 'row recipe-result'+index+'deselected-meal'} key={index+recipe.id} onClick={(e) => {selectMeal(e, recipe)}}>
                     <table role="Handle">
                         <td id="recipe-text">
                             <tr id="recipe-title"><h6><strong>{recipe.name}</strong>, {recipe.type}</h6></tr>
@@ -114,7 +123,7 @@ export function MealList (props) {
                 <ReactPaginate previousLabel={"Previous"} nextLabel={"Next"} pageCount={pageCount} 
                 onPageChange={changePage} containerClassName={"meal-list-buttons"} previousLinkClassName={"previous-btn"} nextLinkClassName={"next-btn"} disabledClassName={"pagination-disabled"} activeClassName={"paginationActive"}/>
                 <input type="date" id="meal-plan-list-datetime" name="meal-plan-list-datetime" defaultValue={startDate}/>
-                <button className="submit-buttons" style={{width:"162px"}} onClick={() => {handleSubmit()}}>Save To Meal Plan</button>
+                <button className="submit-buttons" style={{width:"100%"}} onClick={() => {handleSubmit()}}>Save To Meal Plan</button>
             </div> )
     }
    
