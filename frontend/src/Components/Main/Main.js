@@ -229,6 +229,7 @@ class Main extends Component {
                             deleteSteps={this.props.deleteRecipeSteps}
                             deleteIngredients={this.props.deleteRecipeIngredients}
                             deleteNutrition={this.props.deleteRecipeNutrition}
+                            favorites={this.props.favorites.favorites}
                             groceries={this.props.groceries}
                             edit={this.props.editMealPlan}
                             plans={this.props.mealPlan.mealPlan}/>}/>
