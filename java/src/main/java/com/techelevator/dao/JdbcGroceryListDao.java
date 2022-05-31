@@ -78,6 +78,13 @@ public class JdbcGroceryListDao implements GroceryListDao{
     }
 
     @Override
+    public boolean changeGroceryQuantity(String name, int qty) {
+        String sql = "UPDATE grocery_list SET qty = ? " +
+                "WHERE ingredient_name = ?";
+        return jdbcTemplate.update(sql, qty, name) == 1;
+    }
+
+    @Override
     public boolean toggleGroceryCompleteByName(String name, int qty) {
         String sql = "UPDATE grocery_list SET complete = NOT complete " +
                 "WHERE ingredient_name = ?";

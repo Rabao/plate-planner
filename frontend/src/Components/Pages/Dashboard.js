@@ -87,6 +87,7 @@ export default class Dashboard extends Component{
                                             
                                             <FavoriteRecipes 
                                                     favorites={this.props.favorites} 
+                                                    deleteFavorite={this.props.deleteFavorite}
                                                     recipes={this.props.recipes} 
                                                     user={this.props.user} 
                                                     deleteRecipe={this.props.deleteRecipe}
@@ -126,6 +127,14 @@ function DashEditRecipe(e){
     )
 }
 
+function ClickToRecipe(e){
+    const navigate = useNavigate();
+
+    return(<div key={e.id}  onClick={() => navigate('/recipes/'+e.id)} className="dashboard-recipe-collection">
+    <img src={e.image}/>
+</div>)
+}
+
 
 
 function renderGroceryList(groceries, user) {   
@@ -163,32 +172,11 @@ class FavoriteRecipes extends Component{
             isModalOpen: false,
             activeModal: ''
         };
-        this.toggleModal = this.toggleModal.bind(this);
-        // this.handleDelete = this.handleDelete.bind(this);
-        // this.handleEdit = this.handleEdit.bind(this);
     }
 
-    toggleModal(activeModal){
-        this.setState({
-            activeModal: activeModal,
-            isModalOpen: !this.state.isModalOpen
-        });
+    deleteFave(recipeId, userId){
+        this.props.deleteFavorite(recipeId,userId);
     }
-
-    // handleDelete(id){
-    //     this.toggleModal();
-    //     this.props.deleteRecipe(id);
-    //     this.props.deleteSteps(id);
-    //     this.props.deleteIngredients(id);
-    //     this.props.deleteNutrition(id);
-    //     window.location.reload(false);
-    // }
-
-    // handleEdit(id, values){
-    //     this.toggleModal();
-    //     this.props.editComment(id, values.rating, values.userComment);
-    //     window.location.reload(false);
-    // }
 
     render(){
         let id = this.props.user.id;
@@ -198,28 +186,14 @@ class FavoriteRecipes extends Component{
             return(
             <div className="users-published-recipes">               
                 <div id="dashboard-recipe-collection-text"><p><mark>{recipe.name}</mark></p></div>
-                    <div key={recipe.id} className="dashboard-recipe-collection">  
-                        <img src={recipe.image}/>
+                <ClickToRecipe id={recipe.id} image={recipe.image}/>
+                    <div id="manage-recipe-buttons" md={6}>
+                        <button type="button" onClick={() => this.props.deleteFavorite(recipe.id,id)}className="dashboard-interface-button" >&#10024; Unfave?</button>
                     </div>
-                    {/* <div id="manage-recipe-buttons" md={6}>
-                            <DashEditRecipe id={recipe.id}/>
-                            <button type="button" className="dashboard-interface-button" onClick={() => this.toggleModal('delete')}>&#10060; DELETE</button>
-                    </div>
-                <Modal isOpen={this.state.activeModal === 'delete'} toggle={this.toggleModal}> 
-                        <ModalHeader style={{borderBottom:0}} toggle={this.toggleModal}>Delete Recipe?</ModalHeader>
-                        <ModalBody>
-                            <LocalForm onSubmit={() => this.handleDelete(recipe.id)}>
-                                {recipe.name}<br></br>
-                                <button type='submit' variant='danger'>&#10060;Delete</button>
-                            </LocalForm>
-                        </ModalBody>
-                </Modal>                   */}
             </div>
             )
         })
-    
-
-
+        
     
         return(
             <div className="row dashboard-recipe-collection-wrapper">
@@ -230,7 +204,6 @@ class FavoriteRecipes extends Component{
 
         }
     }
-
 
 class EditDeleteRecipe extends Component{
 
@@ -275,9 +248,7 @@ class EditDeleteRecipe extends Component{
             return(
             <div className="users-published-recipes">               
                 <div id="dashboard-recipe-collection-text"><p><mark>{recipe.name}</mark></p></div>
-                    <div key={recipe.id} className="dashboard-recipe-collection">  
-                        <img src={recipe.image}/>
-                    </div>
+                    <ClickToRecipe id={recipe.id} image={recipe.image}/>
                     <div id="manage-recipe-buttons" md={6}>
                             <DashEditRecipe id={recipe.id}/>
                             <button type="button" className="dashboard-interface-button" onClick={() => this.toggleModal('delete')}>&#10060; DELETE</button>

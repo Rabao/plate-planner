@@ -810,6 +810,14 @@ hr {
   width: fit-content;
 }
 
+.manage-recipe-buttons{
+  width: 20%
+}
+
+.manage-recipe-tags{
+  width: 30%
+}
+
 .author-info-postedby {
   display:inline-block;
   margin-top: 2em;

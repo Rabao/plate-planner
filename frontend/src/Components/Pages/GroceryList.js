@@ -36,7 +36,8 @@ export default function Groceries(props) {
                 postIngredient={props.postIngredient}
                 postNutrition={props.postNutrition}
                 fetchGrocery={props.fetchGrocery}
-                toggleFetchGrocery={props.toggleFetchGrocery}/>
+                toggleFetchGrocery={props.toggleFetchGrocery}
+                changeGroceryQuantity={props.changeGroceryQuantity}/>
         </div>
       </div>
     )
@@ -99,7 +100,9 @@ class AddItem extends Component{
                                 </div>
                             </div>
                         <div className="checklist-quantity">
-                            <label>Quantity</label><input type="number" name="qty" defaultValue={grocery.qty}></input> 
+                            <label>Quantity</label><input type="number" name="qty" 
+                            min={1} defaultValue={grocery.qty}
+                            onChange={(e) => this.handleQtyChange(grocery.ingredient_name,e)}></input> 
                         </div>
                     </div>
                 </div>         
@@ -137,7 +140,9 @@ class AddItem extends Component{
                                 </div>
                             </div>
                         <div className="checklist-quantity">
-                            <label>Quantity</label><input type="number" name="qty" defaultValue={item[groceryId].qty}></input> 
+                            <label>Quantity</label><input type="number" name="qty" 
+                            min={1} defaultValue={item[groceryId].qty}
+                            onChange={(e) => this.handleQtyChange(item[groceryId].name,e)}></input> 
                         </div>
                     </div>
                 </div>         
@@ -232,6 +237,11 @@ class AddItem extends Component{
             this.props.toggleGrocery(id);
         else
             this.props.toggleFetchGrocery(name,qty);
+    }
+
+    handleQtyChange(name,e){
+        console.log(e.target.value);
+        this.props.changeGroceryQuantity(name,e.target.value);
     }
     
     findNutrition(id){
@@ -467,6 +477,7 @@ class AddItem extends Component{
                             id="quantity" 
                             name="quantity" 
                             defaultValue={1}
+                            min={1}
                             className="form-control"/>
                     </Col>
                 </Row>

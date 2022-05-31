@@ -23,6 +23,7 @@ export const GROCERIES_FAILED = 'GROCERIES_FAILED';
 export const ADD_GROCERY = 'ADD_GROCERY';
 export const TOGGLE_GROCERY = 'TOGGLE_GROCERY';
 export const TOGGLE_FETCH_GROCERY = 'TOGGLE_FETCH_GROCERY';
+export const CHANGE_GROCERY_QTY = 'CHANGE_GROCERY_QTY';
 
 //----------------------------------NUTRITION
 export const ADD_NUTRITIONS = 'ADD_NUTRITIONS';

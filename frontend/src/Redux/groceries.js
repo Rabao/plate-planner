@@ -42,6 +42,14 @@ export const Groceries = (state = {
                 return grocery;
             })}
 
+        case ActionTypes.CHANGE_GROCERY_QTY:
+            return{...state, groceries: state.groceries.filter((grocery) => {
+                if(grocery.name === action.payload.name){
+                    grocery.qty = action.payload.qty
+                }
+                return grocery;
+            })}
+
         case ActionTypes.TOGGLE_FETCH_GROCERY:
             return{...state, groceries: state.groceries.filter((grocery) => {
                 if(grocery.name === action.payload.name &&
