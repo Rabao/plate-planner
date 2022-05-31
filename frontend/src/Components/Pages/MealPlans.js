@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import PlanGenerator from '../SubComponents/MealPlanGenerator';
 import {Scheduler} from '../SubComponents/Scheduler/Scheduler';
 import Groceries from './GroceryList';
-import { MealList } from './RecipesList';
+import { MealList } from '../SubComponents/MealPlanList';
 
 
 function MealPlans(props) {
@@ -57,10 +57,12 @@ function MealPlans(props) {
                 <div className="col" md={6} id="plan-dash">
                     <div className="row">
                         <h5>Add Recipes to Plan</h5>
+                        <div className="component-list">
                             <MealList 
                                 recipes={props.recipes}
                                 nutrition={props.recipeNutrition.filter(rn => rn.recipeId != 0)} 
                                 user={props.user}/>
+                        </div>
                     </div>
                 </div>
             </div>

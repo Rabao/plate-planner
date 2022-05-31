@@ -52,8 +52,7 @@ export const Scheduler = (props) => {
             defaultDate={defaultDate}
             startAccessor="start"
             endAccessor="end"
-
-
+            views={['month','agenda']}
             onEventDrop={moveEvent}
             style={{height:500}}
             resizable={false}

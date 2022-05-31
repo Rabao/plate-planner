@@ -285,7 +285,6 @@ h5 {
   height: 101px;
   border-bottom: dashed 1px #dbd5cf;
   text-overflow: ellipsis;
-  filter: opacity(0.75);
   -webkit-user-select: none; /* Safari */        
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
@@ -297,11 +296,16 @@ h5 {
   filter: opacity(1);
 }
 
+.selected-meal {
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
 #recipe-text {
   width: max-content;
   padding-right: 203px;
   height: 100px;
   box-shadow: inset 0em 1.75em #eae4de;
+  pointer-events: none;
 }
 
 #ingredient-measurement {
@@ -333,6 +337,7 @@ h5 {
   margin-left: -198px;
   overflow:hidden;
   position:absolute;
+  pointer-events: none;
 }
 
 #recipe-img-td img {
@@ -574,6 +579,11 @@ hr {
   margin: 5px;
   border: 1px solid #dbd5cf;
   border-radius: 5px;
+  pointer-events: none;
+}
+
+.recipe-note{
+  pointer-events: none;
 }
 
 .recipe-type {

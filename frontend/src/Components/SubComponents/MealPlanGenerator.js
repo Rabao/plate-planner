@@ -43,8 +43,8 @@ import "react-datepicker/dist/react-datepicker.css";
             diet: dietType
         })
         generator(formValues.intake, formValues.meals, formValues.diet);
-        let date = document.getElementById('meal-plan-datetime');
-        console.log(date.value+"T07:00:00-05:00")
+        // let date = document.getElementById('meal-plan-datetime');
+        // console.log(date.value+"T07:00:00-05:00")
     }
 
     //-------------------------------------------------------------------PLAN ID GENERATOR
