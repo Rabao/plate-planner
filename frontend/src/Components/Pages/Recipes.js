@@ -10,6 +10,7 @@ import {Tooltip} from 'react-tippy';
 import 'react-tippy/dist/tippy.css';
 import {RiPlayListAddFill} from 'react-icons/ri';
 import Scheduler from '../SubComponents/Scheduler/Scheduler';
+import { tr } from 'date-fns/locale';
 
 export default class Recipes extends Component {
     constructor(props){
@@ -71,6 +72,17 @@ const Recipe = (props) => {
     //             <Loader/>
     //         </div>
     //     </div>);     
+
+    function toggleFavorite(switchTo){
+        // console.log(userId);
+        if(switchTo){
+            props.postFavorite(recipeId, userId)
+            window.location.reload(false);
+        }
+        else{
+            props.deleteFavorite(recipeId, userId)
+        }
+    }
         
     if (props.errMess) {
         return(<div className="container">
@@ -93,9 +105,9 @@ const Recipe = (props) => {
                         <Link to={"/edit/recipes/"+props.recipe.id}><button type="button" className="dashboard-interface-button" >&#9997; EDIT</button></Link>
                     </div> : <div></div>} 
                     {props.isFave.length==1 ? <div id="manage-recipe-buttons" md={4}>
-                        <button type="button" className="dashboard-interface-button" >&#10024; FAVED!</button>
+                        <button type="button" onClick={() => toggleFavorite(false)} className="dashboard-interface-button" >&#10024; FAVED!</button>
                     </div> : <div id="manage-recipe-buttons" md={4}>
-                        <button type="button" className="dashboard-interface-button" >&#10032; Favorite?</button>
+                        <button type="button" onClick={() => toggleFavorite(true)} className="dashboard-interface-button" >&#10032; Favorite?</button>
                     </div>}
                  </div>
                 :

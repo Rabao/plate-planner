@@ -81,6 +81,15 @@ export default class Dashboard extends Component{
                                                         <div></div>}
                         </div>
                     </div>             
+                    <div className='row'>
+                        <div className="col" md={12} id="generate-plan">
+                            <h5>Liked Recipes</h5>
+
+
+                           {this.props.favorites ?       <div>faves</div>: 
+                                                        <div></div>}
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col" md={6} id="generate-plan">
                         <aside style={{width:"550px"}}>

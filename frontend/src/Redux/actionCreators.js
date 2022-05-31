@@ -1223,10 +1223,10 @@ export const fetchFavorites = () => (dispatch) => {
         .catch(error => dispatch(recipeTagsFailed(error.message)));
 }
 
-export const postFavorite = (recipeid, userId) => (dispatch) => {
+export const postFavorite = (recipeId, userId) => (dispatch) => {
     const newFave = {
-        recipeid: recipeid,
-        userId: userId,
+        recipeId: recipeId,
+        userId: userId
     }
 
     return fetch(baseUrl + '/favorites', {
