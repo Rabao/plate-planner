@@ -27,7 +27,7 @@ const DailyValueForm = (props) => {
 
     return ( 
             <>
-            <div className="dvcalc" data-id="dvcalc"><span>Add Nutritional Value Details</span></div>
+            <div data-id="dvcalc"><h5>Nutritional Value</h5></div>
                 <div className="toggle-dvcalc">
                 <LocalForm>   
                     <Row className="form-group">

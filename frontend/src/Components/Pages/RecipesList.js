@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
-import { useDrag } from 'react-dnd'
-import { ItemTypes } from '../SubComponents/utils/Items';
 import {Breadcrumb} from 'react-bootstrap'
 import {Link, useNavigate} from 'react-router-dom'
-import { SendMealToPlan } from '../SubComponents/MealPlanGenerator';
-
+import ReactPaginate from 'react-paginate';
 //-------------------------------------------------------------------PLAN ID GENERATOR
 //-------------------------------------------------------------------PLAN ID GENERATOR
 //-------------------------------------------------------------------PLAN ID GENERATOR
 
 function RecipesList(props) {
-
     const navigate = useNavigate();
+    const numRecipes = props.recipes.length;
+    const [pageNumber, setPageNumber] = useState(0);
+    const recipesPerPage = 10;
+    const pagesVisited = pageNumber * recipesPerPage;
+    let pageCount = Math.ceil(numRecipes/recipesPerPage);
+    const changePage = ({selected}) => {
+        setPageNumber(selected)
+    };
+
+
     let results = 0;
 
     function handleClick (e) {
@@ -36,7 +42,7 @@ function RecipesList(props) {
         const ids = props.recipes.map(o => o.id)
         const filtered = props.recipes.filter(({id}, index) => !ids.includes(id, index + 1))
 
-        const map = filtered.map((recipe) => {
+        const map = filtered.slice(pagesVisited, pagesVisited+recipesPerPage).map((recipe) => {
                 let img = recipe.image;
                 // console.log(recipe)
                 return(
@@ -69,6 +75,9 @@ function RecipesList(props) {
             <div className='component-body'>             
                 <h5>Search returned {results} results:</h5>
                     {renderRecipes()}
+                    <ReactPaginate previousLabel='&#11164;' nextLabel='&#11166;' pageCount={pageCount} 
+                onPageChange={changePage} containerClassName={"meal-list-buttons"} previousLinkClassName={"previous-btn"} 
+                nextLinkClassName={"next-btn"} disabledClassName={"pagination-disabled"} activeClassName={"paginationActive"} pageLinkClassName={"pagination-links"}/>
                 </div>
                     {/* Visible if the user is registered. */}         
         </div>

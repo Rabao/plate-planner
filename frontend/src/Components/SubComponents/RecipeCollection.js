@@ -1,14 +1,12 @@
 import React, { Component, useEffect, useState } from 'react'
 import Recipes from '../Pages/Recipes'
 import {Routes, Route, Navigate, Link, useNavigate } from 'react-router-dom'
-// import InfiniteCarousel from 'react-leaf-carousel';
 import Carousel, {consts} from 'react-elastic-carousel';
 import {HiArrowSmLeft, HiArrowSmRight} from 'react-icons/hi'
 import { FaBacon, FaHamburger, FaStar } from 'react-icons/fa';
 import {MdBreakfastDining, MdDinnerDining, MdIcecream, MdLocalDrink, MdLunchDining} from 'react-icons/md';
 import {GiChocolateBar} from 'react-icons/gi'
-// import '../../fontawesome.min.css';
-// import '../../index.css';
+
 
 function RecipeCollection(props)  {
   const navigate = useNavigate();
@@ -50,7 +48,6 @@ const breakPoints = [
 
 
   function enumRecipeCollection() {
-    console.log(data);
            const map = data.map(recipe => {
                   return(
                       <div className="col" md={4} key={recipe.id}>
@@ -85,27 +82,6 @@ const breakPoints = [
           <Carousel renderArrow={carouselArrow} breakPoints={breakPoints} pagination={false}>
             {enumRecipeCollection()}
             </Carousel>
-            {/* <InfiniteCarousel  breakpoints={[
-                                {
-                                  breakpoint: 500,
-                                  settings: {
-                                    slidesToShow: 2,
-                                    slidesToScroll: 2,
-                                  },
-                                },
-                                {
-                                  breakpoint: 768,
-                                  settings: {
-                                    slidesToShow: 3,
-                                    slidesToScroll: 3,
-                                  },
-                                },
-                              ]}
-                              dots={false}
-                              slidesToScroll={4}
-                              slidesToShow={4}>
-              {enumRecipeCollection()}
-            </InfiniteCarousel> */}
         </div>
       </div>
     )

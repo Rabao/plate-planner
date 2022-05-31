@@ -60,7 +60,7 @@ function MealPlans(props) {
                         <div className="component-list">
                             <MealList 
                                 recipes={props.recipes}
-                                nutrition={props.recipeNutrition.filter(rn => rn.recipeId != 0)} 
+                                nutrition={props.recipeNutrition} 
                                 user={props.user}
                                 postPlan={props.postMealPlan}/>
                         </div>

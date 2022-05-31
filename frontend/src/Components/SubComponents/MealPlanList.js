@@ -3,14 +3,20 @@ import { useNavigate } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import {CgSearch} from 'react-icons/cg';
 import { Control, LocalForm } from 'react-redux-form';
+import { FaBacon, FaHamburger, FaStar } from 'react-icons/fa';
+import {MdBreakfastDining, MdDinnerDining, MdIcecream, MdLocalDrink, MdLunchDining} from 'react-icons/md';
+import {GiChocolateBar} from 'react-icons/gi'
+import {Tooltip} from 'react-tippy';
 
 export function MealList (props) {
     const navigate = useNavigate();
     const numRecipes = props.recipes.length;
-    const [isSelected, setIsSelected] = useState(false)
+    const [isSelected, setIsSelected] = useState(false);
+    const [active, setActive] = useState(false);
+    const [data, setdata] = useState(props.recipes);
     const [recipes, setRecipes] = useState(props.recipes.slice(0, numRecipes))
     const [pageNumber, setPageNumber] = useState(0);
-    const recipesPerPage = 5;
+    const recipesPerPage = 4;
     const pagesVisited = pageNumber * recipesPerPage;
     let pageCount = Math.ceil(numRecipes/recipesPerPage);
     const changePage = ({selected}) => {
@@ -25,30 +31,107 @@ export function MealList (props) {
     let startDate = year+"-"+month+"-"+date;
     let mealObject = [];
 
-    function submitSearch(values){
-        console.log(values.searchbar);
-        props.searchRecipe(values.searchbar);
-        const path = '/recipes/search/'+values.searchbar;
-        navigate(path);       
+    const filterResults = (filter) => {
+        const result = props.recipes.filter((recipes) => {
+          return recipes.type === filter;
+        });
+        if(filter === "All"){
+          setdata(props.recipes);
+        } else {
+          setdata(result);
+        }
+      }
+    
+    function setSelected(){
+        setIsSelected({isSelected: !isSelected});
     }
 
-
     function selectMeal(e, recipe){
+        let docs = document.getElementsByClassName('plan-details-wrapper-list')
+        for(let i =0; i < docs.length; i++){
+            docs[i].classList.remove("selected-meal");
+        }
 
-        if(e.target.classList.contains('selected-meal')){
-            e.target.classList.remove('selected-meal')
-        } else {
-            e.target.classList.add('selected-meal')
-
-            if(!e.target){
-                window.classList.remove('selected-meal')
-            }
-            
+        if(!e.target.classList.contains('selected-meal')){
+            e.target.classList.add('selected-meal')         
             if(mealObject.length != 0){
                 mealObject.shift();
             }
             mealObject.push(recipe)
+           
+        } else {
+            e.target.classList.remove('selected-meal')
         }
+        console.log(mealObject)
+        setIsSelected({isSelected: !isSelected});
+    }
+
+    function RecipeNutrition(recipe, nutrition)  {
+        return(
+    
+            <div>
+            { nutrition && recipe ?
+                <table>
+                    <tr>
+                        <th>Recipe</th>
+                        <th>{recipe.name}</th>
+                    </tr>
+                    <tr>
+                        <td>Serving Size</td>
+                        <td>{nutrition.servingSize}</td> 
+                    </tr>
+                    <tr>
+                        <td>Calories</td>
+                        <td>{nutrition.calories}</td>
+                    </tr>
+                    <tr>
+                        <td>Calories from Fat</td>
+                        <td>{nutrition.caloriesFat}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Fat</td>
+                        <td>{nutrition.totalFat}g</td>
+                    </tr>
+                    <tr>
+                        <td>Saturated Fat</td>
+                        <td>{nutrition.saturatedFat}g</td>
+                    </tr>          
+                    <tr>
+                        <td>Cholesterol</td>
+                        <td>{nutrition.cholesterol}mg</td>
+                    </tr>
+                    <tr>
+                        <td>Sodium</td>
+                        <td>{nutrition.sodium}mg</td>
+                    </tr>
+                    <tr>
+                        <td>Total Carbohydrates</td>
+                        <td>{nutrition.totalCarbs}g</td>
+                    </tr>
+                    <tr>
+                        <td>Sugar</td>
+                        <td>{nutrition.sugar}g</td>
+                    </tr>
+                    <tr>
+                        <td>Dietary Fiber</td>
+                        <td>{nutrition.dietaryFiber}g</td>
+                    </tr>
+                    <tr>
+                        <td>Potassium</td>
+                        <td>{nutrition.potassium}mg</td>
+                    </tr>
+                    <tr>
+                        <td>Protein</td>
+                        <td>{nutrition.protein}g</td>
+                    </tr> 
+                </table>
+            
+            : 
+            
+            <div> Nutrition data not available. </div>}
+        </div>
+        )
+    
     }
 
     //-------------------------------------------------------------------PLAN ID GENERATOR
@@ -99,19 +182,26 @@ export function MealList (props) {
              }
             }     
         
-        setTimeout(() => {
-            setIsSelected({isSelected: !isSelected});
-        }, 300)
     }
 
-    const displayRecipes = props.recipes.slice(pagesVisited, pagesVisited+recipesPerPage).map((recipe,index) => {
+    const displayRecipes = data.slice(pagesVisited, pagesVisited+recipesPerPage).map((recipe,index) => {
+       const nutrition = (props.nutrition.filter(rn => rn.recipeId === recipe.id));
 
         return (
-             <div className={ isSelected ? 'row recipe-result-sm '+index+' selected-meal' : 'row recipe-result-sm '+index+' deselected-meal'} key={index+recipe.id} onClick={(e) => {selectMeal(e, recipe)}}>
-                    <div><h6><strong>{recipe.name}</strong>, {recipe.type}</h6></div>
-                        <div><h3>Cal: {props.nutrition.filter(rn => rn.recipeId == recipe.id)[0].calories}</h3></div>
-                    <div id="recipe-img-td-sm"><img src={recipe.image}/></div>
-                </div>
+            <Tooltip 
+            trigger="mouseenter" arrow="true" position="right" 
+            distance="10px" html={(<div id="tooltip">{RecipeNutrition(recipe, nutrition[0])}</div>)}>
+            <table className={ isSelected ? 'row plan-details-wrapper-list t'+index+'selected-meal' : 'row plan-details-wrapper-list t'+index} key={index+recipe.id} onClick={(e) => {selectMeal(e, recipe)}}>
+                <tr>
+                    <td className="plan-img-wrapper-list"><img className="plan-img" src={recipe.image}/></td>
+                    <td className="plan-meal-name"><strong>{recipe.name}</strong><br/><td className="plan-meal-cals"><strong>Cal:</strong> {nutrition[0].calories}</td></td>
+                    <td className="plan-meal-flex"></td>
+                    <td className="plan-meal-type">{recipe.type}<br/></td>
+                </tr>
+            </table>
+        </Tooltip>
+       
+
         )
     })
 
@@ -119,18 +209,21 @@ export function MealList (props) {
         return(
             <div>
                 <div className="col search-wrapper" style={{width:"100%"}}>
-                    <LocalForm onSubmit={(values)=>submitSearch(values)}>
-                            <Control.text model='.searchbar' 
-                            name="searchbar" 
-                            className="form-control"
-                            id="searchbar-meals"/>
-                            {/* <input type="text" name="searchbar" id="searchbar"></input> */}
-                            <button id="search-button-meals" type='submit'><CgSearch /></button>
-                        </LocalForm>
+                <label htmlFor='filters'>Filters:</label>
+                    <ul className="filters">
+                        <li onClick={() => {filterResults('All')}}><FaStar/>All</li>
+                        <li onClick={() => {filterResults('Breakfast')}}><MdBreakfastDining/>Breakfast</li>
+                        <li onClick={() => {filterResults('Lunch')}}><MdLunchDining/>Lunch</li>
+                        <li onClick={() => {filterResults('Dinner')}}><MdDinnerDining/>Dinner</li>
+                        <li onClick={() => {filterResults('Snack')}}><GiChocolateBar/>Snack</li>
+                        <li onClick={() => {filterResults('Dessert')}}><MdIcecream/>Dessert</li>
+                        <li onClick={() => {filterResults('Drinks')}}><MdLocalDrink/>Drinks</li>
+                    </ul>
                     </div>
                 {displayRecipes}
-                <ReactPaginate previousLabel={"Previous"} nextLabel={"Next"} pageCount={pageCount} 
-                onPageChange={changePage} containerClassName={"meal-list-buttons"} previousLinkClassName={"previous-btn"} nextLinkClassName={"next-btn"} disabledClassName={"pagination-disabled"} activeClassName={"paginationActive"}/>
+                <ReactPaginate previousLabel='&#11164;' nextLabel='&#11166;' pageCount={pageCount} 
+                onPageChange={changePage} containerClassName={"meal-list-buttons"} previousLinkClassName={"previous-btn"} 
+                nextLinkClassName={"next-btn"} disabledClassName={"pagination-disabled"} activeClassName={"paginationActive"} pageLinkClassName={"pagination-links"}/><br/>
                 <input type="date" id="meal-plan-list-datetime" name="meal-plan-list-datetime" defaultValue={startDate}/>
                 <button className="submit-buttons" style={{width:"100%"}} onClick={() => {handleSubmit()}}>Save To Meal Plan</button>
             </div> )

@@ -9,6 +9,7 @@ import { array } from 'prop-types';
 import arrayShuffle from 'array-shuffle';
 import "react-datepicker/dist/react-datepicker.css";
 
+
  const PlanGenerator = (props) => {
     const [isClicked, setIsClicked] = useState(false);
     const [isMealSelected, setMealSelected] = useState(false);
@@ -224,7 +225,7 @@ import "react-datepicker/dist/react-datepicker.css";
                 </div>
             </div>
             )
-        } else if(formValues.meals==3){
+        } else {
             return(
             <div>
                 <div className="plan-block">
@@ -238,24 +239,7 @@ import "react-datepicker/dist/react-datepicker.css";
                 </div>
             </div>
             )
-        } else{
-            return(
-            <div>
-                <div className="plan-block">
-                    {mealType == 'Breakfast' ? mealDisplay : props.bShuffle}
-                    <hr/>
-                </div>
-                <div className="plan-block">
-                    {mealType == 'Lunch' ? mealDisplay : props.lShuffle}
-                    <hr/>
-                </div>
-                <div className="plan-block">
-                    {mealType == 'Dinner' ? mealDisplay : props.dShuffle}
-                    <hr/>
-                </div>
-            </div>
-            )
-        }
+        } 
     }
 
    
@@ -303,12 +287,6 @@ import "react-datepicker/dist/react-datepicker.css";
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
-                        <option>7</option>
-                        <option>8</option>
-                        <option>9</option>
                     </select>
                     <button className="shuffle _close" onClick={() =>{setValues(calories.value, numMeals.value, dietType.value)}}><TiArrowShuffle/></button>
                 </div>                

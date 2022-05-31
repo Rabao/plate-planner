@@ -89,7 +89,7 @@ class AddItem extends Component{
                                 </div>
                         <div className="col" md={1}>
                             <div className="checklist-complete">
-                                <label>Complete</label>
+                                <label>Purchased</label>
                                 <div className="checklist-check-box">
                                     <input type="checkbox" 
                                     id="complete" 

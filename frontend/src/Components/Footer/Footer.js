@@ -39,8 +39,7 @@ export const Footer = (props) => {
   return (
       <div className="footer">
         <div className="container">
-          <div className="row">
-              
+          <div className="row">  
           </div>
           <div id="footer1-3">
             <ul>
@@ -49,8 +48,8 @@ export const Footer = (props) => {
             </ul>
           </div>
           <div id="footer2-3">
-                {props.token ? <li><a href="/home">Visit Your Dashboard</a></li> : <li></li>}
-                {props.token ? <li><a href="/recipes">Write A Recipe</a></li> : <li></li>}
+                {props.token ? <li><a href="/user">Visit Your Dashboard</a></li> : <li></li>}
+                {props.token ? <li><a href="/add/recipe">Write A Recipe</a></li> : <li></li>}
                 {props.token ? <li><a href="/groceries">Track Your Groceries</a></li> : <li></li>}
                 {props.token ? <li><a href="/mealplans">Manage Your Meal Plans</a></li> : <li></li>}
           </div>
