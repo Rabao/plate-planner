@@ -86,7 +86,16 @@ export default class Dashboard extends Component{
                             <h5>Liked Recipes</h5>
 
 
-                           {this.props.favorites ?       <div>faves</div>: 
+                           {this.props.favorites ?       <div className="dashboard-recipe-collection-wrapper"> 
+                                            
+                                            <FavoriteRecipes 
+                                                    favorites={this.props.favorites} 
+                                                    recipes={this.props.recipes} 
+                                                    user={this.props.user} 
+                                                    deleteRecipe={this.props.deleteRecipe}
+                                                    deleteSteps={this.props.deleteRecipeSteps}
+                                                    deleteIngredients={this.props.deleteRecipeIngredients}
+                                                    deleteNutrition={this.props.deleteRecipeNutrition}/></div> : 
                                                         <div></div>}
                         </div>
                     </div>
@@ -149,7 +158,81 @@ function renderGroceryList(groceries, user) {
     )
 }
 
+class FavoriteRecipes extends Component{
 
+    constructor(props){
+        super(props);
+        this.state = {
+            isModalOpen: false,
+            activeModal: ''
+        };
+        this.toggleModal = this.toggleModal.bind(this);
+        // this.handleDelete = this.handleDelete.bind(this);
+        // this.handleEdit = this.handleEdit.bind(this);
+    }
+
+    toggleModal(activeModal){
+        this.setState({
+            activeModal: activeModal,
+            isModalOpen: !this.state.isModalOpen
+        });
+    }
+
+    // handleDelete(id){
+    //     this.toggleModal();
+    //     this.props.deleteRecipe(id);
+    //     this.props.deleteSteps(id);
+    //     this.props.deleteIngredients(id);
+    //     this.props.deleteNutrition(id);
+    //     window.location.reload(false);
+    // }
+
+    // handleEdit(id, values){
+    //     this.toggleModal();
+    //     this.props.editComment(id, values.rating, values.userComment);
+    //     window.location.reload(false);
+    // }
+
+    render(){
+        let id = this.props.user.id;
+        let filteredFaves = this.props.favorites.filter(fave => fave.userId === parseInt(id,10));
+        let filteredRecipes = filteredFaves.map(fave => this.props.recipes.filter(recipe => recipe.id === parseInt(fave.recipeId,10))[0])
+        const recipes = filteredRecipes.map((recipe) => {
+            return(
+            <div className="users-published-recipes">               
+                <div id="dashboard-recipe-collection-text"><p><mark>{recipe.name}</mark></p></div>
+                    <div key={recipe.id} className="dashboard-recipe-collection">  
+                        <img src={recipe.image}/>
+                    </div>
+                    {/* <div id="manage-recipe-buttons" md={6}>
+                            <DashEditRecipe id={recipe.id}/>
+                            <button type="button" className="dashboard-interface-button" onClick={() => this.toggleModal('delete')}>&#10060; DELETE</button>
+                    </div>
+                <Modal isOpen={this.state.activeModal === 'delete'} toggle={this.toggleModal}> 
+                        <ModalHeader style={{borderBottom:0}} toggle={this.toggleModal}>Delete Recipe?</ModalHeader>
+                        <ModalBody>
+                            <LocalForm onSubmit={() => this.handleDelete(recipe.id)}>
+                                {recipe.name}<br></br>
+                                <button type='submit' variant='danger'>&#10060;Delete</button>
+                            </LocalForm>
+                        </ModalBody>
+                </Modal>                   */}
+            </div>
+            )
+        })
+    
+
+
+    
+        return(
+            <div className="row dashboard-recipe-collection-wrapper">
+                {recipes} 
+            </div>
+            
+            )
+
+        }
+    }
 
 
 class EditDeleteRecipe extends Component{
