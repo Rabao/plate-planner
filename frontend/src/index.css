@@ -14,9 +14,9 @@ code {
     monospace;
 }
 
-.main {
+/* .main {
   margin-bottom: 5em;
-}
+} */
 
 /*---------------------------- Header CSS ----------------------------*/
 
@@ -1383,4 +1383,46 @@ hr {
     overflow: hidden;
   }
   
+}
+
+.login-page {
+  background-image: url("./Assets/pexels-photo-2641886.jpeg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position:-164.3em;
+  padding-bottom: 25em;
+}
+
+.register {
+  margin-top: 20em;
+  background-image: linear-gradient(to bottom, #fdfbf9, #f5f1ed);
+  padding: 1em;
+  padding-bottom: 5em;
+  border-radius: 0px 15px 15px 0px;
+  background-color: #001135;
+}
+
+.login {
+  margin-top: 20em;
+  background-image: linear-gradient(to bottom, #f5f1ed, #fdfbf9);
+  padding: 1em;
+  padding-bottom: 5em;
+  border-radius: 15px 0px 0px 15px;
+  background-color: #001135;
+}
+
+.login-body {
+  /* background-image: linear-gradient(to bottom, #fdfbf9, #f5f1ed); */
+  /* background-color: #000; */
+  margin-left: 12.5%;
+  margin-right: 12.5%;
+  /* margin-top: 20em; */
+  /* padding: 1em;
+  border-radius: 15px;*/
+}  
+
+.login-register {
+  position: absolute;
+  top: 40em;
+  left:66.8em;
 }

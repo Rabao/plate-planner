@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Routes, Route, Navigate, useParams} from 'react-router-dom'
 import Login from '../Login/Login'
-import Register from '../Register/Register'
+// import Register from '../Register/Register'
 import Header from '../Header/Header'
 import { Footer } from '../Footer/Footer'
 import Home from '../Home/Home'
@@ -222,7 +222,7 @@ class Main extends Component {
                 <div className="main">
                     <Routes>
                         <Route path='/login' element={<Login/>}/>
-                        <Route path='/register'element={<Register/>}/>
+                        {/* <Route path='/register'element={<Register/>}/> */}
                         <Route path='/user' element={<Dashboard 
                             user={this.props.user} 
                             recipes={this.props.recipe.recipe} 
